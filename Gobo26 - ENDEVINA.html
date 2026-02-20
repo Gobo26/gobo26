@@ -104,11 +104,32 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
 @media(min-width:520px){.opcions-grid{grid-template-columns:1fr 1fr;}.marcadors{grid-template-columns:repeat(4,1fr);}}
 @media(max-width:400px){.paraula-display{font-size:1.9rem;}.logo-txt{display:none;}}
 </style>
+
+    <style>
+        html, body { background-color: #0a0e1a !important; color: #e2e8f0 !important; }
+        body::before { content:''; position:fixed; inset:0; background-image:linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px); background-size:40px 40px; pointer-events:none; z-index:0; }
+        #root { position: relative; z-index: 1; }
+        .bg-white, .bg-gray-50, .bg-slate-50, .bg-slate-100 { background-color: #111827 !important; }
+        .bg-gray-100, .bg-gray-200 { background-color: #1a2235 !important; }
+        .bg-slate-800, .bg-gray-800, .bg-gray-900 { background: rgba(10,14,26,0.92) !important; backdrop-filter: blur(20px); border-bottom: 1px solid #1e2d45 !important; }
+        .text-gray-900, .text-gray-800, .text-gray-700, .text-slate-800, .text-slate-700 { color: #e2e8f0 !important; }
+        .text-gray-600, .text-gray-500, .text-slate-500, .text-slate-600 { color: #94a3b8 !important; }
+        .border-gray-200, .border-gray-300, .border-slate-200 { border-color: #1e2d45 !important; }
+        .shadow, .shadow-md, .shadow-lg, .shadow-xl { box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important; }
+        .rounded-xl, .rounded-lg, .rounded-2xl { border: 1px solid #1e2d45; }
+        footer { background: rgba(10,14,26,0.9) !important; border-top: 1px solid #1e2d45 !important; color: #64748b !important; }
+        input, select, textarea { background-color: #1a2235 !important; color: #e2e8f0 !important; border-color: #1e2d45 !important; }
+        input::placeholder { color: #64748b !important; }
+        table { background: #111827 !important; }
+        th { background: #1a2235 !important; color: #94a3b8 !important; }
+        td { border-color: #1e2d45 !important; color: #e2e8f0 !important; }
+        tr:hover td { background: #1a2235 !important; }
+    </style>
 </head>
 <body>
 
 <header class="top-header">
-    <a href="https://ja.cat/gobo26" target="_blank" class="logo">
+    <a href="https://ja.cat/appgobo" target="_blank" class="logo">
         <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
             <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
             <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
@@ -188,7 +209,7 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
     </div>
 </div>
 
-<footer><a href="https://ja.cat/gobo26" target="_blank" style="color:var(--s400);text-decoration:none;font-weight:700;">Una aplicació de Gobo26</a></footer>
+<footer><a href="https://ja.cat/appgobo" target="_blank" style="color:var(--s400);text-decoration:none;font-weight:700;">Una aplicació de Gobo26</a></footer>
 
 <script>
 // ─── DICCIONARI (50 paraules) ─────────────────────────────────────────────────
