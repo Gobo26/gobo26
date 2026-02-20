@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Artesà - Joan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f1f5f9; /* slate-100 */
+            --board-bg: #ffffff;
+            --text-color: #2c3e50;
+            --line-color: #bec6d4;
+            --thick-line: #34495e;
+            --highlight: #e8f4f8;
+            --selected: #b3d9ff;
+            --fixed-num: #2c3e50;
+            --user-num: #2980b9;
+            --error: #e74c3c;
+            --btn-bg: #8e44ad; /* Un toc morat/artístic */
+            --btn-text: white;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            user-select: none;
+        }
+
+        h1 {
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #5d6d7e;
+            color: var(--btn-text);
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        button.primary {
+            background-color: var(--btn-btn); /* Default fallback */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(9, 50px);
+            grid-template-rows: repeat(9, 50px);
+            border: 3px solid var(--thick-line);
+            background-color: var(--board-bg);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            border: 1px solid var(--line-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Línies gruixudes per als quadrants 3x3 */
+        .cell:nth-child(3n) {
+            border-right: 3px solid var(--thick-line);
+        }
+        .cell:nth-child(9n) {
+            border-right: none; /* L'última ja té la vora del grid */
+        }
+        
+        /* Apliquem vora inferior gruixuda a les files 3 i 6 manualment via JS o classes, 
+           però aquí ho fem amb selectors nth-child una mica complexos o classes afegides */
+        .cell.border-bottom {
+            border-bottom: 3px solid var(--thick-line);
+        }
+
+        .cell:hover {
+            background-color: var(--highlight);
+        }
+
+        .cell.selected {
+            background-color: var(--selected);
+        }
+
+        .cell.fixed {
+            color: var(--fixed-num);
+            font-weight: bold;
+            background-color: #f2f2f2;
+            cursor: default;
+        }
+
+        .cell.user-input {
+            color: var(--user-num);
+        }
+
+        .cell.error {
+            background-color: #fadbd8;
+            color: var(--error);
+        }
+
+        .status {
+            margin-top: 20px;
+            font-size: 18px;
+            height: 25px;
+            color: #27ae60;
+        }
+
+        /* Teclat numèric per a mòbils/tauletes */
+        .numpad {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 5px;
+            margin-top: 20px;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .num-btn {
+            padding: 10px 0;
+            background-color: white;
+            border: 1px solid var(--line-color);
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .num-btn:hover {
+            background-color: var(--highlight);
+        }
+
+        @media (max-width: 600px) {
+            .game-board {
+                grid-template-columns: repeat(9, 38px);
+                grid-template-rows: repeat(9, 38px);
+            }
+            .cell {
+                width: 38px;
+                height: 38px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER GOBO26 -->
+    <header style="background:#1e293b;color:white;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+        <div style="display:flex;align-items:center;gap:10px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            <span style="font-family:'Montserrat',sans-serif;font-size:1.2rem;font-weight:700;">Sudoku</span>
+        </div>
+        <a href="https://ja.cat/gobo26" target="_blank" rel="noopener noreferrer"
+           style="display:none;align-items:center;opacity:0.5;transition:opacity 0.2s;text-decoration:none;"
+           id="gobo-logo"
+           onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">
+            <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
+                <text x="50" y="42" text-anchor="middle" fill="white" font-size="22" font-weight="800" font-family="sans-serif">GOBO</text>
+                <text x="50" y="65" text-anchor="middle" fill="#94a3b8" font-size="20" font-weight="700" font-family="sans-serif">26</text>
+            </svg>
+        </a>
+    </header>
+    <script>
+        if (window.innerWidth >= 640) document.getElementById('gobo-logo').style.display = 'flex';
+    </script>
+
+    <div style="min-height:calc(100vh - 60px - 50px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 10px;">
+
+    <h1 style="font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:10px;letter-spacing:1px;color:#1e293b;">Sudoku d'en Joan</h1>
+    
+    <div class="controls">
+        <button onclick="newGame('easy')">Fàcil</button>
+        <button onclick="newGame('medium')">Mitjà</button>
+        <button onclick="newGame('hard')">Difícil</button>
+        <button class="primary" onclick="checkSolution()">Comprovar</button>
+    </div>
+
+    <div id="board" class="game-board"></div>
+
+    <div class="numpad">
+        <button class="num-btn" onclick="inputNumber(1)">1</button>
+        <button class="num-btn" onclick="inputNumber(2)">2</button>
+        <button class="num-btn" onclick="inputNumber(3)">3</button>
+        <button class="num-btn" onclick="inputNumber(4)">4</button>
+        <button class="num-btn" onclick="inputNumber(5)">5</button>
+        <button class="num-btn" onclick="inputNumber(6)">6</button>
+        <button class="num-btn" onclick="inputNumber(7)">7</button>
+        <button class="num-btn" onclick="inputNumber(8)">8</button>
+        <button class="num-btn" onclick="inputNumber(9)">9</button>
+        <button class="num-btn" onclick="inputNumber('delete')">❌</button>
+    </div>
+
+    <div id="message" class="status"></div>
+
+    <script>
+        let board = [];
+        let solution = [];
+        let selectedCell = null;
+
+        // Inicialitzar el joc
+        window.onload = () => newGame('easy');
+
+        function newGame(difficulty) {
+            generateSudoku();
+            removeNumbers(difficulty);
+            renderBoard();
+            document.getElementById('message').textContent = "";
+            selectedCell = null;
+        }
+
+        function generateSudoku() {
+            // 1. Crear tauler buit
+            solution = Array(9).fill().map(() => Array(9).fill(0));
+            
+            // 2. Omplir diagonals (independents)
+            fillDiagonal();
+            
+            // 3. Omplir la resta amb backtracking
+            solveSudoku(solution);
+            
+            // Copiar a 'board' (l'estat actual del joc)
+            board = JSON.parse(JSON.stringify(solution));
+        }
+
+        function fillDiagonal() {
+            for (let i = 0; i < 9; i = i + 3) {
+                fillBox(i, i);
+            }
+        }
+
+        function fillBox(row, col) {
+            let num;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    do {
+                        num = Math.floor(Math.random() * 9) + 1;
+                    } while (!isSafeInBox(row, col, num));
+                    solution[row + i][col + j] = num;
+                }
+            }
+        }
+
+        function isSafeInBox(rowStart, colStart, num) {
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (solution[rowStart + i][colStart + j] === num) return false;
+                }
+            }
+            return true;
+        }
+
+        function isSafe(grid, row, col, num) {
+            // Comprovar fila i columna
+            for (let x = 0; x < 9; x++) {
+                if (grid[row][x] === num || grid[x][col] === num) return false;
+            }
+            // Comprovar quadrat 3x3
+            let startRow = row - row % 3;
+            let startCol = col - col % 3;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (grid[i + startRow][j + startCol] === num) return false;
+                }
+            }
+            return true;
+        }
+
+        function solveSudoku(grid) {
+            let row = -1;
+            let col = -1;
+            let isEmpty = true;
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    if (grid[i][j] === 0) {
+                        row = i;
+                        col = j;
+                        isEmpty = false;
+                        break;
+                    }
+                }
+                if (!isEmpty) break;
+            }
+
+            if (isEmpty) return true;
+
+            for (let num = 1; num <= 9; num++) {
+                if (isSafe(grid, row, col, num)) {
+                    grid[row][col] = num;
+                    if (solveSudoku(grid)) return true;
+                    grid[row][col] = 0;
+                }
+            }
+            return false;
+        }
+
+        function removeNumbers(difficulty) {
+            let attempts = 5;
+            // Definir quants números treure segons dificultat
+            if (difficulty === 'easy') attempts = 30;
+            if (difficulty === 'medium') attempts = 45;
+            if (difficulty === 'hard') attempts = 55;
+
+            while (attempts > 0) {
+                let row = Math.floor(Math.random() * 9);
+                let col = Math.floor(Math.random() * 9);
+                if (board[row][col] !== 0) {
+                    board[row][col] = 0;
+                    attempts--;
+                }
+            }
+        }
+
+        function renderBoard() {
+            const container = document.getElementById('board');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const div = document.createElement('div');
+                    div.classList.add('cell');
+                    
+                    // Afegir vores per als blocs 3x3
+                    if (i === 2 || i === 5) div.classList.add('border-bottom');
+
+                    if (board[i][j] !== 0) {
+                        div.textContent = board[i][j];
+                        div.classList.add('fixed');
+                    } else {
+                        div.classList.add('user-input');
+                        div.dataset.row = i;
+                        div.dataset.col = j;
+                        div.onclick = () => selectCell(div, i, j);
+                    }
+                    container.appendChild(div);
+                }
+            }
+        }
+
+        function selectCell(div, row, col) {
+            // Treure selecció prèvia
+            if (selectedCell) selectedCell.classList.remove('selected');
+            
+            selectedCell = div;
+            selectedCell.classList.add('selected');
+        }
+
+        function inputNumber(num) {
+            if (!selectedCell) return;
+            
+            if (num === 'delete') {
+                selectedCell.textContent = '';
+                selectedCell.classList.remove('error');
+                return;
+            }
+
+            selectedCell.textContent = num;
+            selectedCell.classList.remove('error');
+        }
+
+        // Suport per teclat
+        document.addEventListener('keydown', (e) => {
+            if (!selectedCell) return;
+            
+            const key = e.key;
+            if (key >= '1' && key <= '9') {
+                inputNumber(parseInt(key));
+            } else if (key === 'Backspace' || key === 'Delete') {
+                inputNumber('delete');
+            }
+        });
+
+        function checkSolution() {
+            const cells = document.querySelectorAll('.cell.user-input');
+            let errors = 0;
+            let filled = 0;
+
+            cells.forEach(cell => {
+                const r = parseInt(cell.dataset.row);
+                const c = parseInt(cell.dataset.col);
+                const val = parseInt(cell.textContent);
+
+                if (cell.textContent !== '') {
+                    filled++;
+                    if (val !== solution[r][c]) {
+                        cell.classList.add('error');
+                        errors++;
+                    } else {
+                        cell.classList.remove('error');
+                    }
+                }
+            });
+
+            const msg = document.getElementById('message');
+            if (errors > 0) {
+                msg.textContent = `Tens ${errors} errors. Continua intentant-ho!`;
+                msg.style.color = '#e74c3c';
+            } else if (filled === cells.length) {
+                msg.textContent = "Felicitats Joan! Has completat el Sudoku.";
+                msg.style.color = '#27ae60';
+            } else {
+                msg.textContent = "De moment tot correcte, però encara no has acabat.";
+                msg.style.color = '#2980b9';
+            }
+        }
+    </script>
+
+    </div><!-- fi div central -->
+
+    <!-- FOOTER GOBO26 -->
+    <footer style="background:#1e293b;color:#cbd5e1;text-align:center;padding:12px;font-family:'Montserrat',sans-serif;font-size:11px;">
+        <a href="https://ja.cat/gobo26" target="_blank" rel="noopener noreferrer"
+           style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:#cbd5e1;text-decoration:none;"
+           onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+            <svg width="14" height="14" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
+            Una aplicació de Gobo26
+        </a>
+    </footer>
+
+</body>
+</html>
