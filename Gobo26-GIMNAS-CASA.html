@@ -43,11 +43,29 @@
             50% { transform: translateY(0); animation-timing-function: cubic-bezier(0,0,0.2,1); }
         }
         .animate-bounce-gentle { animation: bounce 2s infinite; }
-    </style>
+    
+/* HEADER */
+header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
+.logo-txt span{color:#3b82f6;}
+.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
+</style>
 
 
 </head>
 <!-- El body ara utilitza 100dvh i centra el contingut només si la pantalla és gran (sm) -->
+<header>
+    <a href="https://ja.cat/appgobo" class="logo">
+        <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
+            <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
+            <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#3b82f6" font-family="Montserrat,sans-serif" font-size="7" font-weight="900">26</text>
+        </svg>
+        <span class="logo-txt">GOBO<span>26</span></span>
+    </a>
+    <span class="hdr-title">Gimnàs a Casa</span>
+</header>
 <body class="bg-gray-100 text-slate-800 flex justify-center sm:items-center">
     
     <!-- Contenidor principal: Al mòbil ocupa el 100%, a l'escriptori té mida de telèfon -->
@@ -58,7 +76,7 @@
 
         // --- GOBO26 ---
         const Gobo26Badge = () => (
-            <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer"
+            <a href="https://ja.cat/appgobo" target="_self" rel="noopener noreferrer"
                className="opacity-30 hover:opacity-70 transition-opacity"
                title="Gobo26">
                 <svg width="24" height="24" viewBox="0 0 100 100" fill="none">
@@ -514,7 +532,7 @@
                         <button onClick={() => setActiveTab('progress')} className={`flex flex-col items-center ${activeTab === 'progress' ? 'text-indigo-600' : 'text-slate-400'}`}><BarChart size={24} /><span className="text-[10px] font-bold mt-1">Progrés</span></button>
                         <button onClick={() => setActiveTab('tips')} className={`flex flex-col items-center ${activeTab === 'tips' ? 'text-indigo-600' : 'text-slate-400'}`}><Lightbulb size={24} /><span className="text-[10px] font-bold mt-1">Consells</span></button>
                     </div>
-                    <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer"
+                    <a href="https://ja.cat/appgobo" target="_self" rel="noopener noreferrer"
                        style={{display:'inline-flex',alignItems:'center',gap:'4px',opacity:0.35,textDecoration:'none',color:'#94a3b8',fontSize:'0.6rem',fontWeight:600,paddingBottom:'6px',transition:'opacity 0.2s'}}
                        onMouseOver={e=>e.currentTarget.style.opacity=0.8} onMouseOut={e=>e.currentTarget.style.opacity=0.35}>
                         <svg width="10" height="10" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" textAnchor="middle" fill="white" fontSize="26" fontWeight="800" fontFamily="sans-serif">G</text><text x="50" y="68" textAnchor="middle" fill="#1e293b" fontSize="22" fontWeight="700" fontFamily="sans-serif">26</text></svg>
@@ -540,5 +558,13 @@
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<HealthApp />);
     </script>
+<footer style="font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:16px;margin-top:auto;border-top:1px solid #1e2d45;">
+    <a href="https://ja.cat/appgobo"
+       style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:#94a3b8;text-decoration:none;"
+       onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+        <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
+        Una aplicació de Gobo26
+    </a>
+</footer>
 </body>
 </html>

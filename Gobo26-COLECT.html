@@ -363,24 +363,30 @@
             .btn-obj { min-height: 56px; }
             .btn-obj .emoji { font-size: 1.3rem; }
         }
-    </style>
+    
+/* HEADER */
+header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
+.logo-txt span{color:#3b82f6;}
+.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
+</style>
 </head>
 <body>
 
 <div id="app">
 
     <header>
-        <a class="logo-wrap" href="https://ja.cat/gobo26" target="_blank" title="Gobo26">
-            <svg class="logo-hex" viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 2L37.3 12V32L20 42L2.7 32V12L20 2Z" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="800" font-size="11">GOBO</text>
-                <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#94a3b8" font-family="Montserrat,sans-serif" font-weight="700" font-size="9">26</text>
-            </svg>
-            <div class="logo-text">GOBO26 <span>Aplicacions útils</span></div>
-        </a>
-        <div class="header-title">🗂️ COL·LECCIONISTA</div>
-        <div class="record-badge"><i class="fa-solid fa-trophy"></i> <span id="record-hdr">0</span></div>
-    </header>
+    <a href="https://ja.cat/appgobo" class="logo">
+        <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
+            <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
+            <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#3b82f6" font-family="Montserrat,sans-serif" font-size="7" font-weight="900">26</text>
+        </svg>
+        <span class="logo-txt">GOBO<span>26</span></span>
+    </a>
+    <span class="hdr-title">Col·leccionista</span>
+</header>
 
     <main>
 
@@ -468,7 +474,14 @@
 
     </main>
 
-    <footer>Una aplicació de <strong>Gobo26</strong></footer>
+    <footer style="font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:16px;margin-top:auto;border-top:1px solid #1e2d45;">
+    <a href="https://ja.cat/appgobo"
+       style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:#94a3b8;text-decoration:none;"
+       onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+        <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
+        Una aplicació de Gobo26
+    </a>
+</footer>
 </div>
 
 <div class="confeti-container" id="confeti-container"></div>

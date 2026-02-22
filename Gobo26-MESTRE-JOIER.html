@@ -235,22 +235,27 @@
     .perla { width: 44px; height: 44px; }
     .font-perla { width: 50px; height: 50px; }
   }
+
+/* HEADER */
+header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
+.logo-txt span{color:#3b82f6;}
+.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
 </style>
 </head>
 <body>
 
 <header>
-  <a class="logo" href="https://ja.cat/appgobo" target="_blank">
-    <div class="logo-hex"><span>GOBO</span><span>26</span></div>
-  </a>
-  <div class="header-center">
-    <div class="header-title">🪬 El Mestre Joier</div>
-    <button class="btn-ajuda" onclick="obrirAjuda()" title="Com es juga?">?</button>
-  </div>
-  <div class="marcador">
-    <div class="xip"><span class="val" id="xip-nivell">1</span><span class="lab">Nivell</span></div>
-    <div class="xip"><span class="val" id="xip-rec-niv">1</span><span class="lab">Rèc.niv</span></div>
-  </div>
+    <a href="https://ja.cat/appgobo" class="logo">
+        <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
+            <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
+            <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#3b82f6" font-family="Montserrat,sans-serif" font-size="7" font-weight="900">26</text>
+        </svg>
+        <span class="logo-txt">GOBO<span>26</span></span>
+    </a>
+    <span class="hdr-title">El Mestre Joier</span>
 </header>
 
 <div id="fantasma"></div>
@@ -296,8 +301,8 @@
   <button id="btn-accio" onclick="iniciar()">COMENÇAR</button>
 </main>
 
-<footer>
-    <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer"
+<footer style="font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:16px;margin-top:auto;border-top:1px solid #1e2d45;">
+    <a href="https://ja.cat/appgobo"
        style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:#94a3b8;text-decoration:none;"
        onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
         <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>

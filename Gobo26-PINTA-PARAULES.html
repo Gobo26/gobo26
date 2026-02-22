@@ -145,23 +145,27 @@ footer{margin-top:auto;padding:14px;text-align:center;}
     .pot{min-height:68px;}
     .xip .val{font-size:1.2rem;}
 }
+
+/* HEADER */
+header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
+.logo-txt span{color:#3b82f6;}
+.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
 </style>
 </head>
 <body>
 
-<header class="top-header">
-    <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer" class="logo" title="Gobo26">
-        <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
-            <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#1e293b" stroke="#94a3b8" stroke-width="3"/>
-            <text x="50" y="42" text-anchor="middle" fill="white" font-size="22" font-weight="800" font-family="sans-serif">GOBO</text>
-            <text x="50" y="65" text-anchor="middle" fill="#94a3b8" font-size="20" font-weight="700" font-family="sans-serif">26</text>
+<header>
+    <a href="https://ja.cat/appgobo" class="logo">
+        <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
+            <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
+            <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#3b82f6" font-family="Montserrat,sans-serif" font-size="7" font-weight="900">26</text>
         </svg>
+        <span class="logo-txt">GOBO<span>26</span></span>
     </a>
-    <span class="hdr-title">🎨 PINTA PARAULES</span>
-    <div style="display:flex;gap:6px;">
-        <button class="btn-abandon-vis" onclick="abandonar()" title="Abandonar partida">✕ Surt</button>
-        <button class="btn-hdr" onclick="obrirAjuda()" title="Com es juga?">?</button>
-    </div>
+    <span class="hdr-title">Pinta Paraules</span>
 </header>
 
 <div id="pantalla-inici">
@@ -237,8 +241,8 @@ footer{margin-top:auto;padding:14px;text-align:center;}
     </div>
 </div>
 
-<footer>
-    <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer"
+<footer style="font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:16px;margin-top:auto;border-top:1px solid #1e2d45;">
+    <a href="https://ja.cat/appgobo"
        style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:#94a3b8;text-decoration:none;"
        onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
         <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
