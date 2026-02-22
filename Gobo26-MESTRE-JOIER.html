@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>El Mestre Joier – Gobo26</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #f1f5f9; --header: #1e293b; --accent: #2563eb; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--bg); min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    width: 100%; background: var(--header); color: #fff;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.7rem 1.2rem; position: sticky; top: 0; z-index: 50; gap: 0.5rem;
+  }
+  .logo { display: none; text-decoration: none; }
+  @media (min-width: 480px) { .logo { display: flex; align-items: center; gap: 0.5rem; } }
+  .logo-hex {
+    width: 42px; height: 42px; background: #1e293b; border: 2px solid #fff;
+    clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1;
+  }
+  .logo-hex span:first-child { font-size: 0.55rem; font-weight: 900; letter-spacing: 1px; color: #fff; }
+  .logo-hex span:last-child  { font-size: 0.6rem; font-weight: 900; color: #60a5fa; }
+  .header-center { display: flex; align-items: center; gap: 0.5rem; flex: 1; justify-content: center; }
+  .header-title  { font-size: 1.05rem; font-weight: 900; letter-spacing: 0.04em; white-space: nowrap; }
+  .btn-ajuda {
+    background: #475569; border: none; color: #fff; width: 28px; height: 28px;
+    border-radius: 50%; font-size: 0.95rem; font-weight: 900; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s; flex-shrink: 0;
+  }
+  .btn-ajuda:hover { background: #2563eb; }
+  .marcador { display: flex; gap: 0.4rem; flex-shrink: 0; }
+  .xip {
+    background: #334155; border-radius: 0.6rem; padding: 0.25rem 0.55rem;
+    font-size: 0.72rem; font-weight: 700; color: #cbd5e1;
+    display: flex; flex-direction: column; align-items: center; line-height: 1.2;
+  }
+  .xip .val { color: #fff; font-size: 0.88rem; font-weight: 900; }
+  .xip .lab { font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; }
+
+  /* MAIN */
+  main {
+    width: 100%; max-width: 640px;
+    padding: 1.2rem 1rem 2rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+  }
+
+  /* MISSATGE */
+  #missatge {
+    font-size: 1.1rem; font-weight: 700; text-align: center;
+    color: #1e293b; min-height: 1.8rem; transition: color 0.3s;
+  }
+
+  /* BARRA */
+  .barra-wrap { width: 100%; height: 10px; background: #cbd5e1; border-radius: 99px; overflow: hidden; }
+  #barra {
+    height: 100%; width: 100%;
+    background: linear-gradient(90deg, #2563eb, #06b6d4);
+    border-radius: 99px; transition: width linear;
+  }
+
+  /* RÈCORD PANEL */
+  #record-wrap {
+    width: 100%;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border-radius: 1.2rem; padding: 0.9rem 1rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    display: flex; gap: 0.5rem; justify-content: space-around; align-items: center;
+  }
+  .record-card { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; }
+  .r-ico { font-size: 1.3rem; }
+  .r-val { font-size: 1.25rem; font-weight: 900; color: #fbbf24; }
+  .r-lab { font-size: 0.58rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.07em; text-align: center; line-height: 1.3; }
+  .record-sep { width: 1px; height: 36px; background: #475569; }
+
+  /* COLLAR */
+  #collar-wrap {
+    width: 100%; background: #fff; border-radius: 1.5rem;
+    padding: 1.5rem 1rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+  }
+  .etiqueta {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #94a3b8;
+  }
+  #collar { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.55rem; padding: 0.3rem 0; }
+
+  .perla {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 3px solid #e2e8f0; background: #f8fafc;
+    cursor: default; position: relative; flex-shrink: 0;
+    transition: transform 0.18s cubic-bezier(.34,1.56,.64,1), border-color 0.2s, box-shadow 0.2s;
+  }
+  .perla::after {
+    content: ''; position: absolute; top: 8px; left: 12px;
+    width: 12px; height: 7px; background: rgba(255,255,255,0.45);
+    border-radius: 50%; transform: rotate(-30deg); pointer-events: none;
+  }
+  .perla.activa {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.25) !important;
+    transform: scale(1.15);
+  }
+  .perla.over { border-color: #0ea5e9; transform: scale(1.2); box-shadow: 0 0 0 4px rgba(14,165,233,0.3); }
+  .perla.pop { animation: pop 0.35s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.35)} 100%{transform:scale(1)} }
+
+  .perla.error-shake { animation: shake 0.5s ease; border-color: #ef4444 !important; box-shadow: 0 0 0 4px rgba(239,68,68,0.35) !important; }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)}
+    60%{transform:translateX(-4px)} 80%{transform:translateX(4px)}
+  }
+  .perla.error-pendent {
+    border: 3px dashed #f97316 !important;
+    background: #fff7ed !important;
+    box-shadow: 0 0 0 3px rgba(249,115,22,0.25) !important;
+  }
+
+  /* PALETA */
+  #paleta-wrap {
+    width: 100%; background: #fff; border-radius: 1.5rem;
+    padding: 1.2rem 1rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+  }
+  #paleta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; }
+  .font-perla {
+    width: 58px; height: 58px; border-radius: 50%; border: 3px solid transparent;
+    cursor: grab; position: relative; touch-action: none; user-select: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .font-perla::after {
+    content: ''; position: absolute; top: 9px; left: 14px;
+    width: 13px; height: 8px; background: rgba(255,255,255,0.5);
+    border-radius: 50%; transform: rotate(-30deg); pointer-events: none;
+  }
+  .font-perla:hover { transform: scale(1.12); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+  .font-perla.seleccionada { border-color: #1e293b; transform: scale(1.18); box-shadow: 0 0 0 4px rgba(30,41,59,0.3); }
+
+  /* FANTASMA */
+  #fantasma {
+    width: 52px; height: 52px; border-radius: 50%;
+    position: fixed; pointer-events: none; z-index: 999;
+    opacity: 0.85; transform: translate(-50%,-50%);
+    display: none; box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+
+  /* BOTÓ */
+  #btn-accio {
+    background: #2563eb; color: #fff; font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem; font-weight: 800; letter-spacing: 0.06em;
+    border: none; border-radius: 1rem; padding: 1rem 2.5rem;
+    cursor: pointer; min-height: 52px; min-width: 200px;
+    box-shadow: 0 6px 0 #1d4ed8; transition: transform 0.1s, box-shadow 0.1s;
+  }
+  #btn-accio:active { transform: translateY(3px); box-shadow: 0 3px 0 #1d4ed8; }
+  #btn-accio:hover  { background: #1d4ed8; }
+
+  .ocult { display: none !important; }
+
+  /* OVERLAY RESULTAT */
+  #overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  #overlay.visible { opacity: 1; pointer-events: all; }
+  .modal {
+    background: #fff; border-radius: 2rem; padding: 2.2rem 1.8rem;
+    text-align: center; max-width: 360px; width: 92%;
+    transform: scale(0.85); transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
+  #overlay.visible .modal { transform: scale(1); }
+  .modal-emoji { font-size: 3.2rem; }
+  .modal-titol { font-size: 1.4rem; font-weight: 900; margin: 0.4rem 0; color: #1e293b; }
+  .modal-text  { color: #64748b; font-size: 0.9rem; margin-bottom: 1.2rem; line-height: 1.5; }
+  .modal-btns  { display: flex; flex-direction: column; gap: 0.6rem; }
+  .btn-modal {
+    background: #2563eb; color: #fff; font-family: 'Montserrat', sans-serif;
+    font-weight: 800; font-size: 0.95rem; border: none; border-radius: 0.8rem;
+    padding: 0.75rem 1.5rem; cursor: pointer; width: 100%;
+    box-shadow: 0 4px 0 #1d4ed8;
+  }
+  .btn-modal.sec { background: #f1f5f9; color: #475569; box-shadow: 0 4px 0 #cbd5e1; }
+
+  /* OVERLAY AJUDA */
+  #overlay-ajuda {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.25s;
+  }
+  #overlay-ajuda.visible { opacity: 1; pointer-events: all; }
+  .modal-ajuda {
+    background: #fff; border-radius: 1.8rem; padding: 2rem 1.8rem;
+    max-width: 360px; width: 92%;
+    transform: scale(0.9); transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  #overlay-ajuda.visible .modal-ajuda { transform: scale(1); }
+  .ajuda-titol { font-size: 1.2rem; font-weight: 900; color: #1e293b; margin-bottom: 1rem; text-align: center; }
+  .ajuda-pas { display: flex; gap: 0.8rem; align-items: flex-start; margin-bottom: 0.85rem; }
+  .ajuda-ico { font-size: 1.4rem; flex-shrink: 0; width: 28px; text-align: center; }
+  .ajuda-txt { font-size: 0.85rem; color: #475569; line-height: 1.45; }
+  .ajuda-txt strong { color: #1e293b; }
+  .btn-tancar-ajuda {
+    background: #1e293b; color: #fff; font-family: 'Montserrat', sans-serif;
+    font-weight: 800; font-size: 0.9rem; border: none; border-radius: 0.8rem;
+    padding: 0.75rem; width: 100%; cursor: pointer; margin-top: 0.5rem;
+  }
+
+  /* CONFETI */
+  .confeti-p {
+    position: fixed; top: -10px; width: 10px; height: 10px;
+    border-radius: 2px; pointer-events: none; z-index: 400;
+    animation: caure var(--dur) ease-in forwards;
+  }
+  @keyframes caure {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  footer { margin-top: auto; padding: 1rem; color: #94a3b8; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; text-align: center; }
+
+  @media (max-width: 400px) {
+    .perla { width: 44px; height: 44px; }
+    .font-perla { width: 50px; height: 50px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="https://ja.cat/appgobo" target="_blank">
+    <div class="logo-hex"><span>GOBO</span><span>26</span></div>
+  </a>
+  <div class="header-center">
+    <div class="header-title">🪬 El Mestre Joier</div>
+    <button class="btn-ajuda" onclick="obrirAjuda()" title="Com es juga?">?</button>
+  </div>
+  <div class="marcador">
+    <div class="xip"><span class="val" id="xip-nivell">1</span><span class="lab">Nivell</span></div>
+    <div class="xip"><span class="val" id="xip-rec-niv">1</span><span class="lab">Rèc.niv</span></div>
+  </div>
+</header>
+
+<div id="fantasma"></div>
+
+<main>
+  <div id="missatge">Preparats per crear el vostre collar?</div>
+
+  <div class="barra-wrap ocult" id="barra-wrap"><div id="barra"></div></div>
+
+  <!-- Rècord panel -->
+  <div id="record-wrap">
+    <div class="record-card">
+      <div class="r-ico">📿</div>
+      <div class="r-val" id="rec-boles">—</div>
+      <div class="r-lab">Màx. boles<br>recordades</div>
+    </div>
+    <div class="record-sep"></div>
+    <div class="record-card">
+      <div class="r-ico">⏱️</div>
+      <div class="r-val" id="rec-temps">—</div>
+      <div class="r-lab">Temps mínim<br>memoritzat</div>
+    </div>
+    <div class="record-sep"></div>
+    <div class="record-card">
+      <div class="r-ico">🏆</div>
+      <div class="r-val" id="rec-nivell">1</div>
+      <div class="r-lab">Nivell<br>màxim</div>
+    </div>
+  </div>
+
+  <!-- Collar -->
+  <div id="collar-wrap">
+    <div class="etiqueta" id="etiq-collar">El collar</div>
+    <div id="collar"></div>
+  </div>
+
+  <!-- Paleta -->
+  <div id="paleta-wrap" class="ocult">
+    <div class="etiqueta" id="etiq-paleta">Arrossegueu o toqueu per posar el color</div>
+    <div id="paleta"></div>
+  </div>
+
+  <button id="btn-accio" onclick="iniciar()">COMENÇAR</button>
+</main>
+
+<footer>
+    <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer"
+       style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:#94a3b8;text-decoration:none;"
+       onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+        <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
+        Una aplicació de Gobo26
+    </a>
+</footer>
+
+<!-- OVERLAY RESULTAT -->
+<div id="overlay">
+  <div class="modal">
+    <div class="modal-emoji" id="m-emoji">🎉</div>
+    <div class="modal-titol" id="m-titol">Bravo!</div>
+    <div class="modal-text"  id="m-text">Collar perfecte!</div>
+    <div class="modal-btns" id="m-btns"></div>
+  </div>
+</div>
+
+<!-- OVERLAY AJUDA -->
+<div id="overlay-ajuda">
+  <div class="modal-ajuda">
+    <div class="ajuda-titol">🪬 Com es juga?</div>
+    <div class="ajuda-pas">
+      <div class="ajuda-ico">👀</div>
+      <div class="ajuda-txt"><strong>Memoritzeu el collar:</strong> apareix un collar de perles de colors. Teniu uns segons per memoritzar la seqüència exacta.</div>
+    </div>
+    <div class="ajuda-pas">
+      <div class="ajuda-ico">🎨</div>
+      <div class="ajuda-txt"><strong>Construïu-lo:</strong> les perles queden buides. <strong>Arrossegueu</strong> el color fins a la perla, o <strong>toqueu</strong> primer el color i després la perla.</div>
+    </div>
+    <div class="ajuda-pas">
+      <div class="ajuda-ico">⚠️</div>
+      <div class="ajuda-txt"><strong>Error:</strong> les perles incorrectes es buiden (es marquen en taronja) i podeu tornar-les a pintar. Teniu <strong>un segon intent</strong> per cada perla.</div>
+    </div>
+    <div class="ajuda-pas">
+      <div class="ajuda-ico">💔</div>
+      <div class="ajuda-txt"><strong>Dues errades:</strong> si una mateixa perla es torna a pintar malament, el joc s'acaba i torneu al <strong>nivell 1</strong>.</div>
+    </div>
+    <div class="ajuda-pas">
+      <div class="ajuda-ico">📈</div>
+      <div class="ajuda-txt"><strong>Progressió:</strong> cada nivell afegeix més boles i menys temps. El tauler de rècords guarda les vostres millors marques.</div>
+    </div>
+    <button class="btn-tancar-ajuda" onclick="tancarAjuda()">Entesos, a jugar! 🎮</button>
+  </div>
+</div>
+
+<script>
+// COLORS
+const COLORS = [
+  { nom: 'Vermell', hex: '#ef4444' },
+  { nom: 'Blau',    hex: '#3b82f6' },
+  { nom: 'Groc',    hex: '#eab308' },
+  { nom: 'Verd',    hex: '#22c55e' },
+  { nom: 'Taronja', hex: '#f97316' },
+  { nom: 'Violeta', hex: '#a855f7' },
+  { nom: 'Rosa',    hex: '#ec4899' },
+];
+
+// RÈCORDS
+const REC = {
+  get boles()  { return parseInt(localStorage.getItem('joier3_rec_boles')  || '0'); },
+  get temps()  { return parseFloat(localStorage.getItem('joier3_rec_temps') || '0'); },
+  get nivell() { return parseInt(localStorage.getItem('joier3_rec_nivell') || '1'); },
+  setBoles(v)  { localStorage.setItem('joier3_rec_boles',  v); },
+  setTemps(v)  { localStorage.setItem('joier3_rec_temps',  v); },
+  setNivell(v) { localStorage.setItem('joier3_rec_nivell', v); },
+};
+
+// ESTAT
+const S = {
+  nivell: 1,
+  sequencia: [],
+  resposta: [],    // null = buit
+  errades: {},     // idx → nº d'errades en aquesta perla
+  colorSelec: null,
+  fase: 'inici',
+  tempsMemoritza: 0,
+};
+
+// ÀUDIO
+const actx = new (window.AudioContext || window.webkitAudioContext)();
+function so(f, t, d) {
+  const o = actx.createOscillator(), g = actx.createGain();
+  o.connect(g); g.connect(actx.destination);
+  o.type = t; o.frequency.value = f;
+  g.gain.setValueAtTime(0.08, actx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + d);
+  o.start(); o.stop(actx.currentTime + d);
+}
+const soClick = () => so(660, 'sine', 0.15);
+const soErr   = () => { so(220,'sawtooth',0.3); setTimeout(()=>so(180,'sawtooth',0.4),150); };
+const soOk    = () => { so(523,'sine',0.15); setTimeout(()=>so(659,'sine',0.15),120); setTimeout(()=>so(784,'sine',0.25),240); };
+const soWarn  = () => so(380, 'triangle', 0.3);
+
+// CONFIG NIVELL
+function cfg(n) {
+  return {
+    perles: Math.min(4 + n, 16),
+    nColors: Math.min(2 + Math.floor(n / 2), COLORS.length),
+    temps: Math.max(2000, 6000 - (n - 1) * 300),
+  };
+}
+
+// INICIAR
+function iniciar() {
+  S.fase = 'memoritza';
+  S.resposta = [];
+  S.errades = {};
+  S.colorSelec = null;
+
+  const { perles, nColors, temps } = cfg(S.nivell);
+  S.tempsMemoritza = temps;
+  const pal = COLORS.slice(0, nColors);
+
+  S.sequencia = Array.from({ length: perles }, () => pal[Math.floor(Math.random() * pal.length)]);
+
+  document.getElementById('btn-accio').classList.add('ocult');
+  document.getElementById('paleta-wrap').classList.add('ocult');
+  document.getElementById('etiq-collar').textContent = 'Memoritzeu el collar…';
+  setMsg('👀 Memoritzeu bé els colors!', '#2563eb');
+
+  renderCollar(S.sequencia, false);
+  mostrarBarra(temps);
+
+  setTimeout(() => {
+    document.getElementById('barra-wrap').classList.add('ocult');
+    prepararResposta(pal);
+  }, temps);
+}
+
+// RENDER COLLAR
+function renderCollar(seq, buit) {
+  const z = document.getElementById('collar');
+  z.innerHTML = '';
+  seq.forEach((col, i) => {
+    const p = document.createElement('div');
+    p.className = 'perla';
+    if (!buit && col) { p.style.backgroundColor = col.hex; p.style.borderColor = 'transparent'; }
+    p.dataset.idx = i;
+    z.appendChild(p);
+    p.addEventListener('dragover',  e => { e.preventDefault(); if(S.fase==='resposta') p.classList.add('over'); });
+    p.addEventListener('dragleave', () => p.classList.remove('over'));
+    p.addEventListener('drop',      e => { e.preventDefault(); p.classList.remove('over'); dipositarColor(i); });
+    p.addEventListener('click',     () => { if(S.fase==='resposta') tapPerla(i); });
+  });
+}
+
+// BARRA TEMPS
+function mostrarBarra(ms) {
+  const w = document.getElementById('barra-wrap'), b = document.getElementById('barra');
+  w.classList.remove('ocult');
+  b.style.transition = 'none'; b.style.width = '100%';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    b.style.transition = `width ${ms}ms linear`; b.style.width = '0%';
+  }));
+}
+
+// PREPARAR RESPOSTA
+function prepararResposta(pal) {
+  S.fase = 'resposta';
+  S.resposta = new Array(S.sequencia.length).fill(null);
+  renderCollar(S.sequencia.map(() => null), true);
+  document.getElementById('etiq-collar').textContent = 'Construïu el collar';
+  setMsg('🎨 Poseu els colors al collar!', '#1e293b');
+  construirPaleta(pal);
+  document.getElementById('paleta-wrap').classList.remove('ocult');
+  marcarProxima();
+}
+
+function construirPaleta(pal) {
+  const z = document.getElementById('paleta');
+  z.innerHTML = '';
+  pal.forEach(col => {
+    const fp = document.createElement('div');
+    fp.className = 'font-perla';
+    fp.style.backgroundColor = col.hex;
+    fp.draggable = true;
+    fp.addEventListener('dragstart', e => { e.dataTransfer.effectAllowed='copy'; iniciarDrag(col, e.clientX, e.clientY); });
+    fp.addEventListener('dragend',   () => aturarDrag());
+    fp.addEventListener('touchstart', e => { e.preventDefault(); iniciarTouch(col, fp, e); }, { passive: false });
+    fp.addEventListener('click', () => seleccionarColor(col, fp));
+    z.appendChild(fp);
+  });
+}
+
+// TAP
+function seleccionarColor(col, fp) {
+  if (S.fase !== 'resposta') return;
+  soClick();
+  S.colorSelec = col;
+  document.querySelectorAll('.font-perla').forEach(e => e.classList.remove('seleccionada'));
+  fp.classList.add('seleccionada');
+  setMsg(`🔵 ${col.nom} seleccionat — toca una perla`, '#0ea5e9');
+}
+function tapPerla(idx) {
+  if (!S.colorSelec) { setMsg('🎨 Primer seleccioneu un color!', '#f97316'); return; }
+  dipositarColor(idx);
+}
+
+// DRAG
+let dragColor = null;
+function iniciarDrag(col, x, y) {
+  dragColor = col;
+  const f = document.getElementById('fantasma');
+  f.style.backgroundColor = col.hex; f.style.display = 'block';
+  movF(x, y);
+}
+function aturarDrag() { dragColor = null; document.getElementById('fantasma').style.display = 'none'; }
+document.addEventListener('dragover', e => { if(dragColor) movF(e.clientX, e.clientY); });
+
+// TOUCH
+let touchColor = null;
+function iniciarTouch(col, fp, e) {
+  touchColor = col; seleccionarColor(col, fp);
+  const f = document.getElementById('fantasma');
+  f.style.backgroundColor = col.hex; f.style.display = 'block';
+  const moure = ev => {
+    ev.preventDefault();
+    const t = ev.touches[0]; movF(t.clientX, t.clientY);
+    document.querySelectorAll('.perla').forEach(p => p.classList.remove('over'));
+    const el = document.elementFromPoint(t.clientX, t.clientY);
+    if (el && el.classList.contains('perla')) el.classList.add('over');
+  };
+  const fi = ev => {
+    ev.preventDefault(); f.style.display = 'none';
+    const t = ev.changedTouches[0];
+    document.querySelectorAll('.perla').forEach(p => p.classList.remove('over'));
+    const el = document.elementFromPoint(t.clientX, t.clientY);
+    if (el && el.classList.contains('perla') && S.fase==='resposta') {
+      dragColor = touchColor; dipositarColor(parseInt(el.dataset.idx)); dragColor = null;
+    }
+    touchColor = null;
+    document.removeEventListener('touchmove', moure);
+    document.removeEventListener('touchend', fi);
+  };
+  document.addEventListener('touchmove', moure, { passive: false });
+  document.addEventListener('touchend', fi, { passive: false });
+}
+function movF(x, y) { const f=document.getElementById('fantasma'); f.style.left=x+'px'; f.style.top=y+'px'; }
+
+// DIPOSITAR COLOR
+function dipositarColor(idx) {
+  const col = dragColor || S.colorSelec;
+  if (!col || S.fase !== 'resposta') return;
+  soClick();
+  S.resposta[idx] = col;
+  const perla = document.querySelectorAll('.perla')[idx];
+  perla.style.backgroundColor = col.hex;
+  perla.style.borderColor = 'transparent';
+  perla.classList.remove('activa','over','error-pendent');
+  perla.classList.add('pop');
+  setTimeout(() => perla.classList.remove('pop'), 400);
+
+  if (S.resposta.every(r => r !== null)) setTimeout(verificar, 200);
+  else marcarProxima();
+}
+
+// MARCAR PROXIMA
+function marcarProxima() {
+  document.querySelectorAll('.perla').forEach(p => p.classList.remove('activa'));
+  const idx = S.resposta.indexOf(null);
+  if (idx >= 0) document.querySelectorAll('.perla')[idx]?.classList.add('activa');
+}
+
+// VERIFICAR
+function verificar() {
+  S.fase = 'verifica';
+  document.getElementById('paleta-wrap').classList.add('ocult');
+  document.querySelectorAll('.font-perla').forEach(e => e.classList.remove('seleccionada'));
+  S.colorSelec = null;
+
+  const errorsIdx = S.resposta
+    .map((r, i) => (!r || r.hex !== S.sequencia[i].hex) ? i : -1)
+    .filter(i => i >= 0);
+
+  if (errorsIdx.length === 0) {
+    // ENCERT
+    soOk();
+    const nboles = S.sequencia.length;
+    const tseg   = +(S.tempsMemoritza / 1000).toFixed(1);
+    let nouRec = false;
+    if (nboles > REC.boles)               { REC.setBoles(nboles); nouRec = true; }
+    if (!REC.temps || tseg < REC.temps)   { REC.setTemps(tseg);   nouRec = true; }
+    if (S.nivell >= REC.nivell)            { REC.setNivell(S.nivell); }
+
+    S.nivell++;
+    actualitzarUI();
+    confeti();
+    mostrarModal('🎉', 'Collar perfecte!',
+      `Nivell ${S.nivell-1} superat.${nouRec?' 🌟 Nou rècord!':''} Ara ve el nivell ${S.nivell}!`,
+      [{ txt: `NIVELL ${S.nivell}`, fn: tancarModal }]
+    );
+
+  } else {
+    // ERROR: hi ha alguna perla amb ≥1 errada prèvia? → game over
+    const gameOver = errorsIdx.some(i => (S.errades[i]||0) >= 1);
+    errorsIdx.forEach(i => { S.errades[i] = (S.errades[i]||0) + 1; });
+
+    if (gameOver) {
+      soErr();
+      // Mostrar seqüència correcta
+      document.querySelectorAll('.perla').forEach((p, i) => {
+        p.style.backgroundColor = S.sequencia[i].hex;
+        p.style.borderColor = 'transparent';
+        p.classList.remove('error-pendent','error-shake','activa');
+      });
+      setTimeout(() => {
+        S.nivell = 1;
+        actualitzarUI();
+        mostrarModal('💔', "S'ha acabat!",
+          "Heu tornat a fallar la mateixa perla. La seqüència correcta era la que veieu. El joc torna al nivell 1.",
+          [{ txt: 'TORNAR A COMENÇAR', fn: tancarModal }]
+        );
+      }, 1400);
+
+    } else {
+      // PRIMER ERROR: buida les perles incorrectes, 2n intent
+      soWarn();
+      errorsIdx.forEach(i => {
+        const p = document.querySelectorAll('.perla')[i];
+        S.resposta[i] = null;
+        p.classList.add('error-shake');
+        setTimeout(() => {
+          p.classList.remove('error-shake');
+          p.style.backgroundColor = '';
+          p.style.borderColor = '';
+          p.classList.add('error-pendent');
+        }, 500);
+      });
+      const n = errorsIdx.length;
+      setTimeout(() => {
+        S.fase = 'resposta';
+        setMsg(`⚠️ ${n} perla${n>1?'es':''} incorrecta${n>1?'es':''}! Teniu un segon intent (taronja).`, '#f97316');
+        construirPaleta(COLORS.slice(0, cfg(S.nivell).nColors));
+        document.getElementById('paleta-wrap').classList.remove('ocult');
+        marcarProxima();
+      }, 700);
+    }
+  }
+}
+
+// MODAL
+function mostrarModal(emoji, titol, text, botons) {
+  document.getElementById('m-emoji').textContent = emoji;
+  document.getElementById('m-titol').textContent = titol;
+  document.getElementById('m-text').textContent  = text;
+  const w = document.getElementById('m-btns');
+  w.innerHTML = '';
+  botons.forEach((b, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn-modal' + (i>0?' sec':'');
+    btn.textContent = b.txt;
+    btn.onclick = b.fn;
+    w.appendChild(btn);
+  });
+  document.getElementById('overlay').classList.add('visible');
+}
+function tancarModal() {
+  document.getElementById('overlay').classList.remove('visible');
+  S.fase = 'inici'; S.colorSelec = null;
+  document.getElementById('collar').innerHTML = '';
+  document.getElementById('etiq-collar').textContent = 'El collar';
+  document.getElementById('paleta-wrap').classList.add('ocult');
+  setMsg('Preparats per al proper collar?', '#1e293b');
+  document.getElementById('btn-accio').textContent = `NIVELL ${S.nivell}`;
+  document.getElementById('btn-accio').classList.remove('ocult');
+  actualitzarUI();
+}
+
+// AJUDA
+function obrirAjuda()  { document.getElementById('overlay-ajuda').classList.add('visible'); }
+function tancarAjuda() { document.getElementById('overlay-ajuda').classList.remove('visible'); }
+
+// UTILS
+function setMsg(txt, color) {
+  const m = document.getElementById('missatge');
+  m.textContent = txt; m.style.color = color || '#1e293b';
+}
+function actualitzarUI() {
+  document.getElementById('xip-nivell').textContent  = S.nivell;
+  document.getElementById('xip-rec-niv').textContent = REC.nivell;
+  document.getElementById('rec-boles').textContent   = REC.boles  || '—';
+  document.getElementById('rec-temps').textContent   = REC.temps  ? REC.temps + 's' : '—';
+  document.getElementById('rec-nivell').textContent  = REC.nivell || '1';
+}
+
+// CONFETI
+function confeti() {
+  const cols = ['#ef4444','#3b82f6','#eab308','#22c55e','#f97316','#a855f7','#ec4899'];
+  for (let i=0; i<60; i++) {
+    const p = document.createElement('div');
+    p.className = 'confeti-p';
+    p.style.left = Math.random()*100+'vw';
+    p.style.backgroundColor = cols[Math.floor(Math.random()*cols.length)];
+    p.style.setProperty('--dur', (1.2+Math.random()*1.5)+'s');
+    p.style.animationDelay = Math.random()*0.6+'s';
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(), 3000);
+  }
+}
+
+// INIT
+actualitzarUI();
+</script>
+</body>
+</html>

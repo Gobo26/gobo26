@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dites Inacabades · Gobo26</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Lora:ital,wght@0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f1f5f9;--paper:#fffcf5;--paper2:#fff8e8;
+  --ink:#2c1810;--ink2:#5c3d20;--ink3:#8b6340;
+  --s200:#e8ddd0;--s300:#d4c4b0;--s400:#b09880;--s800:#1e293b;
+  --blue:#2563eb;--blue2:#3b82f6;
+  --ok:#16a34a;--okl:#f0fdf4;--okd:#166534;
+  --err:#dc2626;--errl:#fff1f1;--errd:#991b1b;
+  --gold:#b45309;--goldl:#fef9c3;--amber:#f59e0b;
+  --sepia1:#8b6340;--sepia2:#d4a853;--sepia3:#f5e6c8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:var(--bg);
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(180,140,80,.07) 28px);
+  display:flex;flex-direction:column;align-items:center;
+}
+
+/* HEADER */
+.top-header{
+  width:100%;background:var(--s800);padding:10px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.3);
+  flex-shrink:0;
+}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-txt{font-size:1rem;font-weight:900;color:white;}
+.logo-txt span{color:var(--blue2);}
+.hdr-title{font-family:'Lora',serif;font-size:1rem;font-weight:600;color:#f5e6c8;letter-spacing:.5px;}
+#btn-ajuda{
+  font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;
+  width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);
+  background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;
+  flex-shrink:0;
+}
+#btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
+
+/* MAIN AREA — scroll intern */
+main{
+  width:100%;max-width:660px;padding:14px 12px 10px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  flex:1;overflow-y:auto;
+}
+
+/* PANTALLA INICI */
+.inici-card{
+  width:100%;background:var(--paper);border-radius:4px;
+  padding:22px 22px 18px;
+  box-shadow:4px 4px 0 var(--s300),8px 8px 0 var(--s200),0 12px 30px rgba(0,0,0,.12);
+  border:1px solid var(--s300);position:relative;overflow:hidden;
+}
+.inici-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:repeating-linear-gradient(90deg,var(--sepia2) 0,var(--sepia2) 8px,transparent 8px,transparent 14px);
+}
+.inici-titol{font-family:'Lora',serif;font-size:1.6rem;font-weight:600;color:var(--ink);text-align:center;margin:10px 0 4px;}
+.inici-sub{font-family:'Lora',serif;font-size:.88rem;font-style:italic;color:var(--ink3);text-align:center;margin-bottom:20px;}
+.niv-llista{display:flex;flex-direction:column;gap:10px;}
+.btn-niv{
+  font-family:'Montserrat',sans-serif;background:var(--paper2);
+  border:1.5px solid var(--s300);border-radius:4px;padding:14px 18px;
+  width:100%;text-align:left;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:all .15s;box-shadow:2px 2px 0 var(--s300);
+  min-height:44px;
+}
+.btn-niv:hover{background:var(--sepia3);border-color:var(--sepia2);transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--s300);}
+.btn-niv-nom{font-size:.95rem;font-weight:700;color:var(--ink);}
+.btn-niv-desc{font-size:.72rem;color:var(--ink3);margin-top:2px;}
+.btn-niv-fletxa{font-size:1.2rem;color:var(--sepia2);font-weight:900;}
+
+/* PANTALLA JOC */
+#p-joc{display:none;width:100%;}
+.info-bar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.badge{
+  font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:2px;
+  background:var(--paper);color:var(--ink2);border:1px solid var(--s300);
+  box-shadow:1px 1px 0 var(--s300);
+}
+.badge.bo{background:var(--okl);color:var(--ok);border-color:#86efac;}
+
+/* PERGAMÍ */
+.pergami{
+  width:100%;background:linear-gradient(160deg,#fffcf0,#fff8e0 60%,#fdf3d0);
+  border:1.5px solid var(--sepia2);border-radius:4px;
+  padding:20px 20px 16px;
+  box-shadow:3px 3px 0 var(--s300),6px 6px 0 var(--s200),0 8px 24px rgba(0,0,0,.1);
+  position:relative;margin-bottom:10px;
+}
+.pergami::before{
+  content:'';position:absolute;top:6px;left:6px;right:6px;bottom:6px;
+  border:1px solid rgba(180,140,80,.2);border-radius:2px;pointer-events:none;
+}
+.pergami-deco{text-align:center;font-size:1.4rem;margin-bottom:6px;opacity:.55;}
+.instruccio-dita{
+  font-size:.68rem;font-weight:700;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:2px;text-align:center;margin-bottom:12px;
+}
+.inici-dita{
+  font-family:'Lora',serif;font-size:1.3rem;font-weight:600;
+  color:var(--ink);line-height:1.5;text-align:center;
+}
+.punts-susp{color:var(--sepia2);letter-spacing:4px;font-style:italic;}
+
+/* OPCIONS */
+.opcions-grid{width:100%;display:grid;grid-template-columns:1fr;gap:9px;margin-bottom:10px;}
+.btn-op{
+  font-family:'Lora',serif;background:var(--paper);border:1.5px solid var(--s300);
+  border-radius:4px;padding:13px 16px;font-size:.95rem;font-style:italic;
+  color:var(--ink2);cursor:pointer;transition:all .15s;
+  text-align:left;width:100%;box-shadow:2px 2px 0 var(--s300);
+  line-height:1.45;min-height:44px;
+}
+.btn-op::before{content:'\2026\00a0';color:var(--sepia2);font-weight:700;font-style:normal;}
+.btn-op:hover:not(:disabled){
+  background:var(--sepia3);border-color:var(--sepia2);
+  transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--s300);color:var(--ink);
+}
+.btn-op:active:not(:disabled){transform:none;box-shadow:0 0 0 var(--s300);}
+.btn-op.encert{background:var(--okl)!important;border-color:var(--ok)!important;color:var(--okd)!important;box-shadow:2px 2px 0 var(--okd)!important;}
+.btn-op.encert::before{content:'\2705\00a0';font-style:normal;}
+.btn-op.error{background:var(--errl)!important;border-color:var(--err)!important;color:var(--errd)!important;box-shadow:2px 2px 0 var(--errd)!important;animation:shake .35s ease;}
+.btn-op.error::before{content:'\274c\00a0';font-style:normal;}
+.btn-op.revelat{background:var(--okl)!important;border-color:var(--ok)!important;color:var(--okd)!important;opacity:.8;box-shadow:none!important;}
+.btn-op.revelat::before{content:'\2705\00a0';font-style:normal;}
+.btn-op.broma-rev{background:#fef9c3!important;border-color:var(--amber)!important;color:#78350f!important;opacity:.8;box-shadow:none!important;}
+.btn-op.broma-rev::before{content:'\1f0cf\00a0';font-style:normal;}
+
+/* FEEDBACK */
+.feedback-card{
+  width:100%;background:var(--paper);border:1.5px solid var(--s300);
+  border-radius:4px;padding:18px 20px;box-shadow:3px 3px 0 var(--s300);
+  display:none;animation:slideUp .3s ease;
+}
+.fb-ico{font-size:2rem;text-align:center;margin-bottom:6px;}
+.fb-titol{font-size:1rem;font-weight:900;text-align:center;margin-bottom:8px;}
+.fb-refrany{
+  font-family:'Lora',serif;font-size:.95rem;font-style:italic;color:var(--ink);
+  text-align:center;background:linear-gradient(135deg,var(--sepia3),var(--goldl));
+  border-radius:4px;border-left:3px solid var(--sepia2);
+  padding:10px 14px;margin-bottom:10px;line-height:1.6;
+}
+.fb-desc{font-size:.8rem;color:var(--ink2);text-align:center;line-height:1.5;margin-bottom:12px;}
+#btn-seg{
+  font-family:'Montserrat',sans-serif;width:100%;padding:13px;
+  background:var(--s800);color:#f5e6c8;border:none;border-radius:4px;
+  font-size:.92rem;font-weight:900;cursor:pointer;
+  box-shadow:3px 3px 0 var(--ink);letter-spacing:.5px;
+  transition:all .1s;min-height:44px;
+}
+#btn-seg:hover{opacity:.9;}
+#btn-seg:active{transform:translate(2px,2px);box-shadow:none;}
+
+/* COMPTADOR RONDES */
+.ronda-comptador{
+  font-size:.75rem;font-weight:700;color:var(--ink3);
+  text-align:center;padding:4px 0;
+}
+
+/* MODAL AJUDA */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal-box{
+  background:var(--paper);border:1.5px solid var(--s300);border-radius:4px;
+  padding:26px 22px 20px;max-width:400px;width:92%;
+  box-shadow:6px 6px 0 var(--s300),0 20px 60px rgba(0,0,0,.3);
+  animation:popIn .3s ease;max-height:90vh;overflow-y:auto;
+}
+.modal-box h2{font-family:'Lora',serif;font-size:1.2rem;margin-bottom:14px;color:var(--ink);}
+.ajuda-pas{display:flex;gap:10px;margin-bottom:10px;font-size:.84rem;line-height:1.55;color:var(--ink2);}
+.ajuda-ico{font-size:1.25rem;flex-shrink:0;}
+.ajuda-niv{
+  background:var(--sepia3);border-radius:4px;border-left:3px solid var(--sepia2);
+  padding:10px 12px;margin:8px 0 12px;font-size:.78rem;line-height:1.9;color:var(--ink2);
+}
+.ajuda-niv strong{color:var(--ink);}
+#btn-tancar-ajuda{
+  width:100%;font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;
+  padding:12px;background:var(--s800);color:#f5e6c8;border:none;border-radius:4px;
+  cursor:pointer;margin-top:8px;box-shadow:2px 2px 0 var(--ink);min-height:44px;
+}
+
+/* ANIMACIONS */
+@keyframes popIn{from{transform:scale(.85) translateY(10px);opacity:0}to{transform:none;opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes floatUp{to{transform:translateY(-50px);opacity:0}}
+.confeti{position:fixed;pointer-events:none;z-index:300;animation:confetti-fall 2.2s ease-in forwards;}
+@keyframes confetti-fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
+.bonus-pop{position:fixed;font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;pointer-events:none;z-index:100;animation:slideUp .2s ease,floatUp 1s .2s ease forwards;}
+
+/* FOOTER */
+footer{
+  font-size:.72rem;color:var(--ink3);font-weight:600;
+  text-align:center;padding:10px;flex-shrink:0;
+}
+
+/* RESPONSIVE */
+@media(min-width:520px){.opcions-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:400px){.inici-dita{font-size:1.1rem;}.logo-txt{display:none;}}
+</style>
+</head>
+<body>
+<header class="top-header">
+  <a href="https://ja.cat/gobo26" target="_blank" class="logo">
+    <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
+      <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
+      <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#3b82f6" font-family="Montserrat,sans-serif" font-size="7" font-weight="900">26</text>
+    </svg>
+    <span class="logo-txt">GOBO<span>26</span></span>
+  </a>
+  <span class="hdr-title">Dites Inacabades</span>
+  <button id="btn-ajuda" onclick="mostrarAjuda()">?</button>
+</header>
+
+<main id="main-area">
+
+<!-- PANTALLA INICI -->
+<div class="inici-card" id="p-inici">
+  <div class="inici-titol">Dites Inacabades</div>
+  <div class="inici-sub">Com acaba aquesta dita popular?</div>
+  <div class="niv-llista">
+    <button class="btn-niv" onclick="iniciar(1)">
+      <div>
+        <div class="btn-niv-nom">🌿 Nivell 1 · Populars</div>
+        <div class="btn-niv-desc">Dites que tothom hauria de conèixer</div>
+      </div>
+      <span class="btn-niv-fletxa">▶</span>
+    </button>
+    <button class="btn-niv" onclick="iniciar(2)">
+      <div>
+        <div class="btn-niv-nom">🦉 Nivell 2 · Per pensar-hi</div>
+        <div class="btn-niv-desc">Menys habituals, cal reflexionar</div>
+      </div>
+      <span class="btn-niv-fletxa">▶</span>
+    </button>
+    <button class="btn-niv" onclick="iniciar(3)">
+      <div>
+        <div class="btn-niv-nom">🧓 Nivell 3 · Dels avis</div>
+        <div class="btn-niv-desc">Les dites més antigues i picants</div>
+      </div>
+      <span class="btn-niv-fletxa">▶</span>
+    </button>
+  </div>
+</div>
+
+<!-- PANTALLA JOC -->
+<div id="p-joc">
+  <div class="info-bar">
+    <span class="badge" id="badge-niv">Nivell 1</span>
+    <span class="badge bo" id="badge-ratxa">🎯 Ratxa: 0</span>
+  </div>
+  <div class="pergami">
+    <div class="pergami-deco">❧</div>
+    <div class="instruccio-dita">Com acaba aquesta dita?</div>
+    <div class="inici-dita" id="inici-dita">…</div>
+  </div>
+  <div class="opcions-grid" id="opcions-grid"></div>
+  <div class="feedback-card" id="feedback-card">
+    <div class="fb-ico" id="fb-ico"></div>
+    <div class="fb-titol" id="fb-titol"></div>
+    <div class="fb-refrany" id="fb-refrany"></div>
+    <div class="fb-desc" id="fb-desc"></div>
+    <button id="btn-seg" onclick="novaRonda()">Següent dita ➔</button>
+  </div>
+  <div style="text-align:center;margin-top:8px;">
+    <button onclick="tornar()" style="font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;color:var(--ink3);background:none;border:none;cursor:pointer;text-decoration:underline;padding:8px;">↩ Menú principal</button>
+  </div>
+</div>
+
+</main>
+
+<!-- MODAL AJUDA -->
+<div id="modal-ajuda" class="modal-overlay">
+  <div class="modal-box">
+    <h2>📜 Com es juga?</h2>
+    <div class="ajuda-pas"><span class="ajuda-ico">📜</span><span>Apareix el principi d'una dita popular catalana. Has de triar com acaba entre 4 opcions.</span></div>
+    <div class="ajuda-pas"><span class="ajuda-ico">⚠️</span><span>Dues opcions son finals d'<strong>altres dites reals</strong>. Una és una <strong>continuació de broma inventada</strong>. Vigila!</span></div>
+    <div class="ajuda-pas"><span class="ajuda-ico">🔥</span><span>Encadena respostes correctes per fer ratxa. Si t'equivoques, la ratxa s'acaba.</span></div>
+    <div class="ajuda-niv">
+      <strong>🌿 Nivell 1</strong> — Dites populars i molt conegudes<br>
+      <strong>🦉 Nivell 2</strong> — Dites que cal pensar-s'hi<br>
+      <strong>🧓 Nivell 3</strong> — Les mes antigues i picants
+    </div>
+    <button id="btn-tancar-ajuda" onclick="tancarAjuda()">Entesos, a jugar!</button>
+  </div>
+</div>
+
+<footer>
+  <a href="https://ja.cat/gobo26" target="_blank" style="color:var(--ink3);text-decoration:none;font-weight:700;">Una aplicació de Gobo26</a>
+</footer>
+
+<script>
+var app = {
+  niv: 1,
+  ratxa: 0,
+  usats: {1:[],2:[],3:[]},
+};
+
+var DITES = {
+1:[
+  {i:"Qui no vulgui pols,",c:"que no vagi a l'era",d:["que no escombri el terra","que tanqui la finestra"],b:"que porti les sabates molt ben tapades"},
+  {i:"De mica en mica,",c:"s'omple la pica",d:["es fa la rica","s'aprèn la música"],b:"la mosca es fa gran i molt exigent"},
+  {i:"Val més un pardal a la mà,",c:"que una perdiu en l'aire",d:["que deu al campanar","que anar al mercat"],b:"que un gall que et miri malament des del galliner"},
+  {i:"Qui sembra vents,",c:"recull tempestes",d:["menja pols tot l'any","plora cada vespre"],b:"ha de comprar molts paraigua i força grans"},
+  {i:"A la taula i al llit,",c:"al primer crit",d:["s'hi va vestit","no hi fa mai fred"],b:"s'hi va quan es vol i s'hi queda fins que es pot"},
+  {i:"Qui no té feina,",c:"el gat pentina",d:["la son l'endormina","menja poca farina"],b:"fa llistes de coses que de tota manera mai farà"},
+  {i:"L'hàbit,",c:"no fa el monjo",d:["fa l'home","no fa la por"],b:"fa les fotos de casament molt més serioses"},
+  {i:"Gos que lladra,",c:"no mossega",d:["mai no para","tothom el coneix"],b:"té un contracte amb l'ajuntament del poble"},
+  {i:"Qui matina,",c:"fa farina",d:["truca a la campana","es tarda la canya"],b:"es troba el forn ja tancat i la cua llarga"},
+  {i:"Feina feta,",c:"no fa nosa",d:["no es refà","ben pagada és una gosa"],b:"és la que ja no has de fer tu mai mes"},
+  {i:"Quan el gat dorm,",c:"les rates ballen",d:["el ratolí s'escapa","la casa s'engrandeix"],b:"el gat somia que és ell qui balla millor"},
+  {i:"No diguis blat,",c:"fins que no sigui al sac i ben lligat",d:["si no n'has sembrat","si no és barat"],b:"si no vols que el veí et demani la recepta"},
+  {i:"Tal faràs,",c:"tal trobaràs",d:["tal com vas","tal diràs"],b:"tal pensaran els veïns de tu tot i no dir res"},
+  {i:"A cavall regalat,",c:"no li miris el dentat",d:["no li diguis nat","mira on vas montat"],b:"millor que haguessin regalat directament diners"},
+  {i:"La llengua no té ossos,",c:"però en trenca de molt grossos",d:["però parla molt i sola","però fa molts gossos"],b:"però alguns dies actua com si en tingués molts"},
+  {i:"Quan es tanca una porta,",c:"s'obre una finestra",d:["en queda una de millor","el vent no para"],b:"algun veí ho ha vist tot i ja ho explica"},
+  {i:"Qui té boca,",c:"s'equivoca",d:["menja i s'ofoca","no pot callar"],b:"ha de comprar pasta de dents sí o sí cada mes"},
+  {i:"Qui cerca,",c:"troba",d:["s'embolica","no para mai"],b:"fa tard a dinar perquè ha estat cercant massa"},
+  {i:"Mai plou,",c:"a gust de tothom",d:["quan el camp ho vol","sense núvols primer"],b:"quan has posat la roba a assecar al balcó"},
+  {i:"Qui no arrisca,",c:"no pisca",d:["no guanya res","no avança gens"],b:"té l'assegurança al dia però s'avorreix força"}
+],
+2:[
+  {i:"A bon entenedor,",c:"breu parlador",d:["bon receptor","cap paraula millor"],b:"mig explicació ja li basta i li sobra"},
+  {i:"A cada bugada,",c:"es perd un llençol",d:["s'acaba l'estol","hi entra un consol"],b:"l'aigua s'emporta coses que apreciaves molt"},
+  {i:"A gota a gota,",c:"es fa gorg",d:["s'omple el pot","es crema el crostó"],b:"t'adones massa tard que s'ha omplert el soterrani"},
+  {i:"Aigua passada,",c:"no mou molí",d:["mai no torna aquí","fa fred al camí"],b:"és molt bona per als peixos que ja hi viuen tan bé"},
+  {i:"Al gat vell,",c:"no cal ensenyar-li la rata",d:["no li rasques l'espata","li agrada la manta"],b:"li pots dir que és jove però no se'l creu gens"},
+  {i:"Al pot petit,",c:"hi ha la bona confitura",d:["hi caben les lectures","hi ha bones aventures"],b:"hi pots posar exactament el que hi cap i punt"},
+  {i:"Digue'm amb qui vas,",c:"i et diré qui ets",d:["i sabré on aniràs","i ja ho sé tot"],b:"i et diré si recordo on és el restaurant que em dius"},
+  {i:"Home previngut,",c:"mai no és vençut",d:["mai no és perdut","val més que el sabut"],b:"porta paraigua fins i tot al mes d'agost"},
+  {i:"Qui calla,",c:"consent",d:["s'avé ben bé","no ment mai"],b:"probablement està mirant el mòbil i no escolta"},
+  {i:"El temps perdut,",c:"mai més no torna",d:["no és ben guanyat","no es compra ni es ven"],b:"és el que vas passar mirant el sostre sense cap motiu"},
+  {i:"En la terra dels cecs,",c:"el borni és el rei",d:["hi ha poca llei","tot és gris i grei"],b:"les ulleres no es venen gaire bé ni les lents"},
+  {i:"Val més boig conegut,",c:"que savi per conèixer",d:["que cordura per vendre","que esperar sense créixer"],b:"perquè ja saps per on li surt el dimoni cada vegada"},
+  {i:"Qui troba bon padrí,",c:"ja ha recorregut mig camí",d:["no necessita violí","viu millor sense fi"],b:"pot anar cantant a la feina des del primer dia"},
+  {i:"Mira de què es vanta,",c:"i sabràs que li falta",d:["i sabràs qui és i on planta","i sabràs si és dels de la Santa"],b:"i decideix si t'interessa sentir-ho fins al final del tot"},
+  {i:"Si no pots impedir el vent,",c:"fes-te un molí",d:["posa't un mantell fi","porta el capell ben fi"],b:"posa't darrere d'algú més alt que no mogui els braços"},
+  {i:"De pressa i bé,",c:"no pot ser",d:["només hi ha fe","el pa no es fa"],b:"els cuiners amb estrella dirien que sí si cobren prou"},
+  {i:"Diners fan,",c:"diners",d:["papers i lligams","soroll als butxacons"],b:"que tothom et truqui molt més sovint de cop i volta"},
+  {i:"El lladre,",c:"sempre té por de ser robat",d:["no pot dormir ben aixoplugat","fa nosa al costat"],b:"duu sempre les claus de casa ben guardades a la butxaca"},
+  {i:"La mala herba,",c:"sempre creix",d:["no es doblega en res","mai no fa profits"],b:"té una estratègia de creixement molt sòlida i eficaç"},
+  {i:"Mai no és tard,",c:"quan arriba",d:["quan el cor ho mana","si hi ha seny de part"],b:"excepte als sopars de casament que comencen a les dotze"}
+],
+3:[
+  {i:"A cal ferrer,",c:"ganivet de fusta",d:["tothom hi treballa","sempre hi ha flames enceses"],b:"el ferrer és el que menys sap on ha posat el martell"},
+  {i:"Al lloc de la guineu,",c:"qui se n'aixeca ja no hi seu",d:["ningú no hi va sense lleu","hi fa fred tot l'any"],b:"no hi posaries mai el cul si hi haguessis estat tu"},
+  {i:"Al mal costum,",c:"trenca-li la cama",d:["dóna-li l'ama","no li diguis mai brama"],b:"explica-li molt suaument que no es porta gens bé"},
+  {i:"Boca muda,",c:"mai no és batuda",d:["mai no és perduda","fa pena nua"],b:"fa difícil saber si la persona és simpàtica o no"},
+  {i:"Hostes vingueren,",c:"que de casa ens tragueren",d:["que de tot ens digueren","que tot ens endugueren"],b:"i van fer servir totes les tovalloles bones de la casa"},
+  {i:"La llei de l'embut:",c:"ample per a mi, estret per a tu",d:["tot per al dalt res per al mut","rodó per a un quadrat per a l'altre"],b:"és la que millor coneix el qui la fa servir molt sovint"},
+  {i:"Qui dorm amb canalla,",c:"es lleva pixat",d:["perd la batalla","no trova la falla"],b:"necessita un bon matalàs una muda i molta paciència"},
+  {i:"Qui no demana,",c:"pateix de gana",d:["no guanya res de res","fa sempre la trampa"],b:"creu que tothom ja sap el que necessita sense dir res"},
+  {i:"Qui és sabater,",c:"que faci sabates",d:["que cusi bé els bates","que no faci pilates"],b:"sap perfectament per on li entra l'aigua al peu"},
+  {i:"Qui vulgui mentir,",c:"gran memòria ha de tenir",d:["que sàpiga escapar i fugir","que mai no es vulgui rendir"],b:"hauria de prendre notes perquè és molt mes complicat"},
+  {i:"Se'n treu més llepant,",c:"que mossegant",d:["que bufant amb ganes","que cridant ben fort"],b:"però als restaurants no t'ho permeten mai de fer"},
+  {i:"Un parell de mamelles,",c:"fan dels homes titelles",d:["fan bones novelles","valen més que dues estelles"],b:"és un refrany que avui dia requeriria moltes matisacions"},
+  {i:"Vestiu un bastó,",c:"i semblarà un senyor",d:["i no serà millor","i trobareu un amo major"],b:"i el bastó continuarà sent un bastó però molt ben vestit"},
+  {i:"Al mal que no té remei,",c:"és millor posar-hi seny",d:["no li donis cap consell","no hi poseu mirall"],b:"el millor és queixar-se molt fins que es resol sol"},
+  {i:"Aprèn primer a callar,",c:"si vols saber parlar",d:["si vols poder escoltar","si no vols plorar"],b:"però si et costa molt comença per murmurar fluixet"},
+  {i:"Cadascú sap a casa seva,",c:"on li plou",d:["on s'ennuega i s'enreda","on li fa el frou"],b:"on es posa les calcetes i on guarda les coses secretes"},
+  {i:"Qui té el cul llogat,",c:"no seu quan vol",d:["no para de moure's del tot","sempre fa el que vol"],b:"ha de mirar molt bé les condicions del contracte"},
+  {i:"De l'arbre caigut,",c:"tothom en fa llenya",d:["ningú no en pren llenya","tothom s'hi acosta a veure"],b:"el pagès agraït li posa un obituari al diari local"},
+  {i:"Cada peu,",c:"troba la seva sabata",d:["va al seu camí","fa el seu caminoi"],b:"té l'ungla que li toca i no se'n pot queixar gaire"},
+  {i:"D'on no n'hi ha,",c:"no en raja",d:["no s'en fa cap avantaja","no en trauràs cap gana"],b:"és el principi fonamental de moltes dietes actuals"}
+]
+};
+
+var MSGS_BROMA = [
+  "🃏 Era la trampa de broma!",
+  "😂 T'han enxampat amb la falsa!",
+  "🎭 Pura invenció! Has picat!",
+  "🤣 Aquesta me l'he inventat jo!",
+  "🪤 Era una trampa i has caigut!",
+  "😜 Et vaig vendre fum i te'l vas comprar!",
+  "🎪 Cap avi ho hauria dit mai això!",
+  "🤡 La joker! I has triat la pitjor!",
+  "🧢 T'he posat el barret ben posat!",
+  "😆 Ni en el millor refranyer existeix!",
+  "🐔 Cap avi s'ho hauria cregut mai!",
+  "🎯 La trampa clàssica i has caigut de quatre grapes.",
+  "🦆 Inventada de dalt a baix del tot!",
+  "🌀 Fantasia pura! Has mossegat l'ham.",
+  "🃏 Era broma i t'ha convençut del tot!",
+];
+
+// ---- INIT ----
+function iniciar(n) {
+  app.niv = n;
+  app.ratxa = 0;
+  app.usats = {1:[],2:[],3:[]};
+  document.getElementById('p-inici').style.display = 'none';
+  document.getElementById('p-joc').style.display = 'block';
+  var noms = ['','🌿 Populars','🦉 Per pensar','🧓 Dels avis'];
+  document.getElementById('badge-niv').textContent = noms[n];
+  actualitzarBadge();
+  novaRonda();
+}
+
+function tornar() {
+  document.getElementById('p-joc').style.display = 'none';
+  document.getElementById('p-inici').style.display = 'block';
+}
+
+function novaRonda() {
+  document.getElementById('feedback-card').style.display = 'none';
+  var pool = DITES[app.niv];
+  if (app.usats[app.niv].length >= pool.length) app.usats[app.niv] = [];
+  var disp = pool.filter(function(_,i){ return app.usats[app.niv].indexOf(i) < 0; });
+  var idx = Math.floor(Math.random() * disp.length);
+  var ref = disp[idx];
+  app.usats[app.niv].push(pool.indexOf(ref));
+
+  document.getElementById('inici-dita').innerHTML = ref.i + ' <span class="punts-susp"> ···</span>';
+
+  var opcions = barrejar([
+    {txt: ref.c, tipus: 'correcte'},
+    {txt: ref.d[0], tipus: 'distractor'},
+    {txt: ref.d[1], tipus: 'distractor'},
+    {txt: ref.b, tipus: 'broma'}
+  ]);
+
+  var grid = document.getElementById('opcions-grid');
+  grid.innerHTML = '';
+  opcions.forEach(function(op) {
+    var btn = document.createElement('button');
+    btn.className = 'btn-op';
+    btn.textContent = op.txt;
+    btn.addEventListener('mousedown', sonarClic);
+    btn.onclick = function(){ processarResposta(btn, op, ref, opcions); };
+    grid.appendChild(btn);
+  });
+}
+
+function processarResposta(btn, op, ref, totes) {
+  document.querySelectorAll('.btn-op').forEach(function(b){ b.disabled = true; });
+  var esBroma = op.tipus === 'broma';
+  var encert = op.tipus === 'correcte';
+
+  if (encert) {
+    btn.classList.add('encert');
+    sonarWin(); llençarConfeti(); vibrar([60,30,100]);
+    app.ratxa++;
+    document.getElementById('fb-ico').textContent = app.ratxa >= 5 ? '🔥' : app.ratxa >= 3 ? '⭐' : '✅';
+    document.getElementById('fb-titol').textContent = app.ratxa >= 5 ? 'RATXA x'+app.ratxa+'! Ets dels avis!' : app.ratxa >= 3 ? 'Molt bé! Ratxa de '+app.ratxa+'!' : '✅ Correcte!';
+    document.getElementById('fb-titol').style.color = 'var(--ok)';
+    document.getElementById('fb-refrany').textContent = '"' + ref.i + ' ' + ref.c + '"';
+    document.getElementById('fb-desc').textContent = app.ratxa >= 3 ? '🔥 Ratxa de '+app.ratxa+'! Continua així!' : 'Ben trobat!';
+  } else {
+    btn.classList.add('error');
+    sonarErr(); vibrar([100,50,150]);
+    var btns = Array.from(document.querySelectorAll('.btn-op'));
+    btns.forEach(function(b, i) {
+      if (totes[i] && totes[i].tipus === 'correcte') b.classList.add('revelat');
+      if (totes[i] && totes[i].tipus === 'broma' && b !== btn) b.classList.add('broma-rev');
+    });
+    app.ratxa = 0;
+    document.getElementById('fb-ico').textContent = esBroma ? '🃏' : '❌';
+    document.getElementById('fb-titol').textContent = esBroma ? MSGS_BROMA[Math.floor(Math.random()*MSGS_BROMA.length)] : '❌ No era aquesta!';
+    document.getElementById('fb-titol').style.color = 'var(--err)';
+    document.getElementById('fb-refrany').textContent = '"' + ref.i + ' ' + ref.c + '"';
+    document.getElementById('fb-desc').textContent = esBroma ? 'La continuació de broma t\'ha convençut!' : 'Era el final d\'un altre refrany real.';
+  }
+
+  actualitzarBadge();
+  document.getElementById('feedback-card').style.display = 'block';
+  setTimeout(function(){ document.getElementById('btn-seg').focus(); }, 100);
+}
+
+function actualitzarBadge() {
+  var br = document.getElementById('badge-ratxa');
+  br.textContent = '🎯 Ratxa: ' + app.ratxa;
+  br.className = 'badge ' + (app.ratxa >= 5 ? 'gold' : app.ratxa > 0 ? 'bo' : '');
+}
+
+function mostrarAjuda(){ document.getElementById('modal-ajuda').classList.add('show'); }
+function tancarAjuda(){ document.getElementById('modal-ajuda').classList.remove('show'); }
+
+function barrejar(a) {
+  var b = a.slice();
+  for (var i = b.length-1; i > 0; i--) {
+    var j = Math.floor(Math.random()*(i+1));
+    var t = b[i]; b[i] = b[j]; b[j] = t;
+  }
+  return b;
+}
+
+// --- SONS ---
+var actx;
+function ga(){ if(!actx) actx = new(window.AudioContext||window.webkitAudioContext)(); return actx; }
+function sonarClic(){try{var c=ga();if(c.state==='suspended')c.resume();var o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=400;g.gain.setValueAtTime(.03,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.07);o.start();o.stop(c.currentTime+.07);}catch(e){}}
+function sonarErr(){try{var c=ga();if(c.state==='suspended')c.resume();var o=c.createOscillator(),g=c.createGain();o.type='sawtooth';o.connect(g);g.connect(c.destination);o.frequency.setValueAtTime(160,c.currentTime);o.frequency.linearRampToValueAtTime(80,c.currentTime+.22);g.gain.setValueAtTime(.07,c.currentTime);g.gain.linearRampToValueAtTime(0,c.currentTime+.22);o.start();o.stop(c.currentTime+.22);}catch(e){}}
+function sonarWin(){try{var c=ga();if(c.state==='suspended')c.resume();[[440,.1],[554,.1],[659,.1],[880,.32]].forEach(function(fd,i){var o=c.createOscillator(),g=c.createGain();o.type='triangle';o.connect(g);g.connect(c.destination);o.frequency.value=fd[0];var t=c.currentTime+i*.13;g.gain.setValueAtTime(.07,t);g.gain.exponentialRampToValueAtTime(.001,t+fd[1]);o.start(t);o.stop(t+fd[1]);});}catch(e){}}
+
+// --- CONFETI ---
+function llençarConfeti(){
+  var cs=['#b45309','#d97706','#16a34a','#2563eb','#9333ea','#dc2626'];
+  for(var i=0;i<55;i++){
+    (function(i){
+      setTimeout(function(){
+        var e=document.createElement('div');
+        e.className='confeti';
+        e.style.left=Math.random()*100+'vw';
+        e.style.top='-10px';
+        e.style.background=cs[Math.floor(Math.random()*cs.length)];
+        e.style.animationDuration=(1.4+Math.random()*1.8)+'s';
+        var s=(4+Math.random()*6)+'px';
+        e.style.width=s; e.style.height=s;
+        e.style.borderRadius=Math.random()>.5?'50%':'0';
+        document.body.appendChild(e);
+        setTimeout(function(){e.remove();},3500);
+      },i*28);
+    })(i);
+  }
+}
+function vibrar(p){ if(navigator.vibrate) navigator.vibrate(p); }
+</script>
+</body>
+</html>

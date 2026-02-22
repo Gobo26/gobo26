@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Col·leccionista – Gobo26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #f1f5f9;
+            --text: #334155;
+            --accent: #2563eb;
+            --header-bg: #1e293b;
+            --success: #16a34a;
+            --error: #dc2626;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            user-select: none;
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ── HEADER ── */
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 0 16px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: white;
+            line-height: 1.1;
+        }
+        .logo-text span {
+            font-size: 0.7rem;
+            font-weight: 400;
+            opacity: 0.6;
+            display: block;
+        }
+
+        .header-title {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        .record-badge {
+            background: #334155;
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        /* ── MAIN ── */
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--header-bg);
+            color: #64748b;
+            text-align: center;
+            font-size: 0.7rem;
+            padding: 7px;
+            flex-shrink: 0;
+        }
+
+        /* ── PANTALLES ── */
+        .pantalla { display: none; flex-direction: column; gap: 10px; }
+        .pantalla.activa { display: flex; }
+
+        /* ── CARD ── */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            border: 2px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .card-label {
+            font-weight: 700;
+            font-size: 0.78rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 10px;
+        }
+
+        /* ── INFO BOX ── */
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+        .info-box strong { color: var(--accent); }
+
+        /* ── BOTÓ ── */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 52px;
+            padding: 12px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            width: 100%;
+            color: white;
+            letter-spacing: 0.03em;
+        }
+        .btn:active { transform: translateY(3px); box-shadow: 0 1px 3px rgba(0,0,0,0.15) !important; }
+        .btn-primary { background: var(--accent);   box-shadow: 0 4px 0 #1d4ed8; }
+        .btn-success { background: var(--success);  box-shadow: 0 4px 0 #15803d; }
+        .btn-muted   { background: #64748b;          box-shadow: 0 4px 0 #475569; font-size: 0.82rem; min-height: 44px; }
+
+        /* ── GRAELLA OBJECTES ── */
+        .graella-obj {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn-obj {
+            min-height: 62px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 14px;
+            border: 2px solid rgba(0,0,0,0.08);
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+            transition: transform 0.1s, box-shadow 0.1s;
+            letter-spacing: 0.02em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 8px;
+            text-shadow: none;
+        }
+        .btn-obj:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,0.1); }
+
+        .btn-obj .emoji { font-size: 1.6rem; line-height: 1; }
+        .btn-obj .nom   { font-size: 0.72rem; opacity: 0.9; }
+
+        /* ── LLISTA MEMÒRIA ── */
+        .llista-sequencia { display: flex; flex-direction: column; gap: 7px; }
+
+        .peça-mem {
+            border-radius: 10px;
+            padding: 11px 14px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.25s ease both;
+            border: 2px solid rgba(0,0,0,0.07);
+        }
+        .peça-num {
+            background: rgba(0,0,0,0.12);
+            border-radius: 50%;
+            width: 26px; height: 26px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+        .peça-emoji { font-size: 1.4rem; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ── COMPTE ENRERE ── */
+        .compte-enrere {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        /* ── COL·LECCIÓ VISUAL (grid 4 col) ── */
+        .colleccio-visual {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            min-height: 44px;
+        }
+
+        .obj-dot {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 2px 0 rgba(0,0,0,0.12);
+            animation: popIn 0.15s ease;
+            position: relative;
+        }
+
+        .obj-dot .ordre {
+            position: absolute;
+            top: 3px;
+            left: 5px;
+            font-size: 0.58rem;
+            font-weight: 800;
+            opacity: 0.55;
+            line-height: 1;
+        }
+        @keyframes popIn {
+            from { transform: scale(0.4); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+
+        /* ── STATS ── */
+        .stats-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        .stat-chip {
+            background: #f8fafc;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 12px;
+            text-align: center;
+            flex: 1;
+        }
+        .stat-chip .val { font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+        .stat-chip .lbl { font-size: 0.68rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; }
+
+        /* ── CATEGORIA BADGE ── */
+        .cat-badge {
+            text-align: center;
+            font-size: 2rem;
+            background: #f8fafc;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 8px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .cat-badge small {
+            display: block;
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* ── RESULTAT ── */
+        .resultat-icon { text-align: center; font-size: 3.5rem; margin: 4px 0; }
+        .resultat-msg  { text-align: center; font-size: 1rem; font-weight: 600; line-height: 1.5; }
+
+        .nivell-badge {
+            text-align: center;
+            background: #f0fdf4;
+            border: 2px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 10px;
+            font-weight: 700;
+            color: var(--success);
+            font-size: 0.9rem;
+        }
+
+        .record-new {
+            text-align: center;
+            background: #fffbeb;
+            border: 2px solid #fde68a;
+            border-radius: 10px;
+            padding: 10px;
+            font-weight: 700;
+            color: #b45309;
+            animation: pulse 0.6s ease infinite alternate;
+            font-size: 0.9rem;
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to   { transform: scale(1.03); }
+        }
+
+        /* ── CONFETI ── */
+        .confeti-container {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 999; overflow: hidden;
+        }
+        .confeti-piece {
+            position: absolute;
+            border-radius: 2px;
+            animation: confetiFall linear forwards;
+        }
+        @keyframes confetiFall {
+            0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ── LOGO HEX ── */
+        .logo-hex { width: 34px; height: 34px; }
+
+        @media (max-width: 380px) {
+            .logo-text { display: none; }
+            .btn-obj { min-height: 56px; }
+            .btn-obj .emoji { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+
+    <header>
+        <a class="logo-wrap" href="https://ja.cat/gobo26" target="_blank" title="Gobo26">
+            <svg class="logo-hex" viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 2L37.3 12V32L20 42L2.7 32V12L20 2Z" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="800" font-size="11">GOBO</text>
+                <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#94a3b8" font-family="Montserrat,sans-serif" font-weight="700" font-size="9">26</text>
+            </svg>
+            <div class="logo-text">GOBO26 <span>Aplicacions útils</span></div>
+        </a>
+        <div class="header-title">🗂️ COL·LECCIONISTA</div>
+        <div class="record-badge"><i class="fa-solid fa-trophy"></i> <span id="record-hdr">0</span></div>
+    </header>
+
+    <main>
+
+        <!-- INICI -->
+        <div id="p-inici" class="pantalla activa">
+            <div class="info-box">
+                <strong><i class="fa-solid fa-circle-info"></i> Com es juga</strong><br><br>
+                Veuràs una col·lecció d'objectes en un ordre concret.<br>
+                Memoritza'ls bé i reprodueix la seqüència clicant els objectes.<br><br>
+                Comences amb <strong>3 objectes</strong>. Cada encert n'afegeix un més!
+            </div>
+            <div class="stats-row">
+                <div class="stat-chip">
+                    <div class="val" id="record-inici-punts">0</div>
+                    <div class="lbl"><i class="fa-solid fa-trophy"></i> Rècord pts</div>
+                </div>
+                <div class="stat-chip">
+                    <div class="val" id="record-inici-obj">0</div>
+                    <div class="lbl"><i class="fa-solid fa-boxes-stacked"></i> Màx obj.</div>
+                </div>
+                <div class="stat-chip">
+                    <div class="val" id="nivell-inici">3</div>
+                    <div class="lbl"><i class="fa-solid fa-layer-group"></i> Ara</div>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="app.comencar()">
+                <i class="fa-solid fa-play"></i> COMENÇAR A COL·LECCIONAR
+            </button>
+        </div>
+
+        <!-- MEMÒRIA -->
+        <div id="p-memoria" class="pantalla">
+            <div class="card">
+                <div class="card-label"><i class="fa-solid fa-eye"></i> Recorda la col·lecció</div>
+                <div id="cat-badge-mem" class="cat-badge" style="margin-bottom:10px;"></div>
+                <div id="llista-peces" class="llista-sequencia"></div>
+            </div>
+            <div class="card" style="text-align:center; padding: 14px;">
+                <div style="font-size:0.75rem; color:#94a3b8; margin-bottom:4px;">Temps per memoritzar</div>
+                <div class="compte-enrere" id="compte-enrere">–</div>
+            </div>
+        </div>
+
+        <!-- COL·LECCIÓ -->
+        <div id="p-construccio" class="pantalla">
+            <div class="card">
+                <div class="card-label"><i class="fa-solid fa-hand-pointer"></i> Clica els objectes en ordre</div>
+                <div id="graella-obj" class="graella-obj"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-label">
+                    <i class="fa-solid fa-boxes-stacked"></i> La teva col·lecció
+                    <span id="prog-text" style="font-weight:400; color:#94a3b8; margin-left:6px;"></span>
+                </div>
+                <div id="colleccio-visual" class="colleccio-visual"></div>
+            </div>
+
+            <button class="btn btn-success" onclick="app.verificar()">
+                <i class="fa-solid fa-check"></i> CONFIRMAR COL·LECCIÓ
+            </button>
+            <button class="btn btn-muted" onclick="app.esborrarUltima()">
+                <i class="fa-solid fa-delete-left"></i> Esborrar últim objecte
+            </button>
+        </div>
+
+        <!-- RESULTAT -->
+        <div id="p-resultat" class="pantalla">
+            <div class="card">
+                <div class="resultat-icon" id="res-icon"></div>
+                <div class="resultat-msg"  id="res-msg"></div>
+            </div>
+            <div id="res-record" style="display:none" class="record-new">
+                <i class="fa-solid fa-star"></i> NOU RÈCORD PERSONAL!
+            </div>
+            <div id="res-nivell" class="nivell-badge" style="display:none"></div>
+
+            <button class="btn btn-primary" id="btn-resultat" onclick="app.accioResultat()">
+                <i class="fa-solid fa-forward"></i> CONTINUAR
+            </button>
+            <button class="btn btn-muted" onclick="app.tornarInici()">
+                <i class="fa-solid fa-rotate-left"></i> Tornar a l'inici
+            </button>
+        </div>
+
+    </main>
+
+    <footer>Una aplicació de <strong>Gobo26</strong></footer>
+</div>
+
+<div class="confeti-container" id="confeti-container"></div>
+
+<script>
+// ── CATEGORIES D'OBJECTES ──
+// Cada objecte: { emoji, nom, color (fons) }
+// Colors pastel: fons suau + text fosc per contrast
+const CATEGORIES = [
+    {
+        nom: 'Fruites', emoji: '🍎',
+        objectes: [
+            { emoji: '🍎', nom: 'Poma',      color: '#fca5a5', text: '#7f1d1d' },
+            { emoji: '🍋', nom: 'Llimona',   color: '#fde68a', text: '#713f12' },
+            { emoji: '🍇', nom: 'Raïm',      color: '#c4b5fd', text: '#3b0764' },
+            { emoji: '🍊', nom: 'Taronja',   color: '#fdba74', text: '#7c2d12' },
+        ]
+    },
+    {
+        nom: 'Cotxes', emoji: '🚗',
+        objectes: [
+            { emoji: '🚗', nom: 'Vermell',   color: '#fca5a5', text: '#7f1d1d' },
+            { emoji: '🚙', nom: 'Blau',      color: '#93c5fd', text: '#1e3a5f' },
+            { emoji: '🚕', nom: 'Groc',      color: '#fde68a', text: '#713f12' },
+            { emoji: '🚌', nom: 'Verd',      color: '#86efac', text: '#14532d' },
+        ]
+    },
+    {
+        nom: 'Flors', emoji: '🌸',
+        objectes: [
+            { emoji: '🌹', nom: 'Rosa',      color: '#f9a8d4', text: '#831843' },
+            { emoji: '🌻', nom: 'Girasol',   color: '#fde68a', text: '#713f12' },
+            { emoji: '🌷', nom: 'Tulipa',    color: '#fca5a5', text: '#7f1d1d' },
+            { emoji: '💐', nom: 'Ram',       color: '#86efac', text: '#14532d' },
+        ]
+    },
+    {
+        nom: 'Pilotes', emoji: '⚽',
+        objectes: [
+            { emoji: '⚽', nom: 'Futbol',    color: '#cbd5e1', text: '#1e293b' },
+            { emoji: '🏀', nom: 'Bàsquet',   color: '#fdba74', text: '#7c2d12' },
+            { emoji: '🎾', nom: 'Tennis',    color: '#bef264', text: '#1a2e05' },
+            { emoji: '🏐', nom: 'Voley',     color: '#93c5fd', text: '#1e3a5f' },
+        ]
+    },
+    {
+        nom: 'Segells', emoji: '📮',
+        objectes: [
+            { emoji: '🟥', nom: 'Vermell',   color: '#fca5a5', text: '#7f1d1d' },
+            { emoji: '🟦', nom: 'Blau',      color: '#93c5fd', text: '#1e3a5f' },
+            { emoji: '🟩', nom: 'Verd',      color: '#86efac', text: '#14532d' },
+            { emoji: '🟨', nom: 'Groc',      color: '#fde68a', text: '#713f12' },
+        ]
+    },
+    {
+        nom: 'Monedes', emoji: '🪙',
+        objectes: [
+            { emoji: '🥇', nom: 'Or',        color: '#fde68a', text: '#713f12' },
+            { emoji: '🥈', nom: 'Plata',     color: '#e2e8f0', text: '#334155' },
+            { emoji: '🥉', nom: 'Bronze',    color: '#fdba74', text: '#7c2d12' },
+            { emoji: '🪙', nom: 'Coure',     color: '#d6b896', text: '#4a2c1a' },
+        ]
+    },
+    {
+        nom: 'Sabates', emoji: '👟',
+        objectes: [
+            { emoji: '👟', nom: 'Esportiva', color: '#93c5fd', text: '#1e3a5f' },
+            { emoji: '👠', nom: 'Taló',      color: '#f9a8d4', text: '#831843' },
+            { emoji: '🥾', nom: 'Bota',      color: '#d6b896', text: '#4a2c1a' },
+            { emoji: '🩴', nom: 'Sandàlia',  color: '#86efac', text: '#14532d' },
+        ]
+    },
+    {
+        nom: 'Bolets', emoji: '🍄',
+        objectes: [
+            { emoji: '🍄',    nom: 'Roig',     color: '#fca5a5', text: '#7f1d1d' },
+            { emoji: '🍄‍🟫', nom: 'Marró',    color: '#d6b896', text: '#4a2c1a' },
+            { emoji: '🌰',    nom: 'Castanya', color: '#fdba74', text: '#7c2d12' },
+            { emoji: '🫐',    nom: 'Nabiu',    color: '#c4b5fd', text: '#3b0764' },
+        ]
+    },
+];
+
+const app = (() => {
+    const appState = {
+        plano: [],
+        colleccio: [],
+        nivell: 3,
+        punts: 0,
+        categoriaActual: null,
+        encert: false,
+        interval: null
+    };
+
+    // ── utils ──
+    function getRecord() {
+        return {
+            punts: parseInt(localStorage.getItem('gobo26_col_punts') || '0'),
+            objectes: parseInt(localStorage.getItem('gobo26_col_objectes') || '0')
+        };
+    }
+    function setRecord(punts, objectes) {
+        const r = getRecord();
+        if (punts > r.punts)   localStorage.setItem('gobo26_col_punts', punts);
+        if (objectes > r.objectes) localStorage.setItem('gobo26_col_objectes', objectes);
+    }
+
+    function mostrarPantalla(id) {
+        document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+        document.getElementById(id).classList.add('activa');
+    }
+
+    function actualitzarRecordHeader() {
+        const r = getRecord();
+        document.getElementById('record-hdr').textContent = r.punts;
+        document.getElementById('record-inici-punts').textContent = r.punts;
+        document.getElementById('record-inici-obj').textContent = r.objectes;
+    }
+
+    function son(freq, dur, type = 'sine') {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.frequency.value = freq;
+            osc.type = type;
+            gain.gain.setValueAtTime(0.15, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+            osc.start(); osc.stop(ctx.currentTime + dur);
+        } catch(e) {}
+    }
+
+    function llançarConfeti() {
+        const cont = document.getElementById('confeti-container');
+        cont.innerHTML = '';
+        const cores = ['#2563eb','#16a34a','#d69e2e','#e53e3e','#7c3aed','#0891b2','#db2777'];
+        for (let i = 0; i < 70; i++) {
+            const p = document.createElement('div');
+            p.className = 'confeti-piece';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.background = cores[Math.floor(Math.random() * cores.length)];
+            p.style.width  = (7 + Math.random() * 9) + 'px';
+            p.style.height = (7 + Math.random() * 9) + 'px';
+            p.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+            p.style.animationDelay = (Math.random() * 0.6) + 's';
+            cont.appendChild(p);
+            setTimeout(() => p.remove(), 4500);
+        }
+        if (navigator.vibrate) navigator.vibrate([80, 40, 80]);
+    }
+
+    function categoriaAleatoria() {
+        return CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
+    }
+
+    // ── lògica ──
+    function comencar() {
+        appState.colleccio = [];
+        appState.plano = [];
+        appState.encert = false;
+        appState.categoriaActual = categoriaAleatoria();
+
+        const objs = appState.categoriaActual.objectes;
+        for (let i = 0; i < appState.nivell; i++) {
+            appState.plano.push(objs[Math.floor(Math.random() * objs.length)]);
+        }
+
+        document.getElementById('nivell-inici').textContent = appState.nivell;
+        mostrarPantalla('p-memoria');
+        mostrarMemoria();
+    }
+
+    function mostrarMemoria() {
+        const cat = appState.categoriaActual;
+
+        // badge categoria
+        document.getElementById('cat-badge-mem').innerHTML =
+            `${cat.emoji} <small>${cat.nom}</small>`;
+
+        // llista
+        const cont = document.getElementById('llista-peces');
+        cont.innerHTML = '';
+        appState.plano.forEach((obj, i) => {
+            const div = document.createElement('div');
+            div.className = 'peça-mem';
+            div.style.background = obj.color;
+            div.style.color = obj.text;
+            div.style.animationDelay = (i * 0.1) + 's';
+            div.innerHTML = `<span class="peça-num">${i + 1}</span>
+                             <span class="peça-emoji">${obj.emoji}</span>
+                             <span>${obj.nom.toUpperCase()}</span>`;
+            cont.appendChild(div);
+        });
+
+        // compte enrere
+        // Nivells 1-3 → 4s, nivells 4-6 → 5s, nivell 7+ → 6s
+        let temps;
+        if (appState.nivell <= 3) temps = 4;
+        else if (appState.nivell <= 6) temps = 5;
+        else temps = 6;
+        const el = document.getElementById('compte-enrere');
+        el.textContent = temps;
+        el.style.color = '#2563eb';
+
+        clearInterval(appState.interval);
+        appState.interval = setInterval(() => {
+            temps--;
+            el.textContent = temps;
+            if (temps <= 3) el.style.color = '#dc2626';
+            if (temps <= 0) {
+                clearInterval(appState.interval);
+                anarColleccio();
+            }
+        }, 1000);
+    }
+
+    function anarColleccio() {
+        appState.colleccio = [];
+        construirGraella();
+        dibuixarColleccio();
+        mostrarPantalla('p-construccio');
+        document.getElementById('compte-enrere').style.color = '#2563eb';
+    }
+
+    function construirGraella() {
+        const cont = document.getElementById('graella-obj');
+        cont.innerHTML = '';
+        appState.categoriaActual.objectes.forEach((obj, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-obj';
+            btn.style.background = obj.color;
+            btn.style.color = obj.text;
+            btn.innerHTML = `<span class="emoji">${obj.emoji}</span><span class="nom">${obj.nom.toUpperCase()}</span>`;
+            btn.onclick = () => afegir(i);
+            cont.appendChild(btn);
+        });
+    }
+
+    function afegir(idx) {
+        if (appState.colleccio.length >= appState.plano.length) return;
+        const obj = appState.categoriaActual.objectes[idx];
+        appState.colleccio.push(obj);
+        son(440 + appState.colleccio.length * 55, 0.1);
+        dibuixarColleccio();
+    }
+
+    function esborrarUltima() {
+        if (appState.colleccio.length === 0) return;
+        appState.colleccio.pop();
+        dibuixarColleccio();
+    }
+
+    function dibuixarColleccio() {
+        const cont = document.getElementById('colleccio-visual');
+        cont.innerHTML = '';
+        appState.colleccio.forEach((obj, i) => {
+            const d = document.createElement('div');
+            d.className = 'obj-dot';
+            d.style.background = obj.color;
+            d.innerHTML = `<span class="ordre">${i + 1}</span>${obj.emoji}`;
+            cont.appendChild(d);
+        });
+        document.getElementById('prog-text').textContent =
+            `(${appState.colleccio.length} / ${appState.plano.length})`;
+    }
+
+    function verificar() {
+        if (appState.colleccio.length === 0) { son(200, 0.2); return; }
+
+        const ok = appState.plano.every((obj, i) =>
+            appState.colleccio[i] && appState.colleccio[i].nom === obj.nom
+        ) && appState.colleccio.length === appState.plano.length;
+
+        if (ok) {
+            appState.punts += appState.nivell * 10;
+            appState.nivell++;
+            appState.encert = true;
+            llançarConfeti();
+            son(600, 0.25); setTimeout(() => son(800, 0.25), 220); setTimeout(() => son(1000, 0.3), 440);
+
+            const r = getRecord();
+            const nouRecord = appState.punts > r.punts || (appState.nivell - 1) > r.objectes;
+            setRecord(appState.punts, appState.nivell - 1); // nivell -1 perquè ja s'ha incrementat
+
+            document.getElementById('res-icon').textContent = '🎉';
+            document.getElementById('res-msg').innerHTML =
+                `<strong style="color:var(--success)">Perfecte!</strong><br>
+                 La col·lecció és exactament igual.<br>
+                 <span style="color:#64748b; font-size:0.88rem">Punts acumulats: <strong>${appState.punts}</strong></span>`;
+            document.getElementById('res-nivell').style.display = 'block';
+            document.getElementById('res-nivell').innerHTML =
+                `<i class="fa-solid fa-boxes-stacked"></i> Pròxim repte: <strong>${appState.nivell} objectes</strong>`;
+            document.getElementById('res-record').style.display = nouRecord ? 'block' : 'none';
+            if (nouRecord) {
+                const rN = getRecord();
+                document.getElementById('res-record').innerHTML =
+                    `<i class="fa-solid fa-star"></i> NOU RÈCORD! · ${rN.punts} pts · ${rN.objectes} objectes`;
+            }
+            document.getElementById('btn-resultat').innerHTML =
+                '<i class="fa-solid fa-forward"></i> CONTINUAR COL·LECCIONANT';
+        } else {
+            son(160, 0.5, 'sawtooth');
+            if (navigator.vibrate) navigator.vibrate(400);
+            appState.encert = false;
+            appState.nivell = 3;
+            appState.punts = 0;
+
+            document.getElementById('res-icon').textContent = '😬';
+            document.getElementById('res-msg').innerHTML =
+                `<strong style="color:var(--error)">No és correcte!</strong><br>
+                 La seqüència no coincideix.<br>
+                 <span style="color:#64748b; font-size:0.88rem">Tornem a començar des de 3 objectes.</span>`;
+            document.getElementById('res-nivell').style.display = 'none';
+            document.getElementById('res-record').style.display = 'none';
+            document.getElementById('btn-resultat').innerHTML =
+                '<i class="fa-solid fa-rotate-left"></i> TORNAR A INTENTAR-HO';
+        }
+
+        actualitzarRecordHeader();
+        mostrarPantalla('p-resultat');
+    }
+
+    // BOTÓ PRINCIPAL DE RESULTAT: si encert → nova partida directa; si error → inici
+    function accioResultat() {
+        if (appState.encert) {
+            comencar(); // nova ronda, nivell ja incrementat
+        } else {
+            tornarInici();
+        }
+    }
+
+    function tornarInici() {
+        document.getElementById('nivell-inici').textContent = appState.nivell;
+        actualitzarRecordHeader();
+        mostrarPantalla('p-inici');
+    }
+
+    // init
+    actualitzarRecordHeader();
+    document.getElementById('nivell-inici').textContent = appState.nivell;
+
+    return { comencar, afegir, esborrarUltima, verificar, accioResultat, tornarInici };
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amagades! · Gobo26</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
+    --s600:#475569; --s700:#334155; --s800:#1e293b;
+    --blue:#2563eb; --blue2:#3b82f6;
+    --ok:#16a34a; --okl:rgba(22,163,74,0.1);
+    --err:#dc2626; --errl:rgba(220,38,38,0.08);
+    --gold:#f59e0b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+
+/* HEADER */
+header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
+.logo-txt span{color:var(--blue2);}
+.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
+#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
+#btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
+
+main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:14px;}
+
+/* TARGETES PANELL */
+.card{width:100%;background:white;border:1px solid var(--s200);border-radius:14px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.07);}
+
+/* SELECTOR NIVELL */
+.card h3{font-size:.75rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;text-align:center;}
+.niv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.niv-btn{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:900;padding:14px 8px;border-radius:12px;border:2px solid var(--s200);background:white;color:var(--s800);cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.niv-btn small{font-size:.6rem;font-weight:700;color:var(--s400);text-transform:uppercase;}
+.niv-btn:hover{border-color:var(--blue2);color:var(--blue);transform:translateY(-2px);box-shadow:0 4px 12px rgba(37,99,235,.15);}
+.niv-btn.actiu{background:var(--s800);color:white;border-color:var(--s800);box-shadow:0 4px 12px rgba(30,41,59,.3);}
+.niv-btn.actiu small{color:rgba(255,255,255,.6);}
+
+/* PANTALLA MEMORITZAR */
+#p-memoria{display:none;}
+.compte-enrere{font-size:4.5rem;font-weight:900;color:var(--gold);text-align:center;line-height:1;margin:8px 0;}
+.compte-enrere.urgent{color:var(--err);animation:pulsaUrgent .4s ease-in-out infinite;}
+@keyframes pulsaUrgent{0%,100%{transform:scale(1)}50%{transform:scale(1.1)};}
+.boles-wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:12px 0;}
+.bola{background:var(--s800);color:white;padding:10px 16px;border-radius:10px;font-size:1.2rem;font-weight:900;animation:apareixer .3s ease both;}
+@keyframes apareixer{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+.bola-ok{background:var(--ok)!important;}
+.bola-err{background:var(--err)!important;}
+.hint-text{font-size:.85rem;font-weight:700;color:var(--s600);text-align:center;}
+
+/* PANTALLA JOC */
+#p-joc{display:none;}
+.info-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px;}
+.badge{font-size:.75rem;font-weight:700;padding:5px 12px;border-radius:99px;background:var(--s200);color:var(--s700);}
+.badge.oportunitat-1{background:#dbeafe;color:var(--blue);}
+.badge.oportunitat-2{background:#fef3c7;color:#92400e;}
+.nuvol{display:grid;gap:8px;margin-bottom:12px;}
+.btn-paraula{font-family:'Montserrat',sans-serif;padding:12px 8px;font-size:1rem;font-weight:700;background:white;border:2px solid var(--s300);border-radius:12px;cursor:pointer;transition:all .15s;color:var(--s800);}
+.btn-paraula:hover:not(.bloquejat){border-color:var(--blue2);transform:translateY(-1px);}
+.btn-paraula.actiu{border-color:var(--blue);background:#dbeafe;color:var(--blue);}
+.btn-paraula.encert{border-color:var(--ok)!important;background:var(--okl)!important;color:var(--ok)!important;}
+.btn-paraula.error-btn{border-color:var(--err)!important;background:var(--errl)!important;color:var(--err)!important;animation:shake .35s ease;}
+.btn-paraula.bloquejat{cursor:default;opacity:.6;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+#feedback{font-size:.88rem;font-weight:700;text-align:center;color:var(--s600);padding:6px 0;}
+
+/* PROGRÉS SELECCIÓ */
+.prog-sel{display:flex;justify-content:center;gap:6px;margin-bottom:8px;}
+.prog-dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--s300);background:white;transition:all .2s;}
+.prog-dot.ple{background:var(--blue);border-color:var(--blue);}
+.prog-dot.ok{background:var(--ok);border-color:var(--ok);}
+
+/* PANTALLA FINAL */
+#p-final{display:none;text-align:center;}
+.rank-ico{font-size:4rem;margin-bottom:8px;}
+.final-titol{font-size:2rem;font-weight:900;margin-bottom:6px;}
+.final-sub{font-size:.95rem;color:var(--s600);font-weight:600;margin-bottom:16px;}
+.paraules-correctes{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:16px;}
+.boto-gran{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;padding:14px 28px;border-radius:99px;border:none;cursor:pointer;background:var(--blue);color:white;box-shadow:0 4px 0 #1d4ed8;transition:opacity .2s;}
+.boto-gran:hover{opacity:.9;}
+.boto-gran:active{transform:translateY(2px);box-shadow:0 2px 0 #1d4ed8;}
+.boto-gran.sec{background:#1a2235;color:var(--s700);border:2px solid var(--s300);box-shadow:none;}
+
+/* RÈCORDS */
+#record-panel{width:100%;max-width:680px;background:white;border:1px solid var(--s200);padding:12px 16px;border-radius:12px;display:none;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+#record-panel h3{color:var(--s700);font-size:.8rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:0;}
+.rec-caps{display:grid;grid-template-columns:1fr 60px 60px 60px;font-size:.65rem;font-weight:700;color:var(--s400);text-transform:uppercase;padding:0 4px;margin-bottom:2px;text-align:center;}
+.rec-row{display:grid;grid-template-columns:1fr 60px 60px 60px;padding:4px 4px;border-bottom:1px solid var(--s200);font-size:.8rem;font-weight:700;color:var(--s700);text-align:center;align-items:center;}
+.rec-row:last-child{border-bottom:none;}
+.rec-row span:first-child{text-align:left;}
+.rec-row .val{color:var(--blue);font-size:.75rem;}
+
+/* ESTADÍSTIQUES */
+#estadistiques{width:100%;max-width:680px;background:white;border:1px solid var(--s200);padding:12px 16px;border-radius:12px;display:none;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+#estadistiques h2{text-align:left;font-size:.8rem;font-weight:900;color:var(--s800);text-transform:uppercase;letter-spacing:2px;margin-bottom:0;}
+.fila-stat{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--s200);font-size:.85rem;}
+.fila-stat:last-of-type{border-bottom:none;}
+.stat-val{font-weight:900;color:var(--blue);}
+
+/* Contingut plegable */
+.panel-cap{display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.panel-arrow{font-size:.8rem;color:var(--s400);}
+.panel-cos{overflow:hidden;transition:max-height .3s ease;max-height:300px;margin-top:8px;}
+.panel-cos.tancat{max-height:0;margin-top:0;}
+
+/* MODALS */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal-box{background:white;border:1px solid var(--s200);border-radius:20px;padding:28px 24px 22px;max-width:400px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);}
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-box h2{font-size:1.2rem;margin-bottom:14px;color:var(--s800);}
+.ajuda-pas{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;font-size:.88rem;line-height:1.5;color:var(--s700);}
+.ajuda-ico{font-size:1.4rem;flex-shrink:0;}
+#btn-tancar-ajuda{width:100%;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;padding:12px;background:var(--s800);color:white;border:none;border-radius:99px;cursor:pointer;margin-top:10px;}
+
+/* TAULA TEMPS per nivell */
+.temps-bar{width:100%;background:var(--s200);border-radius:99px;height:5px;margin-top:4px;overflow:hidden;}
+.temps-fill{height:100%;background:var(--gold);border-radius:99px;transition:width 1s linear;}
+.temps-fill.urgent{background:var(--err);}
+
+.confeti{position:fixed;border-radius:2px;pointer-events:none;z-index:300;animation:confetti-fall 2.2s ease-in forwards;}
+@keyframes confetti-fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padding:16px;margin-top:auto;border-top:1px solid #1e2d45;}
+@media(max-width:400px){.niv-grid{grid-template-columns:repeat(2,1fr);}header .logo-txt{display:none;}}
+</style>
+</head>
+<body>
+<header>
+    <a href="https://ja.cat/appgobo" target="_blank" class="logo">
+        <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
+            <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
+            <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#3b82f6" font-family="Montserrat,sans-serif" font-size="7" font-weight="900">26</text>
+        </svg>
+        <span class="logo-txt">GOBO<span>26</span></span>
+    </a>
+    <span class="hdr-title">Amagades!</span>
+    <button id="btn-ajuda" onclick="mostrarAjuda()">?</button>
+</header>
+
+<main>
+    <!-- PANTALLA INICI -->
+    <div class="card" id="p-inici">
+        <h3>Quantes paraules vols memoritzar?</h3>
+        <div class="niv-grid">
+            <button class="niv-btn" onclick="triar(3,this)">3<small>Fàcil</small></button>
+            <button class="niv-btn" onclick="triar(4,this)">4<small>Normal</small></button>
+            <button class="niv-btn" onclick="triar(5,this)">5<small>Difícil</small></button>
+            <button class="niv-btn" onclick="triar(6,this)">6<small>Expert</small></button>
+        </div>
+    </div>
+
+    <!-- PANTALLA MEMORITZAR -->
+    <div class="card" id="p-memoria">
+        <div class="compte-enrere" id="compteEnrere">6</div>
+        <div class="temps-bar"><div class="temps-fill" id="temps-fill" style="width:100%"></div></div>
+        <div class="boles-wrap" id="boles"></div>
+        <p class="hint-text">Memoritza les paraules! Desapareixeran en <span id="seg-text">6</span>s</p>
+    </div>
+
+    <!-- PANTALLA JOC -->
+    <div class="card" id="p-joc">
+        <div class="info-bar">
+            <span class="badge" id="badge-intents">Oportunitat 1 de 2</span>
+            <span class="badge" id="badge-obj">Tria 3 paraules</span>
+        </div>
+        <div class="prog-sel" id="prog-sel"></div>
+        <div class="nuvol" id="nuvol"></div>
+        <div id="feedback"></div>
+    </div>
+
+    <!-- PANTALLA FINAL -->
+    <div class="card" id="p-final">
+        <div class="rank-ico" id="rank-ico"></div>
+        <div class="final-titol" id="final-titol"></div>
+        <div class="final-sub" id="final-sub"></div>
+        <div class="paraules-correctes" id="paraules-finals"></div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+            <button class="boto-gran" onclick="tornarInici()">▶ Nova partida</button>
+        </div>
+    </div>
+
+    <!-- RÈCORDS -->
+    <div id="record-panel">
+        <div class="panel-cap" onclick="togglePanel('rec-cos','rec-arr')">
+            <h3>🏅 Millors marques</h3>
+            <span class="panel-arrow" id="rec-arr">▲</span>
+        </div>
+        <div class="panel-cos" id="rec-cos">
+            <div class="rec-caps"><span>Nivell</span><span>🥇 1r</span><span>🥈 2n</span><span>🎮 Jug.</span></div>
+            <div class="rec-row" id="rec-row-3" style="display:none"><span>3 paraules</span><span class="val" id="rec-3-1">—</span><span class="val" id="rec-3-2">—</span><span class="val" id="rec-3-j">—</span></div>
+            <div class="rec-row" id="rec-row-4" style="display:none"><span>4 paraules</span><span class="val" id="rec-4-1">—</span><span class="val" id="rec-4-2">—</span><span class="val" id="rec-4-j">—</span></div>
+            <div class="rec-row" id="rec-row-5" style="display:none"><span>5 paraules</span><span class="val" id="rec-5-1">—</span><span class="val" id="rec-5-2">—</span><span class="val" id="rec-5-j">—</span></div>
+            <div class="rec-row" id="rec-row-6" style="display:none"><span>6 paraules</span><span class="val" id="rec-6-1">—</span><span class="val" id="rec-6-2">—</span><span class="val" id="rec-6-j">—</span></div>
+        </div>
+    </div>
+
+    <!-- ESTADÍSTIQUES -->
+    <div id="estadistiques">
+        <div class="panel-cap" onclick="togglePanel('stat-cos','stat-arr')">
+            <h2>📊 Estadístiques</h2>
+            <span class="panel-arrow" id="stat-arr">▲</span>
+        </div>
+        <div class="panel-cos" id="stat-cos">
+            <div class="fila-stat"><span>🥇 Victòria al 1r intent</span><span class="stat-val" id="st-v1">0</span></div>
+            <div class="fila-stat"><span>🥈 Victòria al 2n intent</span><span class="stat-val" id="st-v2">0</span></div>
+            <div class="fila-stat"><span>💀 Derrotes</span><span class="stat-val" id="st-d">0</span></div>
+            <div class="fila-stat"><span>🎮 Partides totals</span><span class="stat-val" id="st-t">0</span></div>
+            <div style="text-align:center;margin-top:8px;">
+                <span style="cursor:pointer;font-size:.75rem;color:var(--s600);text-decoration:underline;" onclick="esborrarDades()">Esborrar dades</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Modal Ajuda -->
+<div id="modal-ajuda" class="modal-overlay">
+    <div class="modal-box">
+        <h2>❓ Com es juga?</h2>
+        <div class="ajuda-pas"><span class="ajuda-ico">1️⃣</span><span>Tria quantes paraules vols memoritzar (de 3 a 6).</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">👁️</span><span>Tens uns pocs segons per llegir-les i gravar-les a la memòria.</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">🔍</span><span>Quan s'amaguen, hauràs de trobar-les entre una llista més llarga de paraules semblants.</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">✅</span><span>El joc detecta automàticament quan has seleccionat les <strong>N</strong> paraules i comprova si has encertat.</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">🔄</span><span>Si t'equivoques tens una <strong>segona oportunitat</strong> amb les mateixes paraules. Si tornes a fallar, es mostren les paraules correctes.</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">⏱</span><span>Més paraules = menys temps per memoritzar. Posa't a prova!</span></div>
+        <button id="btn-tancar-ajuda" onclick="tancarAjuda()">Entès!</button>
+    </div>
+</div>
+
+<script>
+// ─── DICCIONARI ───────────────────────────────────────────────────────────────
+const DICC = [
+    "AIGUA","BARCA","CAMÍ","DONA","ESTIU","FESTA","ILLA","JARDÍ","LLUM","MARE",
+    "NEU","OLIVA","PORTA","QUADRE","RIU","SOPES","TERRA","VENT","XARXA","POMA",
+    "TAULA","LLIBRE","CADIRA","POBLE","CIUTAT","BOSC","NÚVOL","DITS","PEU","HORT",
+    "FOC","MAR","SOL","LLUNA","PAU","CARRER","HERBA","PEDRA","VIDRE","FUSTA",
+    "COTXE","TREN","AVIÓ","VELA","GOTA","FLOR","ARBRE","PLUJA","GALL","GANA",
+    "PLAT","FORQUILLA","CULLERA","AMPOLLA","TASSA","MIRALL","CANÇÓ","DANSA",
+    "FINESTRA","ESCALES","TEULADA","BALCÓ","PISCINA","GARATGE","CUINA","MENJADOR",
+    "MERCAT","ESCOLA","HOSPITAL","PARC","PLATJA","MUNTANYA","LLAC","DESERT",
+    "PINZELL","TELA","COLOR","NOTA","RITME","CORDA","PEDAL","TECLA","VIOLÍ",
+    "COURE","FERRO","PLATA","OR","DIAMANT","CARBÓ","SORRA","ARGILA","MARBRE",
+    "LLIMONA","TARONJA","CIRERA","PRESSEC","RAÏM","MADUIXA","MELÓ","SÍNDRIA",
+    "AGULLA","FIL","TEIXIT","ROBA","SABATA","BARRET","GUANT","CINTURÓ","MOCADOR",
+    "COLOM","ESPARVER","ORENETA","CIGALA","FORMIGA","ABELLA","PAPALLONA","CRANC",
+    "PLANETA","ESTRELLA","COMETA","GALÀXIA","ECLIPSI","AURORA","HORITZÓ","CREPUSCLE",
+    "LLEÓ","TIGRE","ELEFANT","CÉRVOL","CONILL","ERIÇÓ","LLÚDRIGA","GUINEU",
+    "CACTUS","BAMBÚ","LÍQUEN","MOLSA","ROSER","LLORER","FAIG","CEDRE","CIRERER"
+];
+
+// Temps per nivell (segons): [3,4,5,6] paraules
+const TEMPS_NIV = {3:5, 4:7, 5:9, 6:12};
+
+// ─── ESTAT ────────────────────────────────────────────────────────────────────
+let n=3, correctes=[], totes=[], selec=[], intents=1, crono=null;
+let usades = new Set(); // anti-repetició de paraules
+let stats   = JSON.parse(localStorage.getItem('gobo26_ma_stats'))   || {v1:0,v2:0,d:0,t:0};
+let records = JSON.parse(localStorage.getItem('gobo26_ma_recs'))    || {};
+
+actualitzarStats(); mostrarRecs();
+
+// ─── UTILS ────────────────────────────────────────────────────────────────────
+function barrejar(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function mostra(id){['p-inici','p-memoria','p-joc','p-final'].forEach(p=>document.getElementById(p).style.display='none');document.getElementById(id).style.display='block';}
+
+// ─── SELECCIONAR NIVELL ───────────────────────────────────────────────────────
+function triar(num, btn){
+    n=num;
+    document.querySelectorAll('.niv-btn').forEach(b=>b.classList.remove('actiu'));
+    btn.classList.add('actiu');
+    iniciarJoc();
+}
+
+// ─── INICIAR JOC ─────────────────────────────────────────────────────────────
+function iniciarJoc(){
+    intents=1;
+    // Anti-repetició: si ja hem usat totes, reiniciar
+    if(usades.size + n > DICC.length) usades.clear();
+    const disponibles = DICC.filter(p => !usades.has(p));
+    correctes = barrejar([...disponibles]).slice(0, n);
+    correctes.forEach(p => usades.add(p));
+    const totalMostrar = Math.min(n * 4, 24); // màx 24 botons
+    const rivals = barrejar(DICC.filter(p=>!correctes.includes(p))).slice(0, totalMostrar - n);
+    totes = barrejar([...correctes, ...rivals]);
+    stats.t=(stats.t||0)+1;
+    localStorage.setItem('gobo26_ma_stats',JSON.stringify(stats));
+    actualitzarStats();
+    mostrarMemoria();
+}
+
+// ─── PANTALLA MEMORITZAR ──────────────────────────────────────────────────────
+function mostrarMemoria(){
+    mostra('p-memoria');
+    const temps = TEMPS_NIV[n];
+    let seg = temps;
+
+    // Mostrar boles
+    const boles = document.getElementById('boles');
+    boles.innerHTML = '';
+    correctes.forEach((p,i)=>{
+        setTimeout(()=>{
+            const d=document.createElement('div');
+            d.className='bola';
+            d.textContent=p;
+            boles.appendChild(d);
+            sonarTic();
+        }, i*150);
+    });
+
+    // Compte enrere
+    const ce = document.getElementById('compteEnrere');
+    const st = document.getElementById('seg-text');
+    const tf = document.getElementById('temps-fill');
+    ce.textContent = seg;
+    ce.classList.remove('urgent');
+    st.textContent = seg;
+    tf.style.transition = 'none';
+    tf.style.width = '100%';
+    tf.classList.remove('urgent');
+
+    clearInterval(crono);
+    setTimeout(()=>{
+        tf.style.transition = `width ${temps}s linear`;
+        tf.style.width = '0%';
+    }, 50);
+
+    crono = setInterval(()=>{
+        seg--;
+        ce.textContent = seg;
+        st.textContent = seg;
+        if(seg <= 2){ ce.classList.add('urgent'); tf.classList.add('urgent'); sonarTic(); vibrar(30); }
+        if(seg <= 0){ clearInterval(crono); anarAlJoc(); }
+    }, 1000);
+}
+
+// ─── PANTALLA JOC ────────────────────────────────────────────────────────────
+function anarAlJoc(){
+    selec=[];
+    mostra('p-joc');
+
+    // Badge intents
+    const bi = document.getElementById('badge-intents');
+    bi.textContent = `Oportunitat ${intents} de 2`;
+    bi.className = `badge oportunitat-${intents}`;
+    document.getElementById('badge-obj').textContent = `Tria ${n} paraules`;
+    document.getElementById('feedback').textContent = '';
+
+    // Progrés punts
+    const ps = document.getElementById('prog-sel');
+    ps.innerHTML = '';
+    for(let i=0;i<n;i++){
+        const d=document.createElement('div');
+        d.className='prog-dot';
+        d.id=`dot-${i}`;
+        ps.appendChild(d);
+    }
+
+    // Nuvol de botons
+    const cols = n <= 4 ? 3 : 4;
+    const nuvol = document.getElementById('nuvol');
+    nuvol.style.gridTemplateColumns = `repeat(${cols},1fr)`;
+    nuvol.innerHTML = totes.map(p=>
+        `<button class="btn-paraula" onclick="clicParaula(this,'${p}')">${p}</button>`
+    ).join('');
+}
+
+// ─── CLIC A PARAULA ───────────────────────────────────────────────────────────
+function clicParaula(el, p){
+    if(el.classList.contains('bloquejat')||el.classList.contains('encert')) return;
+
+    if(el.classList.contains('actiu')){
+        el.classList.remove('actiu');
+        selec=selec.filter(x=>x!==p);
+        actualitzarDots();
+        return;
+    }
+    if(selec.length>=n) return;
+
+    el.classList.add('actiu');
+    selec.push(p);
+    sonarTic();
+    actualitzarDots();
+
+    if(selec.length===n) setTimeout(comprovar, 350);
+}
+
+function actualitzarDots(){
+    for(let i=0;i<n;i++){
+        const d=document.getElementById(`dot-${i}`);
+        if(d) d.className='prog-dot'+(i<selec.length?' ple':'');
+    }
+}
+
+// ─── COMPROVAR ───────────────────────────────────────────────────────────────
+function comprovar(){
+    const encerts = selec.filter(p=>correctes.includes(p));
+    const errors  = selec.filter(p=>!correctes.includes(p));
+    const guanyat = encerts.length===n;
+
+    // Marcar visualment
+    document.querySelectorAll('.btn-paraula').forEach(btn=>{
+        const p=btn.textContent;
+        if(selec.includes(p)){
+            if(correctes.includes(p)){
+                btn.classList.remove('actiu');
+                btn.classList.add('encert');
+                for(let i=0;i<n;i++){const d=document.getElementById(`dot-${i}`);if(d&&i<encerts.length)d.className='prog-dot ok';}
+            } else {
+                btn.classList.remove('actiu');
+                btn.classList.add('error-btn');
+            }
+        }
+        btn.classList.add('bloquejat');
+    });
+
+    if(guanyat){
+        sonarWin(); llençarConfeti(); vibrar([100,50,200]);
+        // Guardar rèord
+        const k=`n${n}`;
+        if(!records[k]) records[k]={v1:0,v2:0,j:0};
+        records[k].j=(records[k].j||0)+1;
+        if(intents===1) records[k].v1=(records[k].v1||0)+1;
+        else records[k].v2=(records[k].v2||0)+1;
+        localStorage.setItem('gobo26_ma_recs',JSON.stringify(records));
+        stats.v1=(stats.v1||0)+(intents===1?1:0);
+        stats.v2=(stats.v2||0)+(intents===2?1:0);
+        localStorage.setItem('gobo26_ma_stats',JSON.stringify(stats));
+        actualitzarStats(); mostrarRecs();
+        setTimeout(()=>finalitzar(true), 900);
+    } else if(intents===1){
+        sonarErr(); vibrar([80,40,80]);
+        intents=2;
+        const fb=document.getElementById('feedback');
+        const ok=selec.filter(p=>correctes.includes(p)).length;
+        fb.textContent=`❌ ${ok} de ${n} correctes. Última oportunitat!`;
+        fb.style.color='var(--err)';
+        setTimeout(()=>{
+            document.querySelectorAll('.btn-paraula').forEach(b=>{
+                b.classList.remove('actiu','error-btn','bloquejat','encert');
+            });
+            selec=[];
+            for(let i=0;i<n;i++){const d=document.getElementById(`dot-${i}`);if(d)d.className='prog-dot';}
+            document.getElementById('badge-intents').textContent='Oportunitat 2 de 2';
+            document.getElementById('badge-intents').className='badge oportunitat-2';
+            fb.textContent='Última oportunitat!';
+            fb.style.color='var(--gold)';
+        }, 1400);
+    } else {
+        sonarErr(); vibrar([200,80,200]);
+        stats.d=(stats.d||0)+1;
+        localStorage.setItem('gobo26_ma_stats',JSON.stringify(stats));
+        actualitzarStats();
+        setTimeout(()=>finalitzar(false), 900);
+    }
+}
+
+// ─── FINAL ────────────────────────────────────────────────────────────────────
+function finalitzar(guanyat){
+    mostra('p-final');
+    const ico=document.getElementById('rank-ico');
+    const tit=document.getElementById('final-titol');
+    const sub=document.getElementById('final-sub');
+    const pf =document.getElementById('paraules-finals');
+
+    if(guanyat){
+        ico.textContent = intents===1?'🏆':'🥇';
+        tit.textContent = intents===1?'PERFECTE!':'MOLT BÉ!';
+        tit.style.color='var(--ok)';
+        sub.textContent = intents===1
+            ?'Has encertat totes les paraules al primer intent!'
+            :'Has superat el repte al segon intent!';
+        pf.innerHTML = correctes.map((p,i)=>`<span style="background:var(--okl);border:2px solid var(--ok);color:var(--ok);padding:6px 14px;border-radius:99px;font-weight:900;font-size:.9rem;animation:apareixer .4s ${i*.1}s both;">${p}</span>`).join('');
+    } else {
+        ico.textContent='😔';
+        tit.textContent='GAME OVER';
+        tit.style.color='var(--err)';
+        sub.textContent='Les paraules eren:';
+        pf.innerHTML = correctes.map((p,i)=>`<span style="background:var(--errl);border:2px solid var(--err);color:var(--err);padding:6px 14px;border-radius:99px;font-weight:900;font-size:.9rem;animation:apareixer .4s ${i*.1}s both;">${p}</span>`).join('');
+    }
+}
+
+function tornarInici(){
+    clearInterval(crono);
+    document.querySelectorAll('.niv-btn').forEach(b=>b.classList.remove('actiu'));
+    selec=[]; intents=1;
+    mostra('p-inici');
+}
+
+// ─── AJUDA ────────────────────────────────────────────────────────────────────
+function mostrarAjuda(){document.getElementById('modal-ajuda').classList.add('show');}
+function tancarAjuda() {document.getElementById('modal-ajuda').classList.remove('show');}
+
+// ─── SO ───────────────────────────────────────────────────────────────────────
+let actx;
+function ga(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;}
+function so(f,d,t='sine',v=.05){try{const c=ga(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.start();o.stop(c.currentTime+d);}catch(e){}}
+function sonarTic(){so(660,.08,'sine',.03);}
+function sonarErr(){so(180,.3,'sawtooth',.05);}
+function sonarWin(){
+    try{const c=ga();
+    [[523,.12],[659,.12],[784,.12],[1047,.35]].forEach(([f,d],i)=>{
+        const o=c.createOscillator(),g=c.createGain();
+        o.connect(g);g.connect(c.destination);o.frequency.value=f;
+        const t=c.currentTime+i*.15;
+        g.gain.setValueAtTime(.08,t);g.gain.exponentialRampToValueAtTime(.001,t+d);
+        o.start(t);o.stop(t+d);
+    });}catch(e){}}
+
+// ─── CONFETI ──────────────────────────────────────────────────────────────────
+function llençarConfeti(){
+    const cs=['#2563eb','#f59e0b','#16a34a','#dc2626','#8b5cf6','#ec4899'];
+    for(let i=0;i<80;i++) setTimeout(()=>{
+        const e=document.createElement('div');e.className='confeti';
+        e.style.left=Math.random()*100+'vw';e.style.top='-10px';
+        e.style.background=cs[Math.floor(Math.random()*cs.length)];
+        e.style.animationDuration=(1.5+Math.random()*2)+'s';
+        const s=(6+Math.random()*8)+'px';e.style.width=s;e.style.height=s;
+        document.body.appendChild(e);setTimeout(()=>e.remove(),3800);
+    },i*30);
+}
+
+// ─── VIBRACIÓ ─────────────────────────────────────────────────────────────────
+function vibrar(p){if(navigator.vibrate)navigator.vibrate(p);}
+
+// ─── ESTADÍSTIQUES ────────────────────────────────────────────────────────────
+function actualitzarStats(){
+    document.getElementById('st-v1').textContent=stats.v1||0;
+    document.getElementById('st-v2').textContent=stats.v2||0;
+    document.getElementById('st-d').textContent=stats.d||0;
+    document.getElementById('st-t').textContent=stats.t||0;
+    document.getElementById('estadistiques').style.display=(stats.t>0)?'block':'none';
+}
+
+function mostrarRecs(){
+    let te=false;
+    [3,4,5,6].forEach(num=>{
+        const k=`n${num}`, row=document.getElementById(`rec-row-${num}`);
+        const r=records[k];
+        if(r&&r.j>0){
+            document.getElementById(`rec-${num}-1`).textContent=r.v1||0;
+            document.getElementById(`rec-${num}-2`).textContent=r.v2||0;
+            document.getElementById(`rec-${num}-j`).textContent=r.j||0;
+            if(row) row.style.display='';
+            te=true;
+        } else if(row) row.style.display='none';
+    });
+    document.getElementById('record-panel').style.display=te?'block':'none';
+}
+
+function esborrarDades(){
+    if(confirm('Voleu esborrar totes les dades?')){
+        stats={v1:0,v2:0,d:0,t:0};records={};
+        localStorage.removeItem('gobo26_ma_stats');localStorage.removeItem('gobo26_ma_recs');
+        actualitzarStats();mostrarRecs();
+    }
+}
+
+function togglePanel(cosId, arrId){
+    const cos=document.getElementById(cosId);
+    const arr=document.getElementById(arrId);
+    if(cos.classList.contains('tancat')){
+        cos.classList.remove('tancat');
+        if(arr) arr.textContent='▲';
+    } else {
+        cos.classList.add('tancat');
+        if(arr) arr.textContent='▼';
+    }
+}
+
+// Init: mostrar pantalla inici
+mostra('p-inici');
+</script>
+<footer style="font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padding:16px;margin-top:auto;border-top:1px solid var(--s200);">
+    <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer"
+       style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:var(--s400);text-decoration:none;"
+       onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+        <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
+        Una aplicació de Gobo26
+    </a>
+</footer>
+</body>
+</html>

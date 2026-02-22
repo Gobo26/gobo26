@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENDEVINA! · Gobo26</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg:#f1f5f9; --s100:#f8fafc; --s200:#e2e8f0; --s300:#cbd5e1;
+    --s400:#94a3b8; --s600:#475569; --s700:#334155; --s800:#1e293b;
+    --blue:#2563eb; --blue2:#3b82f6; --bluel:#dbeafe;
+    --ok:#16a34a; --okl:#dcfce7; --okd:#166534;
+    --err:#dc2626; --errl:#fee2e2; --errd:#991b1b;
+    --gold:#f59e0b; --goldl:#fef3c7;
+    --violet:#7c3aed; --violetl:#ede9fe;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+
+/* ── HEADER ── */
+.top-header{width:100%;background:var(--s800);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-.5px;}
+.logo-txt span{color:var(--blue2);}
+.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
+#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
+#btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
+
+main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:12px;flex:1;}
+
+/* ── MARCADORS ── */
+.marcadors{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.marc-item{background:white;border-radius:10px;padding:8px 6px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.07);}
+.marc-label{font-size:.6rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:.5px;}
+.marc-val{font-size:1.1rem;font-weight:900;color:var(--s800);}
+
+/* ── BARRA NIVELL ── */
+.nivell-wrap{width:100%;background:white;border-radius:12px;padding:10px 14px;box-shadow:0 2px 6px rgba(0,0,0,.07);}
+.nivell-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.nivell-nom{font-size:.78rem;font-weight:900;color:var(--s700);text-transform:uppercase;letter-spacing:.5px;}
+.nivell-prox{font-size:.68rem;font-weight:600;color:var(--s400);}
+.prog-fons{background:var(--s200);border-radius:99px;height:7px;overflow:hidden;}
+.prog-ple{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue2));border-radius:99px;transition:width .5s ease;}
+
+/* ── PARAULA GEGANT ── */
+.paraula-card{width:100%;background:var(--s800);border-radius:14px;padding:24px 20px;text-align:center;box-shadow:0 4px 16px rgba(30,41,59,.25);}
+.paraula-display{font-size:2.4rem;font-weight:900;color:white;letter-spacing:2px;line-height:1.1;word-break:break-word;}
+.paraula-hint{font-size:.75rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-top:8px;}
+
+/* ── OPCIONS ── */
+.opcions-grid{width:100%;display:grid;grid-template-columns:1fr;gap:10px;}
+.btn-op{font-family:'Montserrat',sans-serif;background:white;border:2px solid var(--s300);border-radius:12px;padding:14px 16px;font-size:.92rem;font-weight:600;color:var(--s800);cursor:pointer;transition:all .15s;text-align:left;line-height:1.45;width:100%;box-shadow:0 3px 0 var(--s300);}
+.btn-op:hover:not(:disabled){border-color:var(--blue2);transform:translateY(-2px);box-shadow:0 5px 0 var(--blue2);color:var(--blue);}
+.btn-op:active:not(:disabled){transform:translateY(3px);box-shadow:none;}
+.btn-op:disabled{cursor:default;}
+.btn-op.encert{background:var(--okl)!important;border-color:var(--ok)!important;color:var(--okd)!important;box-shadow:0 3px 0 var(--okd)!important;animation:popIn .3s ease;}
+.btn-op.error{background:var(--errl)!important;border-color:var(--err)!important;color:var(--errd)!important;box-shadow:0 3px 0 var(--errd)!important;animation:shake .35s ease;}
+.btn-op.revelat{background:var(--okl)!important;border-color:var(--ok)!important;color:var(--okd)!important;opacity:.7;box-shadow:none!important;}
+
+/* ── FEEDBACK ── */
+.feedback-card{width:100%;background:white;border-radius:14px;padding:18px 20px;box-shadow:0 2px 8px rgba(0,0,0,.08);display:none;animation:slideUp .3s ease;}
+.feedback-ico{font-size:2.2rem;text-align:center;margin-bottom:8px;}
+.feedback-titol{font-size:1rem;font-weight:900;text-align:center;margin-bottom:6px;}
+.feedback-desc{font-size:.85rem;font-weight:600;color:var(--s600);text-align:center;line-height:1.5;margin-bottom:14px;}
+.feedback-desc strong{color:var(--s800);font-size:1rem;}
+#btn-seg{font-family:'Montserrat',sans-serif;width:100%;padding:14px;background:var(--blue);color:white;border:none;border-radius:99px;font-size:1rem;font-weight:900;cursor:pointer;box-shadow:0 4px 0 #1d4ed8;transition:opacity .2s;}
+#btn-seg:hover{opacity:.9;}
+#btn-seg:active{transform:translateY(2px);box-shadow:0 2px 0 #1d4ed8;}
+
+/* ── PENALITZACIÓ ── */
+.penal-badge{display:inline-block;background:var(--errl);color:var(--err);font-size:.75rem;font-weight:900;padding:4px 12px;border-radius:99px;margin-bottom:8px;}
+.bonus-badge{display:inline-block;background:var(--goldl);color:#92400e;font-size:.75rem;font-weight:900;padding:4px 12px;border-radius:99px;margin-bottom:8px;}
+
+/* ── STATS / RÈCORDS ── */
+#record-panel,#estadistiques{width:100%;max-width:680px;background:white;border-radius:12px;padding:12px 16px;box-shadow:0 2px 8px rgba(0,0,0,.07);}
+#record-panel h3,#estadistiques h2{font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--s700);margin-bottom:0;}
+.fila-stat{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--s200);font-size:.85rem;}
+.fila-stat:last-of-type{border-bottom:none;}
+.stat-val{font-weight:900;color:var(--blue);}
+.panel-cap{display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.panel-arrow{font-size:.8rem;color:var(--s400);}
+.panel-cos{overflow:hidden;transition:max-height .3s ease;max-height:400px;margin-top:8px;}
+.panel-cos.tancat{max-height:0;margin-top:0;}
+
+/* ── MODAL AJUDA ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal-box{background:white;border-radius:20px;padding:28px 24px 22px;max-width:400px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);max-height:90vh;overflow-y:auto;}
+.modal-box h2{font-size:1.2rem;margin-bottom:14px;color:var(--s800);}
+.ajuda-pas{display:flex;gap:12px;margin-bottom:11px;align-items:flex-start;font-size:.86rem;line-height:1.5;color:var(--s700);}
+.ajuda-ico{font-size:1.3rem;flex-shrink:0;margin-top:1px;}
+.ajuda-niv{background:var(--s100);border-radius:8px;padding:10px 12px;margin:8px 0 14px;font-size:.8rem;line-height:1.8;color:var(--s700);}
+.ajuda-niv strong{color:var(--s800);}
+#btn-tancar-ajuda{width:100%;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;padding:12px;background:var(--s800);color:white;border:none;border-radius:99px;cursor:pointer;margin-top:8px;}
+
+/* ── ANIMACIONS ── */
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes pulsGold{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.4)}50%{box-shadow:0 0 0 8px rgba(245,158,11,0)}}
+@keyframes floatUp{to{transform:translateY(-50px);opacity:0}}
+.confeti{position:fixed;border-radius:2px;pointer-events:none;z-index:300;animation:confetti-fall 2.2s ease-in forwards;}
+@keyframes confetti-fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.bonus-popup{position:fixed;font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;pointer-events:none;z-index:100;animation:slideUp .2s ease,floatUp 1s .2s ease forwards;}
+
+footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padding:16px;margin-top:auto;}
+@media(min-width:520px){.opcions-grid{grid-template-columns:1fr 1fr;}.marcadors{grid-template-columns:repeat(4,1fr);}}
+@media(max-width:400px){.paraula-display{font-size:1.9rem;}.logo-txt{display:none;}}
+</style>
+
+
+</head>
+<body>
+
+<header class="top-header">
+    <a href="https://ja.cat/appgobo" target="_blank" class="logo">
+        <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
+            <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
+            <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#3b82f6" font-family="Montserrat,sans-serif" font-size="7" font-weight="900">26</text>
+        </svg>
+        <span class="logo-txt">GOBO<span>26</span></span>
+    </a>
+    <span class="hdr-title">ENDEVINA!</span>
+    <button id="btn-ajuda" onclick="mostrarAjuda()">?</button>
+</header>
+
+<main>
+    <!-- MARCADORS -->
+    <div class="marcadors">
+        <div class="marc-item"><div class="marc-label">⭐ Punts</div><div class="marc-val" id="m-punts">0</div></div>
+        <div class="marc-item"><div class="marc-label">🔥 Ratxa</div><div class="marc-val" id="m-ratxa">0</div></div>
+        <div class="marc-item"><div class="marc-label">✅ Encerts</div><div class="marc-val" id="m-ok">0</div></div>
+        <div class="marc-item"><div class="marc-label">🏆 Rècord</div><div class="marc-val" id="m-rec">0</div></div>
+    </div>
+
+    <!-- BARRA DE NIVELL -->
+    <div class="nivell-wrap">
+        <div class="nivell-info">
+            <span class="nivell-nom" id="niv-nom">Nivell 1 · Aprenent</span>
+            <span class="nivell-prox" id="niv-prox"></span>
+        </div>
+        <div class="prog-fons"><div class="prog-ple" id="prog-ple" style="width:0%"></div></div>
+    </div>
+
+    <!-- PARAULA -->
+    <div class="paraula-card">
+        <div class="paraula-hint">Quina és la definició d'aquesta paraula?</div>
+        <div class="paraula-display" id="paraula-display">—</div>
+    </div>
+
+    <!-- OPCIONS -->
+    <div class="opcions-grid" id="opcions-grid"></div>
+
+    <!-- FEEDBACK -->
+    <div class="feedback-card" id="feedback-card">
+        <div class="feedback-ico" id="fb-ico"></div>
+        <div class="feedback-titol" id="fb-titol"></div>
+        <div style="text-align:center;margin-bottom:8px;" id="fb-badge"></div>
+        <div class="feedback-desc" id="fb-desc"></div>
+        <button id="btn-seg" onclick="novaRonda()">Següent paraula ➔</button>
+    </div>
+
+    <!-- RÈCORDS -->
+    <div id="record-panel" style="display:none;">
+        <div class="panel-cap" onclick="togglePanel('rec-cos','rec-arr')">
+            <h3>📊 Les teves estadístiques</h3>
+            <span class="panel-arrow" id="rec-arr">▲</span>
+        </div>
+        <div class="panel-cos" id="rec-cos">
+            <div class="fila-stat"><span>✅ Respostes correctes</span><span class="stat-val" id="st-ok">0</span></div>
+            <div class="fila-stat"><span>❌ Respostes errònies</span><span class="stat-val" id="st-err">0</span></div>
+            <div class="fila-stat"><span>🔥 Millor ratxa</span><span class="stat-val" id="st-ratxa">0</span></div>
+            <div class="fila-stat"><span>🏆 Puntuació màxima</span><span class="stat-val" id="st-rec">0</span></div>
+            <div class="fila-stat"><span>🎮 Rondes jugades</span><span class="stat-val" id="st-total">0</span></div>
+            <div class="fila-stat"><span>🥇 Nivell màxim assolit</span><span class="stat-val" id="st-niv">—</span></div>
+            <div style="text-align:center;margin-top:8px;">
+                <span style="cursor:pointer;font-size:.75rem;color:var(--s400);text-decoration:underline;" onclick="esborrarDades()">Esborrar dades</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- MODAL AJUDA -->
+<div id="modal-ajuda" class="modal-overlay">
+    <div class="modal-box">
+        <h2>❓ Com es juga?</h2>
+        <div class="ajuda-pas"><span class="ajuda-ico">📖</span><span>Apareix una paraula catalana. Has de triar la seva definició correcta entre 4 opcions.</div>
+        <div class="ajuda-pas"><span class="ajuda-ico">⚠️</span><span>Una de les opcions és una definició d'una <strong>altra paraula real</strong>. Una altra és una <strong>definició absurda i inventada</strong>. Vigila!</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">✅</span><span>Cada encert suma <strong>10 punts</strong> + fins a <strong>5 punts extra</strong> per ratxa. Si t'equivoques, perds 5 punts i la ratxa torna a zero.</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">🔥</span><span>Encadenar respostes correctes activa el <strong>multiplicador de ratxa</strong>. A partir de 3 encerts seguits: +3 extra. A partir de 5: +5 extra!</span></div>
+        <div class="ajuda-niv">
+            <strong>🌱 Aprenent</strong> — 0 pts &nbsp;·&nbsp; <strong>🔍 Curiós</strong> — 50 pts<br>
+            <strong>📚 Bibliotecari</strong> — 150 pts &nbsp;·&nbsp; <strong>🦉 Savi</strong> — 300 pts<br>
+            <strong>🎓 Mestre</strong> — 500 pts &nbsp;·&nbsp; <strong>🌟 Eminència</strong> — 800 pts
+        </div>
+        <button id="btn-tancar-ajuda" onclick="tancarAjuda()">Entesos, juguem!</button>
+    </div>
+</div>
+
+<footer>
+    <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer"
+       style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:var(--s400);text-decoration:none;"
+       onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+        <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
+        Una aplicació de Gobo26
+    </a>
+</footer>
+
+<script>
+// ─── DICCIONARI (50 paraules) ─────────────────────────────────────────────────
+const DICC = [
+    {p:"Xerinola",       d:"Diversió sorollosa, gresca animada entre un grup de persones."},
+    {p:"Gamarús",        d:"Ocell rapinyaire nocturn de plomatge marronós / Persona curta d'enteniment."},
+    {p:"Petricor",       d:"Olor característica que fa la terra quan plou després d'un temps sec."},
+    {p:"Baliga-balaga",  d:"Persona poc seriosa que no té formalitat ni responsabilitat."},
+    {p:"Atzur",          d:"Color blau clar i intens, especialment el del cel serè."},
+    {p:"Capsigrany",     d:"Persona de poc seny, que actua sense reflexionar."},
+    {p:"Rauxa",          d:"Determinació sobtada i impulsiva, acció moguda per un impuls irracional."},
+    {p:"Seny",           d:"Ponderació i capacitat de reflexió serena davant les situacions."},
+    {p:"Murri",          d:"Que sap obtenir profit enganyant els altres amb gràcia i astúcia."},
+    {p:"Badocar",        d:"Mirar encantadament sense fixar-se en el que es fa, distret."},
+    {p:"Falòrnia",       d:"Faula, conte, cosa inventada sense fonament real."},
+    {p:"Galifardeu",     d:"Noi jove que fa un cert respecte pel seu aspecte imponent."},
+    {p:"Llepafils",      d:"Persona molt escrupolosa i exigent en el menjar."},
+    {p:"Cagamerles",     d:"Persona que es fa valer poc, de caràcter apagat i servil."},
+    {p:"Pampallugues",   d:"Visió confusa de llum, com d'espurnes o llampecs davant els ulls."},
+    {p:"Bocamoll",       d:"Persona que xerra massa i no sap guardar un secret."},
+    {p:"Mastegot",       d:"Cop fort donat a la cara amb la mà oberta."},
+    {p:"Tabola",         d:"Soroll fort i confús, cridòria desordenada i caòtica."},
+    {p:"Xafarder",       d:"Persona que s'immisceix en els afers dels altres per curiositat."},
+    {p:"Garrepa",        d:"Persona molt estalviadora fins a l'exageració, avar."},
+    {p:"Llépol",         d:"Que té gust per les coses bones, especialment els dolços."},
+    {p:"Entabanar",      d:"Enganyar algú amb paraules o raons hàbils per treure'n profit."},
+    {p:"Esparver",       d:"Au rapinyaire diürna de cos allargassat i ales estretes i punxegudes."},
+    {p:"Feréstec",       d:"Persona o animal salvatge, esquiu, que fuig del tracte humà."},
+    {p:"Galimaties",     d:"Discurs confús, embolicat, impossible d'entendre."},
+    {p:"Bajanada",       d:"Acció o paraula pròpia d'un bajà, ximpleria, bestiesa."},
+    {p:"Tibant",         d:"Que té molta tensió, estirat amb força; també, persona orgullosa."},
+    {p:"Malparit",       d:"Paraula insultant per a una persona dolenta o despreciable."},
+    {p:"Xafardejar",     d:"Ficar el nas en els afers dels altres, cotillejar."},
+    {p:"Engavanyat",     d:"Que està encarcarat, rígid, sense llibertat de moviment."},
+    {p:"Estomacar",      d:"Donar o causar una sorpresa desagradable i violenta a algú."},
+    {p:"Nyicris",        d:"Persona feble, insignificant, de poc pes o presència."},
+    {p:"Paràsit",        d:"Organisme que viu a expenses d'un altre / Persona que viu sense treballar."},
+    {p:"Ruixat",         d:"Pluja sobtada i abundant que cau durant poc temps."},
+    {p:"Tarquim",        d:"Fangar, lloc ple de fang; sediment de fang dipositat per l'aigua."},
+    {p:"Escarràs",       d:"Esforç gran i costós, treball dur que deixa cansat."},
+    {p:"Faldilles",      d:"Peça de roba que cobreix el cos de la cintura avall."},
+    {p:"Garbuix",        d:"Embull, confusió, barreja desordenada de coses."},
+    {p:"Badall",         d:"Acció de badar la boca involuntàriament per son o avorriment."},
+    {p:"Escabetx",       d:"Preparació culinària per conservar aliments en vinagre i espècies."},
+    {p:"Fumarel·lo",     d:"Ocell marí de plomatge negre i blanc, que vola ras sobre l'aigua."},
+    {p:"Engavanyar",     d:"Deixar a algú sense llibertat de moviment, encarcarar."},
+    {p:"Enrenou",        d:"Situació de confusió, soroll i activitat desordenada."},
+    {p:"Rondinar",       d:"Protestar entre dents, queixar-se en veu baixa sense aturar-se."},
+    {p:"Xerraire",       d:"Persona que parla molt i sovint sense dir res important."},
+    {p:"Escamot",        d:"Grup petit de persones, especialment de soldats o treballadors."},
+    {p:"Tarannà",        d:"Manera de ser d'una persona, el seu caràcter i temperament propi."},
+    {p:"Estiuejar",      d:"Passar l'estiu en un lloc determinat, anar-hi de vacances d'estiu."},
+    {p:"Grinyolar",      d:"Fer un soroll agut i desagradable, com el que fa una porta rovellada."},
+    {p:"Paraulota",      d:"Paraula grollera, insult o expressió vulgar i malsonant."},
+    {p:"Albat",           d:"Infant que ha mort abans d'arribar a l'ús de raó."},
+    {p:"Afuar",           d:"Llançar-se amb impetu contra algú o alguna cosa."},
+    {p:"Apedaçar",        d:"Posar pedaços per reparar una cosa espatllada; solucionar provisionalment."},
+    {p:"Arraulir-se",     d:"Encongir-se, fer-se petit arrupint el cos per por o fred."},
+    {p:"Atrafegat",       d:"Molt ocupat, que té molta feina i no para de córrer."},
+    {p:"Aubaga",          d:"Vessant de muntanya orientada al nord, ombrívola i freda."},
+    {p:"Balduf",          d:"Peça de joguina de fusta que gira sobre si mateixa moguda per una corda."},
+    {p:"Bargalot",        d:"Persona noia i graciosa que fa riure amb les seves ocurrències."},
+    {p:"Bellugar",        d:"Moure lleugerament una cosa o moure's un mateix de lloc a lloc."},
+    {p:"Betzef",          d:"Gran quantitat, molt, en abundància desbordant."},
+    {p:"Bleix",           d:"Anhel, desig intens i profund de quelcom."},
+    {p:"Bojot",           d:"Persona que fa bojanades, que actua de manera extravagant."},
+    {p:"Brandar",         d:"Moure's d'un costat a l'altre, oscil·lar rítmicament."},
+    {p:"Brescar",         d:"Menjar o xuclar la bresca per treure'n la mel."},
+    {p:"Bufarell",        d:"Vent suau i agradable que bufa amb delicadesa."},
+    {p:"Cabòria",         d:"Preocupació intensa, pensament obsessiu que no deixa reposar."},
+    {p:"Caliu",           d:"Brases vives que conserven la calor; ambient càlid i acollidor."},
+    {p:"Cansalada",       d:"Carn grassa del porc, especialment la que prové del ventre."},
+    {p:"Capolar",         d:"Tallar a trossos petits, picar carn o qualsevol cosa fins a fer-la a bocins."},
+    {p:"Carreranc",       d:"Camí estret, viarany que passa entre camps o per llocs intransitables."},
+    {p:"Castellet",       d:"Figura humana que es forma quan uns quants s'enfilen sobre els altres."},
+    {p:"Catric-catrac",   d:"Soroll sec i repetit que fa un mecanisme en funcionar."},
+    {p:"Clatell",         d:"Part posterior del coll, entre el cap i les espatlles."},
+    {p:"Clofolla",        d:"Closca dura que protegeix algunes fruites o animals."},
+    {p:"Corcoll",         d:"Cuquet que es menja la fusta des de dins, fent-la malbé."},
+    {p:"Corriol",         d:"Camí estret i poc freqüentat, caminet que serpenteja pel camp."},
+    {p:"Defallir",        d:"Perdre les forces, desmaiar-se o quedar sense energia de cop."},
+    {p:"Desvagat",        d:"Que no té res a fer, que passa el temps sense ocupació."},
+    {p:"Dringar",         d:"Fer un so clar i metàl·lic, com el d'una campaneta o un got de vidre."},
+    {p:"Embadalit",       d:"Fascinat, absorbit per una cosa, incapaç de reaccionar."},
+    {p:"Empastifar",      d:"Embrutar, tacar molt amb una pasta o matèria viscosa."},
+    {p:"Encaparrat",      d:"Obstinat en una idea o propòsit, que no vol cedir de cap manera."},
+    {p:"Esgavellat",      d:"Espatllat, fet malbé, que ha perdut la forma o la consistència."},
+    {p:"Esgrogueit",      d:"Que ha agafat un color groguenc, pàl·lid i poc saludable."},
+    {p:"Esllavissar",     d:"Caure terra, neu o pedres per un pendent de manera sobtada."},
+    {p:"Esmaperdut",      d:"Desconcertat, que ha perdut el nord i no sap com actuar."},
+    {p:"Estarrufat",      d:"Que té el pèl o les plomes eriçats; persona orgullosa i estirada."},
+    {p:"Estrebada",       d:"Estirada forta i sobtada d'una corda, d'una cosa que resisteix."},
+    {p:"Fandango",        d:"Embolic, situació caòtica i difícil de resoldre."},
+    {p:"Farfallós",       d:"Que parla de pressa i sense claredat, embolicant les paraules."},
+    {p:"Feixuc",          d:"Pesat, que fa molt de pes; també, cosa difícil de suportar."},
+    {p:"Flastomar",       d:"Dir paraules gruixudes, blasfemar, insultar amb exaltació."},
+    {p:"Galindaina",      d:"Adorn petit i vistós de poc valor; persona que presumeix massa."},
+    {p:"Gambada",         d:"Pas llarg i decidit, moviment ràpid de les cames en caminar."},
+    {p:"Garfí",           d:"Estri de cuina amb pues, forquilla gran per agafar viandes."},
+    {p:"Garriga",         d:"Terreny erm amb matolls i arbustos de muntanya baixa mediterrània."},
+    {p:"Gavarrera",       d:"Planta arbustiva espinosa que fa roses silvestres, el roser de bosc."},
+    {p:"Gavella",         d:"Feix d'espigues, herba o branques lligades juntes."},
+    {p:"Gebrada",         d:"Capa de glaç molt fi que cobreix les superfícies quan fa molt de fred."},
+    {p:"Giscant",         d:"Que fa un soroll agut i desagradable, estrident i molest."},
+    {p:"Gorfa",           d:"Espai sota la teulada d'una casa, fals sostre o golfes."},
+    {p:"Grapejar",        d:"Tocar o palpar una cosa repetidament amb les mans de manera grollera."},
+    {p:"Guixeta",         d:"Finestreta per on es venen entrades o bitllets, taquilla."},
+    {p:"Llampar",         d:"Caure un llamp; encegar momentàniament amb una llum intensa."},
+    {p:"Llevant",         d:"Vent que ve de l'est; punt cardinal d'on surt el sol."},
+    {p:"Lliscar",         d:"Moure's suaument sobre una superfície sense gairebé fricció."},
+    {p:"Llombrígol",      d:"Cicatriu al centre del ventre que queda del cordó umbilical."},
+    {p:"Malèvol",         d:"Que té mala voluntat envers els altres, que desitja el mal."},
+    {p:"Mandròs",         d:"Que té mandra, que evita l'esforç i s'estima més no fer res."},
+    {p:"Mardà",           d:"Mascle de l'ovella, el que cobreix les femelles del ramat."},
+    {p:"Matinada",        d:"Les primeres hores del dia, just quan comença a clarejar."},
+    {p:"Matollar",        d:"Terreny ple de matolls i arbusts espessos i baixos."},
+    {p:"Moixiganga",      d:"Representació burlesca antiga amb figures grotesques i disfresses."},
+    {p:"Molsosa",         d:"Cobert de molsa, vegetació suau, verda i esponjosa."},
+    {p:"Mostela",         d:"Animal carnívor petit i allargat, de color marronós, de la família dels mustèlids."},
+    {p:"Nafra",           d:"Ferida oberta, llaga que costa de cicatritzar."},
+    {p:"Nirvi",           d:"Excitació nerviosa, estat d'agitació i inquietud interior."},
+    {p:"Nuvolositat",     d:"Abundància de núvols que cobreixen parcialment o totalment el cel."},
+    {p:"Obaga",           d:"Zona de la muntanya que no rep el sol directe, freda i humida."},
+    {p:"Oratge",          d:"Estat de l'atmosfera en un moment donat, el temps que fa."},
+    {p:"Pallissa",        d:"Edifici on es guarda la palla; copiosa derrota o sèrie de cops."},
+    {p:"Panteixar",       d:"Respirar amb dificultat, ofegar-se per cansament o esforç."},
+    {p:"Paparra",         d:"Paràsit que s'enganxa a la pell d'animals i persones per xuclar sang."},
+    {p:"Patracol",        d:"Embolic, confusió o lioet de coses barrejades sense ordre."},
+    {p:"Perxada",         d:"Cop donat amb una perxa; persona molt alta i prima."},
+    {p:"Pixaner",         d:"Que s'orина massa sovint; persona coixa i tímida."},
+    {p:"Plomall",         d:"Conjunt de plomes o fils que formen un adorn, especialment d'un casc."},
+    {p:"Polissó",         d:"Persona que fa malifetes i trapelleries, normalment un nen entremaliat."},
+    {p:"Putxinel·li",     d:"Titella de guant que es mou amb els dits de la mà."},
+    {p:"Rascle",          d:"Eina agrícola amb pues per recollir herba o escampar terres."},
+    {p:"Regirament",      d:"Acció de bellugar o remoure amb força; pertorbació interior."},
+    {p:"Remenar",         d:"Moure i barrejar una cosa de manera repetida i continuada."},
+    {p:"Ribatell",        d:"Marge o terraplè que voreja un camí o un camp."},
+    {p:"Robar",           d:"Prendre allò que és d'altri de manera il·legal i sense permís."},
+    {p:"Ronyós",          d:"Que té ronyons en mal estat; també, persona mesquina i poc generosa."},
+    {p:"Rossec",          d:"Acció d'arrossegar; objecte o persona que va arrossegant-se."},
+    {p:"Rovell",          d:"Oxidació del ferro; la part groga de l'ou; fruits del bosc."},
+    {p:"Runam",           d:"Munt de runa, enderrocs i deixalles d'una construcció."},
+    {p:"Sabonera",        d:"Escuma produïda per el sabó; persona o cosa sense substància."},
+    {p:"Sagristia",       d:"Dependència annexa a l'església on es guarden els ornaments sagrats."},
+    {p:"Sarau",           d:"Ball popular animat i sorollós, festa amb música i dansa."},
+    {p:"Sorral",          d:"Lloc ple de sorra, especialment a la vora del mar o d'un riu."},
+    {p:"Subarbre",        d:"Planta de tija llenyosa però que no arriba a la mida d'un arbre."},
+    {p:"Tastaolletes",    d:"Persona que canvia sovint d'opinió o d'activitat sense constància."},
+    {p:"Terrabastall",    d:"Soroll fort i estrèpit produït per una caiguda o una explosió."},
+    {p:"Torb",            d:"Nevada forta acompanyada de vent que forma remolins."},
+    {p:"Trepitjada",      d:"Acció de posar el peu sobre alguna cosa, xafada forta."},
+    {p:"Trontollar",      d:"Moure's de manera inestable, tremolar o vacil·lar."},
+    {p:"Ullal",           d:"Dent canina, especialment la dels animals com el porc o l'elefant."},
+    {p:"Ventijol",        d:"Vent suau i fresc que bufa sense força però amb persistència."},
+    {p:"Virosta",         d:"Encenall prim i llarg que surt de la fusta en serrar o planejar."},
+    {p:"Xafogor",         d:"Calor humida i sufocant que oprimeix i dificulta la respiració."},
+    {p:"Xiscle",          d:"Crit agut i penetrant de dolor, por o sorpresa sobtada."},
+    {p:"Xollat",          d:"Que li han tret la llana; persona que ha perdut els diners o ha estat estafada."},
+    {p:"Ziga-zaga",       d:"Línia trencada que avança en angles alternats, com un llamp."},
+];
+
+// Definicions falses creatives
+const FALSES = [
+    "Esport antic que consistia a llançar formatges rodant per les muntanyes.",
+    "Instrument musical que només sona perfectament sota l'aigua salada.",
+    "Tipus de barret que portaven els romans per dormir millor.",
+    "Màquina de vapor medieval utilitzada exclusivament per pelar patates.",
+    "Dansa tradicional on està estrictament prohibit moure els peus.",
+    "Unitat de mesura inventada per calcular el pes exacte dels núvols.",
+    "Costum medieval de saludar tocant-se el nas tres vegades.",
+    "Animal mitològic meitat gallina, meitat sofà de cuir verd.",
+    "Plat típic rural fet amb pedres de riu bullides amb herbes.",
+    "Moneda antiga feta d'escorça d'arbre de roure.",
+    "Tècnica de pesca consistent a cridar els peixos pel seu nom.",
+    "Reglament de joc que prohibia als jugadors riure durant el partit.",
+    "Cerimònia on els participants havien de caminar enrere durant una hora.",
+    "Ciència que estudia el comportament de les mongetes en ebullició.",
+    "Tipus de neu que, en fondre's, produeix un soroll melòdic.",
+    "Ofici medieval consistent a comptar les pedres dels camins reials.",
+    "Aparell de fusta usat per mesurar l'amplada dels somriures.",
+    "Teoria filosòfica que defensa que les cadires pensen quan ningú no les mira.",
+    "Planta medicinal que creix únicament a les celles dels gegants de festa major.",
+    "Costum pagès de parlar als alls durant la nit perquè creixessin més.",
+    "Trofeu atorgat als que havien aguantat una hora abraçant un porc senglar.",
+    "Professió gremial consistent a ensenyar als ocells a caminar en fila.",
+    "Títol honorífic concedit a qui havia aconseguit avorrir el rei tres cops seguits.",
+    "Ciència que estudia per quin costat cau sempre la torrada quan és a terra.",
+    "Reglament nàutic que obligava els mariners a saludar els dofins individualment.",
+    "Fórmula matemàtica per calcular quants gats caben dins d'un got de vi.",
+    "Tècnica artesanal de teixir flocs de neu sense que es desfacin.",
+    "Llei medieval que prohibia als sabaters riure en dies de pluja.",
+    "Instrument d'astronomia dissenyat per detectar les mentides dels astres.",
+    "Esport de cort on guanyava el que aconseguia dormir-se el primer.",
+    "Ofici consistent a posar nom als núvols per encàrrec dels ajuntaments.",
+    "Recepta culinària on el principal ingredient era el silenci absolut.",
+    "Remei popular que consistia a posar figues seques a les orelles per pair millor.",
+    "Dansa cerimonial on els participants havien de no mirar-se als ulls en cap moment.",
+    "Eina de fuster dissenyada per doblegar el temps lliure.",
+    "Mesura de longitud equivalent a tres esternuts consecutius d'un ase.",
+    "Tractat filosòfic que demostrava que les pedres tenen by default mal humor.",
+    "Pràctica esportiva consistent a perseguir ombres a la llum de la lluna.",
+    "Costum de les muralles medievals de deixar entrar tothom menys els que feien bona cara.",
+    "Professió itinerant consistent a vendre silenci embolicat en paper de diari.",
+];
+
+const MSGS_FALSA = [
+    "🤣 T'han enxampat amb la falsa!",
+    "😅 Aquesta era completament inventada!",
+    "🎭 Una ficció total! Et vaig enganyar.",
+    "🤡 Definició de broma! No existeix.",
+    "😂 Caigut a la trampa!",
+    "🪤 Era una trampa i has picat!",
+    "🎪 Pura fantasia! M'ho he inventat.",
+    "🧢 T'he posat el barret!",
+    "😆 Ni de bon tros era real això!",
+    "🃏 Carta falsa! Pura invenció.",
+    "🤥 Mentida com una casa de pagès!",
+    "🌀 Absolutament inventada de cap a peus.",
+    "🎩 Truc de màgia! Res era real.",
+    "😜 Et vaig vendre fum i te'l vas comprar!",
+    "🦆 Pura galimaties inventada!",
+    "🙈 No existeix ni per casualitat!",
+    "🤦 Definició de manual del Baliga-balaga!",
+    "🐔 Faula total! Ni de conya és real.",
+    "😎 La trampa clàssica. Has caigut!",
+    "🎯 Fals positiu! Era la definició boja.",
+];
+
+const NIVELLS = [
+    {punts:0,   nom:"🌱 Aprenent"},
+    {punts:50,  nom:"🔍 Curiós"},
+    {punts:150, nom:"📚 Bibliotecari"},
+    {punts:300, nom:"🦉 Savi"},
+    {punts:500, nom:"🎓 Mestre"},
+    {punts:800, nom:"🌟 Eminència"},
+];
+
+// ─── ESTAT ───────────────────────────────────────────────────────────────────
+let stats = JSON.parse(localStorage.getItem('gobo26_end_stats')) || {ok:0,err:0,ratxa:0,rec:0,total:0,niv:''};
+let punts = 0, ratxa = 0, okSessio = 0;
+let usades = new Set();
+let paraulaActual = null;
+
+actualitzarMarcadors(); mostrarStats(); novaRonda();
+
+// ─── NOVA RONDA ──────────────────────────────────────────────────────────────
+function novaRonda(){
+    document.getElementById('feedback-card').style.display='none';
+    window.scrollTo({top:0, behavior:'smooth'});
+
+    // Anti-repetició
+    if(usades.size >= DICC.length) usades.clear();
+    const disponibles = DICC.filter((_,i) => !usades.has(i));
+    const idx = Math.floor(Math.random()*disponibles.length);
+    const objectiu = disponibles[idx];
+    paraulaActual = objectiu;
+    usades.add(DICC.indexOf(objectiu));
+
+    // Distractors: 2 altres paraules reals
+    const altres = DICC.filter(e => e !== objectiu);
+    const barr = barrejar([...altres]);
+    const dist1 = barr[0], dist2 = barr[1];
+
+    // Definició falsa
+    const falsa = FALSES[Math.floor(Math.random()*FALSES.length)];
+
+    // 4 opcions
+    const opcions = barrejar([
+        {text: objectiu.d, tipus:'correcte'},
+        {text: falsa,      tipus:'boja'},
+        {text: dist1.d,    tipus:'distractor', origen: dist1.p},
+        {text: dist2.d,    tipus:'distractor', origen: dist2.p},
+    ]);
+
+    // Mostrar paraula
+    document.getElementById('paraula-display').textContent = objectiu.p.toUpperCase();
+
+    // Construir botons
+    const grid = document.getElementById('opcions-grid');
+    grid.innerHTML = '';
+    opcions.forEach(op => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-op';
+        btn.textContent = op.text;
+        btn.addEventListener('mousedown', sonarClic);
+        btn.onclick = () => processarResposta(btn, op, opcions);
+        grid.appendChild(btn);
+    });
+
+    stats.total = (stats.total||0) + 1;
+    localStorage.setItem('gobo26_end_stats', JSON.stringify(stats));
+}
+
+// ─── PROCESSAR RESPOSTA ──────────────────────────────────────────────────────
+function processarResposta(btn, op, totes){
+    document.querySelectorAll('.btn-op').forEach(b => {b.disabled=true;});
+
+    const encert = op.tipus === 'correcte';
+    const fbCard = document.getElementById('feedback-card');
+
+    if(encert){
+        btn.classList.add('encert');
+        sonarWin();
+        llençarConfeti();
+        vibrar([60,30,100]);
+        ratxa++;
+        okSessio++;
+
+        // Punts base + bonus ratxa
+        const bonus = ratxa >= 5 ? 5 : ratxa >= 3 ? 3 : 0;
+        const guanyats = 10 + bonus;
+        punts = Math.max(0, punts + guanyats);
+
+        if(punts > stats.rec) stats.rec = punts;
+        stats.ok = (stats.ok||0) + 1;
+        if(ratxa > stats.ratxa) stats.ratxa = ratxa;
+
+        document.getElementById('fb-ico').textContent = ratxa >= 5 ? '🔥' : ratxa >= 3 ? '⭐' : '✅';
+        document.getElementById('fb-titol').textContent = ratxa >= 5 ? `RATXA x${ratxa}! Increïble!` : ratxa >= 3 ? `Molt bé! Ratxa de ${ratxa}!` : '✅ Correcte!';
+        document.getElementById('fb-titol').style.color = 'var(--ok)';
+        document.getElementById('fb-badge').innerHTML = bonus > 0
+            ? `<span class="bonus-badge">+${guanyats} punts (${10} base + ${bonus} bonus ratxa 🔥)</span>`
+            : `<span class="bonus-badge">+${guanyats} punts</span>`;
+        document.getElementById('fb-desc').innerHTML = `<strong>${paraulaActual.p}:</strong> ${totes.find(o=>o.tipus==='correcte').text}`;
+
+        mostrarBonusPopup(`+${guanyats}`, btn);
+
+    } else {
+        btn.classList.add('error');
+        sonarErr();
+        vibrar([100,50,150]);
+
+        // Revelar la correcta
+        document.querySelectorAll('.btn-op').forEach(b => {
+            if(b !== btn && totes[Array.from(document.querySelectorAll('.btn-op')).indexOf(b)]?.tipus === 'correcte'){
+                b.classList.add('revelat');
+            }
+        });
+        // Trobar el botó correcte per revelar-lo
+        const btns = Array.from(document.querySelectorAll('.btn-op'));
+        btns.forEach((b,i) => { if(totes[i]?.tipus==='correcte') b.classList.add('revelat'); });
+
+        const penalitzacio = 5;
+        punts = Math.max(0, punts - penalitzacio);
+        ratxa = 0;
+        stats.err = (stats.err||0) + 1;
+
+        document.getElementById('fb-ico').textContent = op.tipus === 'boja' ? '🤣' : '❌';
+        document.getElementById('fb-titol').textContent = op.tipus === 'boja'
+            ? MSGS_FALSA[Math.floor(Math.random()*MSGS_FALSA.length)]
+            : '❌ Incorrecte!';
+        document.getElementById('fb-titol').style.color = 'var(--err)';
+        document.getElementById('fb-badge').innerHTML = `<span class="penal-badge">-${penalitzacio} punts</span>`;
+
+        if(op.tipus === 'distractor'){
+            document.getElementById('fb-desc').innerHTML =
+                `Aquesta definició correspon a: <strong>${op.origen}</strong><br><br><strong>${paraulaActual.p}:</strong> ${totes.find(o=>o.tipus==='correcte').text}`;
+        } else {
+            document.getElementById('fb-desc').innerHTML =
+                `Definició inventada completament!<br><br><strong>${paraulaActual.p}:</strong> ${totes.find(o=>o.tipus==='correcte').text}`;
+        }
+    }
+
+    // Actualitzar nivell assolit
+    const niv = nivellActual();
+    if(!stats.niv || NIVELLS.findIndex(n=>n.nom===stats.niv) < NIVELLS.indexOf(niv)){
+        stats.niv = niv.nom;
+    }
+
+    localStorage.setItem('gobo26_end_stats', JSON.stringify(stats));
+    actualitzarMarcadors();
+    mostrarStats();
+
+    fbCard.style.display = 'block';
+    setTimeout(() => document.getElementById('btn-seg').focus(), 100);
+}
+
+// ─── NIVELLS ─────────────────────────────────────────────────────────────────
+function nivellActual(){
+    let niv = NIVELLS[0];
+    for(const n of NIVELLS) if(punts >= n.punts) niv = n;
+    return niv;
+}
+
+function actualitzarMarcadors(){
+    document.getElementById('m-punts').textContent = punts;
+    document.getElementById('m-ratxa').textContent = ratxa;
+    document.getElementById('m-ok').textContent = okSessio;
+    document.getElementById('m-rec').textContent = stats.rec || 0;
+
+    const niv = nivellActual();
+    const idx = NIVELLS.indexOf(niv);
+    const seg = NIVELLS[idx+1];
+    document.getElementById('niv-nom').textContent = niv.nom;
+
+    if(seg){
+        const rang = seg.punts - niv.punts;
+        const prog = punts - niv.punts;
+        const pct = Math.min(100, Math.max(0, (prog/rang)*100));
+        document.getElementById('prog-ple').style.width = pct + '%';
+        document.getElementById('niv-prox').textContent = `Proper: ${seg.nom} (${seg.punts} pts)`;
+    } else {
+        document.getElementById('prog-ple').style.width = '100%';
+        document.getElementById('niv-prox').textContent = '🎉 Nivell màxim!';
+    }
+}
+
+function mostrarStats(){
+    document.getElementById('st-ok').textContent = stats.ok||0;
+    document.getElementById('st-err').textContent = stats.err||0;
+    document.getElementById('st-ratxa').textContent = stats.ratxa||0;
+    document.getElementById('st-rec').textContent = stats.rec||0;
+    document.getElementById('st-total').textContent = stats.total||0;
+    document.getElementById('st-niv').textContent = stats.niv||'—';
+    document.getElementById('record-panel').style.display = stats.total > 0 ? 'block' : 'none';
+}
+
+function esborrarDades(){
+    if(!confirm('Voleu esborrar totes les dades?')) return;
+    stats = {ok:0,err:0,ratxa:0,rec:0,total:0,niv:''};
+    punts = 0; ratxa = 0; okSessio = 0;
+    localStorage.removeItem('gobo26_end_stats');
+    actualitzarMarcadors(); mostrarStats();
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+function barrejar(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+function mostrarBonusPopup(txt, el){
+    const r = el.getBoundingClientRect();
+    const p = document.createElement('div');
+    p.className = 'bonus-popup';
+    p.textContent = txt;
+    p.style.cssText = `left:${r.left+scrollX+r.width/2-20}px;top:${r.top+scrollY-10}px;color:var(--ok);`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(), 1400);
+}
+
+// ─── AJUDA ───────────────────────────────────────────────────────────────────
+function mostrarAjuda(){document.getElementById('modal-ajuda').classList.add('show');}
+function tancarAjuda() {document.getElementById('modal-ajuda').classList.remove('show');}
+
+// ─── SO ──────────────────────────────────────────────────────────────────────
+let actx;
+function ga(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;}
+function sonarClic(){try{const c=ga();if(c.state==='suspended')c.resume();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=600;o.frequency.exponentialRampToValueAtTime(300,c.currentTime+.05);g.gain.setValueAtTime(.04,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.07);o.start();o.stop(c.currentTime+.07);}catch(e){}}
+function sonarErr(){try{const c=ga();if(c.state==='suspended')c.resume();const o=c.createOscillator(),g=c.createGain();o.type='square';o.connect(g);g.connect(c.destination);o.frequency.setValueAtTime(200,c.currentTime);o.frequency.linearRampToValueAtTime(80,c.currentTime+.2);g.gain.setValueAtTime(.08,c.currentTime);g.gain.linearRampToValueAtTime(0,c.currentTime+.2);o.start();o.stop(c.currentTime+.2);}catch(e){}}
+function sonarWin(){try{const c=ga();if(c.state==='suspended')c.resume();[[523,.12],[659,.12],[784,.12],[1047,.3]].forEach(([f,d],i)=>{const o=c.createOscillator(),g=c.createGain();o.type='triangle';o.connect(g);g.connect(c.destination);o.frequency.value=f;const t=c.currentTime+i*.13;g.gain.setValueAtTime(.08,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.start(t);o.stop(t+d);});}catch(e){}}
+
+// ─── CONFETI ─────────────────────────────────────────────────────────────────
+function llençarConfeti(){
+    const cs=['#2563eb','#f59e0b','#16a34a','#dc2626','#8b5cf6','#ec4899'];
+    for(let i=0;i<60;i++) setTimeout(()=>{
+        const e=document.createElement('div');e.className='confeti';
+        e.style.left=Math.random()*100+'vw';e.style.top='-10px';
+        e.style.background=cs[Math.floor(Math.random()*cs.length)];
+        e.style.animationDuration=(1.4+Math.random()*1.8)+'s';
+        const s=(5+Math.random()*7)+'px';e.style.width=s;e.style.height=s;
+        document.body.appendChild(e);setTimeout(()=>e.remove(),3500);
+    },i*25);
+}
+
+function vibrar(p){if(navigator.vibrate)navigator.vibrate(p);}
+
+function togglePanel(cosId, arrId){
+    const cos=document.getElementById(cosId);
+    const arr=document.getElementById(arrId);
+    if(cos.classList.contains('tancat')){
+        cos.classList.remove('tancat');
+        if(arr) arr.textContent='▲';
+    } else {
+        cos.classList.add('tancat');
+        if(arr) arr.textContent='▼';
+    }
+}
+</script>
+</body>
+</html>

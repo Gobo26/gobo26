@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repte Numèric · Gobo26</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
+    --s600:#475569; --s700:#334155; --s800:#1e293b;
+    --blue:#2563eb; --blue2:#3b82f6;
+    --ok:#16a34a; --err:#dc2626; --errl:#fee2e2; --gold:#f59e0b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+
+header{width:100%;background:var(--s800);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
+.logo-txt span{color:var(--blue2);}
+.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
+#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
+#btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
+
+main{width:100%;max-width:700px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:12px;}
+
+#info-panel{display:flex;gap:8px;width:100%;justify-content:center;flex-wrap:wrap;}
+.info-item{background:white;border-radius:10px;padding:8px 14px;display:flex;flex-direction:column;align-items:center;min-width:70px;box-shadow:0 2px 6px rgba(0,0,0,.07);}
+.info-label{font-size:.65rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:.5px;}
+.info-value{font-size:1.1rem;font-weight:900;color:var(--s800);}
+
+#progress-wrap{width:100%;max-width:700px;background:var(--s200);border-radius:99px;height:6px;overflow:hidden;}
+#progress-bar{height:100%;background:var(--blue);width:0%;transition:width .4s ease;border-radius:99px;}
+
+#indicador{width:100%;max-width:700px;background:white;border-radius:10px;padding:12px 16px;font-size:.9rem;font-weight:700;color:var(--s700);border-left:4px solid var(--blue);box-shadow:0 2px 6px rgba(0,0,0,.07);transition:border-left-color .3s;text-align:center;}
+
+#tema-frase{width:100%;max-width:700px;background:var(--s800);color:white;font-size:.82rem;font-weight:700;text-align:center;padding:7px 16px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;display:none;}
+
+#selector-nivell{width:100%;max-width:700px;background:white;border-radius:12px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+#selector-nivell h3{font-size:.75rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;text-align:center;}
+.sel-botons{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;}
+.sel-btn{font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;padding:8px 14px;border-radius:99px;border:2px solid var(--s200);background:white;color:var(--s700);cursor:pointer;transition:all .15s;}
+.sel-btn:hover{border-color:var(--blue2);color:var(--blue);}
+.sel-btn.actiu{background:var(--s800);color:white;border-color:var(--s800);}
+
+.boto-gran{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;padding:14px 28px;border-radius:99px;border:none;cursor:pointer;transition:opacity .2s;background:var(--blue);color:white;box-shadow:0 4px 0 #1d4ed8;}
+.boto-gran:hover{opacity:.9;}
+.boto-gran:active{transform:translateY(2px);box-shadow:0 2px 0 #1d4ed8;}
+
+/* TAULELL */
+#taulell{display:grid;gap:8px;max-width:700px;width:100%;margin:0 auto 8px;grid-template-columns:repeat(var(--cols,4),1fr);}
+
+.cela{background:white;border:2px solid var(--s300);border-radius:10px;padding:10px 8px;font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;text-align:center;cursor:pointer;transition:transform .1s,box-shadow .1s,background .15s,border-color .15s;display:flex;align-items:center;justify-content:center;user-select:none;box-shadow:0 3px 0 var(--s300);min-height:52px;color:var(--s800);}
+.cela:hover:not(.desactivada):not(.cela-logo){border-color:var(--blue2);transform:translateY(-1px);box-shadow:0 4px 0 var(--blue2);}
+.cela.flash{background:var(--s800)!important;border-color:var(--s800)!important;color:white!important;transform:scale(1.1);box-shadow:0 6px 20px rgba(30,41,59,.4);transition:all .08s;}
+.cela.correcte{background:#dcfce7!important;border-color:var(--ok)!important;}
+.cela.incorrecte{background:var(--errl)!important;border-color:var(--err)!important;animation:shake .35s ease;}
+.cela.desactivada{cursor:default;opacity:.7;}
+.cela.cela-logo{cursor:default!important;background:var(--s800)!important;border-color:var(--s800)!important;pointer-events:none;}
+.cela.replay{background:#fed7aa!important;border-color:#f97316!important;color:#7c2d12!important;}
+
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes pulsePanic{0%,100%{opacity:1}50%{opacity:.6}}
+@keyframes confetti-fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@keyframes floatUp{to{transform:translateY(-40px);opacity:0}}
+
+#controls{display:flex;flex-direction:column;align-items:center;gap:8px;}
+#btn-panic{display:none;font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;padding:10px 20px;border-radius:99px;border:none;cursor:pointer;background:var(--err);color:white;box-shadow:0 4px 0 #991b1b;animation:pulsePanic 1.8s ease-in-out infinite;}
+#btn-parar{display:none;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;padding:8px 18px;border-radius:99px;border:2px solid var(--s300);background:white;color:var(--s600);cursor:pointer;}
+#mult-badge{display:none;position:fixed;top:80px;right:20px;background:var(--blue);color:white;font-size:.8rem;font-weight:900;padding:6px 12px;border-radius:99px;box-shadow:0 4px 12px rgba(37,99,235,.4);animation:popIn .3s ease;z-index:40;}
+
+.bonus-popup{position:fixed;font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;color:var(--ok);pointer-events:none;z-index:100;animation:fadeIn .2s ease,floatUp .8s .1s ease forwards;}
+
+#record-panel{width:100%;max-width:600px;background:white;border:2px solid var(--s200);padding:12px 16px;border-radius:12px;margin-bottom:8px;display:none;}
+#record-panel h3{color:var(--s700);font-size:.8rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:0;}
+.rec-caps{display:grid;grid-template-columns:1fr 70px 70px;font-size:.65rem;font-weight:700;color:var(--s400);text-transform:uppercase;padding:0 4px;margin-bottom:2px;text-align:center;}
+.rec-row{display:grid;grid-template-columns:1fr 70px 70px;padding:4px 4px;border-bottom:1px solid var(--s200);font-size:.8rem;font-weight:700;color:var(--s700);text-align:center;align-items:center;}
+.rec-row:last-child{border-bottom:none;}
+.rec-row span:first-child{text-align:left;}
+.rec-row .val{color:var(--blue);font-size:.75rem;}
+
+#estadistiques{width:100%;max-width:600px;background:white;padding:12px 16px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.08);margin-bottom:12px;display:none;}
+#estadistiques h2{text-align:left;font-size:.8rem;font-weight:900;color:var(--s800);text-transform:uppercase;letter-spacing:2px;margin-bottom:0;}
+.fila-stat{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f1f5f9;font-size:.85rem;}
+.fila-stat:last-of-type{border-bottom:none;}
+.stat-val{font-weight:900;color:var(--blue);}
+.destacat{background:#eff6ff;border-radius:6px;}
+
+/* Contingut plegable */
+#rec-contingut, #stat-contingut { overflow:hidden; transition: max-height .3s ease; max-height: 300px; margin-top: 6px; }
+#rec-contingut.tancat, #stat-contingut.tancat { max-height: 0; margin-top: 0; }
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal-box{background:white;border-radius:20px;padding:28px 24px 22px;max-width:400px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);text-align:center;}
+#modal-rank{font-size:3rem;margin-bottom:4px;}
+#modal-titol{font-size:1.5rem;font-weight:900;color:var(--s800);margin-bottom:4px;}
+#modal-subtitol{font-size:.85rem;color:var(--s600);font-weight:600;margin-bottom:16px;}
+.modal-stat-grid{display:grid;grid-template-columns:1fr auto;gap:6px 16px;text-align:left;font-size:.9rem;color:var(--s700);margin:4px 0 16px;}
+.modal-stat-grid strong{text-align:right;color:var(--s800);}
+.modal-stat-grid small{font-size:.75rem;color:var(--blue);font-weight:600;}
+#modal-record{font-size:.8rem;color:var(--gold);font-weight:900;margin-bottom:14px;}
+
+/* AJUDA */
+#modal-ajuda-box h2{font-size:1.2rem;margin-bottom:14px;color:var(--s800);}
+.ajuda-pas{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;font-size:.88rem;line-height:1.5;color:var(--s700);}
+.ajuda-ico{font-size:1.4rem;flex-shrink:0;}
+.ajuda-avis{background:#fef3c7;border-left:4px solid #f59e0b;border-radius:8px;padding:10px 14px;font-size:.85rem;font-weight:700;color:#78350f;margin:14px 0 18px;line-height:1.5;}
+#btn-tancar-ajuda{width:100%;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;padding:12px;background:var(--s800);color:white;border:none;border-radius:99px;cursor:pointer;}
+
+.confeti{position:fixed;border-radius:2px;pointer-events:none;z-index:300;animation:confetti-fall 2s ease-in forwards;}
+footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padding:16px;margin-top:auto;}
+@media(max-width:400px){.cela{font-size:.95rem;min-height:46px;}header .logo-txt{display:none;}}
+</style>
+
+
+</head>
+<body>
+<header>
+    <a href="https://ja.cat/appgobo" target="_blank" class="logo">
+        <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
+            <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
+            <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#3b82f6" font-family="Montserrat,sans-serif" font-size="7" font-weight="900">26</text>
+        </svg>
+        <span class="logo-txt">GOBO<span>26</span></span>
+    </a>
+    <span class="hdr-title">Repte Numèric</span>
+    <button id="btn-ajuda" onclick="mostrarAjuda()">?</button>
+</header>
+
+<main>
+    <div id="info-panel">
+        <div class="info-item"><span class="info-label">⏱ Temps</span><span class="info-value" id="disp-temps">00:00</span></div>
+        <div class="info-item"><span class="info-label">🎯 Intent</span><span class="info-value" id="disp-intents">1</span></div>
+        <div class="info-item"><span class="info-label">⭐ Punts</span><span class="info-value" id="disp-punts">0</span></div>
+        <div class="info-item"><span class="info-label">🔥 Ratxa</span><span class="info-value" id="disp-combo">0</span></div>
+    </div>
+    <div id="mult-badge">🔥 x<span id="mult-val">2</span></div>
+    <div id="progress-wrap"><div id="progress-bar"></div></div>
+    <div id="indicador">Escull un nivell per començar</div>
+    <div id="tema-frase"></div>
+
+    <div id="selector-nivell">
+        <h3>Nivell de dificultat</h3>
+        <div class="sel-botons">
+            <button class="sel-btn actiu" onclick="triarNivell(1,this)">1️⃣ Seqüència</button>
+            <button class="sel-btn" onclick="triarNivell(2,this)">🔢 Primers</button>
+            <button class="sel-btn" onclick="triarNivell(3,this)">🔁 Dobles</button>
+            <button class="sel-btn" onclick="triarNivell(4,this)">🔁🔢 Primers+</button>
+            <button class="sel-btn" onclick="triarNivell(5,this)">🔚 Dígit final</button>
+        </div>
+    </div>
+
+    <div id="taulell"></div>
+
+    <div id="controls">
+        <button id="btn-panic" onclick="mostrarReplay(true)">🆘 Mostra'm la seqüència</button>
+        <button id="btn-parar" onclick="pararPartida()">■ Parar partida</button>
+    </div>
+
+    <div id="record-panel">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;cursor:pointer;" onclick="togglePanel('rec-contingut')">
+            <h3 style="margin:0;">🏅 Millors marques</h3>
+            <span id="rec-arrow" style="font-size:.8rem;color:var(--s400);">▲</span>
+        </div>
+        <div id="rec-contingut">
+            <div class="rec-caps"><span></span><span>⏱ Temps</span><span>🎯 Intents</span></div>
+            <div class="rec-row" id="rec-row-1" style="display:none"><span>1️⃣ Seq.</span><span class="val" id="rec-1-t">—</span><span class="val" id="rec-1-i">—</span></div>
+            <div class="rec-row" id="rec-row-2" style="display:none"><span>🔢 Prim.</span><span class="val" id="rec-2-t">—</span><span class="val" id="rec-2-i">—</span></div>
+            <div class="rec-row" id="rec-row-3" style="display:none"><span>🔁 Dobles</span><span class="val" id="rec-3-t">—</span><span class="val" id="rec-3-i">—</span></div>
+            <div class="rec-row" id="rec-row-4" style="display:none"><span>🔁🔢 Prim+</span><span class="val" id="rec-4-t">—</span><span class="val" id="rec-4-i">—</span></div>
+            <div class="rec-row" id="rec-row-5" style="display:none"><span>🔚 Dígit</span><span class="val" id="rec-5-t">—</span><span class="val" id="rec-5-i">—</span></div>
+        </div>
+    </div>
+
+    <div id="estadistiques">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;cursor:pointer;" onclick="togglePanel('stat-contingut')">
+            <h2 style="margin:0;font-size:.85rem;">📊 Historial d'Èxits</h2>
+            <span id="stat-arrow" style="font-size:.8rem;color:var(--s400);">▲</span>
+        </div>
+        <div id="stat-contingut">
+            <div class="fila-stat"><span>🥇 A la primera</span><span class="stat-val" id="stat-1">0</span></div>
+            <div class="fila-stat"><span>🥈 En 2 intents</span><span class="stat-val" id="stat-2">0</span></div>
+            <div class="fila-stat"><span>🥉 En 3 intents</span><span class="stat-val" id="stat-3">0</span></div>
+            <div class="fila-stat"><span>En 4 o més</span><span class="stat-val" id="stat-4">0</span></div>
+            <div class="fila-stat"><span>🎮 Partides totals</span><span class="stat-val" id="stat-total">0</span></div>
+            <div class="fila-stat"><span>⭐ Punts acumulats</span><span class="stat-val" id="stat-punts">0</span></div>
+            <div style="text-align:center;margin-top:10px;">
+                <span style="cursor:pointer;font-size:.75rem;color:var(--s600);text-decoration:underline;" onclick="esborrarDades()">Esborrar dades</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Modal Victòria -->
+<div id="modal-win" class="modal-overlay">
+    <div class="modal-box">
+        <div id="modal-rank">🎉</div>
+        <div id="modal-titol">Completat!</div>
+        <div id="modal-subtitol"></div>
+        <div id="modal-stats" class="modal-stat-grid"></div>
+        <div id="modal-record"></div>
+        <button class="boto-gran" onclick="tancarModal()" style="width:100%">▶ Jugar de nou</button>
+    </div>
+</div>
+
+<!-- Modal Ajuda -->
+<div id="modal-ajuda" class="modal-overlay">
+    <div class="modal-box" id="modal-ajuda-box">
+        <h2>❓ Com funciona el joc</h2>
+        <div class="ajuda-pas"><span class="ajuda-ico">1️⃣</span><span>Tries un dels 5 nivells de dificultat.</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">👁️</span><span>Cada ronda el joc fa brillar <strong>només el número nou</strong>. Els anteriors els has de recordar tu.</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">👆</span><span>Has de clicar <strong>tota la seqüència en ordre</strong> des del principi: el 1r, el 2n... fins al nou.</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">❌</span><span>Si t'equivoques, el joc fa brillar <strong>tota la seqüència a les cel·les</strong> perquè la puguis veure. Llavors tornes a repetir-la.</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">🆘</span><span>El botó <strong>"Mostra'm la seqüència"</strong> fa brillar la seqüència en qualsevol moment sense penalització.</span></div>
+        <div class="ajuda-avis">⚠️ Als nivells <strong>Dobles</strong> i <strong>Primers+</strong> hi ha números repetits visualment idèntics. El joc sap quina cel·la és la correcta en cada pas.</div>
+        <button id="btn-tancar-ajuda" onclick="tancarAjuda()">Entès!</button>
+    </div>
+</div>
+
+<footer>
+    <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer"
+       style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:var(--s400);text-decoration:none;"
+       onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+        <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
+        Una aplicació de Gobo26
+    </a>
+</footer>
+
+<script>
+// ─── CONFIGURACIÓ ────────────────────────────────────────────
+const NIV = {
+    1:{nom:'Seqüència', emoji:'1️⃣', cols:4, files:2, numJug:7},
+    2:{nom:'Primers',   emoji:'🔢', cols:5, files:2, numJug:9},
+    3:{nom:'Dobles',    emoji:'🔁', cols:4, files:3, numJug:11},
+    4:{nom:'Primers+',  emoji:'🔁🔢',cols:4, files:3, numJug:11},
+    5:{nom:'Dígit final',emoji:'🔚',cols:4, files:3, numJug:11},
+};
+const PRIMERS = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61];
+const LOGO_SVG = `<svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+    <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
+    <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#3b82f6" font-family="Montserrat,sans-serif" font-size="7" font-weight="900">26</text>
+</svg>`;
+const FLASH_MS = 500, FLASH_GAP = 300;
+
+// ─── ESTAT ───────────────────────────────────────────────────
+let nivell=1, celes=[], seqOrdre=[], seqActual=1, idxUsr=0;
+let jocActiu=false, enReplay=false;
+let intents=1, combo=0, mult=1, punts=0;
+let tInici, tInterval;
+let descExtra='';
+
+let stats  =JSON.parse(localStorage.getItem('gobo26_n3_stats')) ||{1:0,2:0,3:0,4:0,total:0,punts:0};
+let recs   =JSON.parse(localStorage.getItem('gobo26_n3_recs'))  ||{};
+actualitzarStats(); mostrarRecs();
+
+// ─── UTILS ───────────────────────────────────────────────────
+function barrejar(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function triarN(a,n){return barrejar([...a]).slice(0,n);}
+function fmtT(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
+function tActual(){return Math.floor((Date.now()-tInici)/1000);}
+function tick(){document.getElementById('disp-temps').textContent=fmtT(tActual());}
+
+// ─── GENERACIÓ ───────────────────────────────────────────────
+function generarCeles(n){
+    const def=NIV[n];
+    const totalCeles=def.cols*def.files;
+    descExtra='';
+    let valors=[];
+
+    if(n===1) valors=barrejar([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]).slice(0,7);
+    else if(n===2) valors=triarN(PRIMERS,9);
+    else if(n===3){
+        const base=barrejar(Array.from({length:20},(_,i)=>i+1)).slice(0,8);
+        const rep=triarN(base,3);
+        valors=barrejar([...base,...rep]); // 11
+    }
+    else if(n===4){
+        const base=triarN(PRIMERS,8);
+        const rep=triarN(base,3);
+        valors=barrejar([...base,...rep]); // 11
+    }
+    else if(n===5){
+        const d=Math.floor(Math.random()*10);
+        descExtra=`Acaben en ${d}`;
+        const cands=[];
+        for(let i=(d===0?10:d);i<=269;i+=10) cands.push(i);
+        valors=triarN(cands,11);
+    }
+
+    // Logo en posició aleatòria
+    const logoPos=Math.floor(Math.random()*totalCeles);
+    const res=[];
+    let vi=0;
+    for(let i=0;i<totalCeles;i++){
+        if(i===logoPos) res.push({id:`c${i}`,val:null,logo:true});
+        else res.push({id:`c${i}`,val:valors[vi++],logo:false});
+    }
+    // Seqüència: ordre aleatori de les celes jugables
+    const jugables=res.filter(c=>!c.logo);
+    return{celes:res, seq:barrejar([...jugables])};
+}
+
+// ─── SELECCIONAR NIVELL ───────────────────────────────────────
+function triarNivell(n,btn){
+    nivell=n;
+    document.querySelectorAll('.sel-btn').forEach(b=>b.classList.remove('actiu'));
+    btn.classList.add('actiu');
+    iniciarJoc();
+}
+
+// ─── INICIAR JOC ─────────────────────────────────────────────
+function iniciarJoc(){
+    const gen=generarCeles(nivell);
+    celes=gen.celes; seqOrdre=gen.seq;
+    seqActual=1; idxUsr=0; intents=1; combo=0; mult=1; punts=0;
+    jocActiu=false; enReplay=false;
+
+    stats.total=(stats.total||0)+1;
+    localStorage.setItem('gobo26_n3_stats',JSON.stringify(stats));
+    actualitzarStats();
+
+    // UI reset
+    document.getElementById('disp-intents').textContent='1';
+    document.getElementById('disp-intents').style.color='';
+    document.getElementById('disp-punts').textContent='0';
+    document.getElementById('disp-combo').textContent='0';
+    document.getElementById('progress-bar').style.width='0%';
+    document.getElementById('mult-badge').style.display='none';
+    document.getElementById('btn-parar').style.display='block';
+    document.getElementById('btn-panic').style.display='block';
+    document.getElementById('selector-nivell').style.display='none';
+    document.getElementById('indicador').style.borderLeftColor='var(--blue)';
+
+    const tf=document.getElementById('tema-frase');
+    tf.textContent=descExtra?`${NIV[nivell].nom} · ${descExtra}`:NIV[nivell].nom;
+    tf.style.display='block';
+
+    clearInterval(tInterval);
+    tInici=Date.now();
+    tInterval=setInterval(tick,1000);
+
+    dibuixarTaulell();
+    mostrarNumNou();
+}
+
+// ─── DIBUIXAR TAULELL ────────────────────────────────────────
+function dibuixarTaulell(){
+    const cont=document.getElementById('taulell');
+    cont.innerHTML='';
+    cont.style.setProperty('--cols',NIV[nivell].cols);
+    celes.forEach(c=>{
+        const d=document.createElement('div');
+        d.className='cela';
+        if(c.logo){
+            d.classList.add('cela-logo');
+            d.innerHTML=LOGO_SVG;
+        } else {
+            d.textContent=c.val;
+            d.dataset.id=c.id;
+            d.onclick=()=>clic(d,c.id);
+        }
+        cont.appendChild(d);
+    });
+}
+
+function getEl(id){return document.querySelector(`[data-id="${id}"]`);}
+
+// ─── FLASH D'UN NÚMERO NOU ────────────────────────────────────
+function mostrarNumNou(){
+    jocActiu=false; idxUsr=0;
+    enReplay=false;
+    const total=seqOrdre.length;
+    document.getElementById('progress-bar').style.width=((seqActual-1)/total*100)+'%';
+
+    const nou=seqOrdre[seqActual-1];
+    const el=getEl(nou.id);
+    document.getElementById('indicador').textContent='👁 Mira el número nou...';
+
+    setTimeout(()=>{
+        if(!el) return;
+        el.classList.add('flash');
+        sonarClic();
+        setTimeout(()=>{
+            el.classList.remove('flash');
+            setTimeout(()=>{
+                document.getElementById('indicador').textContent=
+                    `Repeteix la seqüència (${seqActual} número${seqActual>1?'s':''})`;
+                jocActiu=true;
+            },200);
+        },FLASH_MS);
+    },300);
+}
+
+// ─── REPLAY: flash de tota la seqüència a les cel·les ────────
+function mostrarReplay(esManual){
+    jocActiu=false; enReplay=true;
+    if(esManual) document.getElementById('indicador').textContent='🆘 Seqüència en curs...';
+    else         document.getElementById('indicador').textContent='❌ Error! Mira bé la seqüència...';
+
+    // Marcar totes les celes com desactivades durant el replay
+    document.querySelectorAll('.cela:not(.cela-logo)').forEach(c=>c.classList.add('desactivada'));
+
+    let i=0;
+    function nextFlash(){
+        if(i>=seqActual){
+            // Replay acabat → tornar a permetre clics
+            document.querySelectorAll('.cela:not(.cela-logo)').forEach(c=>c.classList.remove('desactivada'));
+            setTimeout(()=>{
+                document.getElementById('indicador').textContent=
+                    `Torna a repetir (${seqActual} número${seqActual>1?'s':''})`;
+                document.getElementById('indicador').style.borderLeftColor='var(--blue)';
+                idxUsr=0; enReplay=false; jocActiu=true;
+            },300);
+            return;
+        }
+        const item=seqOrdre[i];
+        const el=getEl(item.id);
+        if(el){
+            el.classList.add('replay');
+            sonarClic();
+            setTimeout(()=>{
+                el.classList.remove('replay');
+                i++; setTimeout(nextFlash, FLASH_GAP);
+            },FLASH_MS);
+        } else {
+            i++; setTimeout(nextFlash,50);
+        }
+    }
+    setTimeout(nextFlash, 400);
+}
+
+// ─── GESTIÓ DE CLICS ─────────────────────────────────────────
+function clic(el,id){
+    if(!jocActiu || enReplay) return;
+    if(idxUsr>=seqActual) return;
+
+    const esperat=seqOrdre[idxUsr];
+
+    if(id===esperat.id){
+        // ✅ CORRECTE
+        sonarClic();
+        el.classList.add('correcte');
+        setTimeout(()=>el.classList.remove('correcte'),130);
+        combo++; idxUsr++;
+
+        if(combo>=5) mult=3; else if(combo>=3) mult=2; else mult=1;
+        document.getElementById('disp-combo').textContent=combo;
+        if(mult>1){
+            document.getElementById('mult-badge').style.display='block';
+            document.getElementById('mult-val').textContent=mult;
+        }
+
+        if(idxUsr===seqActual){
+            // Seqüència de la ronda completada
+            jocActiu=false;
+            const p=1+(mult>=3?2:mult>=2?1:0);
+            punts+=p;
+            document.getElementById('disp-punts').textContent=punts;
+            mostrarBonus(`+${p}`,el);
+            vibrar(30);
+
+            if(seqActual===seqOrdre.length){
+                victoriaFinal();
+            } else {
+                const msg=combo>=5?`🔥 RATXA x${mult}! +${p}`:`✅ Ronda ${seqActual}! +${p}`;
+                setIndicador(msg,'var(--blue)');
+                setTimeout(()=>{seqActual++;mostrarNumNou();},700);
+            }
+        }
+    } else {
+        // ❌ ERROR
+        sonarErr();
+        el.classList.add('incorrecte');
+        setTimeout(()=>el.classList.remove('incorrecte'),400);
+        jocActiu=false; combo=0; mult=1;
+        document.getElementById('disp-combo').textContent='0';
+        document.getElementById('mult-badge').style.display='none';
+        vibrar([70,40,70]);
+        intents++;
+        document.getElementById('disp-intents').textContent=intents;
+        document.getElementById('disp-intents').style.color='var(--err)';
+        setIndicador(`❌ Error! Repeteixo la seqüència...`,'var(--err)');
+        // Replay automàtic de la seqüència a les cel·les
+        setTimeout(()=>mostrarReplay(false),500);
+    }
+}
+
+// ─── VICTÒRIA ────────────────────────────────────────────────
+function victoriaFinal(){
+    clearInterval(tInterval);
+    sonarWin();
+    const seg=tActual(), tt=fmtT(seg);
+    const pb=Math.max(0,Math.round(10*Math.max(0,1-seg/120)));
+    punts+=pb;
+
+    document.getElementById('progress-bar').style.width='100%';
+    guardarEstat(intents);
+
+    const kT=`${nivell}_t`, kI=`${nivell}_i`;
+    let nouRec=[];
+    if(recs[kT]==null||seg<recs[kT]){recs[kT]=seg;nouRec.push('temps');}
+    if(recs[kI]==null||intents<recs[kI]){recs[kI]=intents;nouRec.push('intents');}
+    stats.punts=(stats.punts||0)+punts;
+    localStorage.setItem('gobo26_n3_stats',JSON.stringify(stats));
+    localStorage.setItem('gobo26_n3_recs',JSON.stringify(recs));
+    mostrarRecs();
+
+    let rank='🎉',titol='Completat!';
+    if(intents===1){rank='🏆';titol='PERFECTE!';}
+    else if(intents<=2){rank='🥇';titol='Excel·lent!';}
+    else if(intents<=3){rank='🥈';titol='Molt bé!';}
+    else if(intents<=5){rank='🥉';titol='Ben fet!';}
+
+    document.getElementById('modal-rank').textContent=rank;
+    document.getElementById('modal-titol').textContent=titol;
+    document.getElementById('modal-subtitol').textContent=`${NIV[nivell].nom} · ${seqOrdre.length} números`;
+    document.getElementById('modal-stats').innerHTML=
+        `<span>⏱ Temps</span><strong>${tt}</strong>
+         <span>🎯 Intents</span><strong>${intents}</strong>
+         <span>🏅 Punts</span><strong>${punts}${pb>0?` <small>(+${pb} vel.)</small>`:''}</strong>
+         <span>📊 Acumulat</span><strong>${stats.punts||0} pts</strong>`;
+    document.getElementById('modal-record').textContent=
+        nouRec.length?'🆕 Nou rècord: '+nouRec.join(', ')+'!':'';
+
+    setTimeout(()=>{
+        document.getElementById('modal-win').classList.add('show');
+        llençarConfeti();
+        vibrar([100,50,100,50,200]);
+    },400);
+}
+
+function tancarModal(){
+    document.getElementById('modal-win').classList.remove('show');
+    actualitzarStats(); clearInterval(tInterval);
+    document.getElementById('taulell').innerHTML='';
+    ['disp-temps','disp-intents','disp-punts','disp-combo'].forEach((id,i)=>{
+        document.getElementById(id).textContent=i===0?'00:00':i===1?'1':'0';
+    });
+    document.getElementById('disp-intents').style.color='';
+    document.getElementById('mult-badge').style.display='none';
+    document.getElementById('btn-parar').style.display='none';
+    document.getElementById('btn-panic').style.display='none';
+    document.getElementById('selector-nivell').style.display='';
+    setIndicador('Escull un nivell per començar','var(--blue)');
+    const tf=document.getElementById('tema-frase');
+    tf.textContent='';tf.style.display='none';
+    document.getElementById('progress-bar').style.width='0%';
+}
+
+function pararPartida(){
+    jocActiu=false; enReplay=false;
+    clearInterval(tInterval);
+    document.getElementById('taulell').innerHTML='';
+    document.getElementById('btn-parar').style.display='none';
+    document.getElementById('btn-panic').style.display='none';
+    document.getElementById('selector-nivell').style.display='';
+    document.getElementById('mult-badge').style.display='none';
+    ['disp-temps','disp-intents','disp-punts','disp-combo'].forEach((id,i)=>{
+        document.getElementById(id).textContent=i===0?'00:00':i===1?'1':'0';
+    });
+    document.getElementById('disp-intents').style.color='';
+    setIndicador('Escull un nivell per començar','var(--blue)');
+    const tf=document.getElementById('tema-frase');
+    tf.textContent='';tf.style.display='none';
+    document.getElementById('progress-bar').style.width='0%';
+}
+
+// ─── AJUDA ───────────────────────────────────────────────────
+function mostrarAjuda(){document.getElementById('modal-ajuda').classList.add('show');}
+function tancarAjuda() {document.getElementById('modal-ajuda').classList.remove('show');}
+
+// ─── SO ──────────────────────────────────────────────────────
+let actx;
+function ga(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;}
+function sonarClic(){try{const c=ga(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.setValueAtTime(.08,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.12);o.start();o.stop(c.currentTime+.12);}catch(e){}}
+function sonarErr(){try{const c=ga(),o=c.createOscillator(),g=c.createGain();o.type='sawtooth';o.connect(g);g.connect(c.destination);o.frequency.setValueAtTime(200,c.currentTime);o.frequency.exponentialRampToValueAtTime(60,c.currentTime+.2);g.gain.setValueAtTime(.12,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.25);o.start();o.stop(c.currentTime+.25);}catch(e){}}
+function sonarWin(){try{const c=ga();[523,659,784,1047].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=f;const t=c.currentTime+i*.12;g.gain.setValueAtTime(.1,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.start(t);o.stop(t+.3);});}catch(e){}}
+
+// ─── UTILS UI ────────────────────────────────────────────────
+function setIndicador(txt,color){const el=document.getElementById('indicador');el.textContent=txt;el.style.borderLeftColor=color;}
+function mostrarBonus(txt,el){const r=el.getBoundingClientRect(),p=document.createElement('div');p.className='bonus-popup';p.textContent=txt;p.style.left=(r.left+scrollX+r.width/2-20)+'px';p.style.top=(r.top+scrollY-10)+'px';document.body.appendChild(p);setTimeout(()=>p.remove(),1100);}
+function vibrar(p){if(navigator.vibrate)navigator.vibrate(p);}
+
+// ─── CONFETI ─────────────────────────────────────────────────
+function llençarConfeti(){const cs=['#2563eb','#f59e0b','#16a34a','#dc2626','#8b5cf6','#ec4899'];for(let i=0;i<70;i++)setTimeout(()=>{const e=document.createElement('div');e.className='confeti';e.style.left=Math.random()*100+'vw';e.style.top='-10px';e.style.background=cs[Math.floor(Math.random()*cs.length)];e.style.animationDuration=(1.5+Math.random()*2)+'s';const s=(6+Math.random()*8)+'px';e.style.width=s;e.style.height=s;document.body.appendChild(e);setTimeout(()=>e.remove(),3600);},i*35);}
+
+// ─── ESTADÍSTIQUES ───────────────────────────────────────────
+function guardarEstat(n){const c=n>3?4:n;stats[c]=(stats[c]||0)+1;localStorage.setItem('gobo26_n3_stats',JSON.stringify(stats));actualitzarStats();setTimeout(()=>{const el=document.getElementById(`stat-${c}`);if(el){el.closest('.fila-stat').classList.add('destacat');setTimeout(()=>el.closest('.fila-stat').classList.remove('destacat'),2200);}},150);}
+
+function actualitzarStats(){
+    [1,2,3,4].forEach(i=>{const el=document.getElementById(`stat-${i}`);if(el)el.textContent=stats[i]||0;const r=el?el.closest('.fila-stat'):null;if(r)r.style.display=(stats[i]>0)?'':'none';});
+    document.getElementById('stat-total').textContent=stats.total||0;
+    const sp=document.getElementById('stat-punts');if(sp)sp.textContent=stats.punts||0;
+    const te=stats.total>0;
+    document.getElementById('estadistiques').style.display=te?'block':'none';
+    ['stat-total','stat-punts'].forEach(id=>{const el=document.getElementById(id);const r=el?el.closest('.fila-stat'):null;if(r)r.style.display=te?'':'none';});
+}
+
+function mostrarRecs(){
+    let te=false;
+    [1,2,3,4,5].forEach(n=>{
+        const tEl=document.getElementById(`rec-${n}-t`);
+        const iEl=document.getElementById(`rec-${n}-i`);
+        const row=document.getElementById(`rec-row-${n}`);
+        if(!tEl)return;
+        const t=recs[`${n}_t`],i=recs[`${n}_i`];
+        const ok=t!=null||i!=null;
+        if(row)row.style.display=ok?'':'none';
+        tEl.textContent=t!=null?fmtT(t):'—';
+        iEl.textContent=i!=null?i:'—';
+        if(ok)te=true;
+    });
+    document.getElementById('record-panel').style.display=te?'block':'none';
+}
+
+function esborrarDades(){
+    if(confirm('Voleu esborrar totes les dades i rècords?')){
+        stats={1:0,2:0,3:0,4:0,total:0,punts:0};recs={};
+        localStorage.removeItem('gobo26_n3_stats');localStorage.removeItem('gobo26_n3_recs');
+        actualitzarStats();mostrarRecs();
+    }
+}
+
+function togglePanel(id){
+    const el=document.getElementById(id);
+    const isRec=(id==='rec-contingut');
+    const arrow=document.getElementById(isRec?'rec-arrow':'stat-arrow');
+    if(el.classList.contains('tancat')){
+        el.classList.remove('tancat');
+        if(arrow) arrow.textContent='▲';
+    } else {
+        el.classList.add('tancat');
+        if(arrow) arrow.textContent='▼';
+    }
+}
+</script>
+</body>
+</html>

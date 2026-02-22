@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Gobo26 - Sudoku</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:         #f1f5f9;
+            --board-bg:   #ffffff;
+            --text:       #334155;
+            --text-fixed: #1e293b;
+            --text-user:  #2563eb;
+            --text-error: #dc2626;
+            --line-thin:  #94a3b8;
+            --line-thick: #475569;
+            --cell-hover: #e2e8f0;
+            --cell-sel:   #bfdbfe;
+            --cell-fixed: #f8fafc;
+            --cell-error: #fee2e2;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* tot en una pantalla */
+        }
+
+        /* HEADER */
+        header {
+            background: #1e293b;
+            color: white;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header-left svg { opacity: 0.9; }
+
+        #gobo-logo {
+            display: none;
+            align-items: center;
+            opacity: 0.45;
+            transition: opacity 0.2s;
+            text-decoration: none;
+        }
+        #gobo-logo:hover { opacity: 0.9; }
+
+        /* MAIN: ocupa tot l'espai restant */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 8px;
+            overflow: hidden;
+            gap: 4px;
+        }
+
+        /* BOTONS DE DIFICULTAT */
+        .controls {
+            display: flex;
+            gap: 5px;
+            flex-shrink: 0;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .controls button {
+            flex: 1;
+            padding: 6px 4px;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            background: white;
+            color: var(--text);
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+        .controls button:hover { background: #e2e8f0; }
+        .controls button.primary {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+        }
+        .controls button.primary:hover { background: #1d4ed8; }
+
+        /* TAULELL — ocupa el màxim d'espai disponible */
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            grid-template-rows: repeat(9, 1fr);
+            background: var(--line-thick);
+            border: 2px solid var(--line-thick);
+            border-radius: 4px;
+            gap: 0;
+            /* Mòbil: quasi tot l'ample de pantalla */
+            width: min(92vw, 92vw);
+            height: min(92vw, 92vw);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            flex-shrink: 1;
+            max-width: 440px;
+            max-height: 440px;
+        }
+
+        .cell {
+            background: var(--board-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s;
+            border-right:  1px solid var(--line-thin);
+            border-bottom: 1px solid var(--line-thin);
+            font-size: clamp(14px, 5vw, 26px);
+        }
+
+        /* Eliminar vores externes */
+        .cell:nth-child(9n)   { border-right: none; }
+        .cell:nth-child(n+73) { border-bottom: none; }
+
+        /* Línies gruixudes de bloc */
+        .cell.right-thick  { border-right:  2px solid var(--line-thick); }
+        .cell.bottom-thick { border-bottom: 2px solid var(--line-thick); }
+
+        /* Estats */
+        .cell:hover    { background: var(--cell-hover); }
+        .cell.fixed    { background: var(--cell-fixed); color: var(--text-fixed); cursor: default; }
+        .cell.fixed:hover { background: var(--cell-fixed); }
+        .cell.selected { background: var(--cell-sel) !important; }
+        .cell.user-input { color: var(--text-user); }
+        .cell.error    { background: var(--cell-error) !important; color: var(--text-error); }
+
+        /* MISSATGE */
+        .status {
+            font-size: 0.72rem;
+            font-weight: 700;
+            height: 1em;
+            color: #475569;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* TECLAT NUMÈRIC — botons grans i fàcils de tocar */
+        .numpad {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+            width: 100%;
+            max-width: 420px;
+            flex-shrink: 0;
+        }
+
+        .num-btn {
+            padding: 10px 0;
+            min-height: 44px;
+            background: white;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(14px, 4vw, 20px);
+            font-weight: 700;
+            color: var(--text);
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .num-btn:hover { background: #e2e8f0; }
+        .num-btn.del   { background: #fee2e2; border-color: #fca5a5; color: #dc2626; font-size: clamp(12px, 3.5vw, 18px); }
+        .num-btn.del:hover { background: #fecaca; }
+
+        /* FOOTER */
+        footer {
+            background: #1e293b;
+            border-top: 1px solid #334155;
+            color: #64748b;
+            text-align: center;
+            padding: 5px;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+        footer a {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.4;
+            transition: opacity 0.2s;
+            color: #cbd5e1;
+            text-decoration: none;
+        }
+        footer a:hover { opacity: 0.8; }
+
+        /* ESCRIPTORI */
+        @media (min-width: 640px) {
+            #gobo-logo { display: flex; }
+            .game-board {
+                width: min(60vmin, 440px);
+                height: min(60vmin, 440px);
+            }
+            .numpad { width: min(60vmin, 440px); }
+            .cell { font-size: clamp(14px, 3vmin, 26px); }
+            main { justify-content: space-evenly; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-left">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+            </svg>
+            SUDOKU
+        </div>
+        <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer" id="gobo-logo">
+            <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+                <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
+                <text x="50" y="42" text-anchor="middle" fill="white" font-size="22" font-weight="800" font-family="sans-serif">GOBO</text>
+                <text x="50" y="65" text-anchor="middle" fill="#94a3b8" font-size="20" font-weight="700" font-family="sans-serif">26</text>
+            </svg>
+        </a>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+        <div class="controls">
+            <button onclick="newGame('easy')">Fàcil</button>
+            <button onclick="newGame('medium')">Mitjà</button>
+            <button onclick="newGame('hard')">Difícil</button>
+            <button class="primary" onclick="checkSolution()">Comprovar</button>
+        </div>
+
+        <div id="board" class="game-board"></div>
+
+        <div class="status" id="message"></div>
+
+        <div class="numpad" id="numpad">
+            <button class="num-btn" onclick="inputNumber(1)">1</button>
+            <button class="num-btn" onclick="inputNumber(2)">2</button>
+            <button class="num-btn" onclick="inputNumber(3)">3</button>
+            <button class="num-btn" onclick="inputNumber(4)">4</button>
+            <button class="num-btn" onclick="inputNumber(5)">5</button>
+            <button class="num-btn" onclick="inputNumber(6)">6</button>
+            <button class="num-btn" onclick="inputNumber(7)">7</button>
+            <button class="num-btn" onclick="inputNumber(8)">8</button>
+            <button class="num-btn" onclick="inputNumber(9)">9</button>
+            <button class="num-btn del" onclick="inputNumber('delete')">✕</button>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer"
+           onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+            <svg width="12" height="12" viewBox="0 0 100 100" fill="none">
+                <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/>
+                <text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text>
+                <text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text>
+            </svg>
+            Una aplicació de Gobo26
+        </a>
+    </footer>
+
+    <script>
+        let board = [], solution = [], selectedCell = null;
+
+        window.onload = () => newGame('easy');
+
+        function newGame(difficulty) {
+            generateSudoku();
+            removeNumbers(difficulty);
+            renderBoard();
+            document.getElementById('message').textContent = '';
+            selectedCell = null;
+        }
+
+        function generateSudoku() {
+            solution = Array(9).fill().map(() => Array(9).fill(0));
+            fillDiagonal();
+            solveSudoku(solution);
+            board = JSON.parse(JSON.stringify(solution));
+        }
+
+        function fillDiagonal() {
+            for (let i = 0; i < 9; i += 3) fillBox(i, i);
+        }
+
+        function fillBox(row, col) {
+            let num;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    do { num = Math.floor(Math.random() * 9) + 1; }
+                    while (!isSafeInBox(row, col, num));
+                    solution[row + i][col + j] = num;
+                }
+            }
+        }
+
+        function isSafeInBox(rs, cs, num) {
+            for (let i = 0; i < 3; i++)
+                for (let j = 0; j < 3; j++)
+                    if (solution[rs+i][cs+j] === num) return false;
+            return true;
+        }
+
+        function isSafe(grid, row, col, num) {
+            for (let x = 0; x < 9; x++)
+                if (grid[row][x] === num || grid[x][col] === num) return false;
+            let sr = row - row%3, sc = col - col%3;
+            for (let i = 0; i < 3; i++)
+                for (let j = 0; j < 3; j++)
+                    if (grid[sr+i][sc+j] === num) return false;
+            return true;
+        }
+
+        function solveSudoku(grid) {
+            for (let i = 0; i < 9; i++)
+                for (let j = 0; j < 9; j++)
+                    if (grid[i][j] === 0) {
+                        for (let n = 1; n <= 9; n++) {
+                            if (isSafe(grid, i, j, n)) {
+                                grid[i][j] = n;
+                                if (solveSudoku(grid)) return true;
+                                grid[i][j] = 0;
+                            }
+                        }
+                        return false;
+                    }
+            return true;
+        }
+
+        function removeNumbers(difficulty) {
+            let count = difficulty === 'easy' ? 30 : difficulty === 'medium' ? 45 : 55;
+            while (count > 0) {
+                let r = Math.floor(Math.random()*9), c = Math.floor(Math.random()*9);
+                if (board[r][c] !== 0) { board[r][c] = 0; count--; }
+            }
+        }
+
+        function renderBoard() {
+            const container = document.getElementById('board');
+            container.innerHTML = '';
+
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const div = document.createElement('div');
+                    div.classList.add('cell');
+
+                    /* Línies gruixudes a la dreta dels blocs (columnes 2 i 5) */
+                    if (j === 2 || j === 5) div.classList.add('right-thick');
+                    /* Línies gruixudes a sota dels blocs (files 2 i 5) */
+                    if (i === 2 || i === 5) div.classList.add('bottom-thick');
+
+                    if (board[i][j] !== 0) {
+                        div.textContent = board[i][j];
+                        div.classList.add('fixed');
+                    } else {
+                        div.classList.add('user-input');
+                        div.dataset.row = i;
+                        div.dataset.col = j;
+                        div.onclick = () => selectCell(div);
+                    }
+                    container.appendChild(div);
+                }
+            }
+        }
+
+        function selectCell(div) {
+            if (selectedCell) selectedCell.classList.remove('selected');
+            selectedCell = div;
+            div.classList.add('selected');
+        }
+
+        function inputNumber(num) {
+            if (!selectedCell) return;
+            if (num === 'delete') {
+                selectedCell.textContent = '';
+                selectedCell.classList.remove('error');
+            } else {
+                selectedCell.textContent = num;
+                selectedCell.classList.remove('error');
+            }
+        }
+
+        document.addEventListener('keydown', e => {
+            if (!selectedCell) return;
+            if (e.key >= '1' && e.key <= '9') inputNumber(parseInt(e.key));
+            else if (e.key === 'Backspace' || e.key === 'Delete') inputNumber('delete');
+        });
+
+        function checkSolution() {
+            const cells = document.querySelectorAll('.cell.user-input');
+            let errors = 0, filled = 0;
+            cells.forEach(cell => {
+                const r = parseInt(cell.dataset.row), c = parseInt(cell.dataset.col);
+                const val = parseInt(cell.textContent);
+                if (cell.textContent !== '') {
+                    filled++;
+                    if (val !== solution[r][c]) { cell.classList.add('error'); errors++; }
+                    else cell.classList.remove('error');
+                }
+            });
+            const msg = document.getElementById('message');
+            if (errors > 0) {
+                msg.textContent = `Tens ${errors} error${errors>1?'s':''}. Continua!`;
+                msg.style.color = '#dc2626';
+            } else if (filled === cells.length) {
+                msg.textContent = '🎉 Felicitats! Sudoku completat!';
+                msg.style.color = '#16a34a';
+            } else {
+                msg.textContent = 'De moment tot correcte, però no has acabat.';
+                msg.style.color = '#2563eb';
+            }
+        }
+
+        /* Logo Gobo26 visible només en pantalles grans */
+        if (window.innerWidth >= 640) document.getElementById('gobo-logo').style.display = 'flex';
+    </script>
+
+</body>
+</html>
