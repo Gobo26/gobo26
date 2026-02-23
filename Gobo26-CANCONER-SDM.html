@@ -3,44 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cançoner del grup d'havaneres SONS DEL MAR Unificat</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <title>Cançoner · Sons del Mar · Gobo26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #f1f5f9;
-            color: #2d3748;
-        }
-        h1, h2, h3 {
-            font-family: 'Montserrat', sans-serif;
-        }
-        .lyrics {
-            font-family: 'Merriweather', serif;
-            line-height: 1.6; /* Una mica més junt per aprofitar espai */
-            white-space: pre-wrap;
-        }
-        .card {
-            transition: transform 0.2s ease-in-out;
-            scroll-margin-top: 10px; 
-        }
-        .card:hover {
-            transform: translateY(-2px);
-        }
-    
-/* HEADER */
-header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
-.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
-.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
-.logo-txt span{color:#3b82f6;}
-.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
-</style>
-
-
+        :root{--bg:#f1f5f9;--s200:#e2e8f0;--s400:#94a3b8;--s800:#1e293b;--blue:#2563eb;--blue2:#3b82f6;}
+        *{box-sizing:border-box;margin:0;padding:0;}
+        html,body{height:100%;overflow:hidden;}
+        body{font-family:'Montserrat',sans-serif;background:var(--bg);color:#334155;display:flex;flex-direction:column;}
+        header{width:100%;background:var(--s800);border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
+        .logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+        .logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
+        .logo-txt span{color:var(--blue2);}
+        .hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
+        .cerca-bar{padding:12px 16px;background:white;border-bottom:1px solid var(--s200);flex-shrink:0;}
+        .cerca-bar input{width:100%;max-width:700px;display:block;margin:0 auto;padding:10px 14px;border:2px solid var(--s200);border-radius:10px;font-family:'Montserrat',sans-serif;font-size:.95rem;color:var(--s800);background:#f8fafc;outline:none;transition:border-color .2s;}
+        .cerca-bar input:focus{border-color:var(--blue2);}
+        main{flex:1;overflow-y:auto;padding:16px;}
+        .inner{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:16px;}
+        .index-box{background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08);padding:16px 20px;}
+        .index-title{font-size:1rem;font-weight:700;color:#1e40af;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--s200);}
+        .index-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+        @media(max-width:480px){.index-grid{grid-template-columns:1fr;}}
+        .index-link{color:var(--blue);font-size:.88rem;padding:4px 2px;text-decoration:none;display:block;}
+        .index-link:hover{color:#1e40af;text-decoration:underline;}
+        .song-card{background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08);overflow:hidden;border:1px solid #e2e8f0;scroll-margin-top:8px;}
+        .song-header{background:#eff6ff;padding:12px 16px;border-bottom:1px solid #dbeafe;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+        .song-title{font-size:1.05rem;font-weight:700;color:#1e3a8a;margin-bottom:2px;}
+        .song-author{font-size:.8rem;color:#64748b;font-style:italic;}
+        .btn-index{font-size:.7rem;color:var(--blue);background:white;padding:4px 10px;border-radius:6px;border:1px solid #bfdbfe;text-decoration:none;white-space:nowrap;font-weight:600;text-transform:uppercase;cursor:pointer;flex-shrink:0;}
+        .btn-index:hover{background:#eff6ff;}
+        .song-body{padding:16px 20px;}
+        .lyrics{font-family:'Merriweather',serif;font-size:.9rem;line-height:1.7;white-space:pre-wrap;color:#374151;}
+        .no-res{text-align:center;padding:40px 20px;color:var(--s400);font-size:1rem;}
+        footer{font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:14px;flex-shrink:0;border-top:1px solid #1e2d45;}
+        footer a{display:inline-flex;align-items:center;gap:6px;opacity:.4;transition:opacity .2s;color:#94a3b8;text-decoration:none;}
+        footer a:hover{opacity:.8;}
+    </style>
 </head>
-<body class="bg-slate-100">
-
-    <header>
+<body>
+<header>
     <a href="https://ja.cat/appgobo" class="logo">
         <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
             <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
@@ -51,212 +52,54 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
     </a>
     <span class="hdr-title">Cançoner d'Havaneres</span>
 </header>
-
-    <main class="container mx-auto px-2 py-4 md:px-4 md:py-6">
-        
-        <div id="indexContainer" class="mb-6 p-4 bg-white rounded-lg shadow-md">
-            <h2 class="text-lg md:text-xl font-bold text-blue-800 mb-3 border-b pb-2">Índex de Cançons</h2>
-            <ul id="songIndex" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
-                </ul>
+<div class="cerca-bar">
+    <input type="search" id="searchInput" placeholder="🔍 Cerca per títol o lletra…" autocomplete="off">
+</div>
+<main>
+    <div class="inner">
+        <div id="indexContainer" class="index-box">
+            <div class="index-title">Índex de Cançons</div>
+            <div id="songIndex" class="index-grid"></div>
         </div>
-
-        <div id="songsContainer" class="grid grid-cols-1 gap-4 md:gap-6 max-w-4xl mx-auto">
-            </div>
-
-        <div id="noResults" class="hidden text-center py-10 text-gray-500 text-lg">
-            No s'han trobat cançons.
-        </div>
-
-    </main>
-
-    <footer style="font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:16px;margin-top:auto;border-top:1px solid #1e2d45;">
-    <a href="https://ja.cat/appgobo"
-       style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:#94a3b8;text-decoration:none;"
-       onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+        <div id="songsContainer"></div>
+        <div id="noResults" class="no-res" style="display:none">No s'han trobat cançons.</div>
+    </div>
+</main>
+<footer>
+    <a href="https://ja.cat/appgobo">
         <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
         Una aplicació de Gobo26
     </a>
 </footer>
-
-    <script>
-        // Funció per moure's a una cançó sense canviar la URL
-        function anarACanco(id) {
-            const element = document.getElementById(id);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        // Funció per tornar a l'índex sense canviar la URL
-        function anarAIndex() {
-            const element = document.getElementById('indexContainer');
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        const songs = [
-            
-            {
-                title: "El canó de Palamós",
-                author: "Josep Lluís Ortega Monasterio",
-                lyrics: `El canó de Palamós,
-ben mirat que n'és d'hermós,
-ja fa temps que està callat,
-ja fa temps que mira el mar
-amb el ventre rovellat,
-quatre rodes i un forat.
-
-De la boca del canó,
-només surten els records
-de les guerres d'aquell temps,
-quan la gent de l'Empordà,
-de la Selva i del Vallès
-es mataven per no res.
-
-Escolteu la seva veu,
-oh, canons de tot el món
-i la gent de tot arreu,
-no més guerres ni més morts,
-no més bombes ni més foc,
-sóc el canó de Palamós.`
-            },
-            {
-                title: "El capità",
-                author: "Carles Casanovas / Antoni Mas",
-                lyrics: `Quan naveguis de bolina,
-sota el grop orsant la nau.
-Quan la boira sigui espessa
-i el redós quedi llunyà.
-
-Quan terregis entre lloses,
-perquè el vent és massa fort.
-Quan el cel no té resposta,
-llavors sabràs el que costa
-menar la nau fins a port.
-
-Que senzill ser capità
-quan el vent bufa de popa,
-quan no hi ha esculls a tocar,
-quan la pesca és generosa.
-Que senzill ser capità
-sota estrelles i a coberta,
-tot singlant per mar oberta
-i amb la lluna de costat.
-
-Quan el far no et sigui guia
-perquè no volen els déus.
-Quan l'onada trenqui a sobre,
-quan et costi estar dempeus.
-Quan la mar brami gelosa
-i tremoli tot el casc,
-quan la força et sigui escassa,
-llavors sabràs quina traça
-li cal a un bon capità.
-
-Quan la mar dorm encalmada,
-quan Neptú fa migdiada,
-jo també sóc capità.`
-            },
-            {
-                title: "El meu avi",
-                author: "J.L. Ortega Monasterio",
-                lyrics: `El meu avi va anar a Cuba
-a bordo del "Catalán",
-el millor barco de guerra
-de la flota d'Ultramar.
-El timoner i el nostramo
-i catorze mariners
-eren nascuts a Calella,
-eren nascuts a Palafrugell...
-
-Quan el "Catalán" sortia a la mar,
-els nois de Calella feien un cremat,
-mans a la guitarra, solien cantar, solien cantar:
-Visca Catalunya! Visca el "Catalán"!...
-
-Arribaren temps de guerres,
-de perfídies i traïcions
-en el mar de les Antilles
-retronaren els canons.
-I el mariners de Calella,
-el meu avi enmig de tots,
-varen morir a coberta,
-varen morir al peu del canó!
-
-Quan el "Catalán" sortia a la mar,
-cridava el meu avi: apa nois que és tard!
-però els valents de bordo
-no varen tornar, no varen tornar
-tingueren la culpa els americans...`
-            },
-        ];
-
-        const songsContainer = document.getElementById('songsContainer');
-        const songIndex = document.getElementById('songIndex');
-        const searchInput = document.getElementById('searchInput');
-        const noResults = document.getElementById('noResults');
-
-        function normalizeText(text) {
-            return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-        }
-
-        function renderSongs(filterText = "") {
-            songsContainer.innerHTML = "";
-            songIndex.innerHTML = "";
-            
-            const normalizedFilter = normalizeText(filterText);
-            let hasResults = false;
-
-            songs.forEach((song, index) => {
-                const normalizedTitle = normalizeText(song.title);
-                const normalizedLyrics = normalizeText(song.lyrics);
-                
-                if (normalizedTitle.includes(normalizedFilter) || normalizedLyrics.includes(normalizedFilter)) {
-                    hasResults = true;
-                    
-                    // Create Index Link - Mida ajustada
-                    const li = document.createElement('li');
-                    li.innerHTML = `<a href="#" onclick="anarACanco('song-${index}'); return false;" class="text-blue-600 text-sm md:text-base hover:text-blue-800 hover:underline block p-1">${song.title}</a>`;
-                    songIndex.appendChild(li);
-
-                    // Create Song Card - Amb menys padding i lletra ajustada
-                    const card = document.createElement('article');
-                    card.id = `song-${index}`;
-                    card.className = "card bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 scroll-mt-24";
-                    
-                    card.innerHTML = `
-                        <div class="bg-blue-50 px-4 py-3 md:px-5 md:py-4 border-b border-blue-100 flex justify-between items-center">
-                            <div>
-                                <h2 class="text-lg md:text-xl font-bold text-blue-900">${song.title}</h2>
-                                <p class="text-xs md:text-sm text-gray-600 italic mt-0.5">${song.author}</p>
-                            </div>
-                            <a href="#" onclick="anarAIndex(); return false;" class="text-[10px] md:text-xs text-blue-500 hover:text-blue-700 bg-white px-2 py-1 rounded border border-blue-200 uppercase font-semibold">↑ Índex</a>
-                        </div>
-                        <div class="p-4 md:p-5">
-                            <div class="lyrics text-sm md:text-base text-gray-800">${song.lyrics}</div>
-                        </div>
-                    `;
-                    songsContainer.appendChild(card);
-                }
-            });
-
-            if (hasResults) {
-                noResults.classList.add('hidden');
-            } else {
-                noResults.classList.remove('hidden');
-            }
-        }
-
-        searchInput.addEventListener('input', (e) => {
-            renderSongs(e.target.value);
+<script>
+    function anarACanco(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+    function anarAIndex(){const el=document.getElementById('indexContainer');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo({top:0,behavior:'smooth'});}
+    const songs=[
+        {title:"El canó de Palamós",author:"Josep Lluís Ortega Monasterio",lyrics:`El canó de Palamós,\nben mirat que n'és d'hermós,\nja fa temps que està callat,\nja fa temps que mira el mar\namb el ventre rovellat,\nquatre rodes i un forat.\n\nDe la boca del canó,\nnomés surten els records\nde les guerres d'aquell temps,\nquan la gent de l'Empordà,\nde la Selva i del Vallès\nes mataven per no res.\n\nEscolteu la seva veu,\noh, canons de tot el món\ni la gent de tot arreu,\nno més guerres ni més morts,\nno més bombes ni més foc,\nsóc el canó de Palamós.`},
+        {title:"El capità",author:"Carles Casanovas / Antoni Mas",lyrics:`Quan naveguis de bolina,\nsota el grop orsant la nau.\nQuan la boira sigui espessa\ni el redós quedi llunyà.\n\nQuan terregis entre lloses,\nperquè el vent és massa fort.\nQuan el cel no té resposta,\nllavors sabràs el que costa\nmenar la nau fins a port.\n\nQue senzill ser capità\nquan el vent bufa de popa,\nquan no hi ha esculls a tocar,\nquan la pesca és generosa.\nQue senzill ser capità\nsota estrelles i a coberta,\ntot singlant per mar oberta\ni amb la lluna de costat.\n\nQuan el far no et sigui guia\nperquè no volen els déus.\nQuan l'onada trenqui a sobre,\nquan et costi estar dempeus.\nQuan la mar brami gelosa\ni tremoli tot el casc,\nquan la força et sigui escassa,\nllavors sabràs quina traça\nli cal a un bon capità.\n\nQuan la mar dorm encalmada,\nquan Neptú fa migdiada,\njo també sóc capità.`},
+        {title:"El meu avi",author:"J.L. Ortega Monasterio",lyrics:`El meu avi va anar a Cuba\na bordo del "Catalán",\nel millor barco de guerra\nde la flota d'Ultramar.\nEl timoner i el nostramo\ni catorze mariners\neren nascuts a Calella,\neren nascuts a Palafrugell...\n\nQuan el "Catalán" sortia a la mar,\nels nois de Calella feien un cremat,\nmans a la guitarra, solien cantar, solien cantar:\nVisca Catalunya! Visca el "Catalán"!...\n\nArribaren temps de guerres,\nde perfídies i traïcions\nen el mar de les Antilles\nretronaren els canons.\nI el mariners de Calella,\nel meu avi enmig de tots,\nvaren morir a coberta,\nvaren morir al peu del canó!\n\nQuan el "Catalán" sortia a la mar,\ncridava el meu avi: apa nois que és tard!\nperò els valents de bordo\nno varen tornar, no varen tornar\ntingueren la culpa els americans...`},
+    ];
+    const songsContainer=document.getElementById('songsContainer');
+    const songIndex=document.getElementById('songIndex');
+    const searchInput=document.getElementById('searchInput');
+    const noResults=document.getElementById('noResults');
+    function norm(t){return t.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();}
+    function render(f=""){
+        songsContainer.innerHTML="";songIndex.innerHTML="";
+        const nf=norm(f);let ok=false;
+        songs.forEach((s,i)=>{
+            if(!norm(s.title).includes(nf)&&!norm(s.lyrics).includes(nf))return;
+            ok=true;
+            const a=document.createElement('a');a.href='#';a.className='index-link';a.textContent=s.title;
+            a.onclick=e=>{e.preventDefault();anarACanco('song-'+i);};songIndex.appendChild(a);
+            const c=document.createElement('article');c.id='song-'+i;c.className='song-card';
+            c.innerHTML=`<div class="song-header"><div><div class="song-title">${s.title}</div><div class="song-author">${s.author}</div></div><a href="#" class="btn-index" onclick="anarAIndex();return false;">↑ Índex</a></div><div class="song-body"><div class="lyrics">${s.lyrics}</div></div>`;
+            songsContainer.appendChild(c);
         });
-
-        // Initial render
-        renderSongs();
-
-    </script>
+        noResults.style.display=ok?'none':'block';
+    }
+    searchInput.addEventListener('input',e=>render(e.target.value));
+    render();
+</script>
 </body>
 </html>

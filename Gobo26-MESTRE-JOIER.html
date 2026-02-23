@@ -8,9 +8,10 @@
 <style>
   :root { --bg: #f1f5f9; --header: #1e293b; --accent: #2563eb; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
   body {
     font-family: 'Montserrat', sans-serif;
-    background: var(--bg); min-height: 100vh;
+    background: var(--bg); height: 100%;
     display: flex; flex-direction: column; align-items: center;
     overflow-x: hidden;
   }
@@ -53,6 +54,7 @@
     width: 100%; max-width: 640px;
     padding: 1.2rem 1rem 2rem;
     display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+    flex: 1; overflow-y: auto;
   }
 
   /* MISSATGE */

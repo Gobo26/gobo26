@@ -15,7 +15,8 @@
     --gold:#f59e0b;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);height:100%;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;}
 
 /* HEADER */
 .top-header{width:100%;background:var(--s800);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
@@ -33,7 +34,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);min-height:100vh;d
 .btn-abandon-vis:hover{background:#b91c1c;transform:scale(1.05);}
 .btn-abandon-vis:active{transform:scale(.97);}
 
-main{width:100%;max-width:700px;padding:16px 12px 32px;display:flex;flex-direction:column;align-items:center;gap:14px;}
+main{width:100%;max-width:700px;padding:16px 12px 32px;display:flex;flex-direction:column;align-items:center;gap:14px;flex:1;overflow-y:auto;}
 
 /* MARCADORS */
 .marcadors{display:flex;gap:8px;width:100%;justify-content:center;flex-wrap:wrap;}
