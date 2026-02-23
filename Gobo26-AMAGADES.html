@@ -10,15 +10,16 @@
     --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
     --s600:#475569; --s700:#334155; --s800:#1e293b;
     --blue:#2563eb; --blue2:#3b82f6;
-    --ok:#16a34a; --okl:rgba(22,163,74,0.1);
-    --err:#dc2626; --errl:rgba(220,38,38,0.08);
+    --ok:#16a34a; --okl:#dcfce7;
+    --err:#dc2626; --errl:#fee2e2;
     --gold:#f59e0b;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);display:flex;flex-direction:column;align-items:center;}
 
 /* HEADER */
-header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
 .logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
 .logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
 .logo-txt span{color:var(--blue2);}
@@ -26,10 +27,10 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
 #btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
 #btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
 
-main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:14px;}
+main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:14px;flex:1;overflow-y:auto;}
 
 /* TARGETES PANELL */
-.card{width:100%;background:white;border:1px solid var(--s200);border-radius:14px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.07);}
+.card{width:100%;background:white;border:1px solid var(--s200);border-radius:14px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
 
 /* SELECTOR NIVELL */
 .card h3{font-size:.75rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;text-align:center;}
@@ -83,39 +84,33 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 .boto-gran{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;padding:14px 28px;border-radius:99px;border:none;cursor:pointer;background:var(--blue);color:white;box-shadow:0 4px 0 #1d4ed8;transition:opacity .2s;}
 .boto-gran:hover{opacity:.9;}
 .boto-gran:active{transform:translateY(2px);box-shadow:0 2px 0 #1d4ed8;}
-.boto-gran.sec{background:#1a2235;color:var(--s700);border:2px solid var(--s300);box-shadow:none;}
+.boto-gran.sec{background:white;color:var(--s700);border:2px solid var(--s300);box-shadow:none;}
 
 /* RÈCORDS */
-#record-panel{width:100%;max-width:680px;background:white;border:1px solid var(--s200);padding:12px 16px;border-radius:12px;display:none;box-shadow:0 2px 8px rgba(0,0,0,.06);}
-#record-panel h3{color:var(--s700);font-size:.8rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:0;}
-.rec-caps{display:grid;grid-template-columns:1fr 60px 60px 60px;font-size:.65rem;font-weight:700;color:var(--s400);text-transform:uppercase;padding:0 4px;margin-bottom:2px;text-align:center;}
-.rec-row{display:grid;grid-template-columns:1fr 60px 60px 60px;padding:4px 4px;border-bottom:1px solid var(--s200);font-size:.8rem;font-weight:700;color:var(--s700);text-align:center;align-items:center;}
+#record-panel{width:100%;max-width:680px;background:white;border:1px solid var(--s200);padding:16px 20px;border-radius:12px;display:none;}
+#record-panel h3{color:var(--s700);font-size:.85rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;}
+.rec-caps{display:grid;grid-template-columns:1fr 60px 60px 60px;font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;padding:0 4px;margin-bottom:4px;text-align:center;}
+.rec-row{display:grid;grid-template-columns:1fr 60px 60px 60px;padding:6px 4px;border-bottom:1px solid var(--s200);font-size:.82rem;font-weight:700;color:var(--s700);text-align:center;align-items:center;}
 .rec-row:last-child{border-bottom:none;}
 .rec-row span:first-child{text-align:left;}
-.rec-row .val{color:var(--blue);font-size:.75rem;}
+.rec-row .val{color:var(--blue);font-size:.78rem;}
 
 /* ESTADÍSTIQUES */
-#estadistiques{width:100%;max-width:680px;background:white;border:1px solid var(--s200);padding:12px 16px;border-radius:12px;display:none;box-shadow:0 2px 8px rgba(0,0,0,.06);}
-#estadistiques h2{text-align:left;font-size:.8rem;font-weight:900;color:var(--s800);text-transform:uppercase;letter-spacing:2px;margin-bottom:0;}
-.fila-stat{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--s200);font-size:.85rem;}
+#estadistiques{width:100%;max-width:680px;background:white;border:1px solid var(--s200);padding:20px;border-radius:12px;display:none;}
+#estadistiques h2{text-align:center;font-size:1rem;font-weight:900;color:var(--s800);text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;}
+.fila-stat{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:.9rem;}
 .fila-stat:last-of-type{border-bottom:none;}
 .stat-val{font-weight:900;color:var(--blue);}
-
-/* Contingut plegable */
-.panel-cap{display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
-.panel-arrow{font-size:.8rem;color:var(--s400);}
-.panel-cos{overflow:hidden;transition:max-height .3s ease;max-height:300px;margin-top:8px;}
-.panel-cos.tancat{max-height:0;margin-top:0;}
 
 /* MODALS */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;}
 .modal-overlay.show{display:flex;}
-.modal-box{background:white;border:1px solid var(--s200);border-radius:20px;padding:28px 24px 22px;max-width:400px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);}
+.modal-box{background:white;border:1px solid var(--s200);border-radius:20px;padding:28px 24px 22px;max-width:400px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.15);animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);}
 @keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
 .modal-box h2{font-size:1.2rem;margin-bottom:14px;color:var(--s800);}
 .ajuda-pas{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;font-size:.88rem;line-height:1.5;color:var(--s700);}
 .ajuda-ico{font-size:1.4rem;flex-shrink:0;}
-#btn-tancar-ajuda{width:100%;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;padding:12px;background:var(--s800);color:white;border:none;border-radius:99px;cursor:pointer;margin-top:10px;}
+#btn-tancar-ajuda{width:100%;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;padding:12px;background:var(--blue);color:white;border:none;border-radius:99px;cursor:pointer;margin-top:10px;}
 
 /* TAULA TEMPS per nivell */
 .temps-bar{width:100%;background:var(--s200);border-radius:99px;height:5px;margin-top:4px;overflow:hidden;}
@@ -125,13 +120,13 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 .confeti{position:fixed;border-radius:2px;pointer-events:none;z-index:300;animation:confetti-fall 2.2s ease-in forwards;}
 @keyframes confetti-fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
 
-footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padding:16px;margin-top:auto;border-top:1px solid #1e2d45;}
-@media(max-width:400px){.niv-grid{grid-template-columns:repeat(2,1fr);}header .logo-txt{display:none;}}
+footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padding:16px;flex-shrink:0;border-top:1px solid #1e2d45;}
+@media(max-width:400px){.niv-grid{grid-template-columns:repeat(2,1fr);}}
 </style>
 </head>
 <body>
 <header>
-    <a href="https://ja.cat/appgobo" target="_blank" class="logo">
+    <a href="https://ja.cat/appgobo" target="_self" class="logo">
         <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
             <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
             <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
@@ -187,33 +182,23 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
 
     <!-- RÈCORDS -->
     <div id="record-panel">
-        <div class="panel-cap" onclick="togglePanel('rec-cos','rec-arr')">
-            <h3>🏅 Millors marques</h3>
-            <span class="panel-arrow" id="rec-arr">▲</span>
-        </div>
-        <div class="panel-cos" id="rec-cos">
-            <div class="rec-caps"><span>Nivell</span><span>🥇 1r</span><span>🥈 2n</span><span>🎮 Jug.</span></div>
-            <div class="rec-row" id="rec-row-3" style="display:none"><span>3 paraules</span><span class="val" id="rec-3-1">—</span><span class="val" id="rec-3-2">—</span><span class="val" id="rec-3-j">—</span></div>
-            <div class="rec-row" id="rec-row-4" style="display:none"><span>4 paraules</span><span class="val" id="rec-4-1">—</span><span class="val" id="rec-4-2">—</span><span class="val" id="rec-4-j">—</span></div>
-            <div class="rec-row" id="rec-row-5" style="display:none"><span>5 paraules</span><span class="val" id="rec-5-1">—</span><span class="val" id="rec-5-2">—</span><span class="val" id="rec-5-j">—</span></div>
-            <div class="rec-row" id="rec-row-6" style="display:none"><span>6 paraules</span><span class="val" id="rec-6-1">—</span><span class="val" id="rec-6-2">—</span><span class="val" id="rec-6-j">—</span></div>
-        </div>
+        <h3>🏅 Millors marques</h3>
+        <div class="rec-caps"><span>Nivell</span><span>🥇 1r</span><span>🥈 2n</span><span>🎮 Jug.</span></div>
+        <div class="rec-row" id="rec-row-3" style="display:none"><span>3 paraules</span><span class="val" id="rec-3-1">—</span><span class="val" id="rec-3-2">—</span><span class="val" id="rec-3-j">—</span></div>
+        <div class="rec-row" id="rec-row-4" style="display:none"><span>4 paraules</span><span class="val" id="rec-4-1">—</span><span class="val" id="rec-4-2">—</span><span class="val" id="rec-4-j">—</span></div>
+        <div class="rec-row" id="rec-row-5" style="display:none"><span>5 paraules</span><span class="val" id="rec-5-1">—</span><span class="val" id="rec-5-2">—</span><span class="val" id="rec-5-j">—</span></div>
+        <div class="rec-row" id="rec-row-6" style="display:none"><span>6 paraules</span><span class="val" id="rec-6-1">—</span><span class="val" id="rec-6-2">—</span><span class="val" id="rec-6-j">—</span></div>
     </div>
 
     <!-- ESTADÍSTIQUES -->
     <div id="estadistiques">
-        <div class="panel-cap" onclick="togglePanel('stat-cos','stat-arr')">
-            <h2>📊 Estadístiques</h2>
-            <span class="panel-arrow" id="stat-arr">▲</span>
-        </div>
-        <div class="panel-cos" id="stat-cos">
-            <div class="fila-stat"><span>🥇 Victòria al 1r intent</span><span class="stat-val" id="st-v1">0</span></div>
-            <div class="fila-stat"><span>🥈 Victòria al 2n intent</span><span class="stat-val" id="st-v2">0</span></div>
-            <div class="fila-stat"><span>💀 Derrotes</span><span class="stat-val" id="st-d">0</span></div>
-            <div class="fila-stat"><span>🎮 Partides totals</span><span class="stat-val" id="st-t">0</span></div>
-            <div style="text-align:center;margin-top:8px;">
-                <span style="cursor:pointer;font-size:.75rem;color:var(--s600);text-decoration:underline;" onclick="esborrarDades()">Esborrar dades</span>
-            </div>
+        <h2>📊 Estadístiques</h2>
+        <div class="fila-stat"><span>🥇 Victòria al 1r intent</span><span class="stat-val" id="st-v1">0</span></div>
+        <div class="fila-stat"><span>🥈 Victòria al 2n intent</span><span class="stat-val" id="st-v2">0</span></div>
+        <div class="fila-stat"><span>💀 Derrotes</span><span class="stat-val" id="st-d">0</span></div>
+        <div class="fila-stat"><span>🎮 Partides totals</span><span class="stat-val" id="st-t">0</span></div>
+        <div style="text-align:center;margin-top:12px;">
+            <span style="cursor:pointer;font-size:.8rem;color:var(--s600);text-decoration:underline;" onclick="esborrarDades()">Esborrar dades</span>
         </div>
     </div>
 </main>
@@ -560,24 +545,12 @@ function esborrarDades(){
     }
 }
 
-function togglePanel(cosId, arrId){
-    const cos=document.getElementById(cosId);
-    const arr=document.getElementById(arrId);
-    if(cos.classList.contains('tancat')){
-        cos.classList.remove('tancat');
-        if(arr) arr.textContent='▲';
-    } else {
-        cos.classList.add('tancat');
-        if(arr) arr.textContent='▼';
-    }
-}
-
 // Init: mostrar pantalla inici
 mostra('p-inici');
 </script>
-<footer style="font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padding:16px;margin-top:auto;border-top:1px solid var(--s200);">
-    <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer"
-       style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:var(--s400);text-decoration:none;"
+<footer style="font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:16px;flex-shrink:0;border-top:1px solid #1e2d45;">
+    <a href="https://ja.cat/appgobo" target="_self"
+       style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:#94a3b8;text-decoration:none;"
        onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
         <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
         Una aplicació de Gobo26
