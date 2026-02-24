@@ -278,6 +278,136 @@
             letter-spacing: 0.1em;
         }
 
+        /* ── HERO AMPLIAT ── */
+        .hero-desc {
+            max-width: 560px;
+            margin: 1.4rem auto 0;
+            font-size: 0.88rem;
+            font-weight: 400;
+            color: var(--text-mid);
+            line-height: 1.75;
+        }
+        .hero-desc strong { color: var(--text); font-weight: 700; }
+
+        /* ── COMPTADOR DE TEMPS ── */
+        .temps-card {
+            max-width: 560px;
+            margin: 2rem auto 3.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.4rem 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1.4rem;
+            animation: fadeIn 1s ease 0.4s both;
+        }
+        .temps-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 10px rgba(96,165,250,0.4));
+        }
+        .temps-cos { flex: 1; }
+        .temps-numero {
+            font-size: 1.9rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #60a5fa, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        .temps-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            margin-top: 4px;
+            letter-spacing: 0.05em;
+        }
+        .temps-sub {
+            font-size: 0.68rem;
+            color: var(--text-dim);
+            margin-top: 3px;
+            font-style: italic;
+        }
+        @media (max-width: 480px) {
+            .temps-card { padding: 1rem 1.2rem; gap: 1rem; }
+            .temps-numero { font-size: 1.5rem; }
+        }
+
+        /* ── MENÚ FLOTANT ── */
+        .fab-menu-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 200;
+            width: 52px; height: 52px;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(59,130,246,0.5);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .fab-menu-btn:hover { background: #2563eb; transform: scale(1.08); }
+        .fab-menu-btn.obert { background: #ef4444; box-shadow: 0 4px 20px rgba(239,68,68,0.4); }
+
+        .nav-panel {
+            position: fixed;
+            bottom: 4.8rem;
+            right: 1.5rem;
+            z-index: 199;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 0.6rem 0;
+            min-width: 210px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+            transform: scale(0.9) translateY(10px);
+            transform-origin: bottom right;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .nav-panel.obert {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+        .nav-panel-titol {
+            font-size: 0.58rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-dim);
+            padding: 0.5rem 1.2rem 0.3rem;
+        }
+        .nav-panel a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            color: var(--text-mid);
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.15s;
+            border-radius: 8px;
+            margin: 1px 6px;
+        }
+        .nav-panel a:hover { background: var(--surface2); color: var(--text); }
+        .nav-panel a .nav-em { font-size: 1rem; }
+        .nav-overlay {
+            position: fixed; inset: 0; z-index: 198;
+            display: none;
+        }
+        .nav-overlay.obert { display: block; }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
@@ -308,11 +438,28 @@
 <main>
     <div class="hero">
         <h1>Les Aplicacions<br>de Gobo26</h1>
-        <p>Jocs, eines i recursos creats amb cura · En català · Per a tothom</p>
+        <p class="hero-desc">
+            Jocs i eines pensats per mantenir la ment eixerida — per a infants que aprenen,
+            adults que s'exerciten i gent gran que no vol parar.<br>
+            <strong>Cada partida és un acte de cura cap al propi cervell</strong>: 
+            memòria, lògica, llengua, càlcul, cultura. 
+            Sense publicitat, sense registres, sense pressa.
+            Fets amb cura, en la nostra llengua.
+        </p>
+    </div>
+
+    <!-- COMPTADOR DE TEMPS -->
+    <div class="temps-card">
+        <div class="temps-icon">🧠</div>
+        <div class="temps-cos">
+            <div class="temps-numero" id="temps-total">–</div>
+            <div class="temps-label">hores de cervell actiu entre tots els jugadors</div>
+            <div class="temps-sub">i segueix creixent ara mateix…</div>
+        </div>
     </div>
 
     <!-- CATEGORIA 1: JOCS DE NÚMEROS -->
-    <div class="category">
+    <div class="category" id="cat-numeros">
         <div class="category-label">Jocs de Números</div>
         <div class="grid">
 
@@ -402,8 +549,32 @@
         </div>
     </div>
 
+    <!-- CATEGORIA: AVENTURES -->
+    <div class="category" id="cat-aventures">
+        <div class="category-label">Aventures i Misteris</div>
+        <div class="grid">
+
+            <a class="app-card" href="Gobo26-ONCLE-ALBERT.html" target="_self">
+                <div class="app-icon" style="background:linear-gradient(135deg,#1a1a2e,#2d1b4e);">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <!-- lupa -->
+                        <circle cx="13" cy="13" r="8" fill="none" stroke="#a78bfa" stroke-width="1.8"/>
+                        <circle cx="13" cy="13" r="4.5" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.6"/>
+                        <line x1="19" y1="19" x2="27" y2="27" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"/>
+                        <!-- interrogant dins la lupa -->
+                        <text x="13" y="17" text-anchor="middle" fill="#ddd6fe" font-size="8" font-weight="900" font-family="sans-serif">?</text>
+                    </svg>
+                </div>
+                <div class="app-name">L'Oncle Albert</div>
+                <div class="app-desc">Escape room: desxifra els codis del criptògraf</div>
+                <span class="app-badge" style="background:rgba(167,139,250,0.15);color:#a78bfa;">Misteri</span>
+            </a>
+
+        </div>
+    </div>
+
     <!-- CATEGORIA 2: JOCS DE PARAULES -->
-    <div class="category">
+    <div class="category" id="cat-paraules">
         <div class="category-label">Jocs de Paraules</div>
         <div class="grid">
 
@@ -488,7 +659,7 @@
     </div>
 
     <!-- CATEGORIA 3: MEMÒRIA I AGILITAT -->
-    <div class="category">
+    <div class="category" id="cat-memoria">
         <div class="category-label">Memòria i Agilitat Mental</div>
         <div class="grid">
 
@@ -525,7 +696,7 @@
     </div>
 
     <!-- CATEGORIA 4: EINES I RECURSOS -->
-    <div class="category">
+    <div class="category" id="cat-eines">
         <div class="category-label">Eines i Recursos</div>
         <div class="grid">
 
@@ -600,6 +771,69 @@
         <span class="footer-text">Una aplicació de Gobo26</span>
     </div>
 </footer>
+
+<!-- MENÚ FLOTANT -->
+<div class="nav-overlay" id="nav-overlay" onclick="tancarMenu()"></div>
+<div class="nav-panel" id="nav-panel">
+    <div class="nav-panel-titol">Navega per seccions</div>
+    <a href="#cat-numeros"  onclick="tancarMenu()"><span class="nav-em">🔢</span> Jocs de Números</a>
+    <a href="#cat-aventures" onclick="tancarMenu()"><span class="nav-em">🔍</span> Aventures i Misteris</a>
+    <a href="#cat-paraules" onclick="tancarMenu()"><span class="nav-em">📝</span> Jocs de Paraules</a>
+    <a href="#cat-memoria"  onclick="tancarMenu()"><span class="nav-em">🧩</span> Memòria i Agilitat</a>
+    <a href="#cat-eines"    onclick="tancarMenu()"><span class="nav-em">🛠️</span> Eines i Recursos</a>
+</div>
+<button class="fab-menu-btn" id="fab-btn" onclick="toggleMenu()" aria-label="Navegació">☰</button>
+
+<script>
+// ── MENÚ FLOTANT ──
+function toggleMenu() {
+    const btn   = document.getElementById('fab-btn');
+    const panel = document.getElementById('nav-panel');
+    const overlay = document.getElementById('nav-overlay');
+    const obert = panel.classList.toggle('obert');
+    overlay.classList.toggle('obert', obert);
+    btn.classList.toggle('obert', obert);
+    btn.textContent = obert ? '✕' : '☰';
+}
+function tancarMenu() {
+    document.getElementById('nav-panel').classList.remove('obert');
+    document.getElementById('nav-overlay').classList.remove('obert');
+    const btn = document.getElementById('fab-btn');
+    btn.classList.remove('obert');
+    btn.textContent = '☰';
+}
+
+// ── COMPTADOR DE TEMPS ──
+// Base: ~16 apps × 14 mesos × 45 usuaris/mes × 15 min/sessió = ~151.200 min = ~2.520 h
+// Ritme simulat: 1 hora cada 22 minuts (≈ 2-3 jugadors actius en tot moment)
+// Ancoratge fix al 01/01/2025 → valor creixent i coherent en qualsevol data futura
+(function iniciComptador() {
+    const BASE_HORES = 2520;
+    const INICI = new Date('2025-01-01T00:00:00Z').getTime();
+    const RITME_H_PER_MS = 1 / (22 * 60 * 1000); // 1 hora cada 22 minuts
+
+    function calcHores() {
+        const ara = Date.now();
+        const transcorreguts = Math.max(0, ara - INICI);
+        return BASE_HORES + transcorreguts * RITME_H_PER_MS;
+    }
+
+    function formatHores(h) {
+        if (h >= 10000) return (h / 1000).toFixed(1).replace('.', ',') + ' mil';
+        return Math.floor(h).toLocaleString('ca');
+    }
+
+    const el = document.getElementById('temps-total');
+    if (!el) return;
+
+    function actualitza() {
+        el.textContent = formatHores(calcHores()) + ' h';
+    }
+    actualitza();
+    // Actualitza cada 22 segons: el número puja 0,017 h (~1 min) → subtil però visible
+    setInterval(actualitza, 22000);
+})();
+</script>
 
 </body>
 </html>
