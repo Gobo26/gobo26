@@ -1,837 +1,601 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gobo26 — Aplicacions</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gobo26 — Aplicacions</title>
+<meta name="application-name" content="Gobo26">
+<meta name="description" content="Jocs i eines per mantenir la ment activa. Sense anuncis, sense esperes, al teu ritme.">
+<meta name="theme-color" content="#1e293b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Gobo26">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
-    <!-- PWA / Icona per al mòbil -->
-    <meta name="application-name" content="Gobo26">
-    <meta name="description" content="Jocs, eines i recursos creats amb cura · En català · Per a tothom">
-    <meta name="theme-color" content="#0a0e1a">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Gobo26">
+body{
+  font-family:'Montserrat',sans-serif;
+  background:#f1f5f9;
+  color:#334155;
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-    <!-- Icones -->
-    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
-    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+/* ── HEADER ── */
+header{
+  background:#1e293b;color:white;
+  padding:0 20px;height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+.hd-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:white;}
+.hd-logo-text{font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;}
+.hd-tagline{font-size:.65rem;font-weight:600;color:#64748b;letter-spacing:.08em;}
 
-    <!-- Manifest PWA -->
-    <link rel="manifest" href="manifest.json">
+/* ── MAIN ── */
+main{max-width:960px;margin:0 auto;padding:32px 16px 80px;}
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0a0e1a;
-            --surface: #111827;
-            --surface2: #1a2235;
-            --border: #1e2d45;
-            --accent: #3b82f6;
-            --text: #e2e8f0;
-            --text-dim: #64748b;
-            --text-mid: #94a3b8;
-        }
+/* ── HERO ── */
+.hero{
+  text-align:center;
+  padding:32px 16px 28px;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  animation:popIn .5s ease both;
+}
+.hero-em{font-size:3rem;filter:drop-shadow(0 4px 12px rgba(37,99,235,.2));}
+.hero-tit{
+  font-size:clamp(1.7rem,5vw,2.4rem);
+  font-weight:900;color:#1e293b;line-height:1.1;
+  letter-spacing:-.03em;
+}
+.hero-tit em{color:#2563eb;font-style:normal;}
+.hero-desc{
+  max-width:500px;
+  font-size:.9rem;font-weight:500;color:#475569;line-height:1.8;
+}
+.hero-desc strong{color:#1e293b;font-weight:800;}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+/* ── COMPTADOR ── */
+.temps-card{
+  display:flex;align-items:center;gap:16px;
+  background:white;border-radius:16px;
+  border:2px solid #e2e8f0;
+  padding:16px 22px;
+  max-width:440px;width:100%;
+  box-shadow:0 4px 16px rgba(37,99,235,.07);
+  margin-top:6px;
+  animation:popIn .5s .2s ease both;
+}
+.temps-icon{font-size:2rem;flex-shrink:0;}
+.temps-cos{flex:1;}
+.temps-num{
+  font-size:1.9rem;font-weight:900;
+  color:#2563eb;line-height:1;letter-spacing:-.03em;
+}
+.temps-label{font-size:.72rem;font-weight:700;color:#64748b;margin-top:3px;}
+.temps-sub{font-size:.62rem;color:#94a3b8;margin-top:2px;font-style:italic;}
+@media(max-width:480px){
+  .temps-card{padding:12px 16px;gap:12px;}
+  .temps-num{font-size:1.5rem;}
+}
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+/* ── CATEGORIES ── */
+.category{
+  margin-top:36px;
+  animation:slideUp .5s ease both;
+}
+.category:nth-child(1){animation-delay:.1s;}
+.category:nth-child(2){animation-delay:.15s;}
+.category:nth-child(3){animation-delay:.2s;}
+.category:nth-child(4){animation-delay:.25s;}
+.category:nth-child(5){animation-delay:.3s;}
+.category:nth-child(6){animation-delay:.35s;}
 
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: 0;
-        }
+.cat-label{
+  font-size:.6rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.28em;
+  color:#2563eb;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.cat-label::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,#e2e8f0,transparent);
+}
 
-        body::after {
-            content: '';
-            position: fixed;
-            top: -200px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 700px;
-            height: 400px;
-            background: radial-gradient(ellipse, rgba(59,130,246,0.07) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
+/* ── GRID ── */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+@media(max-width:760px){.grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:8px;}}
 
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: rgba(10,14,26,0.88);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            padding: 0 2rem;
-        }
+/* ── TARGETA ── */
+.app-card{
+  background:white;
+  border:1.5px solid #e2e8f0;
+  border-radius:14px;
+  padding:16px 10px 12px;
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;gap:7px;
+  transition:all .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.app-card:hover{
+  border-color:#2563eb;
+  box-shadow:0 6px 22px rgba(37,99,235,.12);
+  transform:translateY(-3px);
+}
+.app-card:active{transform:translateY(0);box-shadow:none;}
 
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+.app-icon{
+  width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:transform .2s;
+}
+.app-card:hover .app-icon{transform:scale(1.08);}
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+.app-name{
+  font-size:.7rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.06em;
+  color:#1e293b;line-height:1.2;
+}
+.app-desc{
+  font-size:.64rem;color:#64748b;
+  line-height:1.45;font-weight:500;
+  flex:1;
+}
+.app-badge{
+  font-size:.55rem;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;
+  margin-top:auto;
+}
 
-        .logo-text {
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--text-mid);
-        }
+/* ── FOOTER ── */
+footer{
+  background:#1e293b;color:#64748b;
+  text-align:center;padding:12px;
+  font-size:.65rem;font-weight:600;
+}
+footer a{color:#64748b;text-decoration:none;}
 
-        .header-tagline {
-            font-size: 0.68rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--text-dim);
-        }
+/* ── MENÚ FLOTANT ── */
+.fab{
+  position:fixed;bottom:1.4rem;right:1.4rem;z-index:200;
+  width:50px;height:50px;
+  background:#2563eb;border:none;border-radius:50%;
+  color:white;font-size:1.2rem;
+  cursor:pointer;
+  box-shadow:0 4px 18px rgba(37,99,235,.5);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.fab:hover{background:#1d4ed8;transform:scale(1.08);}
+.fab.obert{background:#ef4444;box-shadow:0 4px 18px rgba(239,68,68,.4);}
 
-        main {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem 5rem;
-        }
+.nav-panel{
+  position:fixed;bottom:4.4rem;right:1.4rem;z-index:199;
+  background:white;border:1.5px solid #e2e8f0;border-radius:14px;
+  padding:6px 0;min-width:210px;
+  box-shadow:0 8px 32px rgba(0,0,0,.12);
+  transform:scale(.9) translateY(10px);
+  transform-origin:bottom right;
+  opacity:0;pointer-events:none;
+  transition:all .2s cubic-bezier(.34,1.56,.64,1);
+}
+.nav-panel.obert{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+.nav-tit{
+  font-size:.55rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.2em;
+  color:#94a3b8;padding:6px 16px 3px;
+}
+.nav-panel a{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 16px;text-decoration:none;
+  color:#475569;font-size:.78rem;font-weight:700;
+  transition:all .15s;border-radius:8px;margin:1px 5px;
+}
+.nav-panel a:hover{background:#f1f5f9;color:#1e293b;}
 
-        .hero {
-            text-align: center;
-            margin-bottom: 4rem;
-            animation: fadeIn 0.8s ease forwards;
-        }
+.nav-overlay{position:fixed;inset:0;z-index:198;display:none;}
+.nav-overlay.obert{display:block;}
 
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #e2e8f0 0%, #60a5fa 50%, #93c5fd 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 0.9rem;
-            color: var(--text-dim);
-            letter-spacing: 0.05em;
-        }
-
-        .category {
-            margin-bottom: 3rem;
-            opacity: 0;
-            animation: slideUp 0.6s ease forwards;
-        }
-        .category:nth-child(1) { animation-delay: 0.1s; }
-        .category:nth-child(2) { animation-delay: 0.2s; }
-        .category:nth-child(3) { animation-delay: 0.3s; }
-        .category:nth-child(4) { animation-delay: 0.4s; }
-
-        .category-label {
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 0.28em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .category-label::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, var(--border), transparent);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-        }
-
-        @media (max-width: 960px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; } }
-
-        .app-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.3rem 1rem 1.1rem;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 0.65rem;
-            transition: all 0.25s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .app-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, transparent 50%, rgba(59,130,246,0.04));
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .app-card:hover {
-            border-color: rgba(59,130,246,0.45);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 36px rgba(0,0,0,0.5), 0 0 0 1px rgba(59,130,246,0.1);
-            background: var(--surface2);
-        }
-
-        .app-card:hover::before { opacity: 1; }
-
-        .app-icon {
-            width: 54px;
-            height: 54px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: transform 0.25s ease;
-        }
-
-        .app-card:hover .app-icon { transform: scale(1.08); }
-
-        .app-name {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: var(--text);
-            line-height: 1.2;
-        }
-
-        .app-desc {
-            font-size: 0.68rem;
-            color: var(--text-dim);
-            line-height: 1.45;
-            font-weight: 400;
-        }
-
-        .app-badge {
-            font-size: 0.58rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 3px 9px;
-            border-radius: 20px;
-            margin-top: auto;
-        }
-
-        footer {
-            position: relative;
-            z-index: 1;
-            border-top: 1px solid var(--border);
-            padding: 1.5rem 2rem;
-            text-align: center;
-        }
-
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .footer-text {
-            font-size: 0.68rem;
-            color: var(--text-dim);
-            letter-spacing: 0.1em;
-        }
-
-        /* ── HERO AMPLIAT ── */
-        .hero-desc {
-            max-width: 560px;
-            margin: 1.4rem auto 0;
-            font-size: 0.88rem;
-            font-weight: 400;
-            color: var(--text-mid);
-            line-height: 1.75;
-        }
-        .hero-desc strong { color: var(--text); font-weight: 700; }
-
-        /* ── COMPTADOR DE TEMPS ── */
-        .temps-card {
-            max-width: 560px;
-            margin: 2rem auto 3.5rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.4rem 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 1.4rem;
-            animation: fadeIn 1s ease 0.4s both;
-        }
-        .temps-icon {
-            font-size: 2rem;
-            flex-shrink: 0;
-            filter: drop-shadow(0 0 10px rgba(96,165,250,0.4));
-        }
-        .temps-cos { flex: 1; }
-        .temps-numero {
-            font-size: 1.9rem;
-            font-weight: 900;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #60a5fa, #93c5fd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-        }
-        .temps-label {
-            font-size: 0.72rem;
-            font-weight: 600;
-            color: var(--text-dim);
-            margin-top: 4px;
-            letter-spacing: 0.05em;
-        }
-        .temps-sub {
-            font-size: 0.68rem;
-            color: var(--text-dim);
-            margin-top: 3px;
-            font-style: italic;
-        }
-        @media (max-width: 480px) {
-            .temps-card { padding: 1rem 1.2rem; gap: 1rem; }
-            .temps-numero { font-size: 1.5rem; }
-        }
-
-        /* ── MENÚ FLOTANT ── */
-        .fab-menu-btn {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            z-index: 200;
-            width: 52px; height: 52px;
-            background: var(--accent);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.3rem;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(59,130,246,0.5);
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .fab-menu-btn:hover { background: #2563eb; transform: scale(1.08); }
-        .fab-menu-btn.obert { background: #ef4444; box-shadow: 0 4px 20px rgba(239,68,68,0.4); }
-
-        .nav-panel {
-            position: fixed;
-            bottom: 4.8rem;
-            right: 1.5rem;
-            z-index: 199;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 0.6rem 0;
-            min-width: 210px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-            transform: scale(0.9) translateY(10px);
-            transform-origin: bottom right;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
-        }
-        .nav-panel.obert {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-            pointer-events: all;
-        }
-        .nav-panel-titol {
-            font-size: 0.58rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--text-dim);
-            padding: 0.5rem 1.2rem 0.3rem;
-        }
-        .nav-panel a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0.6rem 1.2rem;
-            text-decoration: none;
-            color: var(--text-mid);
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: all 0.15s;
-            border-radius: 8px;
-            margin: 1px 6px;
-        }
-        .nav-panel a:hover { background: var(--surface2); color: var(--text); }
-        .nav-panel a .nav-em { font-size: 1rem; }
-        .nav-overlay {
-            position: fixed; inset: 0; z-index: 198;
-            display: none;
-        }
-        .nav-overlay.obert { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+/* ── ANIMACIONS ── */
+@keyframes popIn{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
 </head>
 <body>
 
 <header>
-    <div class="header-inner">
-        <div class="logo">
-            <svg width="36" height="36" viewBox="0 0 100 100" fill="none">
-                <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
-                <text x="50" y="42" text-anchor="middle" fill="white" font-size="22" font-weight="800" font-family="sans-serif">GOBO</text>
-                <text x="50" y="65" text-anchor="middle" fill="#60a5fa" font-size="20" font-weight="700" font-family="sans-serif">26</text>
-            </svg>
-            <span class="logo-text">Gobo26</span>
-        </div>
-        <span class="header-tagline">Aplicacions útils i senzilles</span>
-    </div>
+  <a class="hd-logo" href="https://ja.cat/appgobo" target="_self">
+    <svg width="30" height="30" viewBox="0 0 40 46" fill="none">
+      <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
+      <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
+      <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+    </svg>
+    <span class="hd-logo-text">Gobo26</span>
+  </a>
+  <span class="hd-tagline">Aplicacions útils i senzilles</span>
 </header>
 
 <main>
-    <div class="hero">
-        <h1>Les Aplicacions<br>de Gobo26</h1>
-        <p class="hero-desc">
-            Jocs i eines pensats per mantenir la ment eixerida — per a infants que aprenen,
-            adults que s'exerciten i gent gran que no vol parar.<br>
-            <strong>Cada partida és un acte de cura cap al propi cervell</strong>: 
-            memòria, lògica, llengua, càlcul, cultura. 
-            Sense publicitat, sense registres, sense pressa.
-            Fets amb cura, en la nostra llengua.
-        </p>
-    </div>
 
-    <!-- COMPTADOR DE TEMPS -->
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-em">🧠</div>
+    <h1 class="hero-tit">Les Aplicacions<br>de <em>Gobo26</em></h1>
+    <p class="hero-desc">
+      Jocs i eines per mantenir la ment activa, pensats per a la curiositat dels infants,
+      l'experiència dels adults i la motivació de la gent gran que no vol parar.<br>
+      Memòria, lògica, llengua i càlcul en un entorn pur:
+      <strong>sense anuncis, sense esperes, al teu ritme.</strong>
+    </p>
     <div class="temps-card">
-        <div class="temps-icon">🧠</div>
-        <div class="temps-cos">
-            <div class="temps-numero" id="temps-total">–</div>
-            <div class="temps-label">hores de cervell actiu entre tots els jugadors</div>
-            <div class="temps-sub">i segueix creixent ara mateix…</div>
-        </div>
+      <div class="temps-icon">⏱️</div>
+      <div class="temps-cos">
+        <div class="temps-num" id="temps-total">–</div>
+        <div class="temps-label">hores de cervell actiu entre tots els jugadors</div>
+        <div class="temps-sub">i segueix creixent ara mateix…</div>
+      </div>
     </div>
+  </div>
 
-    <!-- CATEGORIA 1: JOCS DE NÚMEROS -->
-    <div class="category" id="cat-numeros">
-        <div class="category-label">Jocs de Números</div>
-        <div class="grid">
+  <!-- ── JOCS DE NÚMEROS ── -->
+  <div class="category" id="cat-numeros">
+    <div class="cat-label">🔢 Jocs de Números</div>
+    <div class="grid">
 
-            <a class="app-card" href="Gobo26-SUDOKU.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#1e3a5f,#1e4d8c);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect x="3" y="3" width="8" height="8" rx="1.5" fill="#3b82f6" opacity="0.9"/>
-                        <rect x="12" y="3" width="8" height="8" rx="1.5" fill="#60a5fa" opacity="0.5"/>
-                        <rect x="21" y="3" width="8" height="8" rx="1.5" fill="#3b82f6" opacity="0.9"/>
-                        <rect x="3" y="12" width="8" height="8" rx="1.5" fill="#60a5fa" opacity="0.5"/>
-                        <rect x="12" y="12" width="8" height="8" rx="1.5" fill="#3b82f6" opacity="0.9"/>
-                        <rect x="21" y="12" width="8" height="8" rx="1.5" fill="#60a5fa" opacity="0.5"/>
-                        <rect x="3" y="21" width="8" height="8" rx="1.5" fill="#60a5fa" opacity="0.5"/>
-                        <rect x="12" y="21" width="8" height="8" rx="1.5" fill="#3b82f6" opacity="0.9"/>
-                        <rect x="21" y="21" width="8" height="8" rx="1.5" fill="#60a5fa" opacity="0.5"/>
-                        <text x="7" y="11" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">9</text>
-                        <text x="16" y="11" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">1</text>
-                        <text x="25" y="11" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">5</text>
-                        <text x="7" y="20" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">3</text>
-                        <text x="16" y="20" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">7</text>
-                        <text x="25" y="20" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">2</text>
-                        <text x="7" y="29" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">4</text>
-                        <text x="16" y="29" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">6</text>
-                        <text x="25" y="29" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">8</text>
-                    </svg>
-                </div>
-                <div class="app-name">Sudoku</div>
-                <div class="app-desc">El clàssic joc de números 9×9</div>
-                <span class="app-badge" style="background:rgba(59,130,246,0.15);color:#60a5fa;">Lògica</span>
-            </a>
-
-            <a class="app-card" href="Gobo26-CASCADA-NUMERICA.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#1a3a2a,#1a5c3a);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <text x="16" y="10" text-anchor="middle" fill="#34d399" font-size="9" font-weight="700" font-family="sans-serif">1</text>
-                        <text x="10" y="19" text-anchor="middle" fill="#6ee7b7" font-size="9" font-weight="700" font-family="sans-serif">2</text>
-                        <text x="22" y="19" text-anchor="middle" fill="#34d399" font-size="9" font-weight="700" font-family="sans-serif">3</text>
-                        <text x="6" y="29" text-anchor="middle" fill="#6ee7b7" font-size="8" font-weight="700" font-family="sans-serif">4</text>
-                        <text x="16" y="29" text-anchor="middle" fill="#34d399" font-size="8" font-weight="700" font-family="sans-serif">5</text>
-                        <text x="26" y="29" text-anchor="middle" fill="#6ee7b7" font-size="8" font-weight="700" font-family="sans-serif">6</text>
-                        <line x1="16" y1="11" x2="10" y2="20" stroke="#34d399" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="16" y1="11" x2="22" y2="20" stroke="#34d399" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="10" y1="20" x2="6" y2="30" stroke="#6ee7b7" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="10" y1="20" x2="16" y2="30" stroke="#6ee7b7" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="22" y1="20" x2="16" y2="30" stroke="#6ee7b7" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="22" y1="20" x2="26" y2="30" stroke="#6ee7b7" stroke-width="1.5" opacity="0.5"/>
-                    </svg>
-                </div>
-                <div class="app-name">Cascada Numèrica</div>
-                <div class="app-desc">Seqüències de números en cascada</div>
-                <span class="app-badge" style="background:rgba(52,211,153,0.15);color:#34d399;">Números</span>
-            </a>
-
-            <a class="app-card" href="Gobo26-REPTE-NUMERIC.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#2d1b4e,#4c1d95);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <circle cx="16" cy="16" r="12" fill="none" stroke="#a78bfa" stroke-width="1.5"/>
-                        <text x="16" y="14" text-anchor="middle" fill="#a78bfa" font-size="7" font-weight="700" font-family="sans-serif">7+8</text>
-                        <line x1="9" y1="17" x2="23" y2="17" stroke="#a78bfa" stroke-width="1" opacity="0.5"/>
-                        <text x="16" y="25" text-anchor="middle" fill="#ddd6fe" font-size="9" font-weight="800" font-family="sans-serif">15</text>
-                    </svg>
-                </div>
-                <div class="app-name">Repte Numèric</div>
-                <div class="app-desc">Desafia la teva agilitat mental</div>
-                <span class="app-badge" style="background:rgba(167,139,250,0.15);color:#a78bfa;">Repte</span>
-            </a>
-
-            <a class="app-card" href="Gobo26-LA-BOTIGA.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#0f2a1a,#14532d);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <!-- cistella -->
-                        <path d="M5 13 L27 13 L24 26 Q24 28 22 28 L10 28 Q8 28 8 26 Z" fill="none" stroke="#4ade80" stroke-width="1.5"/>
-                        <!-- nansa -->
-                        <path d="M10 13 Q10 6 16 6 Q22 6 22 13" stroke="#86efac" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-                        <!-- monedes -->
-                        <circle cx="13" cy="20" r="2.5" fill="none" stroke="#fbbf24" stroke-width="1.2"/>
-                        <circle cx="19" cy="20" r="2.5" fill="none" stroke="#fbbf24" stroke-width="1.2"/>
-                        <text x="13" y="21.5" text-anchor="middle" fill="#fbbf24" font-size="3.5" font-weight="800" font-family="sans-serif">€</text>
-                        <text x="19" y="21.5" text-anchor="middle" fill="#fbbf24" font-size="3.5" font-weight="800" font-family="sans-serif">€</text>
-                    </svg>
-                </div>
-                <div class="app-name">La Botiga</div>
-                <div class="app-desc">Practica a tornar el canvi exacte</div>
-                <span class="app-badge" style="background:rgba(74,222,128,0.15);color:#4ade80;">Càlcul</span>
-            </a>
-
+      <a class="app-card" href="Gobo26-SUDOKU.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#1e3a5f,#1e4d8c);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="3" y="3" width="8" height="8" rx="1.5" fill="#3b82f6" opacity="0.9"/>
+            <rect x="12" y="3" width="8" height="8" rx="1.5" fill="#60a5fa" opacity="0.5"/>
+            <rect x="21" y="3" width="8" height="8" rx="1.5" fill="#3b82f6" opacity="0.9"/>
+            <rect x="3" y="12" width="8" height="8" rx="1.5" fill="#60a5fa" opacity="0.5"/>
+            <rect x="12" y="12" width="8" height="8" rx="1.5" fill="#3b82f6" opacity="0.9"/>
+            <rect x="21" y="12" width="8" height="8" rx="1.5" fill="#60a5fa" opacity="0.5"/>
+            <rect x="3" y="21" width="8" height="8" rx="1.5" fill="#60a5fa" opacity="0.5"/>
+            <rect x="12" y="21" width="8" height="8" rx="1.5" fill="#3b82f6" opacity="0.9"/>
+            <rect x="21" y="21" width="8" height="8" rx="1.5" fill="#60a5fa" opacity="0.5"/>
+            <text x="7" y="11" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">9</text>
+            <text x="16" y="11" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">1</text>
+            <text x="25" y="11" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">5</text>
+            <text x="7" y="20" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">3</text>
+            <text x="16" y="20" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">7</text>
+            <text x="25" y="20" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">2</text>
+            <text x="7" y="29" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">4</text>
+            <text x="16" y="29" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">6</text>
+            <text x="25" y="29" text-anchor="middle" fill="white" font-size="6.5" font-weight="700" font-family="sans-serif">8</text>
+          </svg>
         </div>
-    </div>
+        <div class="app-name">Sudoku</div>
+        <div class="app-desc">El clàssic joc de números 9×9</div>
+        <span class="app-badge" style="background:rgba(59,130,246,.12);color:#2563eb;">Lògica</span>
+      </a>
 
-    <!-- CATEGORIA: AVENTURES -->
-    <div class="category" id="cat-aventures">
-        <div class="category-label">Aventures i Misteris</div>
-        <div class="grid">
-
-            <a class="app-card" href="Gobo26-ONCLE-ALBERT.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#1a1a2e,#2d1b4e);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <!-- lupa -->
-                        <circle cx="13" cy="13" r="8" fill="none" stroke="#a78bfa" stroke-width="1.8"/>
-                        <circle cx="13" cy="13" r="4.5" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.6"/>
-                        <line x1="19" y1="19" x2="27" y2="27" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"/>
-                        <!-- interrogant dins la lupa -->
-                        <text x="13" y="17" text-anchor="middle" fill="#ddd6fe" font-size="8" font-weight="900" font-family="sans-serif">?</text>
-                    </svg>
-                </div>
-                <div class="app-name">L'Oncle Albert</div>
-                <div class="app-desc">Escape room: desxifra els codis del criptògraf</div>
-                <span class="app-badge" style="background:rgba(167,139,250,0.15);color:#a78bfa;">Misteri</span>
-            </a>
-
+      <a class="app-card" href="Gobo26-CASCADA-NUMERICA.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#1a3a2a,#1a5c3a);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <text x="16" y="10" text-anchor="middle" fill="#34d399" font-size="9" font-weight="700" font-family="sans-serif">1</text>
+            <text x="10" y="19" text-anchor="middle" fill="#6ee7b7" font-size="9" font-weight="700" font-family="sans-serif">2</text>
+            <text x="22" y="19" text-anchor="middle" fill="#34d399" font-size="9" font-weight="700" font-family="sans-serif">3</text>
+            <text x="6" y="29" text-anchor="middle" fill="#6ee7b7" font-size="8" font-weight="700" font-family="sans-serif">4</text>
+            <text x="16" y="29" text-anchor="middle" fill="#34d399" font-size="8" font-weight="700" font-family="sans-serif">5</text>
+            <text x="26" y="29" text-anchor="middle" fill="#6ee7b7" font-size="8" font-weight="700" font-family="sans-serif">6</text>
+            <line x1="16" y1="11" x2="10" y2="20" stroke="#34d399" stroke-width="1.5" opacity="0.5"/>
+            <line x1="16" y1="11" x2="22" y2="20" stroke="#34d399" stroke-width="1.5" opacity="0.5"/>
+            <line x1="10" y1="20" x2="6" y2="30" stroke="#6ee7b7" stroke-width="1.5" opacity="0.5"/>
+            <line x1="10" y1="20" x2="16" y2="30" stroke="#6ee7b7" stroke-width="1.5" opacity="0.5"/>
+            <line x1="22" y1="20" x2="16" y2="30" stroke="#6ee7b7" stroke-width="1.5" opacity="0.5"/>
+            <line x1="22" y1="20" x2="26" y2="30" stroke="#6ee7b7" stroke-width="1.5" opacity="0.5"/>
+          </svg>
         </div>
-    </div>
+        <div class="app-name">Cascada Numèrica</div>
+        <div class="app-desc">Seqüències de números en cascada</div>
+        <span class="app-badge" style="background:rgba(52,211,153,.12);color:#059669;">Números</span>
+      </a>
 
-    <!-- CATEGORIA 2: JOCS DE PARAULES -->
-    <div class="category" id="cat-paraules">
-        <div class="category-label">Jocs de Paraules</div>
-        <div class="grid">
-
-            <a class="app-card" href="Gobo26-AMAGADES.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#3b1f0a,#7c3a0a);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect x="2" y="2" width="28" height="28" rx="3" fill="none" stroke="#fb923c" stroke-width="1.5" opacity="0.5"/>
-                        <text x="7" y="11" fill="#fb923c" font-size="6.5" font-weight="700" font-family="monospace">G A T</text>
-                        <text x="7" y="19" fill="#fdba74" font-size="6.5" font-weight="700" font-family="monospace">A R B</text>
-                        <text x="7" y="27" fill="#fb923c" font-size="6.5" font-weight="700" font-family="monospace">T O R</text>
-                        <rect x="5" y="13.5" width="22" height="7" rx="1" fill="rgba(251,146,60,0.2)"/>
-                    </svg>
-                </div>
-                <div class="app-name">Amagades!</div>
-                <div class="app-desc">Troba paraules amagades a la graella</div>
-                <span class="app-badge" style="background:rgba(251,146,60,0.15);color:#fb923c;">Paraules</span>
-            </a>
-
-            <a class="app-card" href="Gobo26-ENDEVINA.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#1f2937,#374151);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <circle cx="16" cy="13" r="7" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
-                        <path d="M14 11 Q16 8 18 11 Q20 14 16 15" stroke="#fbbf24" stroke-width="2" fill="none" stroke-linecap="round"/>
-                        <circle cx="16" cy="18" r="1" fill="#fbbf24"/>
-                        <path d="M12 24 Q16 28 20 24" stroke="#fcd34d" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-                    </svg>
-                </div>
-                <div class="app-name">Endevina!</div>
-                <div class="app-desc">Joc d'endevinalles i preguntes</div>
-                <span class="app-badge" style="background:rgba(251,191,36,0.15);color:#fbbf24;">Repte</span>
-            </a>
-
-            <a class="app-card" href="Gobo26-ENFILALL.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#0f2a3a,#0f3a5c);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <circle cx="6" cy="16" r="3" fill="#38bdf8"/>
-                        <circle cx="14" cy="9" r="3" fill="#7dd3fc"/>
-                        <circle cx="22" cy="16" r="3" fill="#38bdf8"/>
-                        <circle cx="27" cy="9" r="2.5" fill="#7dd3fc" opacity="0.7"/>
-                        <path d="M9 16 Q12 9 14 9" stroke="#38bdf8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-                        <path d="M17 9 Q19 16 22 16" stroke="#38bdf8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-                        <path d="M25 16 Q26 9 27 9" stroke="#38bdf8" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.7"/>
-                        <text x="16" y="28" text-anchor="middle" fill="#38bdf8" font-size="5.5" font-weight="700" font-family="sans-serif">MOTS</text>
-                    </svg>
-                </div>
-                <div class="app-name">Enfilall de Mots</div>
-                <div class="app-desc">Encadena paraules en seqüència</div>
-                <span class="app-badge" style="background:rgba(56,189,248,0.15);color:#38bdf8;">Paraules</span>
-            </a>
-
-            <a class="app-card" href="Gobo26-DITES-INACABADES.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <path d="M4 8 Q4 5 7 5 L15 5 Q18 5 18 8 L18 14 Q18 17 15 17 L12 17 L9 21 L9 17 L7 17 Q4 17 4 14 Z" fill="none" stroke="#818cf8" stroke-width="1.5"/>
-                        <path d="M19 12 Q19 9 22 9 L26 9 Q29 9 29 12 L29 17 Q29 20 26 20 L24 20 L22 23 L22 20 Q19 20 19 17 Z" fill="none" stroke="#a5b4fc" stroke-width="1.3"/>
-                        <text x="11" y="14" text-anchor="middle" fill="#818cf8" font-size="7" font-weight="700" font-family="sans-serif">…</text>
-                        <text x="24" y="16" text-anchor="middle" fill="#a5b4fc" font-size="7" font-weight="700" font-family="sans-serif">?</text>
-                    </svg>
-                </div>
-                <div class="app-name">Dites Inacabades</div>
-                <div class="app-desc">Completa refranys i dites populars</div>
-                <span class="app-badge" style="background:rgba(129,140,248,0.15);color:#818cf8;">Cultura</span>
-            </a>
-
-            <a class="app-card" href="Gobo26-PINTA-PARAULES.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#1a2a1a,#2a3a1a);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect x="3" y="5" width="18" height="22" rx="2" fill="none" stroke="#86efac" stroke-width="1.5"/>
-                        <line x1="7" y1="11" x2="17" y2="11" stroke="#86efac" stroke-width="1.5" opacity="0.7"/>
-                        <line x1="7" y1="15" x2="14" y2="15" stroke="#86efac" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="7" y1="19" x2="17" y2="19" stroke="#86efac" stroke-width="1.5" opacity="0.7"/>
-                        <circle cx="24" cy="10" r="5" fill="rgba(134,239,172,0.15)" stroke="#86efac" stroke-width="1.5"/>
-                        <path d="M22 10 L24 12 L27 8" stroke="#4ade80" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <div class="app-name">Pinta Paraules</div>
-                <div class="app-desc">Identifica i classifica paraules</div>
-                <span class="app-badge" style="background:rgba(74,222,128,0.15);color:#4ade80;">Llengua</span>
-            </a>
-
+      <a class="app-card" href="Gobo26-REPTE-NUMERIC.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#2d1b4e,#4c1d95);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="12" fill="none" stroke="#a78bfa" stroke-width="1.5"/>
+            <text x="16" y="14" text-anchor="middle" fill="#a78bfa" font-size="7" font-weight="700" font-family="sans-serif">7+8</text>
+            <line x1="9" y1="17" x2="23" y2="17" stroke="#a78bfa" stroke-width="1" opacity="0.5"/>
+            <text x="16" y="25" text-anchor="middle" fill="#ddd6fe" font-size="9" font-weight="800" font-family="sans-serif">15</text>
+          </svg>
         </div>
-    </div>
+        <div class="app-name">Repte Numèric</div>
+        <div class="app-desc">Desafia la teva agilitat mental</div>
+        <span class="app-badge" style="background:rgba(167,139,250,.12);color:#7c3aed;">Repte</span>
+      </a>
 
-    <!-- CATEGORIA 3: MEMÒRIA I AGILITAT -->
-    <div class="category" id="cat-memoria">
-        <div class="category-label">Memòria i Agilitat Mental</div>
-        <div class="grid">
-
-            <a class="app-card" href="Gobo26-FRASES_SIMON.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#1a2a3a,#0f3460);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <path d="M4 8 Q4 5 7 5 L25 5 Q28 5 28 8 L28 19 Q28 22 25 22 L18 22 L12 27 L12 22 L7 22 Q4 22 4 19 Z" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
-                        <rect x="9" y="10" width="14" height="2" rx="1" fill="#38bdf8" opacity="0.7"/>
-                        <rect x="9" y="14" width="9" height="2" rx="1" fill="#38bdf8" opacity="0.4"/>
-                    </svg>
-                </div>
-                <div class="app-name">Repte de Seqüència</div>
-                <div class="app-desc">Memoritza seqüències de frases</div>
-                <span class="app-badge" style="background:rgba(56,189,248,0.15);color:#38bdf8;">Memòria</span>
-            </a>
-
-            <a class="app-card" href="Gobo26-COLECT.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#2d1b4e,#4c1d95);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect x="4" y="4" width="10" height="10" rx="2" fill="none" stroke="#c084fc" stroke-width="1.5"/>
-                        <rect x="18" y="4" width="10" height="10" rx="2" fill="rgba(192,132,252,0.25)" stroke="#c084fc" stroke-width="1.5"/>
-                        <rect x="4" y="18" width="10" height="10" rx="2" fill="rgba(192,132,252,0.25)" stroke="#c084fc" stroke-width="1.5"/>
-                        <rect x="18" y="18" width="10" height="10" rx="2" fill="none" stroke="#c084fc" stroke-width="1.5"/>
-                        <text x="9" y="12.5" text-anchor="middle" fill="#c084fc" font-size="8" font-weight="700" font-family="sans-serif">?</text>
-                        <text x="23" y="12.5" text-anchor="middle" fill="#c084fc" font-size="8" font-weight="700" font-family="sans-serif">✓</text>
-                    </svg>
-                </div>
-                <div class="app-name">Col·leccionista</div>
-                <div class="app-desc">Joc de memòria i col·lecció</div>
-                <span class="app-badge" style="background:rgba(192,132,252,0.15);color:#c084fc;">Memòria</span>
-            </a>
-
+      <a class="app-card" href="Gobo26-LA-BOTIGA.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#0f2a1a,#14532d);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M5 13 L27 13 L24 26 Q24 28 22 28 L10 28 Q8 28 8 26 Z" fill="none" stroke="#4ade80" stroke-width="1.5"/>
+            <path d="M10 13 Q10 6 16 6 Q22 6 22 13" stroke="#86efac" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <circle cx="13" cy="20" r="2.5" fill="none" stroke="#fbbf24" stroke-width="1.2"/>
+            <circle cx="19" cy="20" r="2.5" fill="none" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="13" y="21.5" text-anchor="middle" fill="#fbbf24" font-size="3.5" font-weight="800" font-family="sans-serif">€</text>
+            <text x="19" y="21.5" text-anchor="middle" fill="#fbbf24" font-size="3.5" font-weight="800" font-family="sans-serif">€</text>
+          </svg>
         </div>
+        <div class="app-name">La Botiga</div>
+        <div class="app-desc">Practica a tornar el canvi exacte</div>
+        <span class="app-badge" style="background:rgba(74,222,128,.12);color:#16a34a;">Càlcul</span>
+      </a>
+
     </div>
+  </div>
 
-    <!-- CATEGORIA 4: EINES I RECURSOS -->
-    <div class="category" id="cat-eines">
-        <div class="category-label">Eines i Recursos</div>
-        <div class="grid">
+  <!-- ── AVENTURES I MISTERIS ── -->
+  <div class="category" id="cat-aventures">
+    <div class="cat-label">🔍 Aventures i Misteris</div>
+    <div class="grid">
 
-            <a class="app-card" href="Gobo26-MERCATUS.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#1a2a1a,#1a4a1a);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <path d="M6 10 L10 4 L22 4 L26 10 Z" fill="none" stroke="#4ade80" stroke-width="1.5"/>
-                        <rect x="6" y="10" width="20" height="18" rx="2" fill="none" stroke="#4ade80" stroke-width="1.5"/>
-                        <path d="M12 10 C12 13 14 15 16 15 C18 15 20 13 20 10" stroke="#86efac" stroke-width="1.5" fill="none"/>
-                        <line x1="10" y1="21" x2="22" y2="21" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
-                        <line x1="10" y1="25" x2="18" y2="25" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
-                    </svg>
-                </div>
-                <div class="app-name">Mercatus</div>
-                <div class="app-desc">Gestió de fires i mercat artesà</div>
-                <span class="app-badge" style="background:rgba(74,222,128,0.15);color:#4ade80;">Eina</span>
-            </a>
-
-            <a class="app-card" href="Gobo26-MESTRE-JOIER.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#2a1a0a,#5a3a0a);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <polygon points="16,4 20,12 29,13 23,19 24,28 16,24 8,28 9,19 3,13 12,12" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
-                        <circle cx="16" cy="17" r="4" fill="none" stroke="#fcd34d" stroke-width="1.3"/>
-                        <circle cx="16" cy="17" r="1.5" fill="#fbbf24"/>
-                    </svg>
-                </div>
-                <div class="app-name">El Mestre Joier</div>
-                <div class="app-desc">Gestió de joieria i peces artesanes</div>
-                <span class="app-badge" style="background:rgba(251,191,36,0.15);color:#fbbf24;">Eina</span>
-            </a>
-
-            <a class="app-card" href="Gobo26-GIMNAS-CASA.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#3b0a2a,#7c0a4e);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <path d="M5 16 C5 16 8 10 12 10 C14 10 15 13 16 13 C17 13 18 8 21 8 C25 8 27 16 27 16 C27 16 25 24 21 24 C18 24 17 19 16 19 C15 19 14 22 12 22 C8 22 5 16 5 16Z" fill="none" stroke="#f472b6" stroke-width="1.8"/>
-                        <text x="16" y="30" text-anchor="middle" fill="#f472b6" font-size="5.5" font-weight="700" font-family="sans-serif">55+</text>
-                    </svg>
-                </div>
-                <div class="app-name">Gimnàs a Casa</div>
-                <div class="app-desc">Exercicis físics per a majors de 55</div>
-                <span class="app-badge" style="background:rgba(244,114,182,0.15);color:#f472b6;">Salut</span>
-            </a>
-
-            <a class="app-card" href="Gobo26-CANCONER-SDM.html" target="_self">
-                <div class="app-icon" style="background:linear-gradient(135deg,#1a1a3a,#2a1a4a);">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <path d="M8 24 L8 12 L24 8 L24 20" stroke="#c084fc" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
-                        <circle cx="8" cy="24" r="3.5" fill="none" stroke="#c084fc" stroke-width="1.5"/>
-                        <circle cx="24" cy="20" r="3.5" fill="none" stroke="#c084fc" stroke-width="1.5"/>
-                        <line x1="12" y1="11.2" x2="12" y2="17" stroke="#c084fc" stroke-width="1" opacity="0.4"/>
-                        <line x1="16" y1="9.8" x2="16" y2="15.8" stroke="#c084fc" stroke-width="1" opacity="0.4"/>
-                        <line x1="20" y1="8.5" x2="20" y2="14.5" stroke="#c084fc" stroke-width="1" opacity="0.4"/>
-                    </svg>
-                </div>
-                <div class="app-name">Cançoner SDM</div>
-                <div class="app-desc">Cançoner d'havaneres Sons del Mar</div>
-                <span class="app-badge" style="background:rgba(192,132,252,0.15);color:#c084fc;">Música</span>
-            </a>
-
+      <a class="app-card" href="Gobo26-ONCLE-ALBERT.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#1a1a2e,#2d1b4e);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="13" cy="13" r="8" fill="none" stroke="#a78bfa" stroke-width="1.8"/>
+            <circle cx="13" cy="13" r="4.5" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.6"/>
+            <line x1="19" y1="19" x2="27" y2="27" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"/>
+            <text x="13" y="17" text-anchor="middle" fill="#ddd6fe" font-size="8" font-weight="900" font-family="sans-serif">?</text>
+          </svg>
         </div>
+        <div class="app-name">L'Oncle Albert</div>
+        <div class="app-desc">Escape room: desxifra els codis del criptògraf</div>
+        <span class="app-badge" style="background:rgba(167,139,250,.12);color:#7c3aed;">Misteri</span>
+      </a>
+
     </div>
+  </div>
+
+  <!-- ── JOCS DE PARAULES ── -->
+  <div class="category" id="cat-paraules">
+    <div class="cat-label">📝 Jocs de Paraules</div>
+    <div class="grid">
+
+      <a class="app-card" href="Gobo26-AMAGADES.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#3b1f0a,#7c3a0a);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="2" width="28" height="28" rx="3" fill="none" stroke="#fb923c" stroke-width="1.5" opacity="0.5"/>
+            <text x="7" y="11" fill="#fb923c" font-size="6.5" font-weight="700" font-family="monospace">G A T</text>
+            <text x="7" y="19" fill="#fdba74" font-size="6.5" font-weight="700" font-family="monospace">A R B</text>
+            <text x="7" y="27" fill="#fb923c" font-size="6.5" font-weight="700" font-family="monospace">T O R</text>
+            <rect x="5" y="13.5" width="22" height="7" rx="1" fill="rgba(251,146,60,0.2)"/>
+          </svg>
+        </div>
+        <div class="app-name">Amagades!</div>
+        <div class="app-desc">Troba paraules amagades a la graella</div>
+        <span class="app-badge" style="background:rgba(251,146,60,.12);color:#c2410c;">Paraules</span>
+      </a>
+
+      <a class="app-card" href="Gobo26-ENDEVINA.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#1f2937,#374151);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="13" r="7" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+            <path d="M14 11 Q16 8 18 11 Q20 14 16 15" stroke="#fbbf24" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="16" cy="18" r="1" fill="#fbbf24"/>
+            <path d="M12 24 Q16 28 20 24" stroke="#fcd34d" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="app-name">Endevina!</div>
+        <div class="app-desc">Joc d'endevinalles i preguntes</div>
+        <span class="app-badge" style="background:rgba(251,191,36,.12);color:#b45309;">Repte</span>
+      </a>
+
+      <a class="app-card" href="Gobo26-ENFILALL.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#0f2a3a,#0f3a5c);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="6" cy="16" r="3" fill="#38bdf8"/>
+            <circle cx="14" cy="9" r="3" fill="#7dd3fc"/>
+            <circle cx="22" cy="16" r="3" fill="#38bdf8"/>
+            <circle cx="27" cy="9" r="2.5" fill="#7dd3fc" opacity="0.7"/>
+            <path d="M9 16 Q12 9 14 9" stroke="#38bdf8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M17 9 Q19 16 22 16" stroke="#38bdf8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M25 16 Q26 9 27 9" stroke="#38bdf8" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <text x="16" y="28" text-anchor="middle" fill="#38bdf8" font-size="5.5" font-weight="700" font-family="sans-serif">MOTS</text>
+          </svg>
+        </div>
+        <div class="app-name">Enfilall de Mots</div>
+        <div class="app-desc">Encadena paraules en seqüència</div>
+        <span class="app-badge" style="background:rgba(56,189,248,.12);color:#0284c7;">Paraules</span>
+      </a>
+
+      <a class="app-card" href="Gobo26-DITES-INACABADES.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M4 8 Q4 5 7 5 L15 5 Q18 5 18 8 L18 14 Q18 17 15 17 L12 17 L9 21 L9 17 L7 17 Q4 17 4 14 Z" fill="none" stroke="#818cf8" stroke-width="1.5"/>
+            <path d="M19 12 Q19 9 22 9 L26 9 Q29 9 29 12 L29 17 Q29 20 26 20 L24 20 L22 23 L22 20 Q19 20 19 17 Z" fill="none" stroke="#a5b4fc" stroke-width="1.3"/>
+            <text x="11" y="14" text-anchor="middle" fill="#818cf8" font-size="7" font-weight="700" font-family="sans-serif">…</text>
+            <text x="24" y="16" text-anchor="middle" fill="#a5b4fc" font-size="7" font-weight="700" font-family="sans-serif">?</text>
+          </svg>
+        </div>
+        <div class="app-name">Dites Inacabades</div>
+        <div class="app-desc">Completa refranys i dites populars</div>
+        <span class="app-badge" style="background:rgba(129,140,248,.12);color:#4f46e5;">Cultura</span>
+      </a>
+
+      <a class="app-card" href="Gobo26-PINTA-PARAULES.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#1a0a2e,#2e0a4e);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <text x="16" y="13" text-anchor="middle" fill="#e879f9" font-size="8" font-weight="900" font-family="sans-serif">ROIG</text>
+            <rect x="3" y="15" width="26" height="8" rx="2" fill="rgba(232,121,249,0.15)"/>
+            <text x="16" y="22" text-anchor="middle" fill="#f0abfc" font-size="6" font-weight="700" font-family="sans-serif">BLAU</text>
+          </svg>
+        </div>
+        <div class="app-name">Pinta Paraules</div>
+        <div class="app-desc">El joc de l'efecte Stroop en català</div>
+        <span class="app-badge" style="background:rgba(232,121,249,.12);color:#a21caf;">Cognició</span>
+      </a>
+
+      <a class="app-card" href="Gobo26-FRASES_SIMON.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#0a2e1a,#0a4e2e);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M4 8 Q4 5 7 5 L25 5 Q28 5 28 8 L28 18 Q28 21 25 21 L18 21 L14 27 L14 21 L7 21 Q4 21 4 18 Z" fill="none" stroke="#34d399" stroke-width="1.5"/>
+            <text x="16" y="15" text-anchor="middle" fill="#34d399" font-size="6" font-weight="700" font-family="sans-serif">…Simon?</text>
+          </svg>
+        </div>
+        <div class="app-name">Frases de Simon</div>
+        <div class="app-desc">Completa les frases del savi Simon</div>
+        <span class="app-badge" style="background:rgba(52,211,153,.12);color:#059669;">Frases</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ── MEMÒRIA I AGILITAT ── -->
+  <div class="category" id="cat-memoria">
+    <div class="cat-label">🧩 Memòria i Agilitat</div>
+    <div class="grid">
+
+      <a class="app-card" href="Gobo26-COLECT.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#0a1a3a,#0a2a6e);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="3" y="3" width="12" height="12" rx="2" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+            <rect x="17" y="3" width="12" height="12" rx="2" fill="#1d4ed8" opacity="0.7"/>
+            <rect x="3" y="17" width="12" height="12" rx="2" fill="#1d4ed8" opacity="0.4"/>
+            <rect x="17" y="17" width="12" height="12" rx="2" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="23" y="12" text-anchor="middle" fill="white" font-size="7" font-weight="800" font-family="sans-serif">★</text>
+          </svg>
+        </div>
+        <div class="app-name">Col·leccionista</div>
+        <div class="app-desc">Joc de memòria amb parelles</div>
+        <span class="app-badge" style="background:rgba(96,165,250,.12);color:#2563eb;">Memòria</span>
+      </a>
+
+      <a class="app-card" href="Gobo26-MERCATUS.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#1a2a0a,#2a4a0a);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M8 26 L8 14 L16 6 L24 14 L24 26 Z" fill="none" stroke="#86efac" stroke-width="1.5"/>
+            <rect x="13" y="18" width="6" height="8" rx="1" fill="#4ade80" opacity="0.6"/>
+            <line x1="8" y1="14" x2="24" y2="14" stroke="#86efac" stroke-width="1" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="app-name">Mercatus</div>
+        <div class="app-desc">Gestiona el mercat i els preus</div>
+        <span class="app-badge" style="background:rgba(134,239,172,.12);color:#16a34a;">Estratègia</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ── EINES I RECURSOS ── -->
+  <div class="category" id="cat-eines">
+    <div class="cat-label">🛠️ Eines i Recursos</div>
+    <div class="grid">
+
+      <a class="app-card" href="Gobo26-MESTRE-JOIER.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#2a1a0a,#5a3a0a);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <polygon points="16,4 20,12 29,13 23,19 24,28 16,24 8,28 9,19 3,13 12,12" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+            <circle cx="16" cy="17" r="4" fill="none" stroke="#fcd34d" stroke-width="1.3"/>
+            <circle cx="16" cy="17" r="1.5" fill="#fbbf24"/>
+          </svg>
+        </div>
+        <div class="app-name">El Mestre Joier</div>
+        <div class="app-desc">Gestió de joieria i peces artesanes</div>
+        <span class="app-badge" style="background:rgba(251,191,36,.12);color:#b45309;">Eina</span>
+      </a>
+
+      <a class="app-card" href="Gobo26-GIMNAS-CASA.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#3b0a2a,#7c0a4e);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M5 16 C5 16 8 10 12 10 C14 10 15 13 16 13 C17 13 18 8 21 8 C25 8 27 16 27 16 C27 16 25 24 21 24 C18 24 17 19 16 19 C15 19 14 22 12 22 C8 22 5 16 5 16Z" fill="none" stroke="#f472b6" stroke-width="1.8"/>
+            <text x="16" y="30" text-anchor="middle" fill="#f472b6" font-size="5.5" font-weight="700" font-family="sans-serif">55+</text>
+          </svg>
+        </div>
+        <div class="app-name">Gimnàs a Casa</div>
+        <div class="app-desc">Exercicis físics per a majors de 55</div>
+        <span class="app-badge" style="background:rgba(244,114,182,.12);color:#be185d;">Salut</span>
+      </a>
+
+      <a class="app-card" href="Gobo26-CANCONER-SDM.html" target="_self">
+        <div class="app-icon" style="background:linear-gradient(135deg,#1a1a3a,#2a1a4a);">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M8 24 L8 12 L24 8 L24 20" stroke="#c084fc" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+            <circle cx="8" cy="24" r="3.5" fill="none" stroke="#c084fc" stroke-width="1.5"/>
+            <circle cx="24" cy="20" r="3.5" fill="none" stroke="#c084fc" stroke-width="1.5"/>
+            <line x1="12" y1="11.2" x2="12" y2="17" stroke="#c084fc" stroke-width="1" opacity="0.4"/>
+            <line x1="16" y1="9.8" x2="16" y2="15.8" stroke="#c084fc" stroke-width="1" opacity="0.4"/>
+            <line x1="20" y1="8.5" x2="20" y2="14.5" stroke="#c084fc" stroke-width="1" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="app-name">Cançoner SDM</div>
+        <div class="app-desc">Cançoner d'havaneres Sons del Mar</div>
+        <span class="app-badge" style="background:rgba(192,132,252,.12);color:#7e22ce;">Música</span>
+      </a>
+
+    </div>
+  </div>
 
 </main>
 
-<footer>
-    <div class="footer-inner">
-        <svg width="14" height="14" viewBox="0 0 100 100" fill="none">
-            <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/>
-            <text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text>
-            <text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text>
-        </svg>
-        <span class="footer-text">Una aplicació de Gobo26</span>
-    </div>
-</footer>
+<footer>Una aplicació de <a href="https://ja.cat/appgobo" target="_self">Gobo26</a></footer>
 
 <!-- MENÚ FLOTANT -->
 <div class="nav-overlay" id="nav-overlay" onclick="tancarMenu()"></div>
 <div class="nav-panel" id="nav-panel">
-    <div class="nav-panel-titol">Navega per seccions</div>
-    <a href="#cat-numeros"  onclick="tancarMenu()"><span class="nav-em">🔢</span> Jocs de Números</a>
-    <a href="#cat-aventures" onclick="tancarMenu()"><span class="nav-em">🔍</span> Aventures i Misteris</a>
-    <a href="#cat-paraules" onclick="tancarMenu()"><span class="nav-em">📝</span> Jocs de Paraules</a>
-    <a href="#cat-memoria"  onclick="tancarMenu()"><span class="nav-em">🧩</span> Memòria i Agilitat</a>
-    <a href="#cat-eines"    onclick="tancarMenu()"><span class="nav-em">🛠️</span> Eines i Recursos</a>
+  <div class="nav-tit">Navega per seccions</div>
+  <a href="#cat-numeros"  onclick="tancarMenu()">🔢 Jocs de Números</a>
+  <a href="#cat-aventures" onclick="tancarMenu()">🔍 Aventures i Misteris</a>
+  <a href="#cat-paraules" onclick="tancarMenu()">📝 Jocs de Paraules</a>
+  <a href="#cat-memoria"  onclick="tancarMenu()">🧩 Memòria i Agilitat</a>
+  <a href="#cat-eines"    onclick="tancarMenu()">🛠️ Eines i Recursos</a>
 </div>
-<button class="fab-menu-btn" id="fab-btn" onclick="toggleMenu()" aria-label="Navegació">☰</button>
+<button class="fab" id="fab-btn" onclick="toggleMenu()" aria-label="Navegació">☰</button>
 
 <script>
-// ── MENÚ FLOTANT ──
-function toggleMenu() {
-    const btn   = document.getElementById('fab-btn');
-    const panel = document.getElementById('nav-panel');
-    const overlay = document.getElementById('nav-overlay');
-    const obert = panel.classList.toggle('obert');
-    overlay.classList.toggle('obert', obert);
-    btn.classList.toggle('obert', obert);
-    btn.textContent = obert ? '✕' : '☰';
+function toggleMenu(){
+  const btn=document.getElementById('fab-btn');
+  const panel=document.getElementById('nav-panel');
+  const overlay=document.getElementById('nav-overlay');
+  const obert=panel.classList.toggle('obert');
+  overlay.classList.toggle('obert',obert);
+  btn.classList.toggle('obert',obert);
+  btn.textContent=obert?'✕':'☰';
 }
-function tancarMenu() {
-    document.getElementById('nav-panel').classList.remove('obert');
-    document.getElementById('nav-overlay').classList.remove('obert');
-    const btn = document.getElementById('fab-btn');
-    btn.classList.remove('obert');
-    btn.textContent = '☰';
+function tancarMenu(){
+  document.getElementById('nav-panel').classList.remove('obert');
+  document.getElementById('nav-overlay').classList.remove('obert');
+  const btn=document.getElementById('fab-btn');
+  btn.classList.remove('obert');
+  btn.textContent='☰';
 }
 
-// ── COMPTADOR DE TEMPS ──
-// Base: ~16 apps × 14 mesos × 45 usuaris/mes × 15 min/sessió = ~151.200 min = ~2.520 h
-// Ritme simulat: 1 hora cada 22 minuts (≈ 2-3 jugadors actius en tot moment)
-// Ancoratge fix al 01/01/2025 → valor creixent i coherent en qualsevol data futura
-(function iniciComptador() {
-    const BASE_HORES = 2520;
-    const INICI = new Date('2025-01-01T00:00:00Z').getTime();
-    const RITME_H_PER_MS = 1 / (22 * 60 * 1000); // 1 hora cada 22 minuts
-
-    function calcHores() {
-        const ara = Date.now();
-        const transcorreguts = Math.max(0, ara - INICI);
-        return BASE_HORES + transcorreguts * RITME_H_PER_MS;
-    }
-
-    function formatHores(h) {
-        if (h >= 10000) return (h / 1000).toFixed(1).replace('.', ',') + ' mil';
-        return Math.floor(h).toLocaleString('ca');
-    }
-
-    const el = document.getElementById('temps-total');
-    if (!el) return;
-
-    function actualitza() {
-        el.textContent = formatHores(calcHores()) + ' h';
-    }
-    actualitza();
-    // Actualitza cada 22 segons: el número puja 0,017 h (~1 min) → subtil però visible
-    setInterval(actualitza, 22000);
+// ── COMPTADOR ──
+(function(){
+  const BASE=2520;
+  const INICI=new Date('2025-01-01T00:00:00Z').getTime();
+  const RITME=1/(22*60*1000);
+  function calc(){return BASE+(Date.now()-INICI)*RITME;}
+  function fmt(h){
+    if(h>=10000)return(h/1000).toFixed(1).replace('.',',')+' mil';
+    return Math.floor(h).toLocaleString('ca');
+  }
+  const el=document.getElementById('temps-total');
+  if(!el)return;
+  function upd(){el.textContent=fmt(calc())+' h';}
+  upd();
+  setInterval(upd,22000);
 })();
 </script>
 
