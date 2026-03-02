@@ -668,8 +668,10 @@ function tancarModal() {
   document.getElementById('etiq-collar').textContent = 'El collar';
   document.getElementById('paleta-wrap').classList.add('ocult');
   setMsg('Preparats per al proper collar?', '#1e293b');
-  document.getElementById('btn-accio').textContent = `NIVELL ${S.nivell}`;
-  document.getElementById('btn-accio').classList.remove('ocult');
+  const btn = document.getElementById('btn-accio');
+  btn.textContent = `NIVELL ${S.nivell}`;
+  btn.onclick = iniciar;
+  btn.classList.remove('ocult');
   actualitzarUI();
 }
 
@@ -683,11 +685,12 @@ function setMsg(txt, color) {
   m.textContent = txt; m.style.color = color || '#1e293b';
 }
 function actualitzarUI() {
-  document.getElementById('xip-nivell').textContent  = S.nivell;
-  document.getElementById('xip-rec-niv').textContent = REC.nivell;
-  document.getElementById('rec-boles').textContent   = REC.boles  || '—';
-  document.getElementById('rec-temps').textContent   = REC.temps  ? REC.temps + 's' : '—';
-  document.getElementById('rec-nivell').textContent  = REC.nivell || '1';
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  set('xip-nivell',  S.nivell);
+  set('xip-rec-niv', REC.nivell);
+  set('rec-boles',   REC.boles  || '—');
+  set('rec-temps',   REC.temps  ? REC.temps + 's' : '—');
+  set('rec-nivell',  REC.nivell || '1');
 }
 
 // CONFETI
