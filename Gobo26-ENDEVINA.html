@@ -187,8 +187,8 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
 <div id="modal-ajuda" class="modal-overlay">
     <div class="modal-box">
         <h2>❓ Com es juga?</h2>
-        <div class="ajuda-pas"><span class="ajuda-ico">📖</span><span>Apareix una paraula catalana. Has de triar la seva definició correcta entre 4 opcions.</div>
-        <div class="ajuda-pas"><span class="ajuda-ico">⚠️</span><span>Una de les opcions és una definició d'una <strong>altra paraula real</strong>. Una altra és una <strong>definició absurda i inventada</strong>. Vigila!</span></div>
+        <div class="ajuda-pas"><span class="ajuda-ico">📖</span><span>Apareix una paraula catalana. Has de triar la seva definició correcta entre <strong>3 opcions</strong>.</div>
+        <div class="ajuda-pas"><span class="ajuda-ico">⚠️</span><span>Una de les opcions és la definició d'una <strong>altra paraula real</strong>. L'altra és una <strong>definició completament inventada</strong>. Vigila!</span></div>
         <div class="ajuda-pas"><span class="ajuda-ico">✅</span><span>Cada encert suma <strong>10 punts</strong> + fins a <strong>5 punts extra</strong> per ratxa. Si t'equivoques, perds 5 punts i la ratxa torna a zero.</span></div>
         <div class="ajuda-pas"><span class="ajuda-ico">🔥</span><span>Encadenar respostes correctes activa el <strong>multiplicador de ratxa</strong>. A partir de 3 encerts seguits: +3 extra. A partir de 5: +5 extra!</span></div>
         <div class="ajuda-niv">
@@ -466,20 +466,18 @@ function novaRonda(){
     paraulaActual = objectiu;
     usades.add(DICC.indexOf(objectiu));
 
-    // Distractors: 2 altres paraules reals
+    // Distractor: 1 altra paraula real
     const altres = DICC.filter(e => e !== objectiu);
-    const barr = barrejar([...altres]);
-    const dist1 = barr[0], dist2 = barr[1];
+    const dist1 = barrejar([...altres])[0];
 
     // Definició falsa
     const falsa = FALSES[Math.floor(Math.random()*FALSES.length)];
 
-    // 4 opcions
+    // 3 opcions: correcta + 1 distractor real + 1 inventada
     const opcions = barrejar([
         {text: objectiu.d, tipus:'correcte'},
         {text: falsa,      tipus:'boja'},
         {text: dist1.d,    tipus:'distractor', origen: dist1.p},
-        {text: dist2.d,    tipus:'distractor', origen: dist2.p},
     ]);
 
     // Mostrar paraula
