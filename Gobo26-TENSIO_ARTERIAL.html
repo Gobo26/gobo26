@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tensió Arterial · Gobo26</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
+  --s600:#475569; --s700:#334155; --s800:#1e293b;
+  --blue:#2563eb; --blue2:#3b82f6;
+  --ok:#16a34a; --okl:#dcfce7;
+  --warn:#d97706; --warnl:#fef3c7;
+  --err:#dc2626; --errl:#fee2e2;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);display:flex;flex-direction:column;align-items:center;}
+
+/* HEADER */
+header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-hex{width:36px;height:36px;flex-shrink:0;}
+.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
+.logo-txt span{color:var(--blue2);}
+.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
+#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
+#btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
+
+/* MAIN */
+main{width:100%;max-width:640px;padding:16px 12px 8px;display:flex;flex-direction:column;gap:12px;flex:1;overflow-y:auto;}
+
+/* CARDS */
+.card{width:100%;background:white;border:1px solid var(--s200);border-radius:14px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.card-title{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;text-align:center;}
+
+/* PANTALLA INICIAL */
+#p-inici{display:flex;flex-direction:column;gap:12px;}
+.avis-privacitat{background:#dbeafe;border-left:4px solid var(--blue);border-radius:10px;padding:12px 14px;font-size:.8rem;color:var(--s700);line-height:1.5;}
+.avis-privacitat strong{color:var(--blue);}
+.camp-form{display:flex;flex-direction:column;gap:6px;}
+.camp-form label{font-size:.75rem;font-weight:700;color:var(--s600);text-transform:uppercase;letter-spacing:1px;}
+.camp-form select,
+.camp-form input{
+  font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;
+  padding:13px 14px;border:2px solid var(--s300);border-radius:12px;
+  background:var(--bg);color:var(--s800);
+  appearance:none;-webkit-appearance:none;transition:border-color .15s;
+  width:100%;
+}
+.camp-form select:focus,
+.camp-form input:focus{outline:none;border-color:var(--blue);background:#dbeafe;}
+
+/* BTN PRINCIPAL */
+.btn-principal{
+  font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;
+  width:100%;padding:14px;border:none;border-radius:12px;cursor:pointer;
+  background:var(--blue);color:white;
+  transition:background .15s,transform .1s;box-shadow:0 4px 12px rgba(37,99,235,.3);
+  min-height:48px;
+}
+.btn-principal:hover{background:var(--blue2);transform:translateY(-1px);}
+.btn-principal:active{transform:scale(.97);}
+
+/* PANTALLA PRINCIPAL */
+#p-principal{display:none;flex-direction:column;gap:12px;}
+
+/* REFERÈNCIA */
+.ref-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:4px;}
+.ref-box{border-radius:10px;padding:10px 8px;text-align:center;font-size:.72rem;font-weight:700;line-height:1.4;}
+.ref-ok{background:var(--okl);color:var(--ok);border:1px solid #86efac;}
+.ref-warn{background:var(--warnl);color:var(--warn);border:1px solid #fcd34d;}
+.ref-err{background:var(--errl);color:var(--err);border:1px solid #fca5a5;}
+.ref-box .ref-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.5px;opacity:.8;}
+.ref-box .ref-vals{font-size:.8rem;margin-top:2px;}
+
+/* INPUTS MESURA */
+.inputs-mesura{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.input-tensio{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.input-tensio label{font-size:.7rem;font-weight:700;color:var(--s600);text-transform:uppercase;letter-spacing:1px;text-align:center;}
+.input-tensio input{
+  width:100%;font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:900;
+  padding:14px 8px;border:2px solid var(--s300);border-radius:12px;
+  text-align:center;background:var(--bg);color:var(--s800);
+  appearance:none;-webkit-appearance:none;transition:border-color .15s,background .15s;
+}
+.input-tensio input:focus{outline:none;border-color:var(--blue);background:#dbeafe;}
+.input-tensio .sub-label{font-size:.65rem;color:var(--s400);font-weight:600;}
+.input-tensio input.error{border-color:var(--err)!important;background:var(--errl)!important;}
+
+/* FEEDBACK FIX */
+#feedback-box{border-radius:12px;padding:12px 16px;text-align:center;display:none;margin-top:10px;border:2px solid transparent;}
+#feedback-box.vis{display:block;}
+#feedback-emoji{font-size:1.3rem;display:block;margin-bottom:3px;}
+#feedback-vals{font-size:2.2rem;font-weight:900;line-height:1;letter-spacing:-1px;}
+#feedback-vals .sep{font-size:1rem;font-weight:700;margin:0 8px;opacity:.4;}
+#feedback-estat{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:5px;}
+#feedback-err{font-size:.82rem;font-weight:700;text-align:center;color:var(--err);padding:4px 0;min-height:20px;}
+
+/* MITJANA */
+.mitjana-box{background:var(--s800);border-radius:14px;padding:22px 16px;text-align:center;}
+.mit-label{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;}
+.mit-nums{display:flex;align-items:baseline;justify-content:center;margin-bottom:10px;}
+.mit-num{font-size:3.2rem;font-weight:900;line-height:1;letter-spacing:-2px;}
+.mit-sep{font-size:1.6rem;font-weight:700;color:rgba(255,255,255,.2);margin:0 12px;}
+.mit-sub{font-size:.75rem;color:var(--s400);margin-bottom:8px;}
+.mit-pill{display:inline-block;padding:5px 18px;border-radius:99px;font-size:.82rem;font-weight:700;}
+
+/* HISTORIAL */
+.hist-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.hist-header h3{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;}
+.hist-count{font-size:.75rem;font-weight:700;background:var(--s200);color:var(--s700);padding:3px 10px;border-radius:99px;}
+.hist-llista{display:flex;flex-direction:column;gap:4px;max-height:220px;overflow-y:auto;}
+.hist-item{
+  background:var(--bg);border:1px solid var(--s200);border-radius:8px;
+  padding:7px 12px;display:grid;grid-template-columns:auto 1fr auto auto;
+  align-items:center;gap:8px;animation:slideIn .2s ease;
+}
+@keyframes slideIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.hist-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.hist-data{font-size:.72rem;color:var(--s600);font-weight:600;}
+.hist-vals{font-size:.9rem;font-weight:900;color:var(--s800);text-align:right;}
+.hist-vals .separat{font-size:.7rem;font-weight:700;color:var(--s400);}
+.btn-del-hist{background:none;border:none;cursor:pointer;color:var(--s400);font-size:.9rem;padding:4px;border-radius:6px;transition:color .15s,background .15s;min-width:28px;min-height:28px;}
+.btn-del-hist:hover{color:var(--err);background:var(--errl);}
+.buit-msg{font-size:.85rem;color:var(--s400);font-style:italic;text-align:center;padding:12px 0;}
+
+/* BTN ESBORRAR */
+.btn-reset{
+  font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;
+  width:100%;padding:10px;border:2px solid var(--errl);border-radius:12px;
+  cursor:pointer;background:white;color:var(--err);
+  transition:all .15s;margin-top:6px;min-height:40px;
+}
+.btn-reset:hover{background:var(--errl);border-color:var(--err);}
+
+/* BTN CANVIAR PERFIL */
+.btn-perfil{
+  font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;
+  padding:8px 16px;border:2px solid var(--s300);border-radius:99px;
+  cursor:pointer;background:white;color:var(--s600);transition:all .15s;
+}
+.btn-perfil:hover{border-color:var(--blue);color:var(--blue);}
+.perfil-info{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--s600);font-weight:600;}
+
+/* MODAL AJUDA */
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center;padding:16px;}
+#overlay.vis{display:flex;}
+.modal{background:white;border-radius:18px;padding:24px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.modal h2{font-size:1.1rem;font-weight:900;color:var(--s800);margin-bottom:14px;}
+.modal p{font-size:.85rem;color:var(--s600);margin-bottom:8px;line-height:1.5;}
+.modal strong{color:var(--blue);}
+.btn-tancar{font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;width:100%;padding:12px;border:none;border-radius:12px;background:var(--blue);color:white;cursor:pointer;margin-top:8px;}
+.btn-tancar:hover{background:var(--blue2);}
+
+/* FOOTER */
+footer{flex-shrink:0;text-align:center;font-size:.7rem;color:var(--s400);padding:8px;font-weight:600;}
+footer a{color:var(--s400);text-decoration:none;}
+
+@media(max-width:380px){
+  .input-tensio input{font-size:1.6rem;padding:12px 6px;}
+  .mit-valor{font-size:2rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="logo" href="https://ja.cat/appgobo" target="_self">
+    <svg class="logo-hex" viewBox="0 0 40 40">
+      <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#2563eb" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="20" y="16" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="9" fill="white">GOBO</text>
+      <text x="20" y="28" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="10" fill="#93c5fd">26</text>
+    </svg>
+    <span class="logo-txt">GOBO<span>26</span></span>
+  </a>
+  <span class="hdr-title">🩺 TENSIÓ ARTERIAL</span>
+  <button id="btn-ajuda" onclick="toggleAjuda()">?</button>
+</header>
+
+<!-- MAIN -->
+<main>
+
+  <!-- PANTALLA INICIAL -->
+  <div id="p-inici">
+    <div class="card">
+      <div class="card-title">Configuració inicial</div>
+      <div class="avis-privacitat">🔒 <strong>Privacitat:</strong> Les dades es guarden únicament en aquest dispositiu. No s'envien a cap servidor extern.</div>
+    </div>
+    <div class="card">
+      <div class="camp-form">
+        <label for="sexe">Sexe</label>
+        <select id="sexe">
+          <option value="home">Home</option>
+          <option value="dona">Dona</option>
+        </select>
+      </div>
+      <div style="height:12px;"></div>
+      <div class="camp-form">
+        <label for="edat">Edat</label>
+        <input type="number" id="edat" placeholder="Ex: 62" min="1" max="120" inputmode="numeric">
+      </div>
+      <div style="height:14px;"></div>
+      <button class="btn-principal" onclick="comencar()">Començar →</button>
+    </div>
+  </div>
+
+  <!-- PANTALLA PRINCIPAL -->
+  <div id="p-principal">
+
+    <!-- PERFIL -->
+    <div class="card" style="padding:12px 18px;">
+      <div class="perfil-info">
+        <span id="info-perfil">—</span>
+        <button class="btn-perfil" onclick="canviarPerfil()">✎ Canviar perfil</button>
+      </div>
+    </div>
+
+    <!-- NOVA MESURA -->
+    <div class="card">
+      <div class="card-title">Nova mesura</div>
+      <div class="inputs-mesura">
+        <div class="input-tensio">
+          <label for="sis">Sistòlica</label>
+          <input type="number" id="sis" placeholder="135" min="50" max="300" inputmode="numeric" onkeydown="if(event.key==='Enter') document.getElementById('dia').focus()">
+          <span class="sub-label">La màxima</span>
+        </div>
+        <div class="input-tensio">
+          <label for="dia">Diastòlica</label>
+          <input type="number" id="dia" placeholder="85" min="30" max="200" inputmode="numeric" onkeydown="if(event.key==='Enter') guardarMesura()">
+          <span class="sub-label">La mínima</span>
+        </div>
+      </div>
+      <div style="height:10px;"></div>
+      <button class="btn-principal" onclick="guardarMesura()">＋ Guardar mesura</button>
+      <div id="feedback-err"></div>
+      <div id="feedback-box">
+        <span id="feedback-emoji"></span>
+        <div id="feedback-vals"><span id="fb-sis"></span><span class="sep">/</span><span id="fb-dia"></span></div>
+        <div id="feedback-estat"></div>
+      </div>
+    </div>
+
+    <!-- MITJANA 7 DIES -->
+    <div class="mitjana-box">
+      <div class="mit-label">Mitjana dels últims 7 dies</div>
+      <div class="mit-nums">
+        <span class="mit-num" id="mit-sis">—</span>
+        <span class="mit-sep">/</span>
+        <span class="mit-num" id="mit-dia">—</span>
+      </div>
+      <div class="mit-sub" id="mit-sub">Encara no hi ha dades suficients</div>
+      <div id="mit-pill"></div>
+    </div>
+
+    <!-- REFERÈNCIA -->
+    <div class="card">
+      <div class="card-title">Valors de referència · Sistòlica / Diastòlica</div>
+      <div class="ref-grid">
+        <div class="ref-box ref-ok"><div class="ref-label">✓ Correcta</div><div class="ref-vals">120–140<br>80–90</div></div>
+        <div class="ref-box ref-warn"><div class="ref-label">⚠ Atenció</div><div class="ref-vals">141–159<br>91–99</div></div>
+        <div class="ref-box ref-err"><div class="ref-label">⚡ Alerta</div><div class="ref-vals">&gt;160<br>&gt;100</div></div>
+      </div>
+    </div>
+
+    <!-- HISTORIAL -->
+    <div class="card">
+      <div class="hist-header">
+        <h3>Historial de mesures</h3>
+        <span class="hist-count" id="hist-count">0 mesures</span>
+      </div>
+      <div id="hist-buit" class="buit-msg">Encara no has registrat cap mesura.</div>
+      <div id="hist-llista" class="hist-llista"></div>
+      <button id="btn-reset" class="btn-reset" onclick="confirmarEsborrat()" style="display:none;">🗑 Esborrar totes les dades</button>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>Una aplicació de <a href="https://ja.cat/appgobo" target="_self">Gobo26</a></footer>
+
+<!-- MODAL AJUDA -->
+<div id="overlay" onclick="tancarAjudaFora(event)">
+  <div class="modal">
+    <h2>🩺 Com funciona</h2>
+    <p>La primera vegada, introdueix el teu <strong>sexe</strong> i <strong>edat</strong> per configurar el perfil.</p>
+    <p>Cada vegada que facis una mesura, introdueix la <strong>sistòlica</strong> (màxima) i la <strong>diastòlica</strong> (mínima).</p>
+    <p>L'aplicació guarda l'historial i calcula la <strong>mitjana dels últims 7 dies</strong> automàticament.</p>
+    <p>Pots eliminar qualsevol mesura individualment amb la <strong>✕</strong> de cada fila.</p>
+    <p style="font-size:.75rem;color:var(--s400);">🔒 Totes les dades es guarden localment en aquest dispositiu.</p>
+    <button class="btn-tancar" onclick="toggleAjuda()">Entès</button>
+  </div>
+</div>
+
+<script>
+let dades = [];
+let perfil = null;
+try { dades = JSON.parse(localStorage.getItem('gobo26_tensio_dades')) || []; } catch(e){ dades=[]; }
+try { perfil = JSON.parse(localStorage.getItem('gobo26_tensio_perfil')) || null; } catch(e){ perfil=null; }
+
+// Migrar dades antigues si existeixen
+try {
+  const old = JSON.parse(localStorage.getItem('dadesPressio'));
+  if (old && old.length && !dades.length) { dades = old; }
+  const oldPerfil = JSON.parse(localStorage.getItem('perfilPressio'));
+  if (oldPerfil && !perfil) { perfil = oldPerfil; }
+} catch(e){}
+
+if (perfil) mostrarPrincipal();
+
+function comencar() {
+  const sexe = document.getElementById('sexe').value;
+  const edat = parseInt(document.getElementById('edat').value);
+  if (!edat || edat < 1 || edat > 120) {
+    document.getElementById('edat').style.borderColor = 'var(--err)';
+    setTimeout(() => document.getElementById('edat').style.borderColor = '', 1500);
+    return;
+  }
+  perfil = { sexe, edat };
+  try { localStorage.setItem('gobo26_tensio_perfil', JSON.stringify(perfil)); } catch(e){}
+  mostrarPrincipal();
+}
+
+function mostrarPrincipal() {
+  document.getElementById('p-inici').style.display = 'none';
+  document.getElementById('p-principal').style.display = 'flex';
+  const sexeText = perfil.sexe === 'home' ? 'Home' : 'Dona';
+  document.getElementById('info-perfil').textContent = `${sexeText}, ${perfil.edat} anys`;
+  actualitzarInterficie();
+  document.getElementById('sis').focus();
+}
+
+function canviarPerfil() {
+  document.getElementById('p-inici').style.display = 'flex';
+  document.getElementById('p-principal').style.display = 'none';
+  if (perfil) {
+    document.getElementById('sexe').value = perfil.sexe || 'home';
+    document.getElementById('edat').value = perfil.edat || '';
+  }
+}
+
+function determinarEstat(sis, dia) {
+  if (sis >= 160 || dia >= 100) return { color:'var(--err)', bg:'var(--errl)', text:'Alerta', emoji:'⚡' };
+  if (sis > 140 || dia > 90)   return { color:'var(--warn)', bg:'var(--warnl)', text:'Atenció', emoji:'⚠' };
+  return { color:'var(--ok)', bg:'var(--okl)', text:'Correcta', emoji:'✓' };
+}
+
+function guardarMesura() {
+  const sis = parseInt(document.getElementById('sis').value);
+  const dia = parseInt(document.getElementById('dia').value);
+
+  document.getElementById('sis').classList.remove('error');
+  document.getElementById('dia').classList.remove('error');
+
+  if (!sis || sis < 50 || sis > 300) {
+    document.getElementById('sis').classList.add('error');
+    mostrarFeedback('⚠ Valor sistòlica incorrecte', true);
+    document.getElementById('sis').focus();
+    return;
+  }
+  if (!dia || dia < 30 || dia > 200) {
+    document.getElementById('dia').classList.add('error');
+    mostrarFeedback('⚠ Valor diastòlica incorrecte', true);
+    document.getElementById('dia').focus();
+    return;
+  }
+
+  const ara = new Date();
+  const dies = ['Diu','Dil','Dim','Dim','Dij','Div','Dis'];
+  const mesos = ['Gen','Feb','Mar','Abr','Mai','Jun','Jul','Ago','Set','Oct','Nov','Des'];
+
+  dades.unshift({
+    id: Date.now(),
+    dataText: `${dies[ara.getDay()]} ${ara.getDate()} ${mesos[ara.getMonth()]} ${ara.getFullYear()}`,
+    hora: `${ara.getHours()}:${ara.getMinutes().toString().padStart(2,'0')}`,
+    sis, dia,
+    timestamp: ara.getTime()
+  });
+
+  try { localStorage.setItem('gobo26_tensio_dades', JSON.stringify(dades)); } catch(e){}
+  document.getElementById('sis').value = '';
+  document.getElementById('dia').value = '';
+
+  const estat = determinarEstat(sis, dia);
+  mostrarResultat(sis, dia, estat);
+  actualitzarInterficie();
+  document.getElementById('sis').focus();
+}
+
+function eliminarMesura(id) {
+  dades = dades.filter(d => d.id !== id);
+  try { localStorage.setItem('gobo26_tensio_dades', JSON.stringify(dades)); } catch(e){}
+  actualitzarInterficie();
+}
+
+function actualitzarInterficie() {
+  const llista = document.getElementById('hist-llista');
+  const buit = document.getElementById('hist-buit');
+  const btnReset = document.getElementById('btn-reset');
+  const histCount = document.getElementById('hist-count');
+
+  llista.innerHTML = '';
+
+  if (dades.length === 0) {
+    buit.style.display = 'block';
+    btnReset.style.display = 'none';
+    histCount.textContent = '0 mesures';
+    document.getElementById('mit-sis').textContent = '—';
+    document.getElementById('mit-sis').style.color = 'rgba(255,255,255,.25)';
+    document.getElementById('mit-dia').textContent = '—';
+    document.getElementById('mit-dia').style.color = 'rgba(255,255,255,.25)';
+    document.getElementById('mit-sub').textContent = 'Encara no hi ha dades';
+    document.getElementById('mit-pill').innerHTML = '';
+    return;
+  }
+
+  buit.style.display = 'none';
+  btnReset.style.display = 'block';
+  histCount.textContent = dades.length + (dades.length === 1 ? ' mesura' : ' mesures');
+
+  dades.forEach(reg => {
+    const estat = determinarEstat(reg.sis, reg.dia);
+    const div = document.createElement('div');
+    div.className = 'hist-item';
+    div.innerHTML = `
+      <span class="hist-dot" style="background:${estat.color};"></span>
+      <span class="hist-data">${reg.dataText}<br>${reg.hora}</span>
+      <span class="hist-vals">${reg.sis}<span class="separat">/</span>${reg.dia}</span>
+      <button class="btn-del-hist" onclick="eliminarMesura(${reg.id})" title="Eliminar">✕</button>
+    `;
+    llista.appendChild(div);
+  });
+
+  // Mitjana 7 dies
+  const ara = Date.now();
+  const setDies = 7 * 24 * 3600 * 1000;
+  const recents = dades.filter(d => (ara - d.timestamp) < setDies);
+
+  if (recents.length >= 1) {
+    const mSis = Math.round(recents.reduce((a,b) => a+b.sis, 0) / recents.length);
+    const mDia = Math.round(recents.reduce((a,b) => a+b.dia, 0) / recents.length);
+    const estat = determinarEstat(mSis, mDia);
+    document.getElementById('mit-sis').textContent = mSis;
+    document.getElementById('mit-sis').style.color = estat.color;
+    document.getElementById('mit-dia').textContent = mDia;
+    document.getElementById('mit-dia').style.color = estat.color;
+    const txt = recents.length === 1 ? '1 mesura aquesta setmana' : `${recents.length} mesures dels últims 7 dies`;
+    document.getElementById('mit-sub').textContent = txt;
+    document.getElementById('mit-pill').innerHTML =
+      `<span class="mit-pill" style="background:${estat.bg};color:${estat.color};">${estat.emoji} ${estat.text}</span>`;
+  } else {
+    document.getElementById('mit-sis').textContent = '—';
+    document.getElementById('mit-sis').style.color = 'rgba(255,255,255,.25)';
+    document.getElementById('mit-dia').textContent = '—';
+    document.getElementById('mit-dia').style.color = 'rgba(255,255,255,.25)';
+    document.getElementById('mit-sub').textContent = 'Cap mesura els últims 7 dies';
+    document.getElementById('mit-pill').innerHTML = '';
+  }
+}
+
+function mostrarResultat(sis, dia, estat) {
+  const box = document.getElementById('feedback-box');
+  document.getElementById('feedback-emoji').textContent = estat.emoji;
+  document.getElementById('fb-sis').textContent = sis;
+  document.getElementById('fb-dia').textContent = dia;
+  document.getElementById('fb-sis').style.color = estat.color;
+  document.getElementById('fb-dia').style.color = estat.color;
+  document.getElementById('feedback-estat').textContent = estat.text;
+  document.getElementById('feedback-estat').style.color = estat.color;
+  box.style.background = estat.bg;
+  box.style.borderColor = estat.color;
+  box.classList.add('vis');
+  document.getElementById('feedback-err').textContent = '';
+}
+
+function mostrarError(msg) {
+  document.getElementById('feedback-err').textContent = msg;
+}
+
+function confirmarEsborrat() {
+  if (confirm('Segur que vols esborrar totes les mesures? Aquesta acció no es pot desfer.')) {
+    dades = [];
+    try { localStorage.removeItem('gobo26_tensio_dades'); } catch(e){}
+    actualitzarInterficie();
+    document.getElementById('feedback-box').classList.remove('vis'); document.getElementById('feedback-err').textContent='';
+  }
+}
+
+function toggleAjuda() {
+  document.getElementById('overlay').classList.toggle('vis');
+}
+function tancarAjudaFora(e) {
+  if (e.target.id === 'overlay') toggleAjuda();
+}
+</script>
+</body>
+</html>

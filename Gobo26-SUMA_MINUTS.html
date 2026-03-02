@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suma de Temps · Gobo26</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
+  --s600:#475569; --s700:#334155; --s800:#1e293b;
+  --blue:#2563eb; --blue2:#3b82f6;
+  --ok:#16a34a; --okl:#dcfce7;
+  --err:#dc2626; --errl:#fee2e2;
+  --gold:#f59e0b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);display:flex;flex-direction:column;align-items:center;}
+
+/* HEADER */
+header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-hex{width:36px;height:36px;flex-shrink:0;}
+.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
+.logo-txt span{color:var(--blue2);}
+.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
+#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
+#btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
+
+/* MAIN */
+main{width:100%;max-width:640px;padding:16px 12px 8px;display:flex;flex-direction:column;gap:12px;flex:1;overflow-y:auto;}
+
+/* CARDS */
+.card{width:100%;background:white;border:1px solid var(--s200);border-radius:14px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.card-title{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;text-align:center;}
+
+/* INPUTS */
+.grup-entrada{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.camp{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.camp label{font-size:.75rem;font-weight:700;color:var(--s600);text-transform:uppercase;letter-spacing:1px;}
+.camp input{
+  width:100%;font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:900;
+  padding:14px 8px;border:2px solid var(--s300);border-radius:12px;
+  text-align:center;background:var(--bg);color:var(--s800);
+  appearance:none;-webkit-appearance:none;transition:border-color .15s,background .15s;
+}
+.camp input:focus{outline:none;border-color:var(--blue);background:#dbeafe;}
+.camp input::placeholder{color:var(--s300);}
+.camp input.error{border-color:var(--err)!important;background:var(--errl)!important;animation:shake .3s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* BOTONS ACCIÓ */
+.botons-accio{display:grid;grid-template-columns:2fr 1fr;gap:10px;}
+.btn-sumar{
+  font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;
+  padding:14px;border:none;border-radius:12px;cursor:pointer;
+  background:var(--blue);color:white;
+  transition:background .15s,transform .1s;box-shadow:0 4px 12px rgba(37,99,235,.3);
+  min-height:48px;
+}
+.btn-sumar:hover{background:var(--blue2);transform:translateY(-1px);}
+.btn-sumar:active{transform:scale(.97);}
+.btn-netejar{
+  font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;
+  padding:14px 10px;border:2px solid var(--s300);border-radius:12px;cursor:pointer;
+  background:white;color:var(--s700);transition:all .15s;min-height:48px;
+}
+.btn-netejar:hover{border-color:var(--s400);background:var(--bg);}
+
+/* RESULTAT TOTAL */
+.resultat-box{
+  background:var(--s800);border-radius:14px;padding:18px;text-align:center;
+  box-shadow:0 4px 16px rgba(30,41,59,.3);
+}
+.res-label{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;}
+.res-total{font-size:1rem;font-weight:700;color:rgba(255,255,255,.5);line-height:1;letter-spacing:0;}
+.res-total .num{font-size:3.2rem;font-weight:900;color:white;letter-spacing:-2px;}
+.res-total .unitat{font-size:1rem;font-weight:700;color:var(--blue2);margin-right:8px;}
+.res-sub{font-size:.8rem;color:var(--s400);margin-top:6px;}
+
+/* HISTORIAL */
+.hist-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.hist-header h3{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;}
+.hist-count{font-size:.75rem;font-weight:700;background:var(--s200);color:var(--s700);padding:3px 10px;border-radius:99px;}
+.llista-temps{list-style:none;padding:0;display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;}
+.element-temps{
+  background:var(--bg);border:1px solid var(--s200);border-radius:8px;
+  padding:6px 10px;display:flex;justify-content:space-between;align-items:center;
+  font-size:.82rem;font-weight:700;color:var(--s800);
+  animation:slideIn .2s ease;
+}
+@keyframes slideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.element-temps .num{font-size:.7rem;color:var(--s400);font-weight:600;}
+.element-temps .temps-val{color:var(--blue);font-weight:900;}
+.btn-del{background:none;border:none;cursor:pointer;color:var(--s400);font-size:1rem;padding:4px;border-radius:6px;transition:color .15s,background .15s;min-width:32px;min-height:32px;}
+.btn-del:hover{color:var(--err);background:var(--errl);}
+.buit-msg{font-size:.85rem;color:var(--s400);font-style:italic;text-align:center;padding:16px 0;}
+
+/* BTN RESET */
+.btn-reset{
+  font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;
+  width:100%;padding:12px;border:2px solid var(--errl);border-radius:12px;
+  cursor:pointer;background:white;color:var(--err);
+  transition:all .15s;margin-top:8px;min-height:44px;
+}
+.btn-reset:hover{background:var(--errl);border-color:var(--err);}
+
+/* FEEDBACK */
+#feedback{
+  font-size:.85rem;font-weight:700;text-align:center;
+  color:var(--ok);padding:4px 0;min-height:24px;
+  transition:opacity .3s;
+}
+
+/* MODAL AJUDA */
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center;padding:16px;}
+#overlay.vis{display:flex;}
+.modal{background:white;border-radius:18px;padding:24px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.modal h2{font-size:1.1rem;font-weight:900;color:var(--s800);margin-bottom:16px;}
+.modal p{font-size:.9rem;color:var(--s600);margin-bottom:10px;line-height:1.5;}
+.modal strong{color:var(--blue);}
+.btn-tancar{
+  font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;
+  width:100%;padding:12px;border:none;border-radius:12px;
+  background:var(--blue);color:white;cursor:pointer;margin-top:8px;
+}
+.btn-tancar:hover{background:var(--blue2);}
+
+/* FOOTER */
+footer{flex-shrink:0;text-align:center;font-size:.7rem;color:var(--s400);padding:8px;font-weight:600;}
+footer a{color:var(--s400);text-decoration:none;}
+
+/* RESPONSIVE */
+@media(max-width:380px){
+  .res-total{font-size:2.2rem;}
+  .camp input{font-size:1.5rem;padding:12px 6px;}
+  .btn-sumar{font-size:.9rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="logo" href="https://ja.cat/appgobo" target="_self">
+    <svg class="logo-hex" viewBox="0 0 40 40">
+      <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#2563eb" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="20" y="16" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="9" fill="white">GOBO</text>
+      <text x="20" y="28" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="10" fill="#93c5fd">26</text>
+    </svg>
+    <span class="logo-txt">GOBO<span>26</span></span>
+  </a>
+  <span class="hdr-title">⏱ SUMA DE TEMPS</span>
+  <button id="btn-ajuda" onclick="toggleAjuda()">?</button>
+</header>
+
+<!-- MAIN -->
+<main>
+
+  <!-- INPUTS -->
+  <div class="card">
+    <div class="card-title">Afegeix un temps</div>
+    <div class="grup-entrada">
+      <div class="camp">
+        <label for="minuts">Minuts</label>
+        <input type="number" id="minuts" placeholder="0" min="0" max="59" inputmode="numeric" onkeydown="teclaEnter(event,'segons')">
+      </div>
+      <div class="camp">
+        <label for="segons">Segons</label>
+        <input type="number" id="segons" placeholder="0" min="0" max="59" inputmode="numeric" onkeydown="teclaEnter(event,null)">
+      </div>
+    </div>
+    <div style="height:8px;"></div>
+    <div class="botons-accio">
+      <button class="btn-sumar" onclick="afegirTemps()">＋ Afegir temps</button>
+      <button class="btn-netejar" onclick="netejarCamps()">✕ Netejar</button>
+    </div>
+    <div id="feedback"></div>
+  </div>
+
+  <!-- RESULTAT -->
+  <div class="resultat-box">
+    <div class="res-label">Temps total acumulat</div>
+    <div class="res-total" id="display-total">
+      <span class="num" id="tot-h">0</span><span class="unitat">h</span><span class="num" id="tot-m">0</span><span class="unitat">m</span><span class="num" id="tot-s">0</span><span class="unitat">s</span>
+    </div>
+    <div class="res-sub" id="res-sub">Afegeix temps per començar</div>
+  </div>
+
+  <!-- HISTORIAL -->
+  <div class="card">
+    <div class="hist-header">
+      <h3>Llista de temps afegits</h3>
+      <span class="hist-count" id="hist-count">0 elements</span>
+    </div>
+    <div id="llista-buida" class="buit-msg">Encara no has afegit cap temps.</div>
+    <ul id="llista-temps" class="llista-temps"></ul>
+    <button id="btn-reset" class="btn-reset" onclick="confirmarEsborrat()" style="display:none;">
+      🗑 Esborrar tot i posar a zero
+    </button>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>Una aplicació de <a href="https://ja.cat/appgobo" target="_self">Gobo26</a></footer>
+
+<!-- MODAL AJUDA -->
+<div id="overlay" onclick="tancarAjudaFora(event)">
+  <div class="modal">
+    <h2>⏱ Com funciona</h2>
+    <p>Escriu els <strong>minuts</strong> i <strong>segons</strong> que vols afegir i prem <strong>Afegir temps</strong>.</p>
+    <p>Pots afegir tants temps com vulguis. El total s'actualitza automàticament.</p>
+    <p>Prem la <strong>✕</strong> de cada element per eliminar-lo individualment.</p>
+    <p>Els teus temps es guarden automàticament i es recuperen la propera vegada que obris l'aplicació.</p>
+    <button class="btn-tancar" onclick="toggleAjuda()">Entès</button>
+  </div>
+</div>
+
+<script>
+let dades = [];
+try { dades = JSON.parse(localStorage.getItem('gobo26_sumaTemps')) || []; } catch(e){ dades=[]; }
+
+function teclaEnter(e, seguentId) {
+  if (e.key === 'Enter') {
+    if (seguentId) document.getElementById(seguentId).focus();
+    else afegirTemps();
+  }
+}
+
+function afegirTemps() {
+  const mRaw = parseInt(document.getElementById('minuts').value) || 0;
+  const sRaw = parseInt(document.getElementById('segons').value) || 0;
+
+  // Netejar errors previs
+  ['minuts','segons'].forEach(id => document.getElementById(id).classList.remove('error'));
+
+  if (mRaw > 59) {
+    marcarError('minuts', '⚠ Els minuts no poden ser més de 59'); return;
+  }
+  if (sRaw > 59) {
+    marcarError('segons', '⚠ Els segons no poden ser més de 59'); return;
+  }
+
+  const m = Math.max(0, mRaw);
+  const s = Math.max(0, sRaw);
+
+  if (m === 0 && s === 0) {
+    mostrarFeedback('⚠ Posa algun número primer', true);
+    document.getElementById('minuts').focus();
+    return;
+  }
+
+  dades.push({ m, s, id: Date.now() });
+  netejarCamps();
+  actualitzarInterficie();
+  mostrarFeedback(`✓ ${m}m ${s}s afegit`);
+}
+
+function marcarError(campId, msg) {
+  const el = document.getElementById(campId);
+  el.classList.add('error');
+  el.focus(); el.select();
+  mostrarFeedback(msg, true);
+  setTimeout(() => el.classList.remove('error'), 1500);
+}
+
+function eliminarElement(id) {
+  dades = dades.filter(d => d.id !== id);
+  actualitzarInterficie();
+}
+
+function netejarCamps() {
+  ['minuts','segons'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('minuts').focus();
+}
+
+function mostrarFeedback(msg, error=false) {
+  const el = document.getElementById('feedback');
+  el.textContent = msg;
+  el.style.color = error ? 'var(--err)' : 'var(--ok)';
+  el.style.opacity = '1';
+  clearTimeout(window._fbTimer);
+  window._fbTimer = setTimeout(() => { el.style.opacity = '0'; }, 2500);
+}
+
+function actualitzarInterficie() {
+  const llistaUl = document.getElementById('llista-temps');
+  const llistaBuida = document.getElementById('llista-buida');
+  const btnReset = document.getElementById('btn-reset');
+  const histCount = document.getElementById('hist-count');
+
+  llistaUl.innerHTML = '';
+  let totalSegons = 0;
+
+  if (dades.length === 0) {
+    llistaBuida.style.display = 'block';
+    btnReset.style.display = 'none';
+    histCount.textContent = '0 elements';
+    document.getElementById('tot-h').textContent = '0';
+    document.getElementById('tot-m').textContent = '0';
+    document.getElementById('tot-s').textContent = '0';
+    document.getElementById('res-sub').textContent = 'Afegeix temps per començar';
+  } else {
+    llistaBuida.style.display = 'none';
+    btnReset.style.display = 'block';
+    histCount.textContent = dades.length + (dades.length === 1 ? ' element' : ' elements');
+
+    dades.forEach((item, idx) => {
+      totalSegons += (item.m * 60) + item.s;
+      const li = document.createElement('li');
+      li.className = 'element-temps';
+      li.innerHTML = `
+        <span class="num">#${dades.length - idx}</span>
+        <span class="temps-val">${item.m}m ${item.s}s</span>
+        <button class="btn-del" onclick="eliminarElement(${item.id})" title="Eliminar">✕</button>
+      `;
+      llistaUl.insertBefore(li, llistaUl.firstChild);
+    });
+
+    const h = Math.floor(totalSegons / 3600);
+    const m = Math.floor((totalSegons % 3600) / 60);
+    const s = totalSegons % 60;
+    document.getElementById('tot-h').textContent = h;
+    document.getElementById('tot-m').textContent = m;
+    document.getElementById('tot-s').textContent = s;
+
+    // Temps en format llegible alternatiu
+    const dies = Math.floor(h / 24);
+    if (dies >= 1) {
+      document.getElementById('res-sub').textContent = `= ${dies} dia${dies>1?'s':''} i ${h%24}h ${m}m`;
+    } else {
+      const totalMin = Math.floor(totalSegons / 60);
+      document.getElementById('res-sub').textContent = `= ${totalMin} minut${totalMin!==1?'s':''} en total`;
+    }
+  }
+
+  try { localStorage.setItem('gobo26_sumaTemps', JSON.stringify(dades)); } catch(e){}
+}
+
+function confirmarEsborrat() {
+  if (confirm('Segur que vols esborrar tots els temps i posar a zero?')) {
+    dades = [];
+    actualitzarInterficie();
+    mostrarFeedback('Llista esborrada');
+  }
+}
+
+function toggleAjuda() {
+  document.getElementById('overlay').classList.toggle('vis');
+}
+
+function tancarAjudaFora(e) {
+  if (e.target.id === 'overlay') toggleAjuda();
+}
+
+// Inicialitzar
+actualitzarInterficie();
+document.getElementById('minuts').focus();
+</script>
+</body>
+</html>

@@ -94,6 +94,7 @@ footer a{color:#94a3b8;text-decoration:none;}
 /* ── ENIGMA ── */
 .e-nav{display:flex;align-items:center;justify-content:space-between;}
 .btn-back{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.78rem;background:#f1f5f9;color:#334155;border:2px solid #e2e8f0;border-radius:8px;padding:6px 12px;cursor:pointer;}
+.btn-saltar{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.78rem;background:#fef9c3;color:#854d0e;border:2px solid #fde68a;border-radius:8px;padding:6px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .e-prog{font-size:.68rem;font-weight:700;color:#94a3b8;}
 .e-cap{background:#1e293b;color:white;border-radius:10px 10px 0 0;padding:10px 14px;display:flex;align-items:center;gap:8px;}
 .e-tit{font-size:.8rem;font-weight:800;flex:1;}
@@ -173,6 +174,14 @@ footer a{color:#94a3b8;text-decoration:none;}
 .btn-sec:active{transform:translateY(4px);box-shadow:none;}
 
 #cv{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100;}
+.cesar-selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0;}
+.cesar-col{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.cesar-xif{font-size:.7rem;font-weight:700;color:#94a3b8;font-family:monospace;letter-spacing:1px;}
+.cesar-btn{width:44px;height:36px;font-size:1.2rem;background:#f1f5f9;border:2px solid #e2e8f0;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:900;color:#334155;-webkit-tap-highlight-color:transparent;user-select:none;}
+.cesar-btn:active{background:#dbeafe;border-color:#2563eb;}
+.cesar-lletra{width:48px;height:52px;background:#1e293b;color:#4ade80;font-family:monospace;font-size:1.5rem;font-weight:900;border-radius:8px;display:flex;align-items:center;justify-content:center;border:2px solid #334155;transition:background .15s;}
+.cesar-lletra.ok{background:#166534;color:#4ade80;}
+.cesar-ok-btn{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1rem;background:#2563eb;color:white;border:none;border-radius:10px;padding:12px;cursor:pointer;width:100%;box-shadow:0 3px 0 #1d4ed8;margin-top:4px;}
 </style>
 </head>
 <body>
@@ -213,7 +222,13 @@ footer a{color:#94a3b8;text-decoration:none;}
       <li>🔀 Enigmes i números <strong>aleatoris</strong> a cada partida.</li>
     </ul>
   </div>
-  <div class="estat-ant" id="estat-ant">📌 Tens una partida guardada. Podràs reprendre-la.</div>
+  <div class="estat-ant" id="estat-ant" style="display:none;">
+    <div style="margin-bottom:8px;">📌 Tens una partida guardada</div>
+    <div style="display:flex;gap:8px;flex-direction:column;">
+      <button class="btn-ppal" id="btn-reprendre" onclick="reprendre()" style="background:#22c55e;box-shadow:0 4px 0 #16a34a;">↩ Reprendre la partida</button>
+      <button class="btn-sec" id="btn-nova" onclick="novaPartida()" style="font-size:.85rem;padding:11px;">✨ Començar una nova partida</button>
+    </div>
+  </div>
   <button class="btn-ppal" id="btn-comecar" onclick="comecar()">Comença l'aventura →</button>
 </div>
 
@@ -234,6 +249,7 @@ footer a{color:#94a3b8;text-decoration:none;}
   <div class="e-nav">
     <button class="btn-back" onclick="tornarMapa()">← Mapa</button>
     <span class="e-prog" id="e-prog">–</span>
+    <button class="btn-saltar" onclick="saltarEnigma()" id="btn-saltar">⏭ Deixar per més tard</button>
   </div>
   <div>
     <div class="e-cap">
@@ -287,6 +303,11 @@ footer a{color:#94a3b8;text-decoration:none;}
     <div class="stat"><span class="stat-n" id="fn-p">–</span><span class="stat-l">Pistes</span></div>
     <div class="stat"><span class="stat-n" id="fn-v">–</span><span class="stat-l">Vides</span></div>
   </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+    <div class="stat"><span class="stat-n" id="fn-temps">–</span><span class="stat-l">Temps partida</span></div>
+    <div class="stat" style="border:2px solid #fde68a;"><span class="stat-n" id="fn-rec" style="color:#f59e0b;">–</span><span class="stat-l">⏱ Rècord</span></div>
+    <div class="stat"><span class="stat-n" id="fn-nparts">–</span><span class="stat-l">Partides</span></div>
+  </div>
   <div class="fin-nota" id="fin-nota">–</div>
   <button class="btn-sec" onclick="reiniciar()">↺ Tornar a jugar</button>
 </div>
@@ -335,15 +356,13 @@ function pick(arr){return arr[randInt(0,arr.length-1)];}
 
 // César: genera desplaçament aleatori (entre 4 i 11, evitem 1,2,3 massa fàcils i 13+ massa llargs)
 function generarCesar(){
-  const desp=randInt(4,11);
-  // Paraula pista: una paraula catalana coneguda de 4-6 lletres
-  const paraulesBase=['PORTA','TAULA','LLUNA','CARRO','HERBA','FLORS','PEDRA','CASES','TEMPS','PLUJA','BOSCO','CAMPA'];
-  const base=pick(paraulesBase);
-  // Xifra la paraula pista i la paraula clau (ALBERT)
+  const desp=randInt(3,11);
   const xifra=s=>s.split('').map(c=>{const code=c.charCodeAt(0);if(code>=65&&code<=90)return String.fromCharCode(((code-65+desp)%26)+65);return c;}).join('');
-  const base_xifrada=xifra(base);
-  const clau_xifrada=xifra('ALBERT');
-  return {desp,base,base_xifrada,clau_xifrada,resposta:'ALBERT'};
+  // Paraules a desxifrar (el "nom secret") - 5 a 7 lletres, variades
+  const paraulesSec=['TRESOR','MISTERI','ENIGMA','LLAPIS','MIRALL','FLAIRE','CAVALL','TARDOR','HIVERN','ESPIGA','BRUIXA','PLANTA','CAMELL','GLOBUS','PREMIA','ESPASA','TEMPLE','FORMIG','GARRAF','OLIVES'];
+  const clau=pick(paraulesSec);
+  const clau_xifrada=xifra(clau);
+  return {desp,clau_xifrada,resposta:clau};
 }
 
 // Rellotge: hora i minuts aleatoris, suma aleatòria
@@ -421,19 +440,29 @@ function generarQMagic(){
 
 // Fórmula lab: paraules catalanes amb nombre de lletres aleatori
 function generarFormula(){
-  const parelles=[
-    {p1:'OR',p2:'PLATA',p3:'LLUNA'},      // 2+5+5=12
-    {p1:'FER',p2:'COURE',p3:'TERRA'},     // 3+5+5=13
-    {p1:'OR',p2:'FERRO',p3:'VENUS'},      // 2+5+5=12
-    {p1:'SAL',p2:'AIGUA',p3:'FULLA'},     // 3+5+5=13
-    {p1:'OR',p2:'PEDRA',p3:'LLUNA'},      // 2+5+5=12
-    {p1:'GAS',p2:'FLAMA',p3:'METAL'},     // 3+5+5=13
-    {p1:'OLI',p2:'SUCRE',p3:'PLATA'},     // 3+5+5=13
+  // Tria 3 paraules aleatòries de longituds molt variades (entre 2 i 8)
+  const PARAULES=[
+    'OR','BO',                                              // 2
+    'SAL','GAS','OLI','FER','CEL','MAR','MEL','COR','RIM', // 3
+    'FANG','ROCA','VENT','PLOM','ZINC','FRED','BROM','FORN',// 4
+    'PLATA','PEDRA','TERRA','COURE','LLUNA','FLAMA','SUCRE',// 5
+    'SOFRE','SILICI','ARGENT','BRONZE','NITRAT','CENDRA',   // 6
+    'CARBONI','CALCITA','CLORURS','GRANITA','SULFURS',      // 7
+    'MAGNESIA','ALUMINIS','CRISTALL','MINERALS',            // 8
   ];
-  const p=pick(parelles);
-  const res=String(p.p1.length+p.p2.length+p.p3.length);
-  return {...p,res};
+  // Tria 3 paraules que tinguin totes longituds DIFERENTS i la diferència màxima sigui gran
+  let p1,p2,p3,tries=0;
+  do {
+    const barreg=[...PARAULES].sort(()=>Math.random()-.5);
+    p1=barreg[0]; p2=barreg[1]; p3=barreg[2];
+    tries++;
+  } while(tries<50 && (p1.length===p2.length||p2.length===p3.length||p1.length===p3.length||Math.max(p1.length,p2.length,p3.length)-Math.min(p1.length,p2.length,p3.length)<3));
+  // Ordena per longitud per presentar-les de menor a major
+  [p1,p2,p3]=[p1,p2,p3].sort((a,b)=>a.length-b.length);
+  const res=String(p1.length+p2.length+p3.length);
+  return {p1,p2,p3,res};
 }
+
 
 // ════════════════════════════════════════
 // VENGEN ELS ENIGMES (amb paràmetres injectats)
@@ -467,15 +496,28 @@ function construirEnigmes(params){
     // ── DESPATX ──
     {
       id:'d1',sala:'sala',titol:'La carta xifrada',emoji:'✉️',
-      textFn:()=>`Has trobat una carta a l'escriptori. Una nota enganxada al sobre diu:<br><br>
-        <em>«Estimat nebot, he xifrat el meu nom per a tu. Però el codi no t'el diré: t'he deixat una paraula pista que ja coneixes per ajudar-te a trobar el desplaçament.»</em><br><br>
-        Paraula pista (la coneixes): <div class="codi-bloc">${cesar.base_xifrada}</div>
-        El meu nom xifrat: <div class="codi-bloc">${cesar.clau_xifrada}</div>`,
-      pregunta:`La paraula pista xifrada és "${cesar.base_xifrada}". La paraula original és "${cesar.base}". Quant s'ha desplaçat cada lletra? Aplica el mateix a "${cesar.clau_xifrada}" i escriu el nom original.`,
+      textFn:()=>{
+        const lletres=cesar.clau_xifrada.split('');
+        window._cesarState=[...lletres];
+        const cols=lletres.map((c,i)=>{
+          return `<div class="cesar-col">
+            <span class="cesar-xif">${c}</span>
+            <button class="cesar-btn" onclick="cesarCanvia(${i},1)">▲</button>
+            <div class="cesar-lletra" id="cesar-l-${i}">${c}</div>
+            <button class="cesar-btn" onclick="cesarCanvia(${i},-1)">▼</button>
+          </div>`;
+        }).join('');
+        return `Has trobat una carta a l'escriptori. El text diu:<br><br>
+          <em>«He xifrat una paraula secreta desplaçant cada lletra <strong>${cesar.desp} posicions cap enrere</strong> a l'alfabet.»</em><br><br>
+          Prem ▲ o ▼ per canviar cada lletra fins trobar la paraula original:<br>
+          <div class="cesar-selector">${cols}</div>
+          <em style="font-size:.75rem;color:#64748b;">Quan tinguis les lletres correctes, escriu la paraula al camp de resposta.</em>`;
+      },
+      pregunta:`Quina paraula formen les lletres que has trobat?`,
       respostes:[cesar.resposta],
-      objecte:{emoji:'🔑',nom:'Clau petita'},
-      temps:120,
-      pista:`Compara "${cesar.base_xifrada[0]}" amb "${cesar.base[0]}": el desplaçament és ${cesar.desp} posicions cap enrere. Aplica-ho a cada lletra de "${cesar.clau_xifrada}".`
+      objecte:{emoji:'🔑',nom:`Paraula: ${cesar.resposta}`},
+      temps:0,
+      pista:`Desplaça cada lletra ${cesar.desp} posicions cap enrere. La primera lletra xifrada és "${cesar.clau_xifrada[0]}", desplaçada ${cesar.desp} cap enrere és "${String.fromCharCode(((cesar.clau_xifrada[0].charCodeAt(0)-65-cesar.desp+26)%26)+65)}".`
     },
     {
       id:'d2',sala:'sala',titol:'El rellotge aturat',emoji:'🕰️',
@@ -489,7 +531,20 @@ function construirEnigmes(params){
     },
     {
       id:'d3',sala:'sala',titol:'El telegrama Morse',emoji:'📡',
-      textFn:()=>`Al calaix de l'escriptori hi ha un telegrama. El missatge és en codi Morse. Cada cel·la és una lletra:<br>${morseHTML(morse.paraula)}`,
+      textFn:()=>{
+        const MT={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..'};
+        function simHTML(s){return s.split('').map(c=>c==='.'?'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;"></span>':'<span style="display:inline-block;width:20px;height:8px;border-radius:4px;background:#4ade80;"></span>').join('<span style="display:inline-block;width:3px;"></span>');}
+        const lletres='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        const refCels=lletres.map(l=>`<div style="display:inline-flex;flex-direction:column;align-items:center;gap:3px;background:#0f172a;border-radius:6px;padding:5px 6px;margin:2px;">
+          <div style="display:flex;align-items:center;gap:2px;">${simHTML(MT[l])}</div>
+          <span style="font-size:.75rem;font-weight:900;color:white;font-family:monospace;">${l}</span>
+        </div>`).join('');
+        const refHTML=`<div style="background:#1e293b;border-radius:8px;padding:8px 6px;margin:8px 0;">
+          <div style="font-size:.62rem;font-weight:800;color:#4ade80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;text-align:center;">📋 Diccionari Morse — símbol → lletra</div>
+          <div style="display:flex;flex-wrap:wrap;gap:3px;justify-content:center;">${refCels}</div>
+        </div>`;
+        return `Al calaix de l'escriptori hi ha un telegrama. Cada bloc és una lletra del missatge:<br>${morseHTML(morse.paraula)}<br>${refHTML}`;
+      },
       pregunta:`Desxifra el codi Morse. Quina paraula formen les ${morse.paraula.length} lletres?`,
       respostes:[morse.resposta],
       objecte:{emoji:'📰',nom:`Telegrama: ${morse.paraula}`},
@@ -519,10 +574,10 @@ function construirEnigmes(params){
     },
     {
       id:'b2',sala:'bibli',titol:'La seqüència oculta',emoji:'🔢',
-      textFn:()=>`Dins del Llibre #${biblio.mig} hi ha un full amb una seqüència i una instrucció:<br><br>
-        <strong style="font-size:1rem;">${fibo.shown.join(' · ')} · ?</strong><br><br>
-        <em>«El número que falta multiplica't per ${fibo.factor} i trobaràs la combinació del pany»</em>.`,
-      pregunta:`Quin és el proper número de la seqüència × ${fibo.factor}?`,
+      textFn:()=>`Dins del Llibre #${biblio.mig} hi ha un full amb una seqüència incompleta:<br><br>
+        <div style="background:#1e293b;color:#4ade80;font-family:monospace;font-size:1.2rem;font-weight:900;border-radius:8px;padding:12px 16px;text-align:center;letter-spacing:3px;margin:8px 0;">${fibo.shown.join('  ·  ')}  ·  <span style="color:#f59e0b;">?</span></div>
+        <em>«Troba el número que substitueix la <span style="color:#b45309;font-style:normal;font-weight:800;">?</span> i multiplica'l per ${fibo.factor}.»</em>`,
+      pregunta:`Quin número va on hi ha la ? Multiplica'l per ${fibo.factor}. Quin és el resultat?`,
       respostes:[fibo.res],
       objecte:{emoji:'🔩',nom:`Combinació pany: ${fibo.res}`},
       temps:55,
@@ -611,7 +666,7 @@ function construirEnigmes(params){
 // ════════════════════════════════════════
 // ESTAT
 // ════════════════════════════════════════
-let E={vides:5,resolts:[],inventari:[],pistes:0,ordre:{},iniciat:false,actual:null,timerId:null,seguentFn:null,params:null};
+let E={vides:5,resolts:[],inventari:[],pistes:0,ordre:{},iniciat:false,actual:null,timerId:null,seguentFn:null,params:null,tempsInici:null};
 
 function saveE(){const s={...E,timerId:null,seguentFn:null};localStorage.setItem('albert4',JSON.stringify(s));}
 function loadE(){
@@ -631,9 +686,38 @@ function reconstruirEnigmes(){ENIGMES=construirEnigmes(E.params);}
   if(loadE()&&E.iniciat){
     reconstruirEnigmes();
     document.getElementById('estat-ant').style.display='block';
-    document.getElementById('btn-comecar').textContent='Reprendre la partida →';
+    document.getElementById('btn-comecar').style.display='none';
   }
 })();
+
+function reprendre(){
+  mostrarPg('pg-mapa');
+  renderMapa();
+}
+
+function novaPartida(){
+  if(!confirm('Segur que vols abandonar la partida guardada i començar de nou?'))return;
+  reiniciar();
+}
+
+function saltarEnigma(){
+  // Deixa l'enigma actual per més tard: el mou al final de la cua de la sala
+  const eng=ENIGMES.find(e=>e.id===E.actual);
+  if(!eng)return;
+  const sid=eng.sala;
+  const ordre=E.ordre[sid]||[];
+  const idx=ordre.indexOf(eng.id);
+  if(idx>=0){
+    ordre.splice(idx,1);
+    ordre.push(eng.id);
+    E.ordre[sid]=ordre;
+    saveE();
+  }
+  aturarTimer();
+  E.actual=null;
+  mostrarPg('pg-mapa');
+  renderMapa();
+}
 
 function comecar(){
   if(!E.iniciat){
@@ -651,6 +735,7 @@ function comecar(){
     };
     reconstruirEnigmes();
     E.iniciat=true;
+    E.tempsInici=Date.now();
     // Barreja l'ordre dins de cada sala
     const perSala={};
     ENIGMES.forEach(e=>{if(!perSala[e.sala])perSala[e.sala]=[];perSala[e.sala].push(e.id);});
@@ -750,6 +835,12 @@ function carregarEnigma(eng){
 // TIMER
 // ════════════════════════════════════════
 function iniciarTimer(seg){
+  if(seg===0){
+    // Sense límit de temps
+    const ht=document.getElementById('hdr-t');
+    if(ht)ht.style.display='none';
+    return;
+  }
   aturarTimer();let r=seg;
   const ht=document.getElementById('hdr-t'),ts=document.getElementById('hdr-ts');
   ht.style.display='flex';ht.className='hd-temps';
@@ -761,6 +852,24 @@ function aturarTimer(){if(E.timerId){clearInterval(E.timerId);E.timerId=null;}co
 // ════════════════════════════════════════
 // COMPROVAR
 // ════════════════════════════════════════
+// ════════════════════════════════════════
+// CESAR INTERACTIU
+// ════════════════════════════════════════
+function cesarCanvia(idx, dir){
+  if(!window._cesarState)return;
+  const actual=window._cesarState[idx];
+  const code=actual.charCodeAt(0);
+  const nou=String.fromCharCode(((code-65+dir+26)%26)+65);
+  window._cesarState[idx]=nou;
+  const el=document.getElementById('cesar-l-'+idx);
+  if(el){
+    el.textContent=nou;
+    // Actualitza l'input amb la paraula actual
+    const inp=document.getElementById('inp');
+    if(inp)inp.value=window._cesarState.join('');
+  }
+}
+
 function norm(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim();}
 
 function comprova(){
@@ -844,16 +953,39 @@ function mostrarGameOver(){
   mostrarPg('pg-go');
 }
 
+function tempsFormat(ms){
+  const s=Math.floor(ms/1000);
+  const m=Math.floor(s/60);
+  const ss=s%60;
+  return m>0?`${m}m ${ss}s`:`${ss}s`;
+}
+
 function mostrarFinal(){
   aturarTimer();soFinal();confetti();setTimeout(confetti,1200);
   document.getElementById('hdr-inv').style.display='none';
   document.getElementById('fn-e').textContent=ENIGMES.length;
   document.getElementById('fn-p').textContent=E.pistes;
   document.getElementById('fn-v').textContent=E.vides;
+
+  // Calcular temps de la partida
+  const tempsMs=E.tempsInici?Date.now()-E.tempsInici:0;
+
+  // Rècords globals (persistents entre partides)
+  let rec=JSON.parse(localStorage.getItem('albert4_rec')||'{"millor":null,"nparts":0}');
+  rec.nparts=(rec.nparts||0)+1;
+  let nouRec=false;
+  if(!rec.millor||tempsMs<rec.millor){rec.millor=tempsMs;nouRec=true;}
+  localStorage.setItem('albert4_rec',JSON.stringify(rec));
+
+  document.getElementById('fn-temps').textContent=tempsFormat(tempsMs);
+  document.getElementById('fn-rec').textContent=rec.millor?tempsFormat(rec.millor):'–';
+  document.getElementById('fn-nparts').textContent=rec.nparts;
+
   let nota;
   if(E.pistes===0&&E.vides>=4)nota='⭐⭐⭐ Impecable! Has resolt tots els enigmes sense cap ajuda. Ets un criptògraf nat. L\'Oncle Albert estaria molt orgullós.';
   else if(E.pistes<=2&&E.vides>=2)nota='⭐⭐ Molt bé! Amb una mica d\'ajuda has trobat el camí. L\'Oncle Albert somriu des d\'on sigui.';
   else nota='⭐ Ho has aconseguit! Els enigmes d\'Albert no eren fàcils. Cada partida et farà millor.';
+  if(nouRec&&rec.nparts>1)nota+=' 🏅 Nou rècord de velocitat!';
   document.getElementById('fin-nota').textContent=nota;
   mostrarPg('pg-final');
   localStorage.removeItem('albert4');
@@ -864,7 +996,7 @@ function reiniciar(){
   E={vides:5,resolts:[],inventari:[],pistes:0,ordre:{},iniciat:false,actual:null,timerId:null,seguentFn:null,params:null};
   ENIGMES=[];
   document.getElementById('estat-ant').style.display='none';
-  document.getElementById('btn-comecar').textContent='Comença l\'aventura →';
+  document.getElementById('btn-comecar').style.display='block';
   document.getElementById('hdr-inv').style.display='none';
   mostrarPg('pg-inici');
 }
