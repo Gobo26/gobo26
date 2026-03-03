@@ -46,7 +46,7 @@
             background: var(--header-bg);
             color: white;
             padding: 0 16px;
-            height: 56px;
+            height: clamp(44px, 8vh, 56px);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -61,7 +61,7 @@
             flex-shrink: 0;
         }
 
-        .hex-svg { width: 34px; height: 34px; }
+        .hex-svg { width: clamp(26px, 5vw, 34px); height: clamp(26px, 5vw, 34px); }
 
         .header-titols {
             flex: 1;
@@ -108,8 +108,8 @@
             min-height: 0;
             display: flex;
             flex-direction: column;
-            padding: 8px 14px 4px;
-            gap: 7px;
+            padding: clamp(4px, 1.5vh, 8px) 14px clamp(2px, 1vh, 4px);
+            gap: clamp(4px, 1.2vh, 7px);
             overflow: hidden;
         }
 
@@ -125,7 +125,7 @@
         .marca-card {
             background: var(--blanc);
             border-radius: 12px;
-            padding: 6px 8px;
+            padding: clamp(4px, 1vh, 6px) 8px;
             box-shadow: 0 2px 6px var(--ombra);
             text-align: center;
             display: flex;
@@ -143,7 +143,7 @@
         }
 
         .marca-card .peca {
-            font-size: clamp(1.4rem, 5vw, 1.8rem);
+            font-size: clamp(1.1rem, 4vw, 1.8rem);
             line-height: 1.1;
         }
 
@@ -154,7 +154,7 @@
         }
 
         .marca-card .punts {
-            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            font-size: clamp(0.95rem, 3.5vw, 1.4rem);
             font-weight: 900;
         }
 
@@ -183,7 +183,7 @@
             justify-content: space-between;
             background: var(--blanc);
             border-radius: 10px;
-            padding: 5px 12px;
+            padding: clamp(3px, 0.8vh, 5px) 12px;
             box-shadow: 0 2px 6px var(--ombra);
             flex-shrink: 0;
         }
@@ -306,7 +306,7 @@
             flex: 1;
             height: clamp(42px, 6vh, 52px);
             font-family: 'Montserrat', sans-serif;
-            font-size: clamp(0.8rem, 3vw, 0.95rem);
+            font-size: clamp(0.75rem, 2.5vw, 0.95rem);
             font-weight: 700;
             border: none;
             border-radius: 12px;
@@ -327,7 +327,7 @@
             font-size: 0.6rem;
             color: var(--gris);
             font-weight: 600;
-            padding: 3px 0 6px;
+            padding: 2px 0 4px;
             flex-shrink: 0;
         }
         footer a { color: var(--primari); text-decoration: none; }
@@ -408,15 +408,41 @@
         @keyframes cau { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 
         /* ===== RESPONSIVE ALÇADA ===== */
-        @media (max-height: 650px) {
-            header { height: 48px; }
-            main { gap: 4px; padding: 5px 12px 2px; }
-            .marca-card { padding: 4px 6px; }
-            .nivell-wrap { padding: 3px 10px; }
+        @media (max-height: 700px) {
+            header { height: clamp(44px, 8vh, 50px); }
+            main { gap: clamp(3px, 1vh, 5px); padding: clamp(3px, 1vh, 6px) 12px clamp(2px, 0.5vh, 3px); }
+            .marca-card { padding: 3px 6px; }
+            .marca-card .peca { font-size: clamp(1rem, 3.5vw, 1.4rem); }
+            .marca-card .punts { font-size: clamp(0.85rem, 3vw, 1.2rem); }
+            .nivell-wrap { padding: 2px 10px; }
+            .missatge { font-size: clamp(0.65rem, 2.5vw, 0.8rem); min-height: 1em; }
+        }
+
+        @media (max-height: 600px) {
+            header { height: 44px; }
+            main { gap: 3px; padding: 3px 10px 2px; }
+            .marcador { gap: 4px; }
+            .marca-card { padding: 2px 5px; gap: 0; }
+            .marca-card .nom { font-size: 0.55rem; }
+            .marca-card .peca { font-size: clamp(0.9rem, 3vw, 1.2rem); }
+            .marca-card .punts { font-size: 0.85rem; }
+            .marca-card .punts-lbl { display: none; }
+            .nivell-wrap { padding: 2px 8px; }
+            .nivell-label { font-size: 0.6rem; }
+            .comp-mini .comp-num { font-size: 0.8rem; }
+            .missatge { font-size: 0.65rem; min-height: 0.9em; }
+            .btn { height: 44px; min-height: 44px; font-size: 0.75rem; }
+            .taulell { width: min(100%, 260px); }
         }
 
         @media (max-height: 520px) {
-            .taulell { width: min(100%, 230px); }
+            .taulell { width: min(100%, 210px); }
+            .cella { font-size: clamp(1.2rem, 5vw, 1.8rem); }
+        }
+
+        @media (max-height: 460px) {
+            .taulell { width: min(100%, 180px); }
+            .marca-card .peca { display: none; }
         }
     </style>
 </head>

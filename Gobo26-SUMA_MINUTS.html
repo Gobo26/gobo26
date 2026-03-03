@@ -12,131 +12,134 @@
   --blue:#2563eb; --blue2:#3b82f6;
   --ok:#16a34a; --okl:#dcfce7;
   --err:#dc2626; --errl:#fee2e2;
-  --gold:#f59e0b;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
-body{font-family:'Montserrat',sans-serif;background:var(--bg);display:flex;flex-direction:column;align-items:center;}
+body{font-family:'Montserrat',sans-serif;font-size:.875rem;background:var(--bg);display:flex;flex-direction:column;align-items:center;color:var(--s700);}
 
 /* HEADER */
-header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
-.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
-.logo-hex{width:36px;height:36px;flex-shrink:0;}
-.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
+header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
+.logo{display:flex;align-items:center;gap:7px;text-decoration:none;}
+.logo-hex{width:30px;height:30px;flex-shrink:0;}
+.logo-txt{font-size:.875rem;font-weight:900;color:white;letter-spacing:-.3px;}
 .logo-txt span{color:var(--blue2);}
-.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
-#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
-#btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
+.hdr-title{font-size:.875rem;font-weight:700;color:white;}
+#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:.875rem;font-weight:700;width:30px;height:30px;border-radius:50%;border:1px solid var(--blue2);background:transparent;color:white;cursor:pointer;}
+#btn-ajuda:hover{background:var(--blue);}
 
 /* MAIN */
-main{width:100%;max-width:640px;padding:16px 12px 8px;display:flex;flex-direction:column;gap:12px;flex:1;overflow-y:auto;}
+main{width:100%;max-width:560px;padding:12px 12px 8px;display:flex;flex-direction:column;gap:10px;flex:1;overflow-y:auto;}
 
 /* CARDS */
-.card{width:100%;background:white;border:1px solid var(--s200);border-radius:14px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
-.card-title{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;text-align:center;}
+.card{width:100%;background:white;border:1px solid var(--s200);border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.card-title{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;text-align:center;}
 
-/* INPUTS */
-.grup-entrada{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.camp{display:flex;flex-direction:column;align-items:center;gap:6px;}
-.camp label{font-size:.75rem;font-weight:700;color:var(--s600);text-transform:uppercase;letter-spacing:1px;}
-.camp input{
-  width:100%;font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:900;
-  padding:14px 8px;border:2px solid var(--s300);border-radius:12px;
-  text-align:center;background:var(--bg);color:var(--s800);
-  appearance:none;-webkit-appearance:none;transition:border-color .15s,background .15s;
+/* DISPLAY */
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.display-temps{
+  font-family:'Montserrat',sans-serif;font-size:1.6rem;font-weight:700;
+  text-align:center;letter-spacing:2px;color:var(--s800);
+  background:var(--bg);border:1.5px solid var(--s300);border-radius:8px;
+  padding:8px;margin-bottom:6px;
+  user-select:none;display:flex;align-items:center;justify-content:center;gap:1px;
 }
-.camp input:focus{outline:none;border-color:var(--blue);background:#dbeafe;}
-.camp input::placeholder{color:var(--s300);}
-.camp input.error{border-color:var(--err)!important;background:var(--errl)!important;animation:shake .3s ease;}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.display-temps.error{border-color:var(--err)!important;background:var(--errl)!important;animation:shake .3s ease;}
+.display-temps .part{color:var(--s800);}
+.display-temps .part.buit{color:var(--s300);}
+.display-temps .separador{color:var(--s400);margin:0 1px;}
+.display-temps .cursor{display:inline-block;width:2px;height:1.4rem;background:var(--blue);vertical-align:middle;animation:parpelleig .8s step-end infinite;}
+@keyframes parpelleig{0%,100%{opacity:1}50%{opacity:0}}
+.hint-format{font-size:.68rem;color:var(--s400);text-align:center;margin-bottom:8px;font-weight:600;}
+
+/* TECLAT */
+.teclat{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;}
+.tec{
+  font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:600;
+  padding:9px 6px;border:1px solid var(--s200);border-radius:8px;
+  background:white;color:var(--s800);cursor:pointer;
+  transition:all .1s;user-select:none;-webkit-tap-highlight-color:transparent;
+  min-height:40px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+.tec:hover{background:#eff6ff;color:var(--blue);border-color:var(--blue2);}
+.tec:active{transform:scale(.93);background:#dbeafe;}
+.tec-sep{font-weight:700;color:var(--s600);background:var(--bg);border-color:var(--s300);}
+.tec-esb{color:var(--s400);background:var(--bg);border-color:var(--s200);}
+.tec-esb:hover{color:var(--err);background:var(--errl);border-color:var(--err);}
+.tec-zero{background:var(--bg);}
 
 /* BOTONS ACCIÓ */
-.botons-accio{display:grid;grid-template-columns:2fr 1fr;gap:10px;}
+.botons-accio{display:grid;grid-template-columns:2fr 1fr;gap:8px;}
 .btn-sumar{
-  font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;
-  padding:14px;border:none;border-radius:12px;cursor:pointer;
-  background:var(--blue);color:white;
-  transition:background .15s,transform .1s;box-shadow:0 4px 12px rgba(37,99,235,.3);
-  min-height:48px;
+  font-family:'Montserrat',sans-serif;font-size:.875rem;font-weight:700;
+  padding:9px 12px;border:none;border-radius:8px;cursor:pointer;
+  background:var(--blue);color:white;transition:background .15s;
+  min-height:38px;
 }
-.btn-sumar:hover{background:var(--blue2);transform:translateY(-1px);}
-.btn-sumar:active{transform:scale(.97);}
+.btn-sumar:hover{background:var(--blue2);}
+.btn-sumar:active{opacity:.85;}
 .btn-netejar{
-  font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;
-  padding:14px 10px;border:2px solid var(--s300);border-radius:12px;cursor:pointer;
-  background:white;color:var(--s700);transition:all .15s;min-height:48px;
+  font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:600;
+  padding:9px 8px;border:1px solid var(--s300);border-radius:8px;cursor:pointer;
+  background:white;color:var(--s600);transition:all .15s;min-height:38px;
 }
 .btn-netejar:hover{border-color:var(--s400);background:var(--bg);}
 
-/* RESULTAT TOTAL */
+/* RESULTAT */
 .resultat-box{
-  background:var(--s800);border-radius:14px;padding:18px;text-align:center;
-  box-shadow:0 4px 16px rgba(30,41,59,.3);
+  background:var(--s800);border-radius:10px;padding:14px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 8px rgba(30,41,59,.2);
 }
-.res-label{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;}
-.res-total{font-size:1rem;font-weight:700;color:rgba(255,255,255,.5);line-height:1;letter-spacing:0;}
-.res-total .num{font-size:3.2rem;font-weight:900;color:white;letter-spacing:-2px;}
-.res-total .unitat{font-size:1rem;font-weight:700;color:var(--blue2);margin-right:8px;}
-.res-sub{font-size:.8rem;color:var(--s400);margin-top:6px;}
+.res-esquerra{flex:1;}
+.res-label{font-size:.65rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px;}
+.res-total{display:flex;align-items:baseline;gap:1px;flex-wrap:wrap;}
+.res-total .num{font-size:1.5rem;font-weight:700;color:white;line-height:1;}
+.res-total .unitat{font-size:.75rem;font-weight:600;color:var(--blue2);margin-right:5px;}
+
 
 /* HISTORIAL */
-.hist-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.hist-header h3{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;}
-.hist-count{font-size:.75rem;font-weight:700;background:var(--s200);color:var(--s700);padding:3px 10px;border-radius:99px;}
-.llista-temps{list-style:none;padding:0;display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;}
+.hist-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.hist-header h3{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.2px;}
+.hist-count{font-size:.7rem;font-weight:700;background:var(--s200);color:var(--s700);padding:2px 8px;border-radius:99px;}
+.llista-temps{list-style:none;padding:0;display:flex;flex-direction:column;gap:3px;max-height:180px;overflow-y:auto;}
 .element-temps{
-  background:var(--bg);border:1px solid var(--s200);border-radius:8px;
-  padding:6px 10px;display:flex;justify-content:space-between;align-items:center;
-  font-size:.82rem;font-weight:700;color:var(--s800);
-  animation:slideIn .2s ease;
+  background:var(--bg);border:1px solid var(--s200);border-radius:6px;
+  padding:5px 10px;display:flex;justify-content:space-between;align-items:center;
+  font-size:.8rem;font-weight:600;color:var(--s800);
+  animation:slideIn .15s ease;
 }
-@keyframes slideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
-.element-temps .num{font-size:.7rem;color:var(--s400);font-weight:600;}
-.element-temps .temps-val{color:var(--blue);font-weight:900;}
-.btn-del{background:none;border:none;cursor:pointer;color:var(--s400);font-size:1rem;padding:4px;border-radius:6px;transition:color .15s,background .15s;min-width:32px;min-height:32px;}
+@keyframes slideIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.element-temps .num{font-size:.68rem;color:var(--s400);font-weight:500;min-width:24px;}
+.element-temps .temps-val{color:var(--blue);font-weight:700;}
+.btn-del{background:none;border:none;cursor:pointer;color:var(--s400);font-size:.85rem;padding:3px 6px;border-radius:4px;transition:color .1s,background .1s;}
 .btn-del:hover{color:var(--err);background:var(--errl);}
-.buit-msg{font-size:.85rem;color:var(--s400);font-style:italic;text-align:center;padding:16px 0;}
+.buit-msg{font-size:.8rem;color:var(--s400);font-style:italic;text-align:center;padding:12px 0;}
 
 /* BTN RESET */
 .btn-reset{
-  font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;
-  width:100%;padding:12px;border:2px solid var(--errl);border-radius:12px;
-  cursor:pointer;background:white;color:var(--err);
-  transition:all .15s;margin-top:8px;min-height:44px;
+  font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:600;
+  width:100%;padding:8px;border:1px solid var(--errl);border-radius:8px;
+  cursor:pointer;background:white;color:var(--err);transition:all .15s;margin-top:6px;
 }
-.btn-reset:hover{background:var(--errl);border-color:var(--err);}
+.btn-reset:hover{background:var(--errl);}
 
 /* FEEDBACK */
-#feedback{
-  font-size:.85rem;font-weight:700;text-align:center;
-  color:var(--ok);padding:4px 0;min-height:24px;
-  transition:opacity .3s;
-}
+#feedback{font-size:.78rem;font-weight:600;text-align:center;color:var(--ok);padding:4px 0;min-height:22px;transition:opacity .3s;}
 
-/* MODAL AJUDA */
+/* MODAL */
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center;padding:16px;}
 #overlay.vis{display:flex;}
-.modal{background:white;border-radius:18px;padding:24px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);}
-.modal h2{font-size:1.1rem;font-weight:900;color:var(--s800);margin-bottom:16px;}
-.modal p{font-size:.9rem;color:var(--s600);margin-bottom:10px;line-height:1.5;}
+.modal{background:white;border-radius:12px;padding:20px;max-width:380px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.2);}
+.modal h2{font-size:.95rem;font-weight:700;color:var(--s800);margin-bottom:12px;}
+.modal p{font-size:.82rem;color:var(--s600);margin-bottom:8px;line-height:1.5;}
 .modal strong{color:var(--blue);}
-.btn-tancar{
-  font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;
-  width:100%;padding:12px;border:none;border-radius:12px;
-  background:var(--blue);color:white;cursor:pointer;margin-top:8px;
-}
+.btn-tancar{font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;width:100%;padding:10px;border:none;border-radius:8px;background:var(--blue);color:white;cursor:pointer;margin-top:6px;}
 .btn-tancar:hover{background:var(--blue2);}
 
 /* FOOTER */
-footer{flex-shrink:0;text-align:center;font-size:.7rem;color:var(--s400);padding:8px;font-weight:600;}
+footer{flex-shrink:0;text-align:center;font-size:.65rem;color:var(--s400);padding:6px;font-weight:600;}
 footer a{color:var(--s400);text-decoration:none;}
-
-/* RESPONSIVE */
-@media(max-width:380px){
-  .res-total{font-size:2.2rem;}
-  .camp input{font-size:1.5rem;padding:12px 6px;}
-  .btn-sumar{font-size:.9rem;}
-}
 </style>
 </head>
 <body>
@@ -161,17 +164,32 @@ footer a{color:var(--s400);text-decoration:none;}
   <!-- INPUTS -->
   <div class="card">
     <div class="card-title">Afegeix un temps</div>
-    <div class="grup-entrada">
-      <div class="camp">
-        <label for="minuts">Minuts</label>
-        <input type="number" id="minuts" placeholder="0" min="0" max="59" inputmode="numeric" onkeydown="teclaEnter(event,'segons')">
-      </div>
-      <div class="camp">
-        <label for="segons">Segons</label>
-        <input type="number" id="segons" placeholder="0" min="0" max="59" inputmode="numeric" onkeydown="teclaEnter(event,null)">
-      </div>
+
+    <!-- Display mm:ss -->
+    <div class="display-temps" id="display-entrada">
+      <span class="part buit" id="disp-mm">00</span>
+      <span class="separador">:</span>
+      <span class="part buit" id="disp-ss">00</span>
+      <span class="cursor" id="disp-cursor"></span>
     </div>
-    <div style="height:8px;"></div>
+    <div class="hint-format">minuts : segons &nbsp;·&nbsp; màx. 59:59</div>
+
+    <!-- Teclat numèric -->
+    <div class="teclat">
+      <button class="tec" onclick="teclaPrem('1')">1</button>
+      <button class="tec" onclick="teclaPrem('2')">2</button>
+      <button class="tec" onclick="teclaPrem('3')">3</button>
+      <button class="tec" onclick="teclaPrem('4')">4</button>
+      <button class="tec" onclick="teclaPrem('5')">5</button>
+      <button class="tec" onclick="teclaPrem('6')">6</button>
+      <button class="tec" onclick="teclaPrem('7')">7</button>
+      <button class="tec" onclick="teclaPrem('8')">8</button>
+      <button class="tec" onclick="teclaPrem('9')">9</button>
+      <button class="tec tec-sep" onclick="teclaPrem(':')">:</button>
+      <button class="tec tec-zero" onclick="teclaPrem('0')">0</button>
+      <button class="tec tec-esb" onclick="teclaPrem('esb')">⌫</button>
+    </div>
+
     <div class="botons-accio">
       <button class="btn-sumar" onclick="afegirTemps()">＋ Afegir temps</button>
       <button class="btn-netejar" onclick="netejarCamps()">✕ Netejar</button>
@@ -181,11 +199,12 @@ footer a{color:var(--s400);text-decoration:none;}
 
   <!-- RESULTAT -->
   <div class="resultat-box">
-    <div class="res-label">Temps total acumulat</div>
-    <div class="res-total" id="display-total">
-      <span class="num" id="tot-h">0</span><span class="unitat">h</span><span class="num" id="tot-m">0</span><span class="unitat">m</span><span class="num" id="tot-s">0</span><span class="unitat">s</span>
+    <div style="text-align:center;width:100%;">
+      <div class="res-label">Temps total acumulat</div>
+      <div class="res-total" id="display-total" style="justify-content:center;">
+        <span class="num" id="tot-h">0</span><span class="unitat">h</span><span class="num" id="tot-m">0</span><span class="unitat">m</span><span class="num" id="tot-s">0</span><span class="unitat">s</span>
+      </div>
     </div>
-    <div class="res-sub" id="res-sub">Afegeix temps per començar</div>
   </div>
 
   <!-- HISTORIAL -->
@@ -222,35 +241,77 @@ footer a{color:var(--s400);text-decoration:none;}
 let dades = [];
 try { dades = JSON.parse(localStorage.getItem('gobo26_sumaTemps')) || []; } catch(e){ dades=[]; }
 
-function teclaEnter(e, seguentId) {
-  if (e.key === 'Enter') {
-    if (seguentId) document.getElementById(seguentId).focus();
-    else afegirTemps();
+// ─── ESTAT TECLAT ─────────────────────────────────────────────────────────────
+let entrada = '';
+
+function teclaPrem(tec) {
+  if (tec === 'esb') {
+    entrada = entrada.slice(0, -1);
+  } else if (tec === ':') {
+    if (entrada.includes(':') || entrada.length === 0) return;
+    entrada += ':';
+  } else {
+    const parts = entrada.split(':');
+    if (!entrada.includes(':')) {
+      if (parts[0].length >= 2) return;
+    } else {
+      if (parts[1].length >= 2) return;
+    }
+    entrada += tec;
   }
+  actualitzarDisplay();
+}
+
+function actualitzarDisplay() {
+  const parts  = entrada.split(':');
+  const tensMM = parts[0] || '';
+  const tensSS = parts.length > 1 ? parts[1] : null;
+  const ambSep = entrada.includes(':');
+
+  const dispMM = document.getElementById('disp-mm');
+  const dispSS = document.getElementById('disp-ss');
+  const cursor = document.getElementById('disp-cursor');
+
+  if (tensMM === '') {
+    dispMM.textContent = '00'; dispMM.className = 'part buit';
+  } else {
+    dispMM.textContent = tensMM.padStart(2,'0'); dispMM.className = 'part';
+  }
+
+  if (tensSS === null) {
+    dispSS.textContent = '00'; dispSS.className = 'part buit';
+  } else if (tensSS === '') {
+    dispSS.textContent = '00'; dispSS.className = 'part buit';
+  } else {
+    dispSS.textContent = tensSS.padStart(2,'0'); dispSS.className = 'part';
+  }
+
+  if (!ambSep) { dispMM.after(cursor); } else { dispSS.after(cursor); }
+  document.getElementById('display-entrada').classList.remove('error');
+}
+
+function netejarCamps() {
+  entrada = '';
+  actualitzarDisplay();
 }
 
 function afegirTemps() {
-  const mRaw = parseInt(document.getElementById('minuts').value) || 0;
-  const sRaw = parseInt(document.getElementById('segons').value) || 0;
+  const parts = entrada.split(':');
+  let m = 0, s = 0;
 
-  // Netejar errors previs
-  ['minuts','segons'].forEach(id => document.getElementById(id).classList.remove('error'));
+  if (entrada === '') { mostrarError('⚠ Posa algun número primer'); return; }
 
-  if (mRaw > 59) {
-    marcarError('minuts', '⚠ Els minuts no poden ser més de 59'); return;
+  if (entrada.includes(':')) {
+    m = parseInt(parts[0]) || 0;
+    s = parseInt(parts[1]) || 0;
+  } else {
+    m = parseInt(parts[0]) || 0;
+    s = 0;
   }
-  if (sRaw > 59) {
-    marcarError('segons', '⚠ Els segons no poden ser més de 59'); return;
-  }
 
-  const m = Math.max(0, mRaw);
-  const s = Math.max(0, sRaw);
-
-  if (m === 0 && s === 0) {
-    mostrarFeedback('⚠ Posa algun número primer', true);
-    document.getElementById('minuts').focus();
-    return;
-  }
+  if (m > 59) { mostrarError('⚠ Els minuts no poden ser més de 59'); return; }
+  if (s > 59) { mostrarError('⚠ Els segons no poden ser més de 59'); return; }
+  if (m === 0 && s === 0) { mostrarError('⚠ Posa algun número primer'); return; }
 
   dades.push({ m, s, id: Date.now() });
   netejarCamps();
@@ -258,22 +319,15 @@ function afegirTemps() {
   mostrarFeedback(`✓ ${m}m ${s}s afegit`);
 }
 
-function marcarError(campId, msg) {
-  const el = document.getElementById(campId);
-  el.classList.add('error');
-  el.focus(); el.select();
+function mostrarError(msg) {
+  document.getElementById('display-entrada').classList.add('error');
+  setTimeout(() => document.getElementById('display-entrada').classList.remove('error'), 1200);
   mostrarFeedback(msg, true);
-  setTimeout(() => el.classList.remove('error'), 1500);
 }
 
 function eliminarElement(id) {
   dades = dades.filter(d => d.id !== id);
   actualitzarInterficie();
-}
-
-function netejarCamps() {
-  ['minuts','segons'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('minuts').focus();
 }
 
 function mostrarFeedback(msg, error=false) {
@@ -286,10 +340,10 @@ function mostrarFeedback(msg, error=false) {
 }
 
 function actualitzarInterficie() {
-  const llistaUl = document.getElementById('llista-temps');
+  const llistaUl    = document.getElementById('llista-temps');
   const llistaBuida = document.getElementById('llista-buida');
-  const btnReset = document.getElementById('btn-reset');
-  const histCount = document.getElementById('hist-count');
+  const btnReset    = document.getElementById('btn-reset');
+  const histCount   = document.getElementById('hist-count');
 
   llistaUl.innerHTML = '';
   let totalSegons = 0;
@@ -301,7 +355,6 @@ function actualitzarInterficie() {
     document.getElementById('tot-h').textContent = '0';
     document.getElementById('tot-m').textContent = '0';
     document.getElementById('tot-s').textContent = '0';
-    document.getElementById('res-sub').textContent = 'Afegeix temps per començar';
   } else {
     llistaBuida.style.display = 'none';
     btnReset.style.display = 'block';
@@ -326,14 +379,6 @@ function actualitzarInterficie() {
     document.getElementById('tot-m').textContent = m;
     document.getElementById('tot-s').textContent = s;
 
-    // Temps en format llegible alternatiu
-    const dies = Math.floor(h / 24);
-    if (dies >= 1) {
-      document.getElementById('res-sub').textContent = `= ${dies} dia${dies>1?'s':''} i ${h%24}h ${m}m`;
-    } else {
-      const totalMin = Math.floor(totalSegons / 60);
-      document.getElementById('res-sub').textContent = `= ${totalMin} minut${totalMin!==1?'s':''} en total`;
-    }
   }
 
   try { localStorage.setItem('gobo26_sumaTemps', JSON.stringify(dades)); } catch(e){}
@@ -347,17 +392,12 @@ function confirmarEsborrat() {
   }
 }
 
-function toggleAjuda() {
-  document.getElementById('overlay').classList.toggle('vis');
-}
-
-function tancarAjudaFora(e) {
-  if (e.target.id === 'overlay') toggleAjuda();
-}
+function toggleAjuda() { document.getElementById('overlay').classList.toggle('vis'); }
+function tancarAjudaFora(e) { if (e.target.id === 'overlay') toggleAjuda(); }
 
 // Inicialitzar
+actualitzarDisplay();
 actualitzarInterficie();
-document.getElementById('minuts').focus();
 </script>
 </body>
 </html>
