@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Eina interactiva per memoritzar el repertori coral">
+    <title>Memoritzador Coral</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: #f1f5f9;
+            color: #2d3748; 
+            font-size: 0.85rem;
+            min-width: 280px;
+        }
+        @media (min-width: 640px) { body { font-size: 0.95rem; } }
+        @media (min-width: 768px) { body { font-size: 1.15rem; } }
+        h1, h2, h3, .serif { font-family: 'Merriweather', serif; }
+
+        .lyrics-text { 
+            white-space: pre-wrap; 
+            line-height: 1.5; 
+            font-size: 0.9rem; 
+        }
+        @media (min-width: 640px) { 
+            .lyrics-text { 
+                line-height: 1.6;
+                font-size: 1.05rem; 
+            } 
+        }
+        @media (min-width: 768px) { 
+            .lyrics-text { 
+                line-height: 2; 
+                font-size: 1.5rem; 
+            } 
+        }
+
+        .animate-fade-in { 
+            animation: fadeIn 0.5s ease-out forwards; 
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .btn-base { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            transform: translateZ(0); 
+        }
+        .btn-base:active { transform: scale(0.98); }
+        .btn-base:hover { transform: translateY(-2px); }
+
+        .btn-primary { 
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            color: white; 
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.4);
+            border: none;
+        }
+        .btn-primary:hover { 
+            box-shadow: 0 6px 16px rgba(234, 88, 12, 0.5);
+        }
+
+        .btn-back { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+            padding: 0.5rem 1rem; 
+            border: 2px solid #cbd5e0; 
+            border-radius: 9999px; 
+            color: #4a5568; 
+            font-weight: 700; 
+            font-size: 0.85rem; 
+            background-color: white;
+            transition: all 0.3s;
+        }
+        .btn-back:hover {
+            border-color: #ea580c;
+            color: #ea580c;
+            background-color: #fff7ed;
+        }
+        
+        .btn-option { 
+            background-color: white; 
+            border: 2px solid #e5e7eb; 
+            padding: 1rem; 
+            border-radius: 0.75rem; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .btn-option:hover {
+            border-color: #fb923c;
+            background-color: #fff7ed;
+        }
+        .btn-option.correct { 
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%) !important; 
+            border-color: #10b981 !important; 
+            color: #065f46;
+            font-weight: 700;
+        }
+        .btn-option.wrong { 
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%) !important; 
+            border-color: #ef4444 !important; 
+            color: #991b1b;
+            font-weight: 700;
+        }
+
+        .tag-select { 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            user-select: none; 
+            background-color: white; 
+            border: 2px solid #e5e7eb; 
+            color: #6b7280;
+            font-weight: 500;
+        }
+        .tag-select:hover {
+            border-color: #fb923c;
+            background-color: #fff7ed;
+        }
+        .tag-select.selected { 
+            background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%) !important; 
+            color: white !important; 
+            border-color: #ea580c !important; 
+            font-weight: 700;
+            box-shadow: 0 4px 8px rgba(251, 146, 60, 0.3);
+        }
+
+        .card { 
+            background: white; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+            border: 1px solid #f3f4f6;
+            transition: all 0.3s;
+        }
+        @media (min-width: 640px) {
+            .card { border-radius: 16px; }
+        }
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .hidden-word { 
+            background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+            color: transparent; 
+            border-radius: 6px; 
+            user-select: none; 
+            transition: all 0.3s; 
+            min-width: 20px; 
+            display: inline-block;
+            padding: 0 4px;
+        }
+        .hidden-word:hover { 
+            background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+            color: white; 
+            cursor: help;
+            box-shadow: 0 2px 4px rgba(251, 146, 60, 0.3);
+        }
+
+        .selectable-line { 
+            cursor: pointer; 
+            padding: 8px 12px; 
+            border-radius: 8px; 
+            transition: all 0.2s;
+            margin: 2px 0;
+        }
+        .selectable-line:hover {
+            background-color: #fef3c7;
+        }
+        .highlight-structure { 
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 4px solid #3b82f6;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+        }
+
+        .global-progress-bar { 
+            height: 20px; 
+            background-color: #f3f4f6; 
+            border-radius: 9999px; 
+            overflow: hidden;
+            border: 2px solid #e5e7eb;
+        }
+        .global-progress-fill { 
+            height: 100%; 
+            background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 50%, #6366f1 100%);
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        }
+
+        .badge-list-item { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 0.75rem 0; 
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.2s;
+        }
+        .badge-list-item:hover {
+            background-color: #fef3c7;
+            padding-left: 0.5rem;
+            border-radius: 8px;
+        }
+        .badge-list-item:last-child { border-bottom: none; }
+        .badge-info { display: flex; align-items: center; gap: 0.75rem; }
+        .badge-icon-small { 
+            color: #f59e0b; 
+            font-size: 1.25rem; 
+            width: 28px; 
+            text-align: center;
+        }
+        .badge-name { 
+            font-weight: 600; 
+            color: #1f2937; 
+            font-size: 0.95rem; 
+        }
+        .badge-count-text { 
+            font-family: monospace; 
+            font-weight: 700; 
+            color: #1f2937; 
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 4px 10px; 
+            border-radius: 8px; 
+            font-size: 0.85rem;
+            border: 1px solid #fbbf24;
+        }
+        .badge-locked { 
+            opacity: 0.35; 
+            filter: grayscale(100%); 
+        }
+
+        .mission-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #fb923c 0%, #ea580c 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        .mission-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .song-card {
+            border-left: 4px solid;
+            border-image: linear-gradient(135deg, #fb923c 0%, #ea580c 100%) 1;
+        }
+
+        /* Personalització scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+        }
+
+        .welcome-badge {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #fbbf24;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #92400e;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #fff 0%, #fafafa 100%);
+            border-radius: 8px;
+            padding: 0.5rem;
+            border: 2px solid #f3f4f6;
+            text-align: center;
+        }
+        @media (min-width: 640px) {
+            .stat-card {
+                border-radius: 12px;
+                padding: 1rem;
+            }
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        @media (min-width: 640px) {
+            .stat-value { font-size: 2rem; }
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: #6b7280;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        @media (min-width: 640px) {
+            .stat-label { font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="bg-slate-800 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-2 sm:px-4 py-2 sm:py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2 sm:gap-3 cursor-pointer" onclick="app.showLibrary()">
+                <i class="fas fa-music text-blue-400 text-xl sm:text-3xl"></i>
+                <div>
+                    <h1 class="text-sm sm:text-xl font-bold text-white leading-tight">Memoritzador Coral</h1>
+                    <p class="text-[10px] sm:text-xs text-slate-300" id="user-greeting">Comença a practicar!</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 sm:gap-4">
+                <div class="stat-card px-2 py-1 sm:px-3 sm:py-2">
+                    <span class="stat-label text-[9px] sm:text-xs">Sessió</span>
+                    <div id="score-display" class="stat-value text-xl sm:text-2xl">0</div>
+                </div>
+                <button onclick="app.showLibrary()" class="text-slate-300 hover:text-white transition-colors">
+                    <i class="fas fa-home text-lg sm:text-2xl"></i>
+                </button>
+                <a href="https://ja.cat/gobo26" target="_blank" rel="noopener noreferrer"
+                   class="hidden sm:flex items-center gap-1 opacity-50 hover:opacity-100 transition-opacity ml-1"
+                   title="Gobo26">
+                    <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
+                        <text x="50" y="42" text-anchor="middle" fill="white" font-size="22" font-weight="800" font-family="sans-serif">GOBO</text>
+                        <text x="50" y="65" text-anchor="middle" fill="#94a3b8" font-size="20" font-weight="700" font-family="sans-serif">26</text>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main id="app-content" class="flex-grow container mx-auto px-2 sm:px-4 py-4 sm:py-6 max-w-4xl"></main>
+
+    <footer class="bg-slate-800 text-white py-6 mt-auto">
+        <div class="container mx-auto px-4 text-center text-slate-300 text-sm">
+            <p class="flex items-center justify-center gap-2">
+                <i class="fas fa-music text-blue-400"></i>
+                Eina de suport per a la memòria coral
+                <i class="fas fa-heart text-red-400"></i>
+            </p>
+            <div id="footer-controls" class="mt-4"></div>
+            <a href="https://ja.cat/gobo26" target="_blank" rel="noopener noreferrer"
+               style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;opacity:0.4;transition:opacity 0.2s;font-size:11px;color:#cbd5e1;text-decoration:none;"
+               onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+                <svg width="14" height="14" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/>
+                    <text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text>
+                    <text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text>
+                </svg>
+                Una aplicació de Gobo26
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const REPERTORI_CORAL = [
+            { "title": "DO YOU HEAR THE PEOPLE SING?", "lyrics": `Pots sentir el poble cantar\ni alçar la veu sense temor?\nÉs la ferotge melodia\ndels que volen llibertat.\nSi el teu cor al bategar\nsent com ressonen els tambors\nés el senyal de l'esperança\nd'un nou demà.\nVols seguir la nostra causa?\nEts prou fort per lluitar amb mi?\nFora de la barricada\nhi ha el món que esperem gaudir.\nUneix-te a la nostra croada\ni lluitem pel destí.\nPots sentir el poble cantar\ni alçar la veu sense temor?\nÉs la ferotge melodia\ndels que volen llibertat.\nSi el teu cor al bategar\nsent com ressonen els tambors\nés el senyal de l'esperança\nd'un nou demà.\nSi tenim coratge i força\nla bandera avançarà.\nPodem perdre tots la vida\nprô la por no ens detindrà.\nLa sang vessarem per la pàtria i\nper la llibertat.\nPots sentir el poble cantar\ni alçar la veu sense temor?\nÉs la ferotge melodia\ndels que volen llibertat.\nSi el teu cor al bategar\nsent com ressonen els tambors\nés el senyal de l'esperança\nd'un nou demà.` },
+            { "title": "LOVE SHINE A LIGHT", "lyrics": `1. L'amor fa brillar un llum dins del nostre cor,\ndeixarem que brilli, deixarem que brilli,\ndeixa que il-lumini cada petit detall;\nque la llum ompli tots els racons del nostre cor.\n2. L'amor fa brillar un llum dins del nostre cor,\ndeixarem que brilli, deixarem que brilli,\ncom la força poderosa d'un riu cabalós\nque omplirà els racons dels meus somnis i il·lusions.\nEntre tots farem brillar un gran llum\nque ens farà veure el camí.\nSerem un sol cor cantant arreu del món.\nQue la llum ompli tots els racons del nostre cor.\n3. L'amor fa brillar un llum dins del nostre món,\ndeixarem que brilli, deixarem que brilli,\nque la màgia il·lumini el camí dels nostres fills,\nque la llum ompli tots els racons del nostre món.\nEntre tots farem brillar un gran llum\nque ens farà veure el camí.\nSerem un sol cor cantant arreu del món.\nQue la llum ompli tots els racons del nostre cor.` },
+            { "title": "FLY ME TO THE MOON", "lyrics": `Porta'm lluny del món,\ncap a la lluna vull volar.\nPorta'm lluny i si pot ser\na Júpiter o a Mart.\nI ben mirat, si anem junts,\ni ben mirat, pots besar-me.\nOmple'm de cançons,\njo vull cantar en tot moment.\nEts el que jo vull\nper sempre jo t'adoraré.\nAl capdavall, ja estem junts\ni vull volar sols amb tu.` },
+            { "title": "VIVA LA VIDA", "lyrics": `Jo feia moure el món,\nel mar s'alçava al meu crit.\nI ara a les nits dormo sol,\nnetejo aquests carrers que ja no són meus.\nSolia tirar els daus.\nVeia la por en els meus enemics.\nSentia cridar tothom:\n"Ara el vell rei és mort! Visca el nou rei!\nEn un minut ets la clau,\ni al moment pots perdre-ho tot\ni descubrir que el teu castell\nestà fet de sorra i sal en terres de fang.\nI sento a Jerusalem campanes,\ni els càntics de les cohorts romanes:\nsón l'escut, el mirall, l'espasa,\nmissioners en terres estranyes.\nPer raons que no sé explicar,\nvas marxar i vaig perdre,\nningú va ser honest,\nquan jo feia moure el món.\nI sento a Jerusalem campanes,\nels càntics de les cohorts romanes:\nsón l'escut, el mirall, l'espasa,\nmissioners en terres estranyes.\nPer raons que no sé explicar,\nvas marxar i vaig perdre,\nningú va ser honest,\nquan jo feia moure el món.` },
+            { "title": "FIELDS OF GOLD", "lyrics": `Pensaràs en mi quan vegis el vent\nballar sobre els camps d'ordi?\nOblidaràs el sol que ens mirava gelós\nquan caminàvem pels camps d'or?\nTu em vas agafar per poder contemplar\njunts aquells bells camps d'ordi,\njo et vaig abraçar, besant els teus cabells,\nentre camps d'espigues d'or.\nVols quedar-te amb mi?\nVols ser el meu amor\nentre els daurats camps d'ordi?\nEns oblidarem del sol envejós\njaient junts sobre dels camps d'or.\nUn compromís és per mi un deure\nque vull complir fèrriament:\nprometo que fins que ens quedi vida\nanirem junts pels camps d'or.\nCaminarem junts pels camps d'or\nJa han passat molts anys d'aquells dies d'estiu\ngaudint junts pels camps d'ordi.\nAra mira els nens com juguen cap al tard\nentre els camps d'espigues d'or.\nUn compromís és per mi un deure\nque vull complir fèrriament:\nprometo que fins que ens quedi vida\nanirem junts pels camps d'or.\nCaminarem junts pels camps d'or\nPensaràs en mi quan vegis el vent\nballar sobre els camps d'ordi?\nOblidaràs el sol que ens mirava gelós\nquan caminàvem pels camps d'or?` },
+            { "title": "SLIPPING THROUGH MY FINGERS", "lyrics": `Amb la bossa a la mà, marxa aviat per anar a l'escola\ndient adéu i amb un somriure absent.\nLa veig marxar i de cop sento gran nostàlgia\nen veure que el seu món està canviant.\nI penso que l'estic perdent per sempre,\nsense que pugui entrar dins el seu món.\nEstic feliç sempre quan torna a casa.\nNineta dels meus ulls.\nPerquè entre els meus dits s'està escapant,\nintento capturar imatges del temps que passa,\nperquè entre els meus dits s'està escapant.\nJo no sé què passa pel seu cap\ni quan ja crec aconseguir-ho, torna a créixer,\ni entre els meus dits torna a escapar.\nRecordo quan esmorzava encara adormida.\nSense adona'm ha passat un temps preciós.\nI quan se'n va m'envaeix la malenconia\ni dubto si he perdut alguns moments.\nOn són totes aquelles aventures,\ni tots aquells indrets on no hem d'anar.\nEns queden tantes coses per fer encara.\nNineta dels meus ulls.\nPerquè entre els meus dits s'està escapant,\nintento capturar imatges del temps que passa,\nperquè entre els meus dits s'està escapant.\nJo no sé què passa pel seu cap\ni quan ja crec aconseguir-ho, torna a créixer,\ni entre els meus dits torna a escapar.\nVoldria que es pogués parar el rellotge,\nreviure aquells moments tan divertits.\nEl temps se m'escapa!\nAmb la bossa a la mà, marxa aviat per anar a l'escola\ndient adéu i amb un somriure absent.` },
+            { "title": "TENS UN AMIC", "lyrics": `Si et sents trist i emboirat\ni necessites una mà,\nsi les coses, les coses no et roden bé.\nTanca els ulls i pensa en mi,\nque prest jo seré aquí,\ncom un raig de llum\ndins la teva foscor.\nDigues baix el meu nom,\ni on sa vulgui que estigui vindré,\nde seguida\na fer-te costat.\nPrimavera, estiu o tardor,\ntot el que has de fer és dir-ho\ni vindré de cop,\nsaps cert que tens un amic.\nSi la boira te'n revolta\ni els núvols tapen el cel,\nsi un vent fred del nord\nsembla gelar-te el cor.\nTanca els ulls i pensa en mi,\nque prest jo seré aquí,\ntrucant a la porta\na punt d'entrar.\nDigues baix el meu nom,\ni on sa vulgui que estigui vindré,\nde seguida\na fer-te costat.\nPrimavera, estiu o tardor,\ntot el que has de fer és dir-ho,\ni vindré de cop,\nsaps cert.\nÉs esperançador saber que tens amics,\nla gent pot ser indiferent\nquan sofreixes, t'ignoren,\nno perdis mai el coratge.\nNo et desanimis.\nDigues baix el meu nom,\ni on sa vulgui que estigui vindré,\nde seguida\na fer-te costat.\nPrimavera, estiu o tardor,\ntot el que has de fer és dir-ho,\ni vindré de cop,\nsaps cert que tens un amic.\nEn mi tens un amic.` },
+            { "title": "UN NÚVOL BLANC", "lyrics": `Senzillament se'n va la vida, i arriba\ncom un cabdell que el vent desfila, i fina.\nI som actors que a voltes,\nespectadors que a voltes,\nsenzillament i com si res,\nla vida ens dóna i pren paper.\nSerenament quan ve l'onada, acaba,\ni potser, en el deixar-se vèncer, comença.\nLa platja enamorada\nno sap l'espera llarga\ni obre els braços no fos cas,\nl'onada avui volgués queda's.\nAixí només, em deixo que tu em deixis;\nnomés així, et deixo que ara em deixis.\nJo tinc, per tu, un niu en el meu arbre\ni un núvol blanc, penjat d'alguna branca.\nMolt blanc.\nSovint és quan el sol declina que el mires.\nEll, pesarós, sap que, si minva, l'estimes.\nArribem tard a voltes\nsense saber que a voltes\nel fràgil art d'un gest senzill,\npodria dir-te que...\nNomés així, em deixo que tu em deixis;\naixí només, et deixo que ara em deixis.\nJo tinc, per tu, un niu en el meu arbre\ni un núvol blanc, penjat d'alguna branca.\nMolt blanc.` },
+            { "title": "I'M A BELIEVER", "lyrics": `Creia que l'amor era una il·lusió\ndestinada a d'altres, prô a mi no.\nL'amor no arribava,\naixò era així,\nni en somnis ho vaig aconseguir.\nPerò et vaig veure a tu,\ni ja no tinc dubtes.\nAra ho sé,\nara ho veig clar.\nAl meu cor\nja no tinc dubtes,\nja no puc viure sense tu.\nCreia que l'amor era només donar,\nprô jo donava i no rebia res.\nNo sé per què intentar-ho,\ntan sols m'emporto cops.\nSempre trobo pluja, quan vull sol.\nEt vaig veure a tu!` },
+            { "title": "SWEET CAROLINE", "lyrics": `Va ser a un portal,\nal moment que tancaven\nl'últim local obert del món.\nCom un punyal,\nuns ulls em travessaven.\nTot va canviar en un segon.\nMans a les mans.\nEns mirem, naufraguem, esclatem.\nSweet Caroline, jo mai havia estat així.\nNo puc dormir des que tu no estàs aquí.\nMiro la nit\ni no sembla tan fosca,\nla il·luminem només tu i jo.\nTot té sentit\nquan de cop passa un cotxe\ni sona aquesta cançó.\nMans a les mans\nens mirem, naufraguem, esclatem.\nSweet Caroline, jo mai havia estat així.\nNo puc dormir des que tu no estàs aquí.` },
+            { "title": "CAN YOU FEEL THE LOVE TONIGHT", "lyrics": `Ja la calma arriba, el sol està marxant,\nel fort vent i la calor ens deixen descansar.\nAquest moment és màgic, estic al teu costat.\nEl meu cor batega fort i només et vull mirar.\nPots sentir aquesta nit\nque està present l'amor?\nI desfà les incerteses\ni tot queda en pau\nQuan arribi l'hora, quan sigui el moment,\ntrobarem un nou camí que ens porti a un nou destí.\nEl gran calidoscopi que ens farà girar\nmostrarà nous horitzons per tornar a començar.\nPots sentir aquesta nit\nque està present l'amor?\nEl món està en harmonia\ni tot està tranquil.` },
+            { "title": "EVERY BREATH YOU TAKE", "lyrics": `Cada alè que prens,\ncada gest que fas,\na cada pensament,\na cada pas que fas,\nt'estaré observant.\nI cada matí,\na cada mot que dius,\nen cada joc que fas,\no si ja antics marxant,\nt'estaré observant.\nNo t'has adonat que tu em pertanys a mi?\nEl cor em fa mal amb cada pas que fas...\nA cada moviment,\nsi trenques juraments,\nun somriure fals,\na cada lloc que vas,\nt'estaré observant.\nDes que te n'has anat estic perdut\ni a la nit quan somio et veig a tu,\nmiro al voltant, però ningú m'importa tant.\nI tinc molt fred. Estic sol. No estàs aquí.\nEstic plorant. Torna, torna amb mi.\n(T'estaré observant)\nCada alè que prens,\ncada gest que fas,\na cada pensament,\na cada pas que fas, (t'estaré observant)\nI cada matí,\na cada mot que dius,\nen cada joc que fas,\no si ja antics marxant, (t'estaré observant)\nA cada moviment,\nsi trenques juraments,\nun somriure fals,\na cada lloc que vas, (t'estaré observant)` }
+        ];
+
+        const MISSIONS = [
+            { id: 1, title: "Comprendre el Context", desc: "Identifica les emocions de la cançó.", points: 10, icon: "fa-book-open", badge: "Intèrpret Conscient" },
+            { id: 2, title: "El Trencaclosques", desc: "Marca l'estructura i repeticions.", points: 15, icon: "fa-puzzle-piece", badge: "Mestre Estructural" },
+            { id: 3, title: "Joc de Paraules", desc: "Omple els buits amb la paraula correcta.", points: 15, icon: "fa-spell-check", badge: "Mestre de les Paraules" },
+            { id: 4, title: "Ocultació Progressiva", desc: "Practica amb text que desapareix.", points: 12, icon: "fa-eye-slash", badge: "Memòria d'Elefant" },
+            { id: 5, title: "Assaig Final", desc: "Canta sense mirar la lletra.", points: 20, icon: "fa-microphone-alt", badge: "Solista Preparat" }
+        ];
+
+        const EMOTION_TAGS = ["Alegria", "Nostàlgia", "Solemne", "Pau", "Fúria/Força", "Amor", "Tristesa", "Esperança", "Natura", "Fe/Sagrat", "Festiu", "Èpic"];
+
+        const appState = {
+            activeSongs: JSON.parse(localStorage.getItem('coralActiveSongs')) || [],
+            user: JSON.parse(localStorage.getItem('coralUser')) || { lifetimePoints: 0, name: '' },
+            sessionPoints: 0,
+            currentSongId: null,
+            modalTimeout: null
+        };
+
+        const app = {
+            init: () => { 
+                app.updateHeader(); 
+                app.renderLibrary(); 
+            },
+
+            updateGreeting: () => {
+                document.getElementById('user-greeting').textContent = 'Comença a practicar!';
+            },
+
+            save: () => {
+                localStorage.setItem('coralActiveSongs', JSON.stringify(appState.activeSongs));
+                localStorage.setItem('coralUser', JSON.stringify(appState.user));
+                app.updateHeader();
+            },
+
+            updateHeader: () => { 
+                document.getElementById('score-display').textContent = appState.sessionPoints; 
+                app.updateGreeting();
+            },
+
+            showLibrary: () => { 
+                appState.currentSongId = null; 
+                app.renderLibrary(); 
+            },
+
+            renderLibrary: () => {
+                const content = document.getElementById('app-content');
+                app.updateFooter(true);
+
+                const activeHtml = appState.activeSongs.map((s, index) => {
+                    const progress = Math.round((s.completedMissions.length / 5) * 100);
+                    const completedCount = s.completedMissions.length;
+                    return `<div onclick="app.openSong('${s.id}')" 
+                        class="song-card card p-5 mb-3 cursor-pointer flex justify-between items-center btn-base animate-slide-in"
+                        style="animation-delay: ${index * 0.05}s">
+                        <div class="flex-grow">
+                            <div class="flex items-center gap-2 mb-2">
+                                <h3 class="font-bold text-gray-800 text-lg">${s.title}</h3>
+                                ${completedCount === 5 ? '<i class="fas fa-trophy text-yellow-500 text-sm"></i>' : ''}
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="flex-grow max-w-xs bg-gray-200 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 h-full rounded-full transition-all duration-500" 
+                                        style="width:${progress}%"></div>
+                                </div>
+                                <span class="text-xs font-bold text-orange-600">${completedCount}/5</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-300 ml-4"></i>
+                    </div>`;
+                }).join('');
+
+                const repoHtml = REPERTORI_CORAL.map((s, i) => {
+                    if (appState.activeSongs.some(a => a.title === s.title)) return '';
+                    return `<div onclick="app.activateFromRepo(${i})" 
+                        class="card p-4 mb-2 cursor-pointer hover:border-orange-400 flex justify-between items-center btn-base border-2 border-transparent">
+                        <span class="text-sm font-bold text-gray-700 flex items-center gap-2">
+                            <i class="fas fa-music text-blue-500"></i>
+                            ${s.title}
+                        </span>
+                        <span class="text-xs bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1 rounded-full font-bold">
+                            AFEGIR
+                        </span>
+                    </div>`;
+                }).join('');
+
+                const totalPossible = REPERTORI_CORAL.length;
+                const totalMissionsDone = appState.activeSongs.reduce((acc, s) => acc + s.completedMissions.length, 0);
+                const maxMissions = totalPossible * 5;
+                const globalPercent = Math.round((totalMissionsDone / maxMissions) * 100) || 0;
+
+                const badgesHtml = MISSIONS.map(m => {
+                    const count = appState.activeSongs.filter(s => s.completedMissions.includes(m.id)).length;
+                    const locked = count === 0;
+                    return `
+                    <div class="badge-list-item ${locked ? 'badge-locked' : ''}">
+                        <div class="badge-info">
+                            <i class="fas fa-medal badge-icon-small"></i>
+                            <span class="badge-name">${m.badge}</span>
+                        </div>
+                        <span class="badge-count-text">${count}/${totalPossible}</span>
+                    </div>`;
+                }).join('');
+
+                const stats = {
+                    activeSongs: appState.activeSongs.length,
+                    completedSongs: appState.activeSongs.filter(s => s.completedMissions.length === 5).length,
+                    totalPoints: appState.user.lifetimePoints
+                };
+
+                content.innerHTML = `
+                <div class="animate-fade-in space-y-8">
+                    ${appState.activeSongs.length === 0 ? `
+                    <div class="card p-8 text-center bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200">
+                        <i class="fas fa-music text-5xl text-orange-400 mb-4"></i>
+                        <h2 class="text-2xl font-bold serif text-gray-800 mb-2">Benvingut/da!</h2>
+                        <p class="text-gray-600 mb-6">Comença afegint la teva primera cançó del repertori disponible.</p>
+                        <i class="fas fa-arrow-down text-orange-400 text-2xl animate-bounce"></i>
+                    </div>` : ''}
+
+                    ${appState.activeSongs.length > 0 ? `
+                    <section>
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-2xl font-bold serif text-gray-800 border-b-4 border-orange-400 inline-block pb-1">
+                                Les Meves Cançons
+                            </h2>
+                            <span class="welcome-badge">${stats.activeSongs} actives</span>
+                        </div>
+                        ${activeHtml}
+                    </section>
+                    
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="stat-card">
+                            <div class="stat-value">${stats.activeSongs}</div>
+                            <div class="stat-label">Cançons</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${stats.completedSongs}</div>
+                            <div class="stat-label">Completades</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${stats.totalPoints}</div>
+                            <div class="stat-label">Punts</div>
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <section>
+                        <h2 class="text-2xl font-bold serif text-gray-800 border-b-4 border-blue-400 inline-block pb-1 mb-4">
+                            Repertori Disponible
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            ${repoHtml || '<p class="text-center text-gray-400 col-span-2 py-4">Totes les cançons estan actives!</p>'}
+                        </div>
+                    </section>
+                    
+                    <section class="card p-6 bg-gradient-to-br from-white to-gray-50">
+                        <div class="flex justify-between items-center mb-3">
+                            <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                                <i class="fas fa-chart-line text-blue-500"></i>
+                                Progrés Global
+                            </h2>
+                            <span class="text-blue-600 font-bold text-sm">${totalMissionsDone}/${maxMissions} missions</span>
+                        </div>
+                        <div class="global-progress-bar mb-6">
+                            <div class="global-progress-fill" style="width:${globalPercent}%"></div>
+                        </div>
+                        
+                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2 border-b-2 border-gray-200 pb-2">
+                            <i class="fas fa-trophy text-amber-500"></i>
+                            Medalles i Fites
+                        </h3>
+                        <div class="flex flex-col">
+                            ${badgesHtml}
+                        </div>
+                    </section>
+                </div>`;
+            },
+
+            activateFromRepo: (i) => {
+                const s = REPERTORI_CORAL[i];
+                const ns = { 
+                    id: Date.now().toString(), 
+                    title: s.title, 
+                    lyrics: s.lyrics, 
+                    completedMissions: [],
+                    activatedDate: new Date().toISOString()
+                };
+                appState.activeSongs.push(ns); 
+                app.save(); 
+                app.openSong(ns.id);
+            },
+
+            openSong: (id) => {
+                appState.currentSongId = id;
+                const s = appState.activeSongs.find(x => x.id === id);
+                app.updateFooter(false);
+                
+                const missionsHtml = MISSIONS.map((m, index) => {
+                    const done = s.completedMissions.includes(m.id);
+                    return `<div onclick="app.startMission(${m.id})" 
+                        class="mission-card card p-5 mb-3 cursor-pointer border-2 ${done ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-300' : 'border-gray-200 hover:border-orange-300'} btn-base animate-slide-in"
+                        style="animation-delay: ${index * 0.05}s">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br ${done ? 'from-green-400 to-emerald-500' : 'from-orange-400 to-orange-600'} flex items-center justify-center flex-shrink-0">
+                                <i class="fas ${done ? 'fa-check' : m.icon} text-xl text-white"></i>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="font-bold text-lg ${done ? 'text-green-800' : 'text-gray-800'} flex items-center gap-2">
+                                    ${m.title} 
+                                    ${done ? '<i class="fas fa-check-circle text-green-600 text-sm"></i>' : ''}
+                                </h4>
+                                <p class="text-sm ${done ? 'text-green-600' : 'text-gray-500'}">${m.desc}</p>
+                            </div>
+                            <div class="text-right flex-shrink-0">
+                                <div class="welcome-badge text-xs">${m.points} pts</div>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+
+                document.getElementById('app-content').innerHTML = `
+                <div class="animate-fade-in">
+                    <button onclick="app.showLibrary()" class="btn-back mb-6">
+                        <i class="fas fa-arrow-left"></i> Tornar a la Biblioteca
+                    </button>
+                    
+                    <div class="card p-6 mb-6 bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h2 class="text-3xl font-bold serif text-orange-900 mb-2">${s.title}</h2>
+                                <div class="flex items-center gap-3">
+                                    <span class="text-sm text-gray-600">
+                                        <i class="fas fa-tasks text-orange-600"></i> 
+                                        ${s.completedMissions.length}/5 missions completades
+                                    </span>
+                                </div>
+                            </div>
+                            <button onclick="app.deleteSong('${s.id}')" 
+                                class="text-red-300 hover:text-red-600 transition-colors p-2">
+                                <i class="fas fa-trash text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold serif text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-list-check text-orange-600"></i>
+                        Missions Disponibles
+                    </h3>
+                    <div class="space-y-2 mb-6">
+                        ${missionsHtml}
+                    </div>
+
+                    <div class="card p-6 bg-gradient-to-br from-gray-50 to-white">
+                        <h4 class="font-bold text-lg mb-3 flex items-center gap-2">
+                            <i class="fas fa-file-lines text-blue-600"></i>
+                            Lletra Completa
+                        </h4>
+                        <div class="lyrics-text text-sm max-h-64 overflow-y-auto p-4 bg-white border-2 border-gray-200 rounded-lg">
+                            ${s.lyrics}
+                        </div>
+                    </div>
+                </div>`;
+            },
+
+            startMission: (mid) => {
+                const s = appState.activeSongs.find(x => x.id === appState.currentSongId);
+                const mission = MISSIONS.find(x => x.id === mid);
+                let html = '';
+                
+                if(mid === 1) {
+                    const tags = EMOTION_TAGS.map(t => 
+                        `<span onclick="this.classList.toggle('selected')" 
+                            class="tag-select inline-block px-4 py-2 m-1 border-2 rounded-full text-sm font-bold">
+                            ${t}
+                        </span>`
+                    ).join('');
+                    
+                    html = `<div class="card p-6">
+                        <div class="text-center mb-6">
+                            <div class="inline-block p-4 bg-orange-100 rounded-full mb-3">
+                                <i class="fas fa-heart text-4xl text-orange-600"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold serif text-gray-800 mb-2">Quin és el context emocional?</h3>
+                            <p class="text-gray-600">Selecciona les emocions que transmet aquesta cançó</p>
+                        </div>
+                        
+                        <div class="flex flex-wrap justify-center mb-6 p-4 bg-gray-50 rounded-lg">
+                            ${tags}
+                        </div>
+                        
+                        <div class="lyrics-text text-sm bg-white p-6 rounded-lg max-h-80 overflow-y-auto border-2 border-gray-200 mb-6">
+                            ${s.lyrics}
+                        </div>
+                        
+                        <button onclick="app.completeMission(1)" 
+                            class="btn-primary w-full py-4 rounded-xl font-bold text-lg btn-base">
+                            <i class="fas fa-check mr-2"></i>
+                            CONFIRMAR SELECCIÓ
+                        </button>
+                    </div>`;
+                } 
+                else if(mid === 2) {
+                    const lines = s.lyrics.split('\n').map(l => 
+                        l.trim() 
+                            ? `<div onclick="this.classList.toggle('highlight-structure')" class="selectable-line">${l}</div>` 
+                            : '<br>'
+                    ).join('');
+                    
+                    html = `<div class="card p-6">
+                        <div class="text-center mb-6">
+                            <div class="inline-block p-4 bg-blue-100 rounded-full mb-3">
+                                <i class="fas fa-puzzle-piece text-4xl text-blue-600"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold serif text-gray-800 mb-2">Identifica l'Estructura</h3>
+                            <p class="text-gray-600">Fes clic sobre les línies que es repeteixen o formen l'estructura</p>
+                        </div>
+                        
+                        <div class="lyrics-text border-2 border-gray-200 p-6 bg-white rounded-xl shadow-inner max-h-96 overflow-y-auto mb-6">
+                            ${lines}
+                        </div>
+                        
+                        <button onclick="app.completeMission(2)" 
+                            class="btn-primary w-full py-4 rounded-xl font-bold text-lg btn-base">
+                            <i class="fas fa-check mr-2"></i>
+                            HO TINC CLAR
+                        </button>
+                    </div>`;
+                } 
+                else if(mid === 3) {
+                    app.initQuiz(s.lyrics);
+                    html = `<div id="quiz-container" class="card p-6 min-h-[400px]"></div>`;
+                    setTimeout(() => app.renderQuizQuestion(3), 50);
+                } 
+                else if(mid === 4) {
+                    html = `<div class="card p-6">
+                        <div class="text-center mb-6">
+                            <div class="inline-block p-4 bg-purple-100 rounded-full mb-3">
+                                <i class="fas fa-eye-slash text-4xl text-purple-600"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold serif text-gray-800 mb-2">Ocultació Progressiva</h3>
+                            <p class="text-gray-600">Augmenta la dificultat amagant més paraules</p>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 mb-6 bg-gradient-to-r from-purple-50 to-indigo-50 p-5 rounded-xl border-2 border-purple-200">
+                            <label class="font-bold text-gray-700 flex-shrink-0">
+                                <i class="fas fa-sliders text-purple-600 mr-2"></i>
+                                Dificultat:
+                            </label>
+                            <input type="range" min="0" max="100" value="0" 
+                                class="flex-grow h-3 rounded-lg appearance-none cursor-pointer accent-purple-600" 
+                                style="background: linear-gradient(to right, #e9d5ff 0%, #c084fc 100%);"
+                                oninput="app.updateHiddenText(this.value)">
+                            <span id="hide-percent" class="font-bold text-purple-700 text-xl w-16 text-right">0%</span>
+                        </div>
+                        
+                        <div id="hidden-lyrics-container" 
+                            class="lyrics-text bg-white p-6 border-2 border-gray-200 rounded-xl min-h-[350px] max-h-[400px] overflow-y-auto">
+                            ${s.lyrics}
+                        </div>
+                        
+                        <button onclick="app.completeMission(4)" 
+                            class="btn-primary w-full py-4 mt-6 rounded-xl font-bold text-lg btn-base">
+                            <i class="fas fa-graduation-cap mr-2"></i>
+                            JA M'HO SÉ!
+                        </button>
+                    </div>`;
+                } 
+                else if(mid === 5) {
+                    html = `
+                    <div class="card p-10 animate-fade-in text-center bg-gradient-to-br from-amber-50 to-orange-50">
+                        <div class="inline-block p-6 bg-gradient-to-br from-orange-400 to-red-500 rounded-full mb-6">
+                            <i class="fas fa-star text-5xl text-white"></i>
+                        </div>
+                        
+                        <h3 class="text-3xl font-bold serif text-orange-900 mb-4">El Moment de la Veritat</h3>
+                        <p class="text-gray-600 mb-8 text-lg">Demostra que domines la cançó</p>
+                        
+                        <div class="max-w-md mx-auto">
+                            <ul class="text-left space-y-4 mb-10 text-lg bg-white p-6 rounded-xl border-2 border-orange-200">
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-music text-orange-500 mt-1"></i>
+                                    <span>Posa l'àudio de la cançó</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-eye-slash text-orange-500 mt-1"></i>
+                                    <span>Tanca els ulls o gira't</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-microphone text-orange-500 mt-1"></i>
+                                    <span>Canta sense mirar la lletra</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-10">
+                            <div class="inline-block p-6 bg-gray-100 rounded-full">
+                                <i class="fas fa-microphone text-6xl text-gray-300"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-4 justify-center flex-wrap">
+                            <button onclick="app.startMission(5)" 
+                                class="px-8 py-3 border-2 border-gray-300 rounded-xl hover:bg-gray-50 transition-all font-bold btn-base">
+                                <i class="fas fa-redo mr-2"></i>
+                                Tornar a provar
+                            </button>
+                            <button onclick="app.completeMission(5)" 
+                                class="btn-primary px-10 py-3 rounded-xl font-bold text-lg btn-base">
+                                <i class="fas fa-trophy mr-2"></i>
+                                L'he dominat!
+                            </button>
+                        </div>
+                    </div>`;
+                }
+                
+                document.getElementById('app-content').innerHTML = `
+                    <div class="mb-4 flex items-center gap-2 text-sm text-gray-500">
+                        <i class="fas fa-music"></i>
+                        <span>${s.title}</span>
+                        <i class="fas fa-chevron-right text-xs"></i>
+                        <span class="text-orange-600 font-bold">${mission.title}</span>
+                    </div>
+                    ${html}
+                    <button onclick="app.openSong('${s.id}')" class="btn-back mt-6">
+                        <i class="fas fa-arrow-left"></i> Tornar a les Missions
+                    </button>`;
+            },
+
+            initQuiz: (text) => {
+                const words = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/).filter(w => w.length > 3);
+                const sentences = text.split('\n').filter(l => l.trim().length > 15);
+                appState.quizState = { words, sentences, qCount: 0, max: 5, mistakes: 0 };
+            },
+
+            renderQuizQuestion: (mid) => {
+                const s = appState.quizState;
+                if(s.qCount >= s.max) {
+                    const ok = s.mistakes === 0;
+                    document.getElementById('quiz-container').innerHTML = `
+                        <div class="text-center py-12 animate-fade-in">
+                            <div class="inline-block p-6 ${ok ? 'bg-green-100' : 'bg-orange-100'} rounded-full mb-6">
+                                <i class="fas ${ok ? 'fa-trophy text-yellow-500' : 'fa-redo text-orange-500'} text-6xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 ${ok ? 'text-green-800' : 'text-orange-800'}">
+                                ${ok ? '🎉 Excel·lent!' : '💪 Segueix practicant!'}
+                            </h3>
+                            <p class="text-gray-600 mb-8">
+                                ${ok ? 'Has encertat totes les respostes!' : `Has tingut ${s.mistakes} error${s.mistakes > 1 ? 's' : ''}. Torna-ho a intentar!`}
+                            </p>
+                            <button onclick="${ok ? `app.completeMission(${mid})` : `app.startMission(${mid})`}" 
+                                class="btn-primary px-12 py-4 rounded-xl font-bold text-lg btn-base">
+                                ${ok ? '<i class="fas fa-check mr-2"></i>Continuar' : '<i class="fas fa-redo mr-2"></i>Tornar a provar'}
+                            </button>
+                        </div>`;
+                    return;
+                }
+                
+                const sentence = s.sentences[Math.floor(Math.random() * s.sentences.length)];
+                const wordsArr = sentence.split(/\s+/);
+                const candidates = wordsArr.map((w, i) => w.length > 3 ? i : -1).filter(i => i !== -1);
+                
+                if (candidates.length === 0) {
+                    s.qCount++;
+                    app.renderQuizQuestion(mid);
+                    return;
+                }
+                
+                const hideIdx = candidates[Math.floor(Math.random() * candidates.length)];
+                const correct = wordsArr[hideIdx].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
+                wordsArr[hideIdx] = "___________";
+                
+                let opts = [correct];
+                while(opts.length < 3 && s.words.length >= 3) {
+                    let rw = s.words[Math.floor(Math.random() * s.words.length)];
+                    if(!opts.includes(rw)) opts.push(rw);
+                }
+                opts.sort(() => Math.random() - 0.5);
+
+                document.getElementById('quiz-container').innerHTML = `
+                    <div class="text-center animate-fade-in">
+                        <div class="mb-6">
+                            <span class="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-full text-sm font-bold">
+                                Pregunta ${s.qCount + 1} de ${s.max}
+                            </span>
+                        </div>
+                        
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-xl mb-8 border-2 border-blue-200">
+                            <h4 class="text-2xl font-serif leading-relaxed italic text-gray-800">
+                                "${wordsArr.join(' ')}"
+                            </h4>
+                        </div>
+                        
+                        <div class="grid gap-3 max-w-md mx-auto mb-6">
+                            ${opts.map(o => `
+                                <div onclick="app.checkAnswer(this, '${o.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')" 
+                                    class="btn-option font-bold text-gray-700 text-lg">
+                                    ${o}
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div id="quiz-feedback" class="font-bold text-lg h-8"></div>
+                        <button id="next-btn" onclick="app.renderQuizQuestion(${mid})" 
+                            class="hidden mt-6 btn-primary px-8 py-3 rounded-xl font-bold btn-base">
+                            Següent <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>`;
+            },
+
+            checkAnswer: (btn, sel, cor) => {
+                const norm = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                const isCorrect = norm(sel) === norm(cor);
+                
+                if(isCorrect) {
+                    btn.classList.add('correct');
+                    document.getElementById('quiz-feedback').innerHTML = 
+                        "<span class='text-green-600'><i class='fas fa-check-circle mr-2'></i>Correcte!</span>";
+                } else {
+                    btn.classList.add('wrong'); 
+                    appState.quizState.mistakes++;
+                    document.getElementById('quiz-feedback').innerHTML = 
+                        `<span class='text-red-600'><i class='fas fa-times-circle mr-2'></i>La resposta era "<strong>${cor}</strong>"</span>`;
+                }
+                
+                document.querySelectorAll('.btn-option').forEach(b => b.onclick = null);
+                appState.quizState.qCount++;
+                document.getElementById('next-btn').classList.remove('hidden');
+            },
+
+            updateHiddenText: (p) => {
+                document.getElementById('hide-percent').innerText = p + '%';
+                const s = appState.activeSongs.find(x => x.id === appState.currentSongId);
+                const w = s.lyrics.split(/(\s+)/);
+                document.getElementById('hidden-lyrics-container').innerHTML = w.map((x, i) => {
+                    if(!x.trim()) return x;
+                    return ((i * 9301 + 49297) % 233280 / 233280 * 100) < p 
+                        ? `<span class="hidden-word" title="Fes clic per veure">${x}</span>` 
+                        : x;
+                }).join('');
+            },
+
+            completeMission: (mid) => {
+                if (appState.modalTimeout) clearTimeout(appState.modalTimeout);
+                const s = appState.activeSongs.find(x => x.id === appState.currentSongId);
+                const first = !s.completedMissions.includes(mid);
+                const mission = MISSIONS.find(x => x.id === mid);
+                
+                if(first) {
+                    s.completedMissions.push(mid);
+                    appState.sessionPoints += mission.points;
+                    appState.user.lifetimePoints += mission.points;
+                }
+                
+                app.save();
+                
+                const allCompleted = s.completedMissions.length === 5;
+                const message = allCompleted 
+                    ? `<div class="mb-4">
+                        <div class="inline-block p-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full mb-4">
+                            <i class="fas fa-trophy text-white text-6xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2 text-orange-800">🎉 Cançó Dominada!</h3>
+                        <p class="text-gray-600 mb-2">Has completat totes les missions de<br><strong>${s.title}</strong></p>
+                        <div class="inline-block bg-gradient-to-r from-green-400 to-emerald-500 text-white px-6 py-2 rounded-full font-bold text-lg mt-2">
+                            +${mission.points} punts
+                        </div>
+                    </div>`
+                    : `<div class="mb-4">
+                        <div class="inline-block p-6 bg-green-100 rounded-full mb-4">
+                            <i class="fas fa-check-circle text-green-500 text-6xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2 text-green-800">Missió Completada!</h3>
+                        <p class="text-gray-600">${mission.title}</p>
+                        <div class="inline-block bg-gradient-to-r from-green-400 to-emerald-500 text-white px-6 py-2 rounded-full font-bold text-lg mt-2">
+                            +${mission.points} punts
+                        </div>
+                    </div>`;
+                
+                app.showModal(`${message}
+                    <button onclick="app.closeModal('${s.id}')" 
+                        class="btn-primary w-full py-4 mt-6 rounded-xl font-bold text-lg btn-base">
+                        <i class="fas fa-arrow-right mr-2"></i>
+                        CONTINUAR
+                    </button>`);
+                
+                appState.modalTimeout = setTimeout(() => app.closeModal(s.id), 3000);
+            },
+
+            showModal: (h) => {
+                const m = document.createElement('div');
+                m.className = 'fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4';
+                m.style.animation = 'fadeIn 0.3s ease-out';
+                m.innerHTML = `<div class="bg-white rounded-2xl p-10 max-w-md w-full text-center shadow-2xl animate-fade-in">${h}</div>`;
+                document.body.appendChild(m);
+            },
+
+            closeModal: (sid) => {
+                if(appState.modalTimeout) clearTimeout(appState.modalTimeout);
+                const m = document.querySelector('.fixed.inset-0'); 
+                if(m) m.remove();
+                app.openSong(sid);
+            },
+
+            deleteSong: (id) => { 
+                if(confirm("Segur que vols eliminar aquesta cançó? Es perdrà tot el progrés.")) { 
+                    appState.activeSongs = appState.activeSongs.filter(x => x.id !== id); 
+                    app.save(); 
+                    app.showLibrary(); 
+                } 
+            },
+
+            updateFooter: (showReset) => { 
+                const controls = showReset 
+                    ? `<div class="flex gap-4 justify-center items-center flex-wrap">
+                        <button onclick="app.hardReset()" class="text-xs text-red-300 hover:text-red-600 font-bold transition-colors">
+                            <i class="fas fa-trash-restore mr-1"></i>
+                            Reiniciar tot
+                        </button>
+                    </div>`
+                    : '';
+                document.getElementById('footer-controls').innerHTML = controls;
+            },
+
+            hardReset: () => { 
+                if(confirm("⚠️ ATENCIÓ: S'esborrarà TOT el progrés i totes les cançons. Aquesta acció no es pot desfer. Estàs segur/a?")) {
+                    if(confirm("Última confirmació: Realment vols eliminar tot?")) {
+                        localStorage.clear(); 
+                        location.reload(); 
+                    }
+                }
+            }
+        };
+
+        // Inicialitzar l'aplicació
+        app.init();
+    </script>
+</body>
+</html>

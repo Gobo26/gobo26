@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aventures i Misteris — Gobo26</title>
+<meta name="description" content="Escape rooms i enigmes. Jocs gratuïts de Gobo26.">
+<meta name="theme-color" content="#1e293b">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;background:#f1f5f9;color:#334155;min-height:100vh;overflow-x:hidden;}
+header{background:#1e293b;color:white;padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.hd-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:white;}
+.hd-logo-text{font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;}
+.hd-back{font-size:.68rem;font-weight:700;color:#94a3b8;text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .2s;}
+.hd-back:hover{color:white;}
+main{max-width:960px;margin:0 auto;padding:28px 16px 80px;}
+.welcome{background:linear-gradient(135deg,#1a1a2e,#2d1b4e);border-radius:18px;padding:24px 26px;margin-bottom:28px;color:white;animation:popIn .5s ease both;}
+.welcome-icon{font-size:2.4rem;margin-bottom:10px;display:block;}
+.welcome-title{font-size:1.3rem;font-weight:900;margin-bottom:8px;letter-spacing:-.02em;}
+.welcome-text{font-size:.82rem;line-height:1.75;opacity:.88;font-weight:500;}
+.cat-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;animation:slideUp .4s ease both;}
+.cat-emoji{font-size:1.8rem;}
+.cat-title{font-size:1.4rem;font-weight:900;color:#1e293b;}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+@media(max-width:760px){.grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:8px;}}
+.app-card{background:white;border:1.5px solid #e2e8f0;border-radius:14px;padding:16px 10px 12px;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;transition:all .2s;-webkit-tap-highlight-color:transparent;animation:slideUp .4s ease both;}
+.app-card:hover{border-color:#2563eb;box-shadow:0 6px 22px rgba(37,99,235,.12);transform:translateY(-3px);}
+.app-card:active{transform:translateY(0);box-shadow:none;}
+.app-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s;}
+.app-card:hover .app-icon{transform:scale(1.08);}
+.app-name{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;line-height:1.2;}
+.app-desc{font-size:.64rem;color:#64748b;line-height:1.45;font-weight:500;flex:1;}
+.app-badge{font-size:.55rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-top:auto;}
+footer{background:#1e293b;color:#64748b;text-align:center;padding:12px;font-size:.65rem;font-weight:600;}
+footer a{color:#64748b;text-decoration:none;}
+@keyframes popIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<header>
+  <a class="hd-logo" href="index.html" target="_self">
+    <svg width="30" height="30" viewBox="0 0 40 46" fill="none">
+      <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
+      <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
+      <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+    </svg>
+    <span class="hd-logo-text">Gobo26</span>
+  </a>
+  <a class="hd-back" href="index.html" target="_self">← Inici</a>
+</header>
+<main>
+  <div class="welcome">
+    <span class="welcome-icon">🔍</span>
+    <div class="welcome-title">Aventures i Misteris</div>
+    <p class="welcome-text">Aquest espai neix de la curiositat per la intel·ligència artificial i del gust per crear coses útils. Aquí trobaràs jocs i petites eines gratuïtes per mantenir la ment activa, sense anuncis ni presses. Un laboratori digital fet amb tranquil·litat i passió. Si t'agrada, comparteix-ho amb algú que també gaudeixi pensant.</p>
+  </div>
+  <div class="cat-header">
+    <span class="cat-emoji">🔍</span>
+    <span class="cat-title">Aventures i Misteris</span>
+  </div>
+  <div class="grid">
+    <a class="app-card" href="Gobo26-ONCLE-ALBERT.html" target="_self" style="animation-delay:.05s">
+      <div class="app-icon" style="background:linear-gradient(135deg,#1a1a2e,#2d1b4e);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <circle cx="13" cy="13" r="8" fill="none" stroke="#a78bfa" stroke-width="1.8"/><circle cx="13" cy="13" r="4.5" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.6"/><line x1="19" y1="19" x2="27" y2="27" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"/>
+          <text x="13" y="17" text-anchor="middle" fill="#ddd6fe" font-size="8" font-weight="900" font-family="sans-serif">?</text>
+        </svg>
+      </div>
+      <div class="app-name">L'Oncle Albert</div>
+      <div class="app-desc">Escape room: desxifra els codis del criptògraf</div>
+      <span class="app-badge" style="background:rgba(167,139,250,.12);color:#7c3aed;">Misteri</span>
+    </a>
+  </div>
+</main>
+<footer>Una aplicació de <a href="index.html" target="_self">Gobo26</a></footer>
+</body>
+</html>

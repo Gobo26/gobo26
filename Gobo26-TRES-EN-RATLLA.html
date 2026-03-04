@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>3 en Ratlla – Gobo26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --fons: #f1f5f9;
+            --text: #334155;
+            --primari: #2563eb;
+            --primari-fosc: #1d4ed8;
+            --header-bg: #1e293b;
+            --blanc: #ffffff;
+            --verd: #16a34a;
+            --vermell: #dc2626;
+            --taronja: #ea580c;
+            --gris: #94a3b8;
+            --ombra: rgba(0,0,0,0.10);
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--fons);
+            color: var(--text);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100dvh;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: var(--header-bg);
+            color: white;
+            padding: 0 16px;
+            height: clamp(44px, 8vh, 56px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .hex-svg { width: clamp(26px, 5vw, 34px); height: clamp(26px, 5vw, 34px); }
+
+        .header-titols {
+            flex: 1;
+            text-align: center;
+        }
+
+        .header-titols h1 {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            line-height: 1.1;
+        }
+
+        .header-titols .subtitol {
+            font-size: 0.6rem;
+            font-weight: 600;
+            opacity: 0.6;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .btn-ajuda {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .btn-ajuda:hover { background: rgba(255,255,255,0.28); }
+
+        /* ===== MAIN ===== */
+        main {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            padding: clamp(4px, 1.5vh, 8px) 14px clamp(2px, 1vh, 4px);
+            gap: clamp(4px, 1.2vh, 7px);
+            overflow: hidden;
+        }
+
+        /* ===== MARCADOR ===== */
+        .marcador {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 6px;
+            align-items: stretch;
+            flex-shrink: 0;
+        }
+
+        .marca-card {
+            background: var(--blanc);
+            border-radius: 12px;
+            padding: clamp(4px, 1vh, 6px) 8px;
+            box-shadow: 0 2px 6px var(--ombra);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+        }
+
+        .marca-card .nom {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--gris);
+        }
+
+        .marca-card .peca {
+            font-size: clamp(1.1rem, 4vw, 1.8rem);
+            line-height: 1.1;
+        }
+
+        .marca-card .punts-wrap {
+            display: flex;
+            gap: 3px;
+            align-items: baseline;
+        }
+
+        .marca-card .punts {
+            font-size: clamp(0.95rem, 3.5vw, 1.4rem);
+            font-weight: 900;
+        }
+
+        .marca-card .punts-lbl {
+            font-size: 0.55rem;
+            font-weight: 600;
+            color: var(--gris);
+        }
+
+        .marca-card.jugador .punts { color: var(--primari); }
+        .marca-card.maquina .punts { color: var(--taronja); }
+
+        .marca-vs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 900;
+            color: var(--gris);
+        }
+
+        /* ===== NIVELL ===== */
+        .nivell-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--blanc);
+            border-radius: 10px;
+            padding: clamp(3px, 0.8vh, 5px) 12px;
+            box-shadow: 0 2px 6px var(--ombra);
+            flex-shrink: 0;
+        }
+
+        .nivell-esq {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .nivell-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--gris);
+        }
+
+        .nivell-badge {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 10px;
+            border-radius: 20px;
+            color: white;
+        }
+
+        .comptadors-mini {
+            display: flex;
+            gap: 12px;
+        }
+
+        .comp-mini { text-align: center; }
+        .comp-mini .comp-num {
+            font-size: 0.9rem;
+            font-weight: 900;
+            color: var(--text);
+            line-height: 1;
+        }
+        .comp-mini .comp-lbl {
+            font-size: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gris);
+        }
+
+        /* ===== MISSATGE ===== */
+        .missatge {
+            text-align: center;
+            font-size: clamp(0.75rem, 3vw, 0.9rem);
+            font-weight: 700;
+            min-height: 1.2em;
+            flex-shrink: 0;
+        }
+        .missatge.guanya { color: var(--verd); }
+        .missatge.perd   { color: var(--vermell); }
+        .missatge.empat  { color: var(--taronja); }
+
+        /* ===== TAULELL ===== */
+        .taulell-wrap {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .taulell {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(6px, 2vw, 12px);
+            background: #cbd5e1;
+            padding: clamp(6px, 2vw, 12px);
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            width: min(100%, 320px);
+            aspect-ratio: 1/1;
+        }
+
+        .cella {
+            background: var(--blanc);
+            border: 2.5px solid #94a3b8;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1.6rem, 8vw, 2.5rem);
+            cursor: pointer;
+            transition: transform 0.12s, border-color 0.12s, background 0.12s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .cella:not(.ocupada):hover {
+            background: #eff6ff;
+            border-color: var(--primari);
+            transform: scale(1.05);
+        }
+
+        .cella.jugador { border-color: var(--primari); background: #eff6ff; }
+        .cella.maquina { border-color: var(--taronja); background: #fff7ed; }
+
+        .cella.guanyadora { animation: pulsaG 0.45s ease-in-out 3; }
+
+        @keyframes pulsaG {
+            0%,100% { transform: scale(1); }
+            50%      { transform: scale(1.14); }
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            flex: 1;
+            height: clamp(42px, 6vh, 52px);
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.75rem, 2.5vw, 0.95rem);
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 3px 8px var(--ombra);
+            transition: transform 0.1s;
+            min-height: 44px;
+        }
+        .btn:active { transform: scale(0.95); }
+        .btn-nova  { background: var(--primari); color: white; }
+        .btn-nova:hover { background: var(--primari-fosc); }
+        .btn-reset { background: #e2e8f0; color: var(--text); }
+        .btn-reset:hover { background: #cbd5e1; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            font-size: 0.6rem;
+            color: var(--gris);
+            font-weight: 600;
+            padding: 2px 0 4px;
+            flex-shrink: 0;
+        }
+        footer a { color: var(--primari); text-decoration: none; }
+
+        /* ===== MODAL AJUDA ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,0.65);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.actiu { display: flex; }
+
+        .modal {
+            background: var(--blanc);
+            border-radius: 20px;
+            padding: 22px 18px 18px;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal h2 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--primari);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .modal .bloc {
+            background: var(--fons);
+            border-radius: 10px;
+            padding: 9px 11px;
+            margin-bottom: 7px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .modal .bloc strong {
+            display: block;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--gris);
+            margin-bottom: 4px;
+        }
+
+        .modal table { width: 100%; border-collapse: collapse; font-size: 0.78rem; font-weight: 600; }
+        .modal table td { padding: 3px 5px; border-bottom: 1px solid #e2e8f0; }
+        .modal table td:first-child { color: var(--gris); font-size: 0.68rem; text-transform: uppercase; white-space: nowrap; }
+        .modal table tr:last-child td { border-bottom: none; }
+
+        .btn-tancar {
+            width: 100%;
+            margin-top: 12px;
+            padding: 12px;
+            background: var(--primari);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            min-height: 44px;
+        }
+        .btn-tancar:hover { background: var(--primari-fosc); }
+
+        /* ===== CONFETI ===== */
+        .confeti-c { position: fixed; inset: 0; pointer-events: none; z-index: 100; overflow: hidden; }
+        .confeti-p { position: absolute; top: -20px; animation: cau linear forwards; }
+        @keyframes cau { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
+        /* ===== RESPONSIVE ALÇADA ===== */
+        @media (max-height: 700px) {
+            header { height: clamp(44px, 8vh, 50px); }
+            main { gap: clamp(3px, 1vh, 5px); padding: clamp(3px, 1vh, 6px) 12px clamp(2px, 0.5vh, 3px); }
+            .marca-card { padding: 3px 6px; }
+            .marca-card .peca { font-size: clamp(1rem, 3.5vw, 1.4rem); }
+            .marca-card .punts { font-size: clamp(0.85rem, 3vw, 1.2rem); }
+            .nivell-wrap { padding: 2px 10px; }
+            .missatge { font-size: clamp(0.65rem, 2.5vw, 0.8rem); min-height: 1em; }
+        }
+
+        @media (max-height: 600px) {
+            header { height: 44px; }
+            main { gap: 3px; padding: 3px 10px 2px; }
+            .marcador { gap: 4px; }
+            .marca-card { padding: 2px 5px; gap: 0; }
+            .marca-card .nom { font-size: 0.55rem; }
+            .marca-card .peca { font-size: clamp(0.9rem, 3vw, 1.2rem); }
+            .marca-card .punts { font-size: 0.85rem; }
+            .marca-card .punts-lbl { display: none; }
+            .nivell-wrap { padding: 2px 8px; }
+            .nivell-label { font-size: 0.6rem; }
+            .comp-mini .comp-num { font-size: 0.8rem; }
+            .missatge { font-size: 0.65rem; min-height: 0.9em; }
+            .btn { height: 44px; min-height: 44px; font-size: 0.75rem; }
+            .taulell { width: min(100%, 260px); }
+        }
+
+        @media (max-height: 520px) {
+            .taulell { width: min(100%, 210px); }
+            .cella { font-size: clamp(1.2rem, 5vw, 1.8rem); }
+        }
+
+        @media (max-height: 460px) {
+            .taulell { width: min(100%, 180px); }
+            .marca-card .peca { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <a class="header-logo" href="https://ja.cat/appgobo" target="_self" title="Gobo26">
+        <svg class="hex-svg" viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 2L37 11.5V29.5L20 39L3 29.5V11.5L20 2Z" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+            <text x="20" y="20" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="800" font-size="9">GOBO</text>
+            <text x="20" y="31" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="800" font-size="9">26</text>
+        </svg>
+    </a>
+    <div class="header-titols">
+        <h1>3 en Ratlla</h1>
+        <div class="subtitol">Entrenament Mental</div>
+    </div>
+    <button class="btn-ajuda" onclick="obrirAjuda()" aria-label="Instruccions">?</button>
+</header>
+
+<!-- MAIN -->
+<main>
+
+    <!-- MARCADOR -->
+    <div class="marcador">
+        <div class="marca-card jugador">
+            <div class="nom">Tu</div>
+            <div class="peca" id="peca-jugador">⭐</div>
+            <div class="punts-wrap">
+                <div class="punts" id="punts-jugador">0</div>
+                <div class="punts-lbl">victòries</div>
+            </div>
+        </div>
+        <div class="marca-vs">VS</div>
+        <div class="marca-card maquina">
+            <div class="nom">Màquina</div>
+            <div class="peca" id="peca-maquina">🤖</div>
+            <div class="punts-wrap">
+                <div class="punts" id="punts-maquina">0</div>
+                <div class="punts-lbl">victòries</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NIVELL I COMPTADORS -->
+    <div class="nivell-wrap">
+        <div class="nivell-esq">
+            <span class="nivell-label">Nivell</span>
+            <span class="nivell-badge" id="badge-nivell">Principiant</span>
+        </div>
+        <div class="comptadors-mini">
+            <div class="comp-mini">
+                <div class="comp-num" id="comp-partides">0</div>
+                <div class="comp-lbl">Partides</div>
+            </div>
+            <div class="comp-mini">
+                <div class="comp-num" id="comp-nivells">0</div>
+                <div class="comp-lbl">Nivells</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MISSATGE -->
+    <div class="missatge" id="missatge">Preparats? Comença tu! 🎯</div>
+
+    <!-- TAULELL -->
+    <div class="taulell-wrap">
+        <div class="taulell" id="taulell">
+            <div class="cella" data-index="0"></div>
+            <div class="cella" data-index="1"></div>
+            <div class="cella" data-index="2"></div>
+            <div class="cella" data-index="3"></div>
+            <div class="cella" data-index="4"></div>
+            <div class="cella" data-index="5"></div>
+            <div class="cella" data-index="6"></div>
+            <div class="cella" data-index="7"></div>
+            <div class="cella" data-index="8"></div>
+        </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+        <button class="btn btn-nova" onclick="novaPartida()">▶ Nova Partida</button>
+        <button class="btn btn-reset" onclick="confirmarReset()">↺ Reiniciar Tot</button>
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>Una aplicació de <a href="https://ja.cat/appgobo" target="_self">Gobo26</a></footer>
+
+<!-- CONFETI -->
+<div class="confeti-c" id="confeti"></div>
+
+<!-- MODAL AJUDA -->
+<div class="modal-overlay" id="modal-ajuda">
+    <div class="modal">
+        <h2>🎮 Com es juga?</h2>
+
+        <div class="bloc">
+            <strong>Objectiu</strong>
+            Aconsegueix 3 peces teves seguides en fila, columna o diagonal, abans que ho faci la màquina.
+        </div>
+
+        <div class="bloc">
+            <strong>Les peces i qui comença</strong>
+            Cada partida nova, el joc tria peces emoji aleatòries i sempre diferents per a tu i per a la màquina. El torn inicial s'alterna: una partida comences tu, la següent comença la màquina. 🎲
+        </div>
+
+        <div class="bloc">
+            <strong>Nivells de dificultat</strong>
+            <table>
+                <tr><td>Principiant</td><td>0–2 victòries · La màquina juga a l'atzar</td></tr>
+                <tr><td>Intermedi</td><td>3–6 victòries · Guanya i bloqueja</td></tr>
+                <tr><td>Expert</td><td>7+ victòries · Estratègia avançada</td></tr>
+            </table>
+        </div>
+
+        <div class="bloc">
+            <strong>Comptadors</strong>
+            <strong style="display:inline; font-size:inherit; text-transform:none; letter-spacing:0; color:var(--text)">Partides</strong> compta totes les jugades. <strong style="display:inline; font-size:inherit; text-transform:none; letter-spacing:0; color:var(--text)">Nivells</strong> compta quantes vegades has ascendit. Es guarden automàticament.
+        </div>
+
+        <button class="btn-tancar" onclick="tancarAjuda()">Entesos, juguem! 🚀</button>
+    </div>
+</div>
+
+<script>
+    const COMBINACIONS = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+    ];
+
+    const TOTES_PECES = [
+        '⭐','🍕','🐸','🚀','🎸','🌈','🦁','🐙','🎯','🍄',
+        '🦋','🐬','🌵','🎪','🦄','🐳','🌺','🎭','🦊','🐧',
+        '🍀','🎨','🦅','🐝','🌙','🍭','🎲','🦖','🌊','🎠',
+        '🏄','🐱','🦀','🌸','🎻','🍩','🦜','🐻','🏆','🎡'
+    ];
+
+    const CONFETIS = ['🌟','✨','🎉','🎊','⭐','💫','🏆','🥇'];
+    const NOMS_NIVELL  = ['Principiant','Intermedi','Expert'];
+    const COLORS_NIVELL = ['#16a34a','#d97706','#dc2626'];
+
+    let estat = ["","","","","","","","",""];
+    let jocActiu = false;
+    let icona_jugador = '';
+    let icona_maquina = '';
+    // torn_inicial: true = jugador comença, false = màquina comença. Alterna cada partida.
+    let torn_inicial = true;
+
+    let punts_jugador  = parseInt(localStorage.getItem('3r_vict_j')    || '0');
+    let punts_maquina  = parseInt(localStorage.getItem('3r_vict_m')    || '0');
+    let total_partides = parseInt(localStorage.getItem('3r_partides')  || '0');
+    let nivells_assolits = parseInt(localStorage.getItem('3r_nivells') || '0');
+    let nivell_anterior  = getNivellActual();
+
+    const cel_les    = document.querySelectorAll('.cella');
+    const missatgeEl = document.getElementById('missatge');
+
+    // ===== SO FINAL DE PARTIDA =====
+    let audioCtx = null;
+
+    function soFiPartida() {
+        try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const ctx = audioCtx;
+            // Dos clics suaus molt breus, en sèrie
+            [0, 0.12].forEach(delay => {
+                const osc  = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, ctx.currentTime + delay);
+                osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + delay + 0.06);
+                gain.gain.setValueAtTime(0.0, ctx.currentTime + delay);
+                gain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + delay + 0.008);
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + 0.08);
+                osc.start(ctx.currentTime + delay);
+                osc.stop(ctx.currentTime + delay + 0.1);
+            });
+        } catch(e) { /* silenci si no hi ha AudioContext */ }
+    }
+
+    function getNivellActual() {
+        if (punts_jugador < 3) return 0;
+        if (punts_jugador < 7) return 1;
+        return 2;
+    }
+
+    function actualitzarUI() {
+        document.getElementById('punts-jugador').textContent  = punts_jugador;
+        document.getElementById('punts-maquina').textContent  = punts_maquina;
+        document.getElementById('peca-jugador').textContent   = icona_jugador;
+        document.getElementById('peca-maquina').textContent   = icona_maquina;
+        document.getElementById('comp-partides').textContent  = total_partides;
+        document.getElementById('comp-nivells').textContent   = nivells_assolits;
+
+        const n = getNivellActual();
+        const badge = document.getElementById('badge-nivell');
+        badge.textContent      = NOMS_NIVELL[n];
+        badge.style.background = COLORS_NIVELL[n];
+    }
+
+    function triarPeces() {
+        const pool = [...TOTES_PECES].sort(() => Math.random() - 0.5);
+        icona_jugador = pool[0];
+        icona_maquina = pool[1];
+    }
+
+    function setMissatge(text, tipus) {
+        missatgeEl.textContent = text;
+        missatgeEl.className   = 'missatge' + (tipus ? ' ' + tipus : '');
+    }
+
+    function novaPartida() {
+        triarPeces();
+        estat = ["","","","","","","","",""];
+        jocActiu = true;
+        cel_les.forEach(c => { c.textContent = ''; c.className = 'cella'; });
+        actualitzarUI();
+
+        if (torn_inicial) {
+            // Comença el jugador
+            setMissatge('El teu torn! ' + icona_jugador + ' endavant 💪', '');
+        } else {
+            // Comença la màquina
+            setMissatge('Ara comença la màquina... ' + icona_maquina, '');
+            jocActiu = false;
+            setTimeout(torMaquina, 700);
+        }
+    }
+
+    function ferMoviment(index, jugador) {
+        estat[index] = jugador;
+        const c = cel_les[index];
+        c.textContent = jugador === 'J' ? icona_jugador : icona_maquina;
+        c.classList.add('ocupada', jugador === 'J' ? 'jugador' : 'maquina');
+    }
+
+    function clickCella(e) {
+        const idx = parseInt(e.currentTarget.dataset.index);
+        if (!jocActiu || estat[idx] !== '') return;
+        ferMoviment(idx, 'J');
+        if (comprovar()) return;
+        if (!estat.includes('')) { fiPartida('empat'); return; }
+        jocActiu = false;
+        setMissatge('La màquina pensa... ' + icona_maquina, '');
+        setTimeout(torMaquina, 550);
+    }
+
+    function torMaquina() {
+        const idx = millorMoviment();
+        if (idx === null) { fiPartida('empat'); return; }
+        ferMoviment(idx, 'M');
+        jocActiu = true;
+        if (comprovar()) return;
+        if (!estat.includes('')) { fiPartida('empat'); return; }
+        setMissatge('El teu torn! ' + icona_jugador, '');
+    }
+
+    function millorMoviment() {
+        const buides = estat.map((v,i) => v==='' ? i : null).filter(v => v !== null);
+        if (!buides.length) return null;
+        const nivell = getNivellActual();
+
+        if (nivell === 0) return buides[Math.floor(Math.random()*buides.length)];
+
+        // Guanyar
+        for (const [a,b,c] of COMBINACIONS) {
+            const v = [estat[a], estat[b], estat[c]];
+            if (v.filter(x=>x==='M').length===2 && v.includes(''))
+                return [a,b,c][v.indexOf('')];
+        }
+        // Bloquejar
+        for (const [a,b,c] of COMBINACIONS) {
+            const v = [estat[a], estat[b], estat[c]];
+            if (v.filter(x=>x==='J').length===2 && v.includes(''))
+                return [a,b,c][v.indexOf('')];
+        }
+
+        if (nivell >= 2) {
+            if (estat[4]==='') return 4;
+            // Cantonada oposada al jugador
+            for (const [j,m] of [[0,8],[2,6],[6,2],[8,0]])
+                if (estat[j]==='J' && estat[m]==='') return m;
+            const cant = [0,2,6,8].filter(i=>estat[i]==='');
+            if (cant.length) return cant[Math.floor(Math.random()*cant.length)];
+        } else {
+            if (estat[4]==='') return 4;
+        }
+
+        return buides[Math.floor(Math.random()*buides.length)];
+    }
+
+    function comprovar() {
+        for (const [a,b,c] of COMBINACIONS) {
+            if (estat[a] && estat[a]===estat[b] && estat[a]===estat[c]) {
+                [a,b,c].forEach(i => cel_les[i].classList.add('guanyadora'));
+                fiPartida(estat[a]==='J' ? 'jugador' : 'maquina');
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function fiPartida(resultat) {
+        jocActiu = false;
+        total_partides++;
+        localStorage.setItem('3r_partides', total_partides);
+
+        // Alterna qui comença la propera partida
+        torn_inicial = !torn_inicial;
+
+        soFiPartida();
+
+        if (resultat === 'jugador') {
+            punts_jugador++;
+            localStorage.setItem('3r_vict_j', punts_jugador);
+            const nouNivell = getNivellActual();
+            if (nouNivell > nivell_anterior) {
+                nivells_assolits++;
+                localStorage.setItem('3r_nivells', nivells_assolits);
+                nivell_anterior = nouNivell;
+                setMissatge('🏆 Nou nivell! Ets ' + NOMS_NIVELL[nouNivell] + '! 🎉', 'guanya');
+            } else {
+                setMissatge('✨ Has guanyat! Molt bé, ' + icona_jugador + '!', 'guanya');
+            }
+            llençarConfeti();
+        } else if (resultat === 'maquina') {
+            punts_maquina++;
+            localStorage.setItem('3r_vict_m', punts_maquina);
+            setMissatge('😅 Ha guanyat la màquina ' + icona_maquina + '. Revenja!', 'perd');
+        } else {
+            setMissatge('🤝 Empat! Nova oportunitat.', 'empat');
+        }
+        actualitzarUI();
+    }
+
+    function llençarConfeti() {
+        const cont = document.getElementById('confeti');
+        cont.innerHTML = '';
+        for (let i = 0; i < 22; i++) {
+            const p = document.createElement('div');
+            p.className = 'confeti-p';
+            p.textContent = CONFETIS[Math.floor(Math.random()*CONFETIS.length)];
+            p.style.left   = Math.random()*100 + 'vw';
+            p.style.fontSize = (1 + Math.random()) + 'rem';
+            p.style.animationDuration = (1.5 + Math.random()*2) + 's';
+            p.style.animationDelay    = Math.random()*0.6 + 's';
+            cont.appendChild(p);
+            p.addEventListener('animationend', () => p.remove());
+        }
+    }
+
+    function confirmarReset() {
+        if (confirm('Vols posar tots els comptadors a zero i tornar al nivell Principiant?')) {
+            punts_jugador = punts_maquina = total_partides = nivells_assolits = 0;
+            nivell_anterior = 0;
+            ['3r_vict_j','3r_vict_m','3r_partides','3r_nivells'].forEach(k => localStorage.setItem(k, 0));
+            novaPartida();
+        }
+    }
+
+    function obrirAjuda() { document.getElementById('modal-ajuda').classList.add('actiu'); }
+    function tancarAjuda() { document.getElementById('modal-ajuda').classList.remove('actiu'); }
+
+    document.getElementById('modal-ajuda').addEventListener('click', function(e) {
+        if (e.target === this) tancarAjuda();
+    });
+
+    cel_les.forEach(c => c.addEventListener('click', clickCella));
+
+    // Arrencada
+    actualitzarUI();
+    novaPartida();
+</script>
+</body>
+</html>
