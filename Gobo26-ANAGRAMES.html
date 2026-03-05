@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Anagrames · Gobo26</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
+  --s600:#475569; --s700:#334155; --s800:#1e293b;
+  --blue:#2563eb; --blue2:#3b82f6;
+  --ok:#16a34a; --okl:#dcfce7;
+  --err:#dc2626; --errl:#fee2e2;
+  --gold:#f59e0b; --goldl:#fef3c7;
+  --violet:#7c3aed; --violetl:#ede9fe;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);display:flex;flex-direction:column;align-items:center;color:var(--s700);}
+
+/* ── HEADER ── */
+header{width:100%;background:var(--s800);border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-hex{width:36px;height:36px;flex-shrink:0;}
+.logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-.5px;}
+.logo-txt span{color:var(--blue2);}
+.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
+#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);flex-shrink:0;}
+#btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
+
+/* ── MAIN ── */
+main{width:100%;max-width:560px;padding:10px 12px 6px;display:flex;flex-direction:column;gap:9px;flex:1;overflow-y:auto;}
+
+/* ── MARCADOR ── */
+.marcador{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.marc-card{background:white;border:1px solid var(--s200);border-radius:10px;padding:7px 4px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.marc-lbl{font-size:.58rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:.8px;margin-bottom:1px;}
+.marc-val{font-size:1.15rem;font-weight:900;color:var(--s800);}
+.marc-val.blau{color:var(--blue);}
+.marc-val.or{color:var(--gold);}
+
+/* ── RONDA BADGE ── */
+.ronda-badge{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:2px;}
+.ronda-pill{font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:99px;border:2px solid;}
+.ronda-pill.r3{background:#dbeafe;color:var(--blue);border-color:var(--blue2);}
+.ronda-pill.r4{background:var(--goldl);color:#92400e;border-color:var(--gold);}
+.ronda-pill.r5{background:var(--violetl);color:var(--violet);border-color:var(--violet);}
+.ronda-prog{font-size:.65rem;font-weight:700;color:var(--s400);}
+
+/* ── CARDS ── */
+.card{width:100%;background:white;border:1px solid var(--s200);border-radius:12px;padding:12px 14px;box-shadow:0 2px 6px rgba(0,0,0,.06);}
+.card-lbl{font-size:.62rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;text-align:center;}
+
+/* ── ZONA CONSTRUCCIÓ ── */
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.zona-const{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px;min-height:50px;padding:6px;background:var(--bg);border:2px dashed var(--s300);border-radius:10px;margin-bottom:8px;transition:border-color .2s,background .2s;}
+.zona-const.ok-flash{border-color:var(--ok)!important;background:var(--okl)!important;}
+.zona-const.err-flash{border-color:var(--err)!important;background:var(--errl)!important;animation:shake .3s ease;}
+
+/* ── BOTONS LLETRA ── */
+.btn-ll{font-family:'Montserrat',sans-serif;width:42px;height:42px;font-size:1.05rem;font-weight:900;text-transform:uppercase;cursor:pointer;background:white;border:2px solid var(--s300);border-radius:9px;box-shadow:0 3px 0 var(--s300);transition:transform .08s,box-shadow .08s;display:flex;align-items:center;justify-content:center;color:var(--s800);-webkit-tap-highlight-color:transparent;user-select:none;}
+.btn-ll:not(:disabled):active{transform:translateY(3px);box-shadow:0 0 0 var(--s300);}
+.btn-ll:disabled{opacity:.22;cursor:default;box-shadow:none;}
+.btn-ll.triada{background:#dbeafe;border-color:var(--blue);color:var(--blue);box-shadow:0 3px 0 #1d4ed8;}
+.btn-ll.triada:active{transform:translateY(3px);box-shadow:0 0 0 #1d4ed8;}
+.zona-lletres{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;padding:2px 0 6px;}
+
+/* ── ACCIONS ── */
+.accions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:5px;}
+.btn-acc{font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;padding:9px 4px;border:none;border-radius:9px;cursor:pointer;min-height:42px;transition:all .12s;}
+.btn-acc:active{transform:scale(.94);}
+.btn-esb{background:var(--errl);color:var(--err);}
+.btn-comp{background:var(--blue);color:white;}
+.btn-comp:hover{background:var(--blue2);}
+.btn-barr{background:var(--goldl);color:#92400e;}
+
+/* ── FEEDBACK ── */
+#feedback{font-size:.8rem;font-weight:700;text-align:center;min-height:20px;padding:3px 0;transition:opacity .35s;}
+
+/* ── DEFINICIÓ ── */
+.def-box{display:none;background:var(--violetl);border:1px solid var(--violet);border-radius:9px;padding:8px 12px;margin-top:6px;animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);}
+.def-box.vis{display:block;}
+.def-paraula{font-size:.82rem;font-weight:900;color:var(--violet);margin-bottom:2px;}
+.def-text{font-size:.75rem;color:var(--s700);line-height:1.5;}
+
+/* ── PARAULES TROBADES ── */
+.trobades-grid{display:flex;flex-wrap:wrap;gap:5px;min-height:24px;}
+@keyframes popIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.tag-ok{font-size:.75rem;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--okl);color:var(--ok);border:1px solid #86efac;animation:popIn .25s cubic-bezier(.175,.885,.32,1.275);cursor:pointer;transition:background .1s;}
+.tag-ok:hover{background:#bbf7d0;}
+.tag-rev{font-size:.75rem;font-weight:700;padding:3px 9px;border-radius:99px;background:#f1f5f9;color:var(--s400);border:1px dashed var(--s400);letter-spacing:.5px;}
+.tag-pend{font-size:.75rem;font-weight:600;padding:3px 9px;border-radius:99px;background:var(--s200);color:var(--s400);border:1px solid var(--s300);letter-spacing:2px;}
+
+/* ── BOTÓ CONTINUA ── */
+.btn-continua{font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;margin-top:10px;width:100%;padding:11px;border:none;border-radius:10px;background:var(--blue);color:white;cursor:pointer;transition:background .12s,transform .08s;animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);}
+.btn-continua:hover{background:var(--blue2);}
+.btn-continua:active{transform:scale(.97);}
+
+
+.ronda-ok{background:var(--okl);border:2px solid var(--ok);border-radius:10px;padding:10px;text-align:center;font-size:.82rem;font-weight:700;color:var(--ok);display:none;animation:popIn .3s ease;}
+.ronda-ok.vis{display:block;}
+
+/* ── PÒDIUM ── */
+.podium-resum{background:var(--s800);border-radius:10px;padding:10px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.podium-resum-lbl{font-size:.6rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1px;}
+.podium-resum-val{font-size:1.3rem;font-weight:900;color:white;}
+.podium-resum-val.or{color:var(--gold);}
+.podium-row{display:flex;align-items:center;gap:9px;background:var(--bg);border:1px solid var(--s200);border-radius:9px;padding:7px 10px;margin-bottom:5px;}
+.podium-medalla{font-size:1.1rem;width:26px;text-align:center;flex-shrink:0;}
+.podium-info{flex:1;}
+.podium-desc{font-size:.72rem;font-weight:700;color:var(--s700);}
+.podium-data{font-size:.6rem;color:var(--s400);margin-top:1px;}
+.podium-pts{font-size:1rem;font-weight:900;color:var(--blue);}
+.podium-buit{font-size:.78rem;color:var(--s400);text-align:center;padding:8px;font-style:italic;}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.show{display:flex;}
+.modal-box{background:white;border-radius:16px;padding:20px 16px 16px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);max-height:90vh;overflow-y:auto;}
+.modal-box h2{font-size:.95rem;font-weight:900;color:var(--s800);margin-bottom:12px;text-align:center;}
+.ajuda-fila{display:flex;gap:9px;margin-bottom:9px;align-items:flex-start;font-size:.8rem;line-height:1.55;color:var(--s700);}
+.ajuda-ico{font-size:1.1rem;flex-shrink:0;width:22px;text-align:center;}
+.pts-taula{width:100%;border-collapse:collapse;font-size:.75rem;margin:6px 0 10px;}
+.pts-taula td{padding:4px 6px;border-bottom:1px solid var(--s200);}
+.pts-taula td:last-child{font-weight:700;color:var(--blue);text-align:right;}
+.btn-tancar{font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;width:100%;padding:10px;border:none;border-radius:10px;background:var(--blue);color:white;cursor:pointer;}
+.btn-tancar:hover{background:var(--blue2);}
+
+/* ── CONFETI ── */
+.confeti-c{position:fixed;inset:0;pointer-events:none;z-index:300;overflow:hidden;}
+.confeti-p{position:absolute;top:-20px;animation:cau linear forwards;}
+@keyframes cau{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+/* ── FOOTER ── */
+footer{flex-shrink:0;text-align:center;font-size:.65rem;color:var(--s400);padding:6px;font-weight:600;border-top:1px solid var(--s200);width:100%;}
+footer a{color:var(--s400);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="https://ja.cat/appgobo" target="_self">
+    <svg class="logo-hex" viewBox="0 0 40 40">
+      <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#2563eb" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="20" y="16" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="9" fill="white">GOBO</text>
+      <text x="20" y="28" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="10" fill="#93c5fd">26</text>
+    </svg>
+    <span class="logo-txt">GOBO<span>26</span></span>
+  </a>
+  <span class="hdr-title">🔤 Anagrames</span>
+  <button id="btn-ajuda" onclick="obrirAjuda()">?</button>
+</header>
+
+<main>
+
+  <!-- MARCADOR -->
+  <div class="marcador">
+    <div class="marc-card">
+      <div class="marc-lbl">Punts</div>
+      <div class="marc-val blau" id="m-punts">0</div>
+    </div>
+    <div class="marc-card">
+      <div class="marc-lbl">Grup</div>
+      <div class="marc-val" id="m-ronda">—</div>
+    </div>
+    <div class="marc-card">
+      <div class="marc-lbl">Grup</div>
+      <div class="marc-val" id="m-paraula">1/4</div>
+    </div>
+    <div class="marc-card">
+      <div class="marc-lbl">⏱</div>
+      <div class="marc-val" id="m-temps">90</div>
+    </div>
+  </div>
+
+  <!-- ZONA JOC -->
+  <div class="card">
+    <!-- Badge de ronda -->
+    <div class="ronda-badge">
+      <span class="ronda-pill r4" id="badge-ronda">Anagrames</span>
+      <span class="ronda-prog" id="badge-prog"></span>
+    </div>
+    <div style="height:8px;"></div>
+
+    <div class="zona-const" id="zona-const"></div>
+    <div class="zona-lletres" id="zona-ll"></div>
+
+    <div class="accions">
+      <button class="btn-acc btn-esb" onclick="esborrarUltima()">⌫ Esborra</button>
+      <button class="btn-acc btn-comp" onclick="comprovar()">✓ Comprova</button>
+      <button class="btn-acc btn-barr" onclick="barrejar()">🔀 Barreja</button>
+    </div>
+    <div id="feedback"></div>
+
+    <!-- Definició de la paraula encertada -->
+    <div class="def-box" id="def-box">
+      <div class="def-paraula" id="def-paraula"></div>
+      <div class="def-text" id="def-text"></div>
+    </div>
+  </div>
+
+  <!-- PROGRÉS PARAULES TROBADES -->
+  <div class="card" id="card-trobades">
+    <div class="card-lbl" id="lbl-trobades">Paraules d'aquest nivell — 0 / 0</div>
+    <div class="trobades-grid" id="trobades-grid"></div>
+    <div class="ronda-ok" id="ronda-ok">✅ Ronda completada! Passem a la ronda següent…</div>
+  </div>
+
+  <!-- PÒDIUM -->
+  <div class="card">
+    <div class="card-lbl">🏆 Pòdium — Millors partides</div>
+    <div id="podium-wrap"></div>
+  </div>
+
+</main>
+
+<footer>Una aplicació de <a href="https://ja.cat/appgobo" target="_self">Gobo26</a></footer>
+<div class="confeti-c" id="confeti-c"></div>
+
+<!-- MODAL AJUDA -->
+<div class="modal-overlay" id="modal-ajuda">
+  <div class="modal-box">
+    <h2>🔤 Com es juga?</h2>
+    <div class="ajuda-fila"><span class="ajuda-ico">🎯</span><span>El joc presenta una sèrie de <strong>grups de lletres</strong> en ordre aleatori. Cada grup amaga diverses paraules catalanes: cal trobar-les <em>totes</em> per passar al grup següent!</span></div>
+    <div class="ajuda-fila"><span class="ajuda-ico">🔤</span><span>Les paraules tenen <strong>4 o més lletres</strong>, i totes apareixen al DIEC2. El badge indica quantes lletres té el grup actual.</span></div>
+    <div class="ajuda-fila"><span class="ajuda-ico">👆</span><span>Clica les lletres per construir una paraula. Clica una lletra seleccionada per tornar-la enrere.</span></div>
+    <div class="ajuda-fila"><span class="ajuda-ico">📖</span><span>Cada paraula encertada mostra el seu <strong>significat</strong>. Clica els tags verds per tornar a veure'l.</span></div>
+    <div class="ajuda-fila"><span class="ajuda-ico">⏱</span><span>Tens <strong>90 segons</strong> per grup. Si el temps s'exhaureix: −5 pts i et revelen les paraules que faltaven.</span></div>
+    <div class="ajuda-fila"><span class="ajuda-ico">⌨️</span><span>A l'ordinador: escriu les lletres, <strong>Intro</strong> comprova, <strong>Retrocés</strong> esborra.</span></div>
+    <table class="pts-taula">
+      <tr><td>Paraula de 4 lletres trobada</td><td>+10 pts</td></tr>
+      <tr><td>Paraula de 5 lletres trobada</td><td>+15 pts</td></tr>
+      <tr><td>Paraula de 6+ lletres trobada</td><td>+20 pts</td></tr>
+      <tr><td>Grup complet sense errors</td><td>+15 pts extra</td></tr>
+      <tr><td>Temps exhaurit</td><td>−5 pts</td></tr>
+    </table>
+    <button class="btn-tancar" onclick="tancarAjuda()">Entesos, juguem! 🚀</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════════════════
+// DICCIONARI — Totes les paraules verificades al DIEC2
+// Estructura: { l:"LLETRES", s:"SOLUCIÓ", def:"Definició breu" }
+// Mínim 4 lletres. Tots els grups tenen ≥2 solucions. Ordre aleatori total.
+// ══════════════════════════════════════════════════════════════════════════════
+const DICC = [
+  // ── 4 LLETRES ──────────────────────────────────────────────────────────────
+  // AMOR → MORA → ROMA
+  {l:"AMOR", s:"AMOR", def:"Sentiment intens d'afecció i afecte envers una persona o cosa."},
+  {l:"AMOR", s:"MORA", def:"Fruit negre i dolç del morer o del romegueral."},
+  {l:"AMOR", s:"ROMA", def:"Que té el nas ample i poc sortit, aplanat. Ex: nas roma."},
+  // MARE → REMA
+  {l:"MARE", s:"MARE", def:"Dona que ha tingut fills. Femella que ha tingut cries."},
+  {l:"MARE", s:"REMA", def:"Tercera persona del singular del present d'indicatiu de remar."},
+  // ACTE → TECA
+  {l:"ACTE", s:"ACTE", def:"Fet o acció. Cadascuna de les parts en què es divideix una obra de teatre."},
+  {l:"ACTE", s:"TECA", def:"Fusta tropical molt dura i resistent, molt apreciada en ebenisteria i construcció naval."},
+  // SOTA → TOSA
+  {l:"SOTA", s:"SOTA", def:"A la part inferior d'alguna cosa."},
+  {l:"SOTA", s:"TOSA", def:"Acció de tondre. Tall del pèl o la llana d'un animal."},
+  // ALBA → BALA
+  {l:"ALBA", s:"ALBA", def:"Primera claror del dia, quan comença a fer-se de dia."},
+  {l:"ALBA", s:"BALA", def:"Projectil llançat per una arma de foc."},
+  // RATA → TARA
+  {l:"RATA", s:"RATA", def:"Mamífer rosegador de mida mitjana, de cua llarga i pelada."},
+  {l:"RATA", s:"TARA", def:"Defecte o imperfecció d'una persona o cosa."},
+  // ROCA → ORCA
+  {l:"ROCA", s:"ROCA", def:"Massa de pedra dura, gran i compacta."},
+  {l:"ROCA", s:"ORCA", def:"Cetaci gran i voraç, l'animal predador més gran dels oceans."},
+  // CAPA → PACA
+  {l:"CAPA", s:"CAPA", def:"Peça de vestir llarga i sense mànigues que es porta sobre les espatlles."},
+  {l:"CAPA", s:"PACA", def:"Fardell gran de palla, llana o cotó premsat i lligat."},
+  // CARN → RANC
+  {l:"CARN", s:"CARN", def:"Teixit muscular del cos dels animals. Part comestible dels animals."},
+  {l:"CARN", s:"RANC", def:"Que fa pudor de greix ranci. Dit d'una cosa passada o deteriorada."},
+  // SALA → ALAS: substituïm per LOSA → SOLA
+  {l:"LOSA", s:"LOSA", def:"Llosa, pedra plana i prima usada en paviments i cobertes."},
+  {l:"LOSA", s:"SOLA", def:"Part inferior de la sabata que toca a terra. Única, sense companyia."},
+  // PIRA → RIPA
+  {l:"PIRA", s:"PIRA", def:"Foguera funerària on s'incinerava el cadàver. Foguera gran."},
+  {l:"PIRA", s:"RIPA", def:"Tauleta prima de fusta que serveix per aguantar les teules o les pissarres."},
+  // ARMA → RAMA
+  {l:"ARMA", s:"ARMA", def:"Instrument o mitjà usat per atacar o defensar-se."},
+  {l:"ARMA", s:"RAMA", def:"Branca lateral d'un arbre o d'una planta. Subdivisió d'una cosa."},
+  // PALA → ALPA (DIEC2: varietat d'herba) → usem LAPA
+  {l:"PALA", s:"PALA", def:"Instrument de treball amb una planxa i un mànec llarg per cavar o carregar."},
+  {l:"PALA", s:"LAPA", def:"Mol·lusc gasteròpode que viu adherit a les roques costaneres."},
+  // CELA → LACE (no DIEC2) → usem PELA → APLE no DIEC2 → PELA → LEAP no; usem PELA → PEAL no; usem CAPE → PECA
+  {l:"CAPE", s:"CAPE", def:"Peça de vestir curta sense mànigues que cobreix les espatlles i l'esquena."},
+  {l:"CAPE", s:"PECA", def:"Taca de color fosc o rogenc a la pell. Falta, defecte moral."},
+  // ── 5 LLETRES ──────────────────────────────────────────────────────────────
+  // RATES → TARES → ASTER
+  {l:"RATES", s:"RATES", def:"Plural de rata: mamífer rosegador de mida mitjana."},
+  {l:"RATES", s:"TARES", def:"Plural de tara: defectes físics o psíquics. Pesos d'embalatge."},
+  {l:"RATES", s:"ASTER", def:"Planta herbàcia de la família de les compostes, amb flors radials ornamentals."},
+  // CARPA → CAPAR
+  {l:"CARPA", s:"CARPA", def:"Peix d'aigua dolça de mida gran, cos robust i escates grans."},
+  {l:"CARPA", s:"CAPAR", def:"Castrar els animals domèstics per impedir la reproducció."},
+  // GOTES → TOGES
+  {l:"GOTES", s:"GOTES", def:"Plural de gota: petites porcions esfèriques d'un líquid."},
+  {l:"GOTES", s:"TOGES", def:"Plural de toga: vestit llarg i ample, insígnia de la magistratura i l'advocacia."},
+  // CORDES → DECORS
+  {l:"CORDES", s:"CORDES", def:"Plural de corda: fil resistent de fibres torcides. Fil sonor d'un instrument musical."},
+  {l:"CORDES", s:"DECORS", def:"Plural de decor: conjunt d'elements ornamentals d'un espai escènic o un local."},
+  // CALMES → CAMELS
+  {l:"CALMES", s:"CALMES", def:"Plural de calma: absència de vent o de moviment. Serenitat, tranquil·litat."},
+  {l:"CALMES", s:"CAMELS", def:"Plural de camell: mamífer artiodàctil del desert, amb una o dues bosses dorsals."},
+  // PARLES → PLAERS
+  {l:"PARLES", s:"PARLES", def:"Plural de parla: varietats lingüístiques locals. Segona persona de parlar."},
+  {l:"PARLES", s:"PLAERS", def:"Plural de plaer: sentiment agradable produït per allò que satisfà un desig."},
+  // CARPES → CAPERS
+  {l:"CARPES", s:"CARPES", def:"Plural de carpa: peixos d'aigua dolça. Tendes de campanya grans."},
+  {l:"CARPES", s:"CAPERS", def:"Plural de caper: arbust mediterrani (Capparis spinosa) de flors blanques."},
+  // CLIMES → MESCLI (no DIEC2 com a nom) → usem LIMES → MILES (DIEC2: plural de milla)
+  {l:"LIMES", s:"LIMES", def:"Plural de lima: fruit del limer, petit i verd, molt àcid."},
+  {l:"LIMES", s:"MILES", def:"Plural de milla: unitat de mesura itinerària equivalent a 1.609 metres."},
+  // PALES → PALES / LAPES → ESPAL no; usem SALPE → PALES → ESPAL no; usem ALPES → PALES / ESPAL no → usem LAPSES → no 5; usem OPALS → POLAS no; usem MALES → LAMES
+  {l:"MALES", s:"MALES", def:"Plural de mala: cosa dolenta o perjudicial. Femení plural de mal."},
+  {l:"MALES", s:"LAMES", def:"Plural de lama: làmina prima de metall. Teixit de fils metàl·lics brillants."},
+  // COVES → VECOS no; usem LONES → NOLES no; usem BONES → BEONS no; usem PORES → ROPES no; usem TOLES → LOTES no; usem MOBLES → 6 ll; usem PORTES → TROPES
+  {l:"PORTES", s:"PORTES", def:"Plural de porta: obertura practicable en una paret. Segona persona de portar."},
+  {l:"PORTES", s:"TROPES", def:"Plural de tropa: conjunt de soldats. Grup de persones que actuen juntes."},
+  // ANGLES → ENGALS no; usem SENYAL → 6; usem CANTES → ENCATS no; usem TANECS no; usem CANTES → SECANT
+  {l:"CANTES", s:"CANTES", def:"Segona persona del present d'indicatiu de cantar."},
+  {l:"CANTES", s:"SECANT", def:"Línia o pla que talla una corba o una superfície en dos o més punts."},
+  // PALMES → SAMPLE no; usem CLAPES → PLACES
+  {l:"CLAPES", s:"CLAPES", def:"Plural de clapa: taca, màcula de color diferent sobre una superfície."},
+  {l:"CLAPES", s:"PLACES", def:"Plural de plaça: espai públic ampli i obert. Càrrec o lloc de treball."},
+  // PRIMES → EMPRIS no DIEC2; usem MERLES → ESLREM no; usem AROMES → MORSES (DIEC2: plural de mors)
+  {l:"AROMES", s:"AROMES", def:"Plural d'aroma: olor agradable i penetrant d'una cosa."},
+  {l:"AROMES", s:"MORSES", def:"Plural de mors: peça del fre que va dins la boca del cavall."},
+  // SEMENT → EMENTS no; usem NETEJA → 6; usem CLOVES → VOCALS
+  {l:"CLOVES", s:"CLOVES", def:"Plural de clova: clovella, part exterior dura d'alguns fruits o llavors."},
+  {l:"CLOVES", s:"VOCALS", def:"Plural de vocal: so produït sense obstrucció a la boca. Membre d'una junta."},
+  // TRONCS → sola; usem CAIRES → CARIES
+  {l:"CAIRES", s:"CAIRES", def:"Plural de caire: angle, aresta d'una cosa. Aspecte o punt de vista."},
+  {l:"CAIRES", s:"CARIES", def:"Malaltia dels ossos o les dents que provoca la destrucció del teixit dur."},
+  // MARCS → 4+1; usem LIARS → RIALS
+  {l:"LIARS", s:"LIARS", def:"Plural de liar: cigarreta de tabac enrotllat a mà amb paper de fumar."},
+  {l:"LIARS", s:"RIALS", def:"Plural de rial: moneda d'or o de plata usada a diversos països orientals."},
+  // NOCES → CONES
+  {l:"NOCES", s:"NOCES", def:"Plural de noça: cerimònia del casament i festa que se celebra."},
+  {l:"NOCES", s:"CONES", def:"Plural de con: figura geomètrica sòlida amb base circular i vèrtex. Pinya de coníferes."},
+  // CAMES → MACES
+  {l:"CAMES", s:"CAMES", def:"Plural de cama: membre inferior del cos humà."},
+  {l:"CAMES", s:"MACES", def:"Plural de maça: bastó gruixut i pesat usat com a arma o eina."},
+  // LLORES → LLORÈS → usem COLES → SOCLE no; usem PENSA → NAPES (5 ll)
+  {l:"PENSA", s:"PENSA", def:"Tercera persona del singular del present d'indicatiu de pensar."},
+  {l:"PENSA", s:"NAPES", def:"Plural de napa: pell adobada, molt fina i suau, per a guants i articles de luxe."},
+  // SALES → LASES no; ESLAS no; ALSES no; usem SOLES → LOSES
+  {l:"SOLES", s:"SOLES", def:"Plural de sola: part inferior de la sabata. Segona persona de soler."},
+  {l:"SOLES", s:"LOSES", def:"Plural de llosa: pedra plana i prima usada en paviments i cobertes."},
+  // CORDA → DROCA no; usem MALES → ja fet; usem RODES → DORES no; DOSER no; DORSE no; usem COLES → SOCLE no; COLSE → ESCOL no; usem LLAMES → FLAMES (6)
+  // MOLES → ESLOAM no; usem SOMER → ROMES (5 ll)
+  {l:"SOMER", s:"SOMER", def:"Ase, ruc. Dit d'algú que és ase, poc intel·ligent."},
+  {l:"SOMER", s:"ROMES", def:"Plural de roma: que té el nas ample i poc sortit. Femení plural."},
+  // ── 6 LLETRES ──────────────────────────────────────────────────────────────
+  // PARLES ja fet; usem CAMINS → sola; usem FORMES → sola; usem CADIRA → sola
+  // LLAMES → FLAMES
+  {l:"LLAMES", s:"LLAMES", def:"Plural de llama: mamífer sud-americà de la família dels camèlids, usat com a bèstia de càrrega."},
+  {l:"LLAMES", s:"FLAMES", def:"Plural de flama: foc viu i lluminós. Passió ardent."},
+  // MERLES → ESMERL no; usem CAMINS → sola; usem PINTAR → sola; usem MESURA → REMAÚS no; usem SAMPLE no; usem MARLES → REALMS no; usem REMOLS → MOLRES no; usem ALTERN → sola; usem CANTES (5) ja fet
+  // ESCALES → CLEASES no; usem CAMPES → MECAPS no; usem CLAPES (5) ja fet
+  // PALMES → SAMPLE no; usem PALMES → LAMPÉS no → usem SEMPAL no; usem MOBLES → BLOMES no
+  // TORNES → NORTES no; NETORS no; STONES no DIEC2; usem ENTERS → TERENS no; NESERT no; RETENS
+  {l:"ENTERS", s:"ENTERS", def:"Plural d'enter: nombre sense part decimal. Adjectiu: sencer, complet."},
+  {l:"ENTERS", s:"RETENS", def:"Plural de retén: tropa o dispositiu de guàrdia en reserva."},
+  // COLORS → CROLLS no; usem CLOSOS → SOCOLS (DIEC2: plural de sòcol)
+  {l:"CLOSOS", s:"CLOSOS", def:"Plural de clòs: espai tancat. Adjectiu: tancat, clos."},
+  {l:"CLOSOS", s:"SOCOLS", def:"Plural de sòcol: base d'una columna o d'un pedestal. Franja decorativa inferior d'una paret."},
+];
+
+// ══════════════════════════════════════════════════════════════════════════════
+// CONSTRUCCIÓ DE LA PARTIDA
+// Una única ronda amb tots els grups barrejats (ordre aleatori total).
+// Només s'inclouen grups amb ≥2 solucions (garantia de joc).
+// ══════════════════════════════════════════════════════════════════════════════
+
+function barrejarArr(a) {
+  const b = [...a];
+  for (let i = b.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [b[i], b[j]] = [b[j], b[i]];
+  }
+  return b;
+}
+
+// Agrupar el diccionari per conjunt de lletres → cada grup = un anagrama
+// Filtra els grups amb menys de 2 solucions
+function construirGrups(dicc) {
+  const mapa = {};
+  dicc.forEach(e => {
+    if (!mapa[e.l]) mapa[e.l] = [];
+    mapa[e.l].push({ s: e.s, def: e.def });
+  });
+  const grups = Object.entries(mapa)
+    .filter(([, sols]) => sols.length >= 2)
+    .map(([l, solucions]) => ({ l, solucions }));
+  return barrejarArr(grups);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ESTAT GLOBAL
+// ══════════════════════════════════════════════════════════════════════════════
+let RONDES;        // [{grups:[{l, solucions:[{s,def}]}], nom, classe, pts}]
+let rondaActual;   // índex de ronda (0,1,2)
+let grupActual;    // índex del grup dins la ronda
+let trobadesCrup;  // set de solucions ja trobades en el grup actual
+let selec;         // [{lletra, id}]
+let temps;
+let crono;
+let punts;
+let errorsGrup;    // errors al grup actual (per bonus)
+let histTrobades;  // totes les paraules encertades a la partida (per reclica)
+let podium;
+try { podium = JSON.parse(localStorage.getItem('gobo26_ana_podium') || '[]'); } catch(e){ podium=[]; }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════════════════════════════════════
+function feedback(msg, color='var(--s700)') {
+  const el = document.getElementById('feedback');
+  el.textContent = msg; el.style.color = color; el.style.opacity = '1';
+  clearTimeout(window._ft);
+  window._ft = setTimeout(() => { el.style.opacity='0'; }, 4500);
+}
+
+function so(defs) {
+  try {
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    defs.forEach(([f,d,delay=0]) => {
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type='sine'; o.frequency.value=f;
+      const t=ctx.currentTime+delay;
+      g.gain.setValueAtTime(.05,t);
+      g.gain.exponentialRampToValueAtTime(.001,t+d);
+      o.start(t); o.stop(t+d);
+    });
+  } catch(e){}
+}
+const soOk  = ()=>so([[523,.08],[659,.12,.11],[784,.2,.24]]);
+const soErr = ()=>so([[220,.2],[170,.18,.1]]);
+const soWin = ()=>so([[523,.09],[659,.09,.12],[784,.09,.25],[1047,.3,.4]]);
+const soTic = ()=>so([[660,.04]]);
+function vib(p){try{if(navigator.vibrate)navigator.vibrate(p);}catch(e){}}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// INICI DE PARTIDA
+// ══════════════════════════════════════════════════════════════════════════════
+function iniciarPartida() {
+  punts        = 0;
+  rondaActual  = 0;
+  grupActual   = 0;
+  errorsGrup   = 0;
+  histTrobades = [];
+  trobadesCrup = new Set();
+
+  const grups = construirGrups(DICC);
+
+  // Una sola "ronda" amb tots els grups barrejats
+  RONDES = [
+    { grups, nom: 'Anagrames', classe: 'r4', pts: null /* dinàmic per longitud */ },
+  ];
+
+  document.getElementById('ronda-ok').classList.remove('vis');
+  document.getElementById('trobades-grid').innerHTML = '';
+  document.getElementById('lbl-trobades').textContent = 'Paraules trobades — 0 / 0';
+
+  refrescaMarcadors();
+  renderPodium();
+  iniciarGrup();
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// INICIAR UN GRUP DE LLETRES (anagrama)
+// ══════════════════════════════════════════════════════════════════════════════
+function iniciarGrup() {
+  selec       = [];
+  temps       = 90;
+  trobadesCrup = new Set();
+  errorsGrup  = 0;
+
+  document.getElementById('def-box').classList.remove('vis');
+  document.getElementById('ronda-ok').classList.remove('vis');
+  document.getElementById('m-temps').style.color = '';
+  const bc = document.getElementById('btn-continua');
+  if (bc) bc.remove();
+
+  const ronda = RONDES[rondaActual];
+  const grup  = ronda.grups[grupActual];
+
+  // Badge ronda: mostra la longitud del grup actual
+  const badge = document.getElementById('badge-ronda');
+  const nLl = grup.l.length;
+  badge.textContent = `${nLl} lletres`;
+  badge.className   = 'ronda-pill ' + (nLl <= 4 ? 'r4' : nLl <= 5 ? 'r3' : 'r5');
+
+  const totalGrups = ronda.grups.length;
+  document.getElementById('badge-prog').textContent = `Grup ${grupActual + 1} / ${totalGrups}`;
+
+  refrescaMarcadors();
+  dibuixarLletres(grup.l);
+  refrescaSolucio();
+  feedback('');
+  refrescaTrobades();
+  iniciarCrono();
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// MARCADORS
+// ══════════════════════════════════════════════════════════════════════════════
+function refrescaMarcadors() {
+  document.getElementById('m-punts').textContent  = punts;
+  document.getElementById('m-ronda').textContent  = '—';
+  const ronda = RONDES ? RONDES[rondaActual] : null;
+  const total = ronda ? ronda.grups.length : '?';
+  document.getElementById('m-paraula').textContent =
+    ronda ? `${grupActual + 1}/${total}` : '—';
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// CRONO
+// ══════════════════════════════════════════════════════════════════════════════
+function iniciarCrono() {
+  clearInterval(crono);
+  crono = setInterval(() => {
+    temps--;
+    const el = document.getElementById('m-temps');
+    el.textContent = temps;
+    if (temps <= 15) el.style.color = 'var(--err)';
+    if (temps <= 10 && temps > 0) soTic();
+    if (temps <= 0) {
+      clearInterval(crono);
+      punts = Math.max(0, punts - 5);
+      errorsGrup++;
+      refrescaMarcadors();
+      // Revelar les paraules que faltaven
+      const grup = RONDES[rondaActual].grups[grupActual];
+      const pendents = grup.solucions.filter(e => !trobadesCrup.has(e.s));
+      const txt = pendents.map(e => e.s).join(', ');
+      feedback(`⏱ Temps exhaurit! −5 pts · Faltaven: ${txt}`, 'var(--err)');
+      vib([200,80,200]);
+      refrescaTrobades(); // mostrar les revelades en gris
+      setTimeout(avançarGrup, 2500);
+    }
+  }, 1000);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// LLETRES UI
+// ══════════════════════════════════════════════════════════════════════════════
+function dibuixarLletres(str) {
+  const cont = document.getElementById('zona-ll');
+  cont.innerHTML = '';
+  barrejarArr(str.toUpperCase().split('')).forEach((ll, i) => {
+    const b = document.createElement('button');
+    b.className = 'btn-ll';
+    b.textContent = ll;
+    b.id = `ll-${i}`;
+    b.onclick = () => triarLletra(ll, `ll-${i}`);
+    cont.appendChild(b);
+  });
+}
+
+function triarLletra(ll, id) {
+  const btn = document.getElementById(id);
+  if (!btn || btn.disabled) return;
+  btn.disabled = true;
+  selec.push({ lletra: ll, id });
+  refrescaSolucio();
+  soTic();
+  document.getElementById('def-box').classList.remove('vis');
+}
+
+function esborrarUltima() {
+  if (!selec.length) return;
+  const last = selec.pop();
+  const btn = document.getElementById(last.id);
+  if (btn) btn.disabled = false;
+  refrescaSolucio();
+}
+
+function refrescaSolucio() {
+  const zona = document.getElementById('zona-const');
+  zona.innerHTML = '';
+  selec.forEach((item, i) => {
+    const b = document.createElement('button');
+    b.className = 'btn-ll triada';
+    b.textContent = item.lletra;
+    b.onclick = () => {
+      selec.splice(i, 1);
+      const orig = document.getElementById(item.id);
+      if (orig) orig.disabled = false;
+      refrescaSolucio();
+    };
+    zona.appendChild(b);
+  });
+}
+
+function barrejar() {
+  selec.forEach(item => {
+    const b = document.getElementById(item.id);
+    if (b) b.disabled = false;
+  });
+  selec = [];
+  refrescaSolucio();
+  dibuixarLletres(RONDES[rondaActual].grups[grupActual].l);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// COMPROVAR
+// ══════════════════════════════════════════════════════════════════════════════
+function comprovar() {
+  const paraula = selec.map(i => i.lletra).join('').toUpperCase();
+  if (!paraula) { feedback('Selecciona alguna lletra!', 'var(--s400)'); return; }
+
+  // Alliberar lletres
+  selec.forEach(item => {
+    const b = document.getElementById(item.id);
+    if (b) b.disabled = false;
+  });
+  selec = [];
+  refrescaSolucio();
+
+  const zona  = document.getElementById('zona-const');
+  const grup  = RONDES[rondaActual].grups[grupActual];
+  const sols  = grup.solucions;
+
+  // Ja trobada?
+  if (trobadesCrup.has(paraula)) {
+    feedback(`"${paraula}" ja la has trobada! 🔁`, 'var(--gold)');
+    zona.classList.add('err-flash');
+    setTimeout(() => zona.classList.remove('err-flash'), 400);
+    return;
+  }
+
+  // És una solució vàlida del grup?
+  const match = sols.find(e => e.s === paraula);
+  if (match) {
+    // ✅ CORRECTE
+    trobadesCrup.add(paraula);
+    // Punts per longitud: 4 lletres=10, 5=15, 6+=20
+    const pts = paraula.length <= 4 ? 10 : paraula.length === 5 ? 15 : 20;
+    punts += pts;
+    refrescaMarcadors();
+    soOk(); vib([50,20,50]);
+    feedback(`✓ ${paraula} · +${pts} pts`, 'var(--ok)');
+    zona.classList.add('ok-flash');
+    setTimeout(() => zona.classList.remove('ok-flash'), 500);
+
+    // Mostrar definició (durant 4,5 s)
+    mostrarDef(match);
+    histTrobades.push(match);
+    refrescaTrobades();
+
+    // Totes trobades?
+    if (trobadesCrup.size === sols.length) {
+      clearInterval(crono);
+      const bonus = (errorsGrup === 0) ? 15 : 0;
+      punts += bonus;
+      refrescaMarcadors();
+      soWin(); vib([80,30,80,30,150]);
+      llençarConfeti();
+      const okDiv = document.getElementById('ronda-ok');
+      okDiv.textContent = bonus > 0
+        ? `🎉 Grup complet sense errors! +${bonus} pts extra`
+        : '✅ Grup complet!';
+      okDiv.classList.add('vis');
+      feedback('');
+      // Mostrar botó de continua — l'usuari decideix quan avançar
+      mostrarBotoContinua();
+    }
+  } else {
+    // ✗ INCORRECTE
+    errorsGrup++;
+    soErr(); vib([120,60,120]);
+    feedback(`✗ "${paraula}" no és vàlida per a aquest grup`, 'var(--err)');
+    zona.classList.add('err-flash');
+    setTimeout(() => zona.classList.remove('err-flash'), 400);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// MOSTRAR DEFINICIÓ (es tanca sola als 4,5 s si no hi ha altra)
+// ══════════════════════════════════════════════════════════════════════════════
+function mostrarDef(item) {
+  document.getElementById('def-paraula').textContent = item.s;
+  document.getElementById('def-text').textContent    = item.def;
+  const box = document.getElementById('def-box');
+  box.classList.add('vis');
+  // La definició queda visible fins que l'usuari premi Comprova o triï una lletra
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// BOTÓ CONTINUA — apareix quan el grup és complet
+// ══════════════════════════════════════════════════════════════════════════════
+function mostrarBotoContinua() {
+  // Evitar duplicats
+  if (document.getElementById('btn-continua')) return;
+  const b = document.createElement('button');
+  b.id        = 'btn-continua';
+  b.className = 'btn-continua';
+  b.textContent = 'Continua →';
+  b.onclick   = () => { b.remove(); avançarGrup(); };
+  document.getElementById('card-trobades').appendChild(b);
+}
+
+
+function avançarGrup() {
+  grupActual++;
+  const ronda     = RONDES[rondaActual];
+  const totalGrups = ronda.grups.length;
+
+  if (grupActual >= totalGrups) {
+    // Ronda completa → passa a la ronda següent o fi de partida
+    if (rondaActual < RONDES.length - 1) {
+      rondaActual++;
+      grupActual = 0;
+      errorsGrup = 0;
+      document.getElementById('ronda-ok').classList.remove('vis');
+      iniciarGrup();
+    } else {
+      // FI DE PARTIDA
+      clearInterval(crono);
+      guardarPodium();
+      renderPodium();
+      feedback('🏆 Partida acabada! Puntuació guardada al pòdium.', 'var(--blue)');
+      setTimeout(iniciarPartida, 4000);
+    }
+  } else {
+    errorsGrup = 0;
+    document.getElementById('ronda-ok').classList.remove('vis');
+    iniciarGrup();
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// TROBADES UI
+// Mostra les solucions del grup actual: verdes (trobades) + grises (pendents)
+// + historial total de la partida (tags clicables per veure def.)
+// ══════════════════════════════════════════════════════════════════════════════
+function refrescaTrobades() {
+  const grid = document.getElementById('trobades-grid');
+  const lbl  = document.getElementById('lbl-trobades');
+  const grup  = RONDES[rondaActual].grups[grupActual];
+  const sols  = grup.solucions;
+  const total = sols.length;
+
+  lbl.textContent = `Paraules d'aquest grup — ${trobadesCrup.size} / ${total}`;
+  grid.innerHTML  = '';
+
+  // Solucions del grup actual
+  sols.forEach(e => {
+    const tag = document.createElement('span');
+    if (trobadesCrup.has(e.s)) {
+      tag.className   = 'tag-ok';
+      tag.textContent = e.s;
+      tag.title       = e.def;
+      tag.onclick     = () => mostrarDef(e);
+    } else if (temps <= 0) {
+      // Revelada per temps exhaurit: mostrar en gris però visible
+      tag.className   = 'tag-rev';
+      tag.textContent = e.s;
+    } else {
+      tag.className   = 'tag-pend';
+      tag.textContent = Array(e.s.length).fill('·').join(' ');
+    }
+    grid.appendChild(tag);
+  });
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// PÒDIUM
+// ══════════════════════════════════════════════════════════════════════════════
+function guardarPodium() {
+  podium.push({
+    punts,
+    ronda: grupActual, // grups completats
+    data: new Date().toLocaleDateString('ca-ES'),
+  });
+  podium.sort((a,b) => b.punts - a.punts);
+  podium = podium.slice(0, 5);
+  try { localStorage.setItem('gobo26_ana_podium', JSON.stringify(podium)); } catch(e){}
+}
+
+function renderPodium() {
+  const wrap = document.getElementById('podium-wrap');
+  wrap.innerHTML = '';
+
+  if (!podium.length) {
+    wrap.innerHTML = '<div class="podium-buit">Encara cap registre. Acaba la teva primera partida!</div>';
+    return;
+  }
+
+  // Resum: millor puntuació i millor ronda
+  const millorPunts = podium[0].punts;
+  const millorGrups = Math.max(...podium.map(p => p.ronda));
+
+  const resum = document.createElement('div');
+  resum.className = 'podium-resum';
+  resum.innerHTML = `
+    <div>
+      <div class="podium-resum-lbl">Millor puntuació</div>
+      <div class="podium-resum-val or">${millorPunts} pts</div>
+    </div>
+    <div style="text-align:right">
+      <div class="podium-resum-lbl">Màxim de grups</div>
+      <div class="podium-resum-val">${millorGrups} grups</div>
+    </div>`;
+  wrap.appendChild(resum);
+
+  const medalles = ['🥇','🥈','🥉','4️⃣','5️⃣'];
+  podium.forEach((e, i) => {
+    const row = document.createElement('div');
+    row.className = 'podium-row';
+    row.innerHTML = `
+      <div class="podium-medalla">${medalles[i]}</div>
+      <div class="podium-info">
+        <div class="podium-desc">${e.punts} punts · ${e.ronda} grups completats</div>
+        <div class="podium-data">${e.data}</div>
+      </div>
+      <div class="podium-pts">${e.punts}</div>`;
+    wrap.appendChild(row);
+  });
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// CONFETI
+// ══════════════════════════════════════════════════════════════════════════════
+function llençarConfeti() {
+  const colors = ['#2563eb','#f59e0b','#16a34a','#dc2626','#8b5cf6','#ec4899'];
+  const formes = ['★','●','◆','▲','✦','✿'];
+  const cont   = document.getElementById('confeti-c');
+  for (let i = 0; i < 55; i++) {
+    setTimeout(() => {
+      const p = document.createElement('div');
+      p.className = 'confeti-p';
+      p.style.left = Math.random()*100+'vw';
+      p.style.fontSize = (.7+Math.random()*.9)+'rem';
+      p.style.color = colors[Math.floor(Math.random()*colors.length)];
+      p.textContent = formes[Math.floor(Math.random()*formes.length)];
+      p.style.animationDuration = (1.4+Math.random()*1.8)+'s';
+      p.style.animationDelay   = Math.random()*.5+'s';
+      cont.appendChild(p);
+      p.addEventListener('animationend', () => p.remove());
+    }, i*30);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════════════════════════════════════════
+function obrirAjuda() { document.getElementById('modal-ajuda').classList.add('show'); }
+function tancarAjuda() { document.getElementById('modal-ajuda').classList.remove('show'); }
+document.getElementById('modal-ajuda').addEventListener('click', e => {
+  if (e.target.id === 'modal-ajuda') tancarAjuda();
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// TECLAT FÍSIC
+// ══════════════════════════════════════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (document.getElementById('modal-ajuda').classList.contains('show')) return;
+  if (e.key === 'Enter')     { comprovar(); return; }
+  if (e.key === 'Backspace') { e.preventDefault(); esborrarUltima(); return; }
+  const ll = e.key.toUpperCase();
+  if (/^[A-ZÀÁÈÉÍÏÒÓÚÜÇ]$/.test(ll)) {
+    const bots = [...document.querySelectorAll('#zona-ll .btn-ll:not(:disabled)')];
+    const bot  = bots.find(b => b.textContent === ll);
+    if (bot) bot.click();
+  }
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ARRENCADA
+// ══════════════════════════════════════════════════════════════════════════════
+iniciarPartida();
+</script>
+</body>
+</html>

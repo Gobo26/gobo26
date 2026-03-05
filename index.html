@@ -32,13 +32,10 @@ main{max-width:960px;margin:0 auto;padding:32px 16px 80px;}
 
 /* ── HERO ── */
 .hero{text-align:center;padding:28px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;animation:popIn .5s ease both;}
-.hero-em{font-size:3.5rem;filter:drop-shadow(0 4px 12px rgba(37,99,235,.25));line-height:1;}
 .hero-tit{font-size:clamp(2rem,6vw,3rem);font-weight:900;color:#1e293b;line-height:1.05;letter-spacing:-.03em;}
 .hero-tit em{color:#2563eb;font-style:normal;}
-
 .hero-taglines{display:flex;flex-direction:column;gap:6px;max-width:560px;margin-top:4px;}
 .tagline-1{font-size:.95rem;font-weight:600;color:#334155;line-height:1.6;}
-.tagline-2{font-size:.88rem;font-weight:500;color:#64748b;line-height:1.6;font-style:italic;}
 
 /* ── COMPTADOR ── */
 .temps-card{display:flex;align-items:center;gap:16px;background:white;border-radius:16px;border:2px solid #e2e8f0;padding:16px 22px;max-width:400px;width:100%;box-shadow:0 4px 16px rgba(37,99,235,.07);margin-top:8px;animation:popIn .5s .2s ease both;}
@@ -50,35 +47,38 @@ main{max-width:960px;margin:0 auto;padding:32px 16px 80px;}
 @media(max-width:480px){.temps-card{padding:12px 16px;gap:12px;}.temps-num{font-size:1.5rem;}}
 
 /* ── SEPARADOR ── */
-.sep{display:flex;align-items:center;gap:16px;margin:36px 0 20px;}
+.sep{display:flex;align-items:center;gap:16px;margin:36px 0 16px;}
 .sep-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,#cbd5e1,transparent);}
 .sep-txt{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.28em;color:#94a3b8;}
 
-/* ── GRID CATEGORIES ── */
-.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-@media(max-width:700px){.cat-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:420px){.cat-grid{grid-template-columns:1fr;}}
+/* ── SECCIONS ── */
+.cat-section{margin-bottom:36px;animation:slideUp .5s ease both;}
+.cat-section:nth-child(1){animation-delay:.05s;}
+.cat-section:nth-child(2){animation-delay:.10s;}
+.cat-section:nth-child(3){animation-delay:.15s;}
+.cat-section:nth-child(4){animation-delay:.20s;}
+.cat-section:nth-child(5){animation-delay:.25s;}
 
-.cat-card{background:white;border:2px solid #e2e8f0;border-radius:18px;padding:22px 16px 18px;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;transition:all .2s;-webkit-tap-highlight-color:transparent;animation:slideUp .5s ease both;}
-.cat-card:hover{border-color:#2563eb;box-shadow:0 8px 28px rgba(37,99,235,.13);transform:translateY(-4px);}
-.cat-card:active{transform:translateY(0);box-shadow:none;}
+.cat-header{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;}
+.cat-icon-big{font-size:1.4rem;line-height:1;}
+.cat-title{font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#1e293b;}
+.cat-subtitle{font-size:.72rem;color:#64748b;font-weight:500;}
 
-.cat-card:nth-child(1){animation-delay:.05s;}
-.cat-card:nth-child(2){animation-delay:.10s;}
-.cat-card:nth-child(3){animation-delay:.15s;}
-.cat-card:nth-child(4){animation-delay:.20s;}
-.cat-card:nth-child(5){animation-delay:.25s;}
+/* ── GRID APPS ── */
+.app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
+@media(max-width:420px){.app-grid{grid-template-columns:1fr 1fr;}}
 
-.cat-icon{font-size:2.4rem;line-height:1;}
-.cat-name{font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;line-height:1.3;}
-.cat-desc{font-size:.72rem;color:#64748b;line-height:1.5;font-weight:500;}
-.cat-count{font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:auto;background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;}
+.app-card{background:white;border:2px solid #e2e8f0;border-radius:14px;padding:16px 12px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.app-card:hover{border-color:#2563eb;box-shadow:0 6px 20px rgba(37,99,235,.13);transform:translateY(-3px);}
+.app-card:active{transform:translateY(0);box-shadow:none;}
+.app-icon{font-size:2rem;line-height:1;}
+.app-name{font-size:.75rem;font-weight:800;color:#1e293b;line-height:1.3;}
+.app-desc{font-size:.68rem;color:#64748b;line-height:1.4;font-weight:500;}
 
 /* ── BIO ── */
-.bio-section{margin-top:44px;animation:slideUp .5s .3s ease both;}
-.bio-card{background:white;border-radius:18px;border:2px solid #e2e8f0;padding:28px 28px;display:flex;gap:20px;align-items:flex-start;box-shadow:0 4px 16px rgba(0,0,0,.05);}
+.bio-section{margin-top:40px;animation:slideUp .5s .3s ease both;}
+.bio-card{background:white;border-radius:18px;border:2px solid #e2e8f0;padding:24px 28px;display:flex;gap:20px;align-items:flex-start;box-shadow:0 4px 16px rgba(0,0,0,.05);}
 .bio-avatar{font-size:2.8rem;flex-shrink:0;line-height:1;}
-.bio-cos{}
 .bio-label{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.28em;color:#2563eb;margin-bottom:8px;}
 .bio-text{font-size:.88rem;color:#475569;line-height:1.75;font-weight:500;}
 .bio-text strong{color:#1e293b;font-weight:800;}
@@ -114,7 +114,6 @@ footer a{color:#64748b;text-decoration:none;}
     <h1 class="hero-tit"><em>Gobo26</em><br>Gimnàs Mental i Creatiu</h1>
     <div class="hero-taglines">
       <p class="tagline-1">🧩 Jocs gratuïts per mantenir la ment desperta. Sense anuncis. Sense presses. Al teu ritme.</p>
-      <p class="tagline-2">🧠 Un racó tranquil per exercitar la ment. Jocs i eines gratuïtes fetes amb cura. Entrena la ment. Juga amb calma.</p>
     </div>
     <div class="temps-card">
       <div class="temps-icon">⏱️</div>
@@ -126,46 +125,136 @@ footer a{color:#64748b;text-decoration:none;}
     </div>
   </div>
 
-  <!-- CATEGORIES -->
-  <div class="sep"><div class="sep-line"></div><div class="sep-txt">Explora les categories</div><div class="sep-line"></div></div>
+  <!-- APLICACIONS -->
+  <div class="sep"><div class="sep-line"></div><div class="sep-txt">Totes les aplicacions</div><div class="sep-line"></div></div>
 
-  <div class="cat-grid">
+  <!-- NÚMEROS -->
+  <div class="cat-section">
+    <div class="cat-header">
+      <span class="cat-icon-big">🔢</span>
+      <span class="cat-title">Jocs de Números</span>
+      <span class="cat-subtitle">Reptes numèrics per exercitar el càlcul.</span>
+    </div>
+    <div class="app-grid">
+      <a class="app-card" href="Gobo26-SUDOKU.html" target="_self">
+        <div class="app-icon">🔲</div>
+        <div class="app-name">Sudoku</div>
+        <div class="app-desc">El clàssic joc de números amb diverses dificultats</div>
+      </a>
+      <a class="app-card" href="Gobo26-REPTE-NUMERIC.html" target="_self">
+        <div class="app-icon">🧮</div>
+        <div class="app-name">Repte Numèric</div>
+        <div class="app-desc">Operacions aritmètiques contra el temps</div>
+      </a>
+      <a class="app-card" href="Gobo26-CASCADA-NUMERICA.html" target="_self">
+        <div class="app-icon">🌊</div>
+        <div class="app-name">Cascada Numèrica</div>
+        <div class="app-desc">Seqüències de números en cascada</div>
+      </a>
+      <a class="app-card" href="Gobo26-SUMA_MINUTS.html" target="_self">
+        <div class="app-icon">⏱️</div>
+        <div class="app-name">Suma Minuts</div>
+        <div class="app-desc">Càlcul mental de temps i minuts</div>
+      </a>
+    </div>
+  </div>
 
-    <a class="cat-card" href="cat-numeros.html" target="_self">
-      <div class="cat-icon">🔢</div>
-      <div class="cat-name">Jocs de Números</div>
-      <div class="cat-desc">Sudoku, càlcul mental, seqüències numèriques i reptes matemàtics</div>
-      <span class="cat-count">5 aplicacions</span>
-    </a>
+  <!-- PARAULES -->
+  <div class="cat-section">
+    <div class="cat-header">
+      <span class="cat-icon-big">📝</span>
+      <span class="cat-title">Jocs de Paraules</span>
+      <span class="cat-subtitle">Vocabulari, dites i jocs lingüístics en català.</span>
+    </div>
+    <div class="app-grid">
+      <a class="app-card" href="Gobo26-AMAGADES.html" target="_self">
+        <div class="app-icon">🔍</div>
+        <div class="app-name">Amagades</div>
+        <div class="app-desc">Troba les paraules amagades en una graella</div>
+      </a>
+      <a class="app-card" href="Gobo26-ANAGRAMES.html" target="_self">
+        <div class="app-icon">🔀</div>
+        <div class="app-name">Anagrames</div>
+        <div class="app-desc">Reordena les lletres per trobar la paraula</div>
+      </a>
+      <a class="app-card" href="Gobo26-DITES-INACABADES.html" target="_self">
+        <div class="app-icon">💬</div>
+        <div class="app-name">Dites Inacabades</div>
+        <div class="app-desc">Completa les dites populars catalanes</div>
+      </a>
+      <a class="app-card" href="Gobo26-ENDEVINA.html" target="_self">
+        <div class="app-icon">🤔</div>
+        <div class="app-name">Endevina</div>
+        <div class="app-desc">Endevinalles i qüestions de vocabulari</div>
+      </a>
+      <a class="app-card" href="Gobo26-ENFILALL.html" target="_self">
+        <div class="app-icon">🧵</div>
+        <div class="app-name">Enfilall</div>
+        <div class="app-desc">Paraules encadenades lletra a lletra</div>
+      </a>
+      <a class="app-card" href="Gobo26-PINTA-PARAULES.html" target="_self">
+        <div class="app-icon">🎨</div>
+        <div class="app-name">Pinta Paraules</div>
+        <div class="app-desc">Efecte Stroop: color i paraula en conflicte</div>
+      </a>
+    </div>
+  </div>
 
-    <a class="cat-card" href="cat-aventures.html" target="_self">
-      <div class="cat-icon">🔍</div>
-      <div class="cat-name">Aventures i Misteris</div>
-      <div class="cat-desc">Escape rooms, enigmes i codis secrets per desxifrar</div>
-      <span class="cat-count">1 aplicació</span>
-    </a>
+  <!-- MEMÒRIA -->
+  <div class="cat-section">
+    <div class="cat-header">
+      <span class="cat-icon-big">🧩</span>
+      <span class="cat-title">Memòria i Agilitat</span>
+      <span class="cat-subtitle">Entrena la memòria i la velocitat de reacció.</span>
+    </div>
+    <div class="app-grid">
+      <a class="app-card" href="Gobo26-COLECT.html" target="_self">
+        <div class="app-icon">🗂️</div>
+        <div class="app-name">Col·leccionista</div>
+        <div class="app-desc">Joc de memòria i col·lecció d'objectes</div>
+      </a>
+      <a class="app-card" href="Gobo26-MESTRE-JOIER.html" target="_self">
+        <div class="app-icon">📿</div>
+        <div class="app-name">Mestre Joier</div>
+        <div class="app-desc">Recorda i reprodueix seqüències de colors</div>
+      </a>
+      <a class="app-card" href="Gobo26-TRES-EN-RATLLA.html" target="_self">
+        <div class="app-icon">⭕</div>
+        <div class="app-name">Tres en Ratlla</div>
+        <div class="app-desc">El joc clàssic contra la IA amb emojis</div>
+      </a>
+    </div>
+  </div>
 
-    <a class="cat-card" href="cat-paraules.html" target="_self">
-      <div class="cat-icon">📝</div>
-      <div class="cat-name">Jocs de Paraules</div>
-      <div class="cat-desc">Amagades, anagrames, dites, paraules encadenades i més</div>
-      <span class="cat-count">6 aplicacions</span>
-    </a>
-
-    <a class="cat-card" href="cat-memoria.html" target="_self">
-      <div class="cat-icon">🧩</div>
-      <div class="cat-name">Memòria i Agilitat</div>
-      <div class="cat-desc">Jocs de parelles, estratègia i entrenament de la memòria</div>
-      <span class="cat-count">2 aplicacions</span>
-    </a>
-
-    <a class="cat-card" href="cat-eines.html" target="_self">
-      <div class="cat-icon">🛠️</div>
-      <div class="cat-name">Eines i Recursos</div>
-      <div class="cat-desc">Eines pràctiques per al dia a dia: salut, temps, música i artesania</div>
-      <span class="cat-count">5 aplicacions</span>
-    </a>
-
+  <!-- EINES -->
+  <div class="cat-section">
+    <div class="cat-header">
+      <span class="cat-icon-big">🛠️</span>
+      <span class="cat-title">Eines i Recursos</span>
+      <span class="cat-subtitle">Utilitats pràctiques per al dia a dia.</span>
+    </div>
+    <div class="app-grid">
+      <a class="app-card" href="Gobo26-GIMNAS-CASA.html" target="_self">
+        <div class="app-icon">🏋️</div>
+        <div class="app-name">Gimnàs a Casa</div>
+        <div class="app-desc">Exercicis guiats per fer a casa</div>
+      </a>
+      <a class="app-card" href="Gobo26-MERCATUS.html" target="_self">
+        <div class="app-icon">🛒</div>
+        <div class="app-name">Mercatus</div>
+        <div class="app-desc">Llista de la compra intel·ligent</div>
+      </a>
+      <a class="app-card" href="Gobo26-TENSIO_ARTERIAL.html" target="_self">
+        <div class="app-icon">❤️</div>
+        <div class="app-name">Tensió Arterial</div>
+        <div class="app-desc">Registre i seguiment de la tensió arterial</div>
+      </a>
+      <a class="app-card" href="Gobo26-CANCONER-SDM.html" target="_self">
+        <div class="app-icon">🎵</div>
+        <div class="app-name">Cançoner SDM</div>
+        <div class="app-desc">Cançoner d'havaneres dels Sons del Mar</div>
+      </a>
+    </div>
   </div>
 
   <!-- BIO -->
