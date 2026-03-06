@@ -35,7 +35,9 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
 </style>
 
     <style>
-        html, body { background-color: #f1f5f9 !important; color: #334155 !important; }
+        html, body { background-color: #f1f5f9 !important; color: #334155 !important; height:100%; overflow:hidden; }
+        body { display:flex; flex-direction:column; }
+        #root { flex:1; display:flex; flex-direction:column; overflow-y:auto; min-height:0; }
     </style>
 </head>
 <header>
@@ -541,8 +543,8 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
 
             if (gameState === 'menu') {
                 return (
-                    <div className="min-h-screen p-4 sm:p-6 font-sans text-slate-700 flex flex-col items-center justify-center" style={{backgroundColor:'#f1f5f9'}}>
-                        <div className="max-w-4xl w-full text-center space-y-6 sm:space-y-8">
+                    <div className="p-3 sm:p-4 font-sans text-slate-700 flex flex-col items-center" style={{backgroundColor:'#f1f5f9',minHeight:0,flex:1}}>
+                        <div className="max-w-4xl w-full text-center space-y-3 sm:space-y-4">
                             
                             <div className="flex justify-end w-full">
                                 <Gobo26Logo />
@@ -604,7 +606,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
             }
 
             return (
-                <div className="min-h-screen p-3 sm:p-4 font-sans text-slate-700 flex flex-col items-center" style={{backgroundColor:'#f1f5f9'}}>
+                <div className="p-3 sm:p-4 font-sans text-slate-700 flex flex-col items-center" style={{backgroundColor:'#f1f5f9',minHeight:0,flex:1}}>
                     
                     {showConfetti && <Confetti />}
                     

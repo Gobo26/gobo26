@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Morse Fàcil · Gobo26</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f1f5f9; --text: #334155; --header: #1e293b;
+      --accent: #2563eb; --success: #10b981; --error: #ef4444;
+      --warn: #f59e0b; --card: #fff; --border: #e2e8f0;
+    }
+    html, body { height: 100%; overflow: hidden; font-family: 'Montserrat', sans-serif; background: var(--bg); }
+    body { display: flex; flex-direction: column; }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--header); color: white; height: 46px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 10px; flex-shrink: 0;
+    }
+    .logo-link { display:flex; align-items:center; gap:7px; text-decoration:none; color:white; }
+    .logo-link svg { width:28px; height:28px; }
+    .hdr-title { font-size:.9rem; font-weight:700; letter-spacing:.05em; }
+    .hdr-pts { background:var(--accent); padding:3px 10px; border-radius:20px; font-size:.8rem; font-weight:700; }
+
+    /* ── SCREENS ── */
+    .screen { display:none; flex:1; flex-direction:column; overflow:hidden; min-height:0; }
+    .screen.on { display:flex; }
+
+    /* ── INICI ── */
+    #s-inici { padding:10px; gap:8px; overflow-y:auto; align-items:center; }
+    .hero { background:var(--card); border-radius:14px; padding:14px; width:100%; max-width:640px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,.07); }
+    .hero h2 { font-size:1.2rem; font-weight:900; color:var(--header); }
+    .hero p  { font-size:.8rem; color:#64748b; margin-top:5px; line-height:1.5; }
+    .card { background:var(--card); border-radius:14px; padding:12px 14px; box-shadow:0 2px 10px rgba(0,0,0,.07); width:100%; max-width:640px; }
+    .etiq { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#94a3b8; margin-bottom:8px; }
+    .grid-niv { display:grid; grid-template-columns:repeat(2,1fr); gap:7px; }
+    .btn-niv { padding:9px 8px; border:2.5px solid var(--border); border-radius:12px; background:white; cursor:pointer; text-align:left; font-family:'Montserrat',sans-serif; transition:all .2s; min-height:44px; }
+    .btn-niv:hover { border-color:var(--accent); }
+    .btn-niv.sel { border-color:var(--accent); background:#eff6ff; }
+    .btn-niv .ni { font-size:.7rem; font-weight:700; color:var(--header); display:block; }
+    .btn-niv .nd { font-size:.6rem; color:#94a3b8; display:block; margin-top:1px; }
+    .btn-niv .na { font-size:.95rem; margin-right:3px; }
+    .btn-gran { width:100%; max-width:640px; padding:13px; background:var(--accent); color:white; border:none; border-radius:12px; font-family:'Montserrat',sans-serif; font-size:1rem; font-weight:700; cursor:pointer; min-height:48px; transition:all .2s; }
+    .btn-gran:hover { background:#1d4ed8; }
+    .btn-gran.sec { background:transparent; color:var(--accent); border:2px solid var(--accent); }
+    .btn-gran.sec:hover { background:#eff6ff; }
+    .rec-badge { display:flex; align-items:center; gap:10px; background:linear-gradient(135deg,#fef9c3,#fef3c7); border:2px solid var(--warn); border-radius:12px; padding:10px 14px; }
+    .rec-badge .ri { font-size:1.4rem; }
+    .rec-badge .rt { font-size:.75rem; }
+    .rec-badge .rt strong { display:block; color:var(--header); }
+
+    /* ══════════════════════════════════════════
+       JOC — layout adaptable
+    ════════════════════════════════════════ */
+    #s-joc { flex-direction: row; }
+
+    /* columna joc */
+    .col-joc {
+      flex:1; display:flex; flex-direction:column; gap:5px;
+      padding:7px 5px 7px 8px; overflow:hidden; min-width:0;
+    }
+    .jcard { background:var(--card); border-radius:11px; padding:8px 11px; box-shadow:0 1px 6px rgba(0,0,0,.07); flex-shrink:0; }
+
+    .estat-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+    .vides { display:flex; gap:3px; }
+    .vida { font-size:.95rem; transition:all .3s; }
+    .vida.off { opacity:.2; filter:grayscale(1); }
+    .barra-wrap { height:6px; background:var(--border); border-radius:6px; overflow:hidden; }
+    #barra { height:100%; border-radius:6px; transition:width .3s linear, background-color .5s; background:var(--success); }
+
+    /* zona morse */
+    .zona-morse-outer {
+      flex:1; display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      overflow:hidden; padding:4px; min-height:0;
+    }
+    .morse-scene { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; width:100%; }
+    .morse-fila  { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:0 10px; }
+    .ll-grup { display:flex; flex-direction:column; align-items:center; gap:4px; }
+    .ll-sims { display:flex; gap:5px; align-items:center; }
+    .dot, .dash { display:inline-block; animation:pop-in .35s ease both; flex-shrink:0; }
+    .dot  { width:18px; height:18px; border-radius:50%; background:var(--accent); }
+    .dash { width:46px; height:18px; border-radius:9px; background:var(--header); }
+    @keyframes pop-in { from{opacity:0;transform:scale(0);} to{opacity:1;transform:scale(1);} }
+    .ll-codi { font-size:.6rem; color:#cbd5e1; letter-spacing:2px; font-weight:600; }
+    .sep-ll { width:2px; height:18px; background:var(--border); border-radius:2px; }
+    .zona-pista { font-size:.72rem; color:#94a3b8; font-style:italic; text-align:center; min-height:18px; margin-top:3px; }
+
+    /* display resposta (en lloc d'input de text al mòbil) */
+    .resp-display {
+      flex:1; font-family:'Montserrat',sans-serif; font-size:1.5rem; font-weight:700;
+      padding:8px 10px; border:3px solid var(--border); border-radius:10px;
+      text-transform:uppercase; text-align:center; background:white; color:var(--header);
+      min-height:48px; display:flex; align-items:center; justify-content:center;
+      letter-spacing:3px; transition:border-color .2s; user-select:none;
+    }
+    .resp-display.ok  { border-color:var(--success); background:#f0fdf4; }
+    .resp-display.err { border-color:var(--error);   background:#fef2f2; animation:shake .3s; }
+    .resp-display .cursor { display:inline-block; width:2px; height:1.2em; background:var(--accent); margin-left:2px; animation:blink 1s step-end infinite; vertical-align:middle; }
+    @keyframes blink { 50%{opacity:0;} }
+    @keyframes shake { 25%{transform:translateX(-5px);} 75%{transform:translateX(5px);} }
+
+    /* input ocult (desktop) */
+    #camp-hidden {
+      position:absolute; left:-9999px; top:-9999px; opacity:0;
+    }
+
+    .btn-ok { padding:8px 14px; background:var(--accent); color:white; border:none; border-radius:10px; font-size:1rem; font-weight:700; cursor:pointer; min-height:48px; min-width:48px; font-family:'Montserrat',sans-serif; transition:all .2s; }
+    .btn-ok:hover { background:#1d4ed8; }
+
+    .btns-petits { display:flex; gap:5px; margin-top:5px; }
+    .btn-p { flex:1; padding:6px 3px; background:transparent; border:1.5px solid var(--border); border-radius:8px; font-family:'Montserrat',sans-serif; font-size:.65rem; font-weight:600; color:#64748b; cursor:pointer; transition:all .2s; min-height:34px; }
+    .btn-p:hover { border-color:var(--accent); color:var(--accent); }
+    .btn-p.pista-btn { color:var(--warn); border-color:#fcd34d; }
+
+    /* taula lateral desktop */
+    .col-taula {
+      width:178px; flex-shrink:0; background:var(--card);
+      border-left:2px solid var(--border); display:flex; flex-direction:column; overflow:hidden;
+    }
+    .taula-cap { background:var(--header); color:white; font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:5px 8px; flex-shrink:0; }
+    .taula-scroll { flex:1; overflow-y:auto; padding:4px; }
+    .grid-taula-d { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; }
+    .cel-t { background:var(--bg); border-radius:5px; padding:4px 2px; text-align:center; transition:background .15s, border .15s; border:1.5px solid transparent; cursor:default; }
+    .cel-t.hl { background:#dbeafe; border-color:var(--accent); }
+    .cel-t strong { display:block; font-size:.88rem; color:var(--header); }
+    .cel-t span   { display:block; font-size:.58rem; color:var(--accent); font-weight:700; letter-spacing:1.5px; }
+
+    /* ══════════════════════════════════════════
+       TECLAT MÒBIL PERSONALITZAT
+    ════════════════════════════════════════ */
+    .teclat-mobil {
+      display: none; /* activat per JS si mòbil */
+      flex-direction: column;
+      background: #dde3ea;
+      padding: 5px 4px 6px;
+      gap: 4px;
+      flex-shrink: 0;
+      border-top: 2px solid #c5cdd6;
+    }
+
+    .teclat-fila {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    /* Tecla normal (lletra) */
+    .tecla {
+      flex: 1;
+      max-width: 46px;
+      min-width: 0;
+      background: white;
+      border: none;
+      border-radius: 7px;
+      box-shadow: 0 2px 0 #b0bac4;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 1px 4px;
+      font-family: 'Montserrat', sans-serif;
+      transition: transform .08s, box-shadow .08s;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      /* alçada calculada per JS */
+    }
+    .tecla:active { transform: translateY(2px); box-shadow: 0 0 0 #b0bac4; }
+    .tecla .t-ll  { font-size: .85rem; font-weight: 700; color: var(--header); line-height: 1; }
+    .tecla .t-cod { font-size: .46rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; margin-top: 1px; line-height: 1; }
+
+    /* Tecla especial: esborrar i confirmar */
+    .tecla-acc {
+      flex: 1.5;
+      max-width: 60px;
+      background: #adb5bd;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      box-shadow: 0 2px 0 #8d9399;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tecla-acc:active { transform: translateY(2px); box-shadow: 0 0 0 #8d9399; }
+    .tecla-acc.ok-btn { background: var(--accent); box-shadow: 0 2px 0 #1a4fa8; font-size: .9rem; }
+    .tecla-acc.ok-btn:active { box-shadow: 0 0 0 #1a4fa8; }
+
+    /* Tecla HL (lletra actual ressaltada) */
+    .tecla.hl { background: #dbeafe; box-shadow: 0 2px 0 #93b4e0; }
+    .tecla.hl .t-ll { color: var(--accent); }
+
+    /* ── RESULTAT ── */
+    #s-resultat { padding:10px; gap:8px; overflow-y:auto; align-items:center; }
+    .res-hero { text-align:center; }
+    .res-emoji { font-size:2.8rem; display:block; margin-bottom:5px; }
+    .res-titol { font-size:1.3rem; font-weight:900; color:var(--header); }
+    .res-sub   { font-size:.8rem; color:#64748b; margin-top:4px; }
+    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-top:10px; }
+    .stat { background:var(--bg); border-radius:10px; padding:9px; text-align:center; }
+    .stat b { display:block; font-size:1.7rem; font-weight:900; color:var(--accent); }
+    .stat s { display:block; font-size:.6rem; color:#94a3b8; font-weight:600; text-transform:uppercase; letter-spacing:.05em; font-style:normal; }
+
+    .flash { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(.5); font-size:3rem; opacity:0; pointer-events:none; z-index:200; transition:all .15s; }
+    .flash.on { opacity:1; transform:translate(-50%,-60%) scale(1.2); }
+    #cfv { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999; }
+    footer { background:var(--header); color:#64748b; text-align:center; padding:4px; font-size:.6rem; flex-shrink:0; }
+    #s-taula-sola { padding:10px; gap:8px; overflow-y:auto; align-items:center; }
+  </style>
+</head>
+<body>
+<canvas id="cfv"></canvas>
+<div class="flash" id="flash"></div>
+<input id="camp-hidden" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly>
+
+<!-- HEADER -->
+<header>
+  <a href="https://ja.cat/appgobo" class="logo-link" target="_self">
+    <svg viewBox="0 0 100 115" fill="none"><polygon points="50,5 95,30 95,80 50,105 5,80 5,30" fill="#2563eb" stroke="#1d4ed8" stroke-width="3"/><text x="50" y="52" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="28" fill="white">GOBO</text><text x="50" y="82" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="24" fill="#fbbf24">26</text></svg>
+  </a>
+  <span class="hdr-title">MORSE FÀCIL</span>
+  <div class="hdr-pts">⭐ <span id="pts-hdr">0</span></div>
+</header>
+
+<!-- ══ INICI ══ -->
+<div class="screen on" id="s-inici">
+  <div class="hero">
+    <h2>· — &nbsp;Morse Fàcil</h2>
+    <p>Aprèn el Morse pas a pas, reconeixent símbols i traduint paraules fins a frases senzilles.</p>
+  </div>
+  <div class="card">
+    <div class="etiq">Tria el nivell</div>
+    <div class="grid-niv" id="grid-niv">
+      <button class="btn-niv sel" onclick="sel(0,this)"><span class="na">🌱</span><span class="ni">Nivell 1 — E T A O I N</span><span class="nd">Les 6 lletres més freqüents · 40s</span></button>
+      <button class="btn-niv" onclick="sel(1,this)"><span class="na">🌿</span><span class="ni">Nivell 2 — + S H R D L U</span><span class="nd">12 lletres · 35s</span></button>
+      <button class="btn-niv" onclick="sel(2,this)"><span class="na">🌳</span><span class="ni">Nivell 3 — Alfabet sencer</span><span class="nd">Totes les lletres · 28s</span></button>
+      <button class="btn-niv" onclick="sel(3,this)"><span class="na">💬</span><span class="ni">Nivell 4 — Paraules curtes</span><span class="nd">2–3 lletres · 30s</span></button>
+      <button class="btn-niv" onclick="sel(4,this)"><span class="na">📝</span><span class="ni">Nivell 5 — Paraules</span><span class="nd">3–5 lletres · 25s</span></button>
+      <button class="btn-niv" onclick="sel(5,this)"><span class="na">🔥</span><span class="ni">Nivell 6 — Frases senzilles</span><span class="nd">3–4 paraules · 40s</span></button>
+    </div>
+  </div>
+  <div class="card" id="rec-inici" style="display:none">
+    <div class="rec-badge"><span class="ri">🏆</span><div class="rt"><strong>Millor rècord: <span id="rec-val">0</span> pts</strong>El teu millor resultat</div></div>
+  </div>
+  <button class="btn-gran" onclick="iniciar()">▶ Jugar!</button>
+  <button class="btn-gran sec" onclick="go('s-taula-sola')">📋 Veure la taula Morse completa</button>
+</div>
+
+<!-- ══ JOC ══ -->
+<div class="screen" id="s-joc">
+
+  <!-- columna joc -->
+  <div class="col-joc" id="col-joc">
+
+    <div class="jcard">
+      <div class="estat-row">
+        <div class="etiq" style="margin:0">
+          Pregunta <span id="q-num">1</span>/<span id="q-tot">10</span>
+          &nbsp;<span id="badge-niv" style="background:var(--accent);color:white;padding:1px 7px;border-radius:10px;font-size:.6rem;">N1</span>
+        </div>
+        <div class="vides" id="vides"></div>
+      </div>
+      <div class="barra-wrap"><div id="barra"></div></div>
+    </div>
+
+    <div class="jcard" style="flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;">
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;margin-bottom:4px;">Quin símbol és aquest?</div>
+      <div class="zona-morse-outer" id="zona-morse"></div>
+      <div class="zona-pista" id="zona-pista">Clica les lletres del teclat per respondre ↓</div>
+    </div>
+
+    <div class="jcard" id="jcard-input">
+      <div class="input-row" id="input-row">
+        <!-- desktop: input real -->
+        <div class="resp-display" id="resp-display"><span class="cursor"></span></div>
+        <button class="btn-ok" onclick="comprovar()">✓</button>
+      </div>
+      <div class="btns-petits">
+        <button class="btn-p pista-btn" id="btn-pista" onclick="pista()">💡 Pista (−3)</button>
+        <button class="btn-p" onclick="saltar()">⏭ Saltar (−5)</button>
+        <button class="btn-p" onclick="sortir()">✕ Sortir</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- taula lateral desktop -->
+  <div class="col-taula" id="taula-desktop">
+    <div class="taula-cap">📋 Taula Morse</div>
+    <div class="taula-scroll">
+      <div class="grid-taula-d" id="taula-joc-d"></div>
+    </div>
+  </div>
+
+  <!-- TECLAT MÒBIL -->
+  <div class="teclat-mobil" id="teclat-mobil">
+    <!-- generat per JS -->
+  </div>
+
+</div>
+
+<!-- ══ TAULA SOLA ══ -->
+<div class="screen" id="s-taula-sola">
+  <div class="card" style="max-width:640px;width:100%;margin:10px auto 0;"><h2 style="font-size:1.1rem;font-weight:900;color:var(--header);margin-bottom:4px">📋 Taula del Codi Morse</h2><p style="font-size:.78rem;color:#64748b">Tots els símbols del codi internacional</p></div>
+  <div class="card" style="max-width:640px;width:100%;margin:8px auto;"><div id="taula-gran" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px;"></div></div>
+  <button class="btn-gran sec" style="max-width:640px;margin:0 auto 10px;" onclick="go('s-inici')">← Tornar</button>
+</div>
+
+<!-- ══ RESULTAT ══ -->
+<div class="screen" id="s-resultat">
+  <div class="card res-hero" style="max-width:500px;width:100%;margin:10px auto 0;">
+    <span class="res-emoji" id="r-emoji">🎉</span>
+    <div class="res-titol" id="r-titol"></div>
+    <div class="res-sub"   id="r-sub"></div>
+    <div class="stats">
+      <div class="stat"><b id="r-pts">0</b><s>Punts</s></div>
+      <div class="stat"><b id="r-enc">0</b><s>Encerts</s></div>
+      <div class="stat"><b id="r-rat">0</b><s>Millor ratxa</s></div>
+    </div>
+  </div>
+  <div class="card" id="rec-res" style="display:none;max-width:500px;width:100%;margin:8px auto 0;">
+    <div class="rec-badge"><span class="ri">🏆</span><div class="rt"><strong>Nou rècord!</strong>Has superat la teva millor puntuació</div></div>
+  </div>
+  <button class="btn-gran" onclick="iniciar()" style="max-width:500px;margin:8px auto 0;">🔄 Tornar a jugar</button>
+  <button class="btn-gran sec" onclick="go('s-inici')" style="max-width:500px;margin:6px auto 0;">← Menú</button>
+  <button class="btn-gran sec" onclick="esborrarRec()" style="max-width:500px;margin:6px auto 10px;font-size:.8rem;color:#94a3b8;border-color:var(--border);">🗑 Esborrar rècord</button>
+</div>
+
+<footer>Una aplicació de Gobo26</footer>
+
+<script>
+// ══ DADES ══
+const MORSE={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..'};
+
+// Layout del teclat (QWERTY adaptat, 3 files de lletres + fila d'acció)
+const TECLAT_FILES = [
+  ['Q','W','E','R','T','Y','U','I','O','P'],
+  ['A','S','D','F','G','H','J','K','L'],
+  ['ESBORRAR','Z','X','C','V','B','N','M','OK']
+];
+
+const N1=['E','T','A','O','I','N'];
+const N2=[...N1,'S','H','R','D','L','U'];
+const N3=Object.keys(MORSE);
+const N4=['EL','LA','NO','SI','ON','PA','MA','NI','JA','HI','SOL','MAR','CEL','DIA','NIT','BON','MAL','COR','RIU','ONA','NEU','PEU','CAP','FER','VEU','SET','NOU','DOS','PAS','MÀ'];
+const N5=['CASA','BONA','HOLA','AMOR','LLUM','BLAU','VENT','BOSC','ROCA','FLOR','FRED','FOSC','PEIX','LLET','ARBRE','PORTA','CAMÍ','PLUJA','TAULA','BARCA','PARET','BLANC','NEGRE','TERRA','LLUNA','HERBA','FEINA','FESTA','FORÇA','SANTA'];
+const N6=['BON DIA','BONA NIT','EL MAR','EL SOL','LA MAR','BON VENT','NIT I DIA','MAR I CEL','PAU I AMOR','CEL BLAU','UN COR FELIÇ','EL VENT DEL MAR','TERRA I MAR','VEU DEL COR','BON VENT I MAR'];
+
+const NIVELLS=[
+  {nom:'N1',pool:N1, temps:40,preguntes:10,pts:8},
+  {nom:'N2',pool:N2, temps:35,preguntes:12,pts:10},
+  {nom:'N3',pool:N3, temps:28,preguntes:12,pts:14},
+  {nom:'N4',pool:N4, temps:30,preguntes:12,pts:18},
+  {nom:'N5',pool:N5, temps:25,preguntes:12,pts:22},
+  {nom:'N6',pool:N6, temps:40,preguntes:10,pts:30},
+];
+
+const esMobil=()=>window.innerWidth<=600;
+
+// ══ ESTAT ══
+let resposta='';
+let st={niv:0,pts:0,vides:3,q:0,obj:'',enc:0,ratxa:0,mratxa:0,p1:false,p2:false,tid:null,ttot:40,trest:40};
+let rec=+localStorage.getItem('gobo26_morse_rec')||0;
+let glob=+localStorage.getItem('gobo26_morse_glob')||0;
+
+// ══ WEB AUDIO ══
+let audioCtx=null;
+function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function beep(ctx,t,dur){
+  const osc=ctx.createOscillator(),gain=ctx.createGain();
+  osc.connect(gain);gain.connect(ctx.destination);
+  osc.frequency.value=650;osc.type='sine';
+  gain.gain.setValueAtTime(0,t);
+  gain.gain.linearRampToValueAtTime(0.45,t+0.005);
+  gain.gain.setValueAtTime(0.45,t+dur-0.005);
+  gain.gain.linearRampToValueAtTime(0,t+dur);
+  osc.start(t);osc.stop(t+dur+0.01);
+}
+function reproduirMorse(text,callback){
+  try{
+    const ctx=getCtx();
+    const doPlay=()=>{
+      const DOT=0.07,DASH=0.21,GAP=0.07,LGAP=0.21,WGAP=0.49;
+      let t=ctx.currentTime+0.1;
+      text.split(' ').forEach((mot,wi)=>{
+        if(wi>0)t+=WGAP;
+        mot.split('').forEach((ll,li)=>{
+          if(li>0)t+=LGAP;
+          const cod=MORSE[ll];if(!cod)return;
+          cod.split('').forEach((s,si)=>{
+            if(si>0)t+=GAP;
+            const dur=s==='.'?DOT:DASH;
+            beep(ctx,t,dur);t+=dur;
+          });
+        });
+      });
+      if(callback)setTimeout(callback,(t-ctx.currentTime)*1000+100);
+    };
+    if(ctx.state==='suspended')ctx.resume().then(doPlay);else doPlay();
+  }catch(e){if(callback)callback();}
+}
+
+// ══ INIT ══
+construirTaulesMorse();
+construirTeclatMobil();
+document.getElementById('pts-hdr').textContent=glob;
+if(rec>0){document.getElementById('rec-inici').style.display='block';document.getElementById('rec-val').textContent=rec;}
+
+// ══ NAVEGACIÓ ══
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
+function sel(i,btn){st.niv=i;document.querySelectorAll('.btn-niv').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
+
+// ══ TECLAT MÒBIL ══
+function construirTeclatMobil(){
+  const cont=document.getElementById('teclat-mobil');
+  cont.innerHTML='';
+  TECLAT_FILES.forEach(fila=>{
+    const row=document.createElement('div');
+    row.className='teclat-fila';
+    fila.forEach(k=>{
+      if(k==='ESBORRAR'){
+        const btn=document.createElement('button');
+        btn.className='tecla-acc';
+        btn.textContent='⌫';
+        btn.addEventListener('touchstart',e=>{e.preventDefault();teclaEsborrar();},{passive:false});
+        btn.addEventListener('mousedown',e=>{e.preventDefault();teclaEsborrar();});
+        row.appendChild(btn);
+      } else if(k==='OK'){
+        const btn=document.createElement('button');
+        btn.className='tecla-acc ok-btn';
+        btn.textContent='✓';
+        btn.addEventListener('touchstart',e=>{e.preventDefault();comprovar();},{passive:false});
+        btn.addEventListener('mousedown',e=>{e.preventDefault();comprovar();});
+        row.appendChild(btn);
+      } else {
+        const btn=document.createElement('button');
+        btn.className='tecla';
+        btn.id='tk-'+k;
+        const ll=document.createElement('span'); ll.className='t-ll'; ll.textContent=k;
+        const cod=document.createElement('span'); cod.className='t-cod'; cod.textContent=MORSE[k]||'';
+        btn.appendChild(ll); btn.appendChild(cod);
+        btn.addEventListener('touchstart',e=>{e.preventDefault();teclaLletra(k);},{passive:false});
+        btn.addEventListener('mousedown',e=>{e.preventDefault();teclaLletra(k);});
+        row.appendChild(btn);
+      }
+    });
+    cont.appendChild(row);
+  });
+}
+
+function teclaLletra(ll){
+  if(resposta.length>=20)return;
+  resposta+=ll;
+  actualitzarDisplay();
+}
+function teclaEsborrar(){
+  if(resposta.length===0)return;
+  resposta=resposta.slice(0,-1);
+  actualitzarDisplay();
+}
+
+function actualitzarDisplay(){
+  const d=document.getElementById('resp-display');
+  if(d.classList.contains('ok')||d.classList.contains('err')) return;
+  d.innerHTML=resposta+'<span class="cursor"></span>';
+}
+
+// ══ INICIAR ══
+function iniciar(){
+  st.pts=0;st.vides=3;st.q=0;st.enc=0;st.ratxa=0;st.mratxa=0;
+  const niv=NIVELLS[st.niv];
+  document.getElementById('q-tot').textContent=niv.preguntes;
+  document.getElementById('badge-niv').textContent=niv.nom;
+
+  if(esMobil()){
+    document.getElementById('taula-desktop').style.display='none';
+    document.getElementById('teclat-mobil').style.display='flex';
+    document.getElementById('s-joc').style.flexDirection='column';
+    document.getElementById('col-joc').style.padding='5px 6px 3px';
+    document.getElementById('col-joc').style.gap='4px';
+    // zona morse menys padding
+    document.querySelector('.zona-morse-outer').style.padding='2px';
+  } else {
+    document.getElementById('taula-desktop').style.display='flex';
+    document.getElementById('teclat-mobil').style.display='none';
+    document.getElementById('s-joc').style.flexDirection='row';
+  }
+
+  go('s-joc');renderVides();novaPregunta();
+}
+
+// ══ NOVA PREGUNTA ══
+function novaPregunta(){
+  clearInterval(st.tid);
+  const pool=NIVELLS[st.niv].pool;
+  st.obj=pool[Math.floor(Math.random()*pool.length)];
+  st.p1=false;st.p2=false;
+  resposta='';
+  document.getElementById('q-num').textContent=st.q+1;
+  const d=document.getElementById('resp-display');
+  d.className='resp-display';
+  d.innerHTML='<span class="cursor"></span>';
+  document.getElementById('btn-pista').disabled=false;
+  document.getElementById('zona-pista').textContent=esMobil()?'Clica les lletres del teclat per respondre ↓':'Escriu la resposta ↓';
+  ressaltar(st.obj);
+  renderMorse(st.obj);
+  reproduirMorse(st.obj,()=>{iniciarTemps();});
+}
+
+// ══ RENDER MORSE ══
+function renderMorse(obj){
+  const zona=document.getElementById('zona-morse');zona.innerHTML='';
+  const scene=document.createElement('div');scene.className='morse-scene';
+  obj.split(' ').forEach((mot,gi)=>{
+    if(gi>0){const sep=document.createElement('div');sep.style.cssText='width:4px;height:26px;background:#cbd5e1;border-radius:3px;';scene.appendChild(sep);}
+    const fila=document.createElement('div');fila.className='morse-fila';
+    mot.split('').forEach((ll,i)=>{
+      if(i>0){const s=document.createElement('div');s.className='sep-ll';fila.appendChild(s);}
+      const cod=MORSE[ll];if(!cod)return;
+      const grup=document.createElement('div');grup.className='ll-grup';
+      const sims=document.createElement('div');sims.className='ll-sims';
+      cod.split('').forEach((s,j)=>{
+        const el=document.createElement('span');el.className=s==='.'?'dot':'dash';
+        el.style.animationDelay=(gi*.12+i*.08+j*.05)+'s';sims.appendChild(el);
+      });
+      const codi=document.createElement('div');codi.className='ll-codi';codi.textContent=cod;
+      grup.appendChild(sims);grup.appendChild(codi);fila.appendChild(grup);
+    });
+    scene.appendChild(fila);
+  });
+  zona.appendChild(scene);
+}
+
+// ══ RESSALTAR TECLAT I TAULA ══
+function ressaltar(obj){
+  // taula desktop
+  document.querySelectorAll('.cel-t').forEach(c=>c.classList.remove('hl'));
+  // teclat mòbil
+  document.querySelectorAll('.tecla').forEach(c=>c.classList.remove('hl'));
+
+  const lletres=[...new Set(obj.replace(/ /g,'').split(''))];
+  lletres.forEach(ll=>{
+    const ct=document.getElementById('ct-d-'+ll); if(ct) ct.classList.add('hl');
+    const tk=document.getElementById('tk-'+ll);   if(tk) tk.classList.add('hl');
+  });
+}
+
+// ══ TEMPS ══
+function iniciarTemps(){
+  const niv=NIVELLS[st.niv];st.ttot=niv.temps;st.trest=niv.temps;
+  const b=document.getElementById('barra');b.style.width='100%';b.style.backgroundColor='#10b981';
+  st.tid=setInterval(()=>{
+    st.trest-=.1;
+    const pct=Math.max(0,(st.trest/st.ttot)*100);
+    b.style.width=pct+'%';
+    b.style.backgroundColor=pct<30?'#ef4444':pct<55?'#f59e0b':'#10b981';
+    if(st.trest<=0){clearInterval(st.tid);tempsFora();}
+  },100);
+}
+
+function tempsFora(){
+  flash('⏱');
+  document.getElementById('zona-pista').innerHTML='<strong style="color:var(--error)">Era: <em>'+st.obj+'</em></strong>';
+  perdreVida();st.ratxa=0;
+  setTimeout(()=>{if(st.vides>0)continuar();else acabar();},1400);
+}
+
+// ══ COMPROVAR ══
+function comprovar(){
+  const resp=resposta.trim();
+  if(!resp)return;
+  const d=document.getElementById('resp-display');
+  if(resp===st.obj){
+    clearInterval(st.tid);
+    const niv=NIVELLS[st.niv];
+    const bonus=Math.floor((st.trest/st.ttot)*niv.pts);
+    let p=niv.pts+bonus;
+    st.ratxa++;if(st.ratxa>st.mratxa)st.mratxa=st.ratxa;
+    if(st.ratxa>=3){p+=5;mostrarBonus('🔥 Ratxa x'+st.ratxa+' +5');}
+    st.pts+=p;st.enc++;
+    glob+=p;localStorage.setItem('gobo26_morse_glob',glob);
+    document.getElementById('pts-hdr').textContent=glob;
+    d.className='resp-display ok';
+    d.innerHTML=resp;
+    flash('✅');vibrar([50,30,50]);
+    setTimeout(continuar,700);
+  }else{
+    d.className='resp-display err';
+    flash('❌');vibrar([200]);st.ratxa=0;
+    setTimeout(()=>{
+      resposta='';
+      d.className='resp-display';
+      d.innerHTML='<span class="cursor"></span>';
+    },600);
+  }
+}
+
+function continuar(){st.q++;if(st.q>=NIVELLS[st.niv].preguntes)acabar();else novaPregunta();}
+function perdreVida(){st.vides=Math.max(0,st.vides-1);renderVides();}
+function renderVides(){
+  const c=document.getElementById('vides');c.innerHTML='';
+  for(let i=0;i<3;i++){const s=document.createElement('span');s.className='vida'+(i>=st.vides?' off':'');s.textContent='❤️';c.appendChild(s);}
+}
+
+function pista(){
+  if(!st.p1){st.p1=true;document.getElementById('zona-pista').innerHTML='💡 Comença per <strong>'+st.obj[0]+'</strong> · '+st.obj.length+' caràcter'+(st.obj.length>1?'s':'');}
+  else if(!st.p2){st.p2=true;const m=st.obj.substring(0,Math.ceil(st.obj.length/2));document.getElementById('zona-pista').innerHTML='💡 Comença per <strong>'+m+'…</strong>';document.getElementById('btn-pista').disabled=true;}
+}
+
+function saltar(){if(!confirm('Saltar? Costarà 5 punts.'))return;clearInterval(st.tid);st.ratxa=0;continuar();}
+function sortir(){if(!confirm('Abandonar la partida?'))return;clearInterval(st.tid);netejarHL();go('s-inici');}
+function netejarHL(){document.querySelectorAll('.cel-t,.tecla').forEach(c=>c.classList.remove('hl'));}
+
+// ══ RESULTAT ══
+function acabar(){
+  clearInterval(st.tid);netejarHL();
+  const pct=st.enc/NIVELLS[st.niv].preguntes;
+  let em,ti,su;
+  if(pct>=.9){em='🏆';ti='Extraordinari!';su='Ets un expert del Morse!';confetti();}
+  else if(pct>=.7){em='🥇';ti='Excel·lent!';su='Molt bona partida!';}
+  else if(pct>=.5){em='🥈';ti='Força bé!';su='Ja agafes el ritme.';}
+  else{em='📡';ti='Segueix practicant';su='El Morse és difícil al principi!';}
+  document.getElementById('r-emoji').textContent=em;
+  document.getElementById('r-titol').textContent=ti;
+  document.getElementById('r-sub').textContent=su;
+  document.getElementById('r-pts').textContent=st.pts;
+  document.getElementById('r-enc').textContent=st.enc+'/'+NIVELLS[st.niv].preguntes;
+  document.getElementById('r-rat').textContent=st.mratxa;
+  if(st.pts>rec&&st.pts>0){rec=st.pts;localStorage.setItem('gobo26_morse_rec',rec);document.getElementById('rec-res').style.display='block';}
+  else document.getElementById('rec-res').style.display='none';
+  go('s-resultat');
+}
+function esborrarRec(){if(!confirm('Esborrar el rècord?'))return;rec=0;localStorage.removeItem('gobo26_morse_rec');document.getElementById('rec-res').style.display='none';}
+
+// ══ TAULES ══
+function construirTaulesMorse(){
+  const d=document.getElementById('taula-joc-d');
+  Object.entries(MORSE).forEach(([ll,cod])=>{
+    const el=document.createElement('div');el.className='cel-t';el.id='ct-d-'+ll;
+    el.innerHTML='<strong>'+ll+'</strong><span>'+cod+'</span>';d.appendChild(el);
+  });
+  const gran=document.getElementById('taula-gran');
+  Object.entries(MORSE).forEach(([ll,cod])=>{
+    const el=document.createElement('div');el.style.cssText='background:var(--bg);border-radius:8px;padding:8px 4px;text-align:center;';
+    el.innerHTML='<strong style="display:block;font-size:1.2rem;color:var(--header);margin-bottom:3px">'+ll+'</strong><span style="font-size:.8rem;color:var(--accent);font-weight:700;letter-spacing:2px">'+cod+'</span>';
+    gran.appendChild(el);
+  });
+}
+
+// ══ UTILS ══
+function flash(s){const el=document.getElementById('flash');el.textContent=s;el.classList.add('on');setTimeout(()=>el.classList.remove('on'),400);}
+function mostrarBonus(t){const tag=document.createElement('div');tag.textContent=t;tag.style.cssText='position:fixed;top:58px;right:10px;z-index:150;background:#f59e0b;color:white;padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;';document.body.appendChild(tag);setTimeout(()=>tag.remove(),1500);}
+function vibrar(p){if('vibrate'in navigator)navigator.vibrate(p);}
+function confetti(){
+  const cv=document.getElementById('cfv'),cx=cv.getContext('2d');
+  cv.width=innerWidth;cv.height=innerHeight;
+  let ps=Array.from({length:80},()=>({x:Math.random()*cv.width,y:-20,sz:Math.random()*8+3,c:'hsl('+Math.floor(Math.random()*360)+',70%,55%)',vy:Math.random()*4+2,vx:(Math.random()-.5)*3,r:Math.random()*360,rv:(Math.random()-.5)*6}));
+  let f=0;
+  (function draw(){cx.clearRect(0,0,cv.width,cv.height);ps.forEach(p=>{cx.save();cx.translate(p.x,p.y);cx.rotate(p.r*Math.PI/180);cx.fillStyle=p.c;cx.fillRect(-p.sz/2,-p.sz/2,p.sz,p.sz);cx.restore();p.y+=p.vy;p.x+=p.vx;p.r+=p.rv;});if(++f<80)requestAnimationFrame(draw);else cx.clearRect(0,0,cv.width,cv.height);})();
+}
+
+// Teclat físic (desktop)
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('s-joc').classList.contains('on')){
+    if(e.key==='Enter'){comprovar();return;}
+    if(e.key==='Backspace'){teclaEsborrar();return;}
+    const k=e.key.toUpperCase();
+    if(k.length===1&&k>='A'&&k<='Z') teclaLletra(k);
+  }
+});
+</script>
+</body>
+</html>

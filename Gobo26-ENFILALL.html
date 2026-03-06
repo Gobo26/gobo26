@@ -764,11 +764,11 @@
         #btn-panic-sortir { background: var(--error-light); color: var(--error); border-color: var(--error) !important; }
     
 /* HEADER */
-header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;position:relative;}
 .logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
 .logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
 .logo-txt span{color:#3b82f6;}
-.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
+.hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;position:absolute;left:50%;transform:translateX(-50%);pointer-events:none;}
 </style>
 
 
@@ -819,7 +819,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
 <div id="tema-frase"></div>
 
 <!-- Indicador -->
-<div id="indicador">Escull un nivell de dificultat per començar</div>
+<div id="indicador">Escull un nivell de dificultat per començar.<br><br>Posa a prova la teva agilitat mental. Entrena la memòria a curt termini i la retenció de seqüències.<br><br>Tria un nivell per començar i recorda: respecta sempre l'ordre, encara que la frase sigui fàcil!</div>
 
 <!-- Taulell -->
 <div id="taulell"></div>
@@ -1192,7 +1192,7 @@ actualitzarTaulaStats();
 mostrarRecords();
 
 // Mostrar taulell buit inicial
-document.getElementById('indicador').textContent = 'Escull un nivell de dificultat per començar';
+document.getElementById('indicador').innerHTML = 'Escull un nivell de dificultat per començar.003cbr003e003cbr003ePosa a prova la teva agilitat mental. Entrena la memòria a curt termini i la retenció de seqüències.003cbr003e003cbr003eTria un nivell per començar i recorda: respecta sempre l0027ordre, encara que la frase sigui fàcil!';
 
 // ============================================================
 // NIVELL
@@ -1310,7 +1310,7 @@ function pararPartida() {
 
     // Reset visual complet
     document.getElementById('taulell').innerHTML = '';
-    document.getElementById('indicador').textContent = 'Escull un nivell de dificultat per començar';
+    document.getElementById('indicador').innerHTML = 'Escull un nivell de dificultat per començar.003cbr003e003cbr003ePosa a prova la teva agilitat mental. Entrena la memòria a curt termini i la retenció de seqüències.003cbr003e003cbr003eTria un nivell per començar i recorda: respecta sempre l0027ordre, encara que la frase sigui fàcil!';
     document.getElementById('indicador').style.borderLeftColor = 'var(--blue-600)';
     document.getElementById('progress-bar').style.width = '0%';
     document.getElementById('display-temps').textContent = '00:00';
@@ -1325,7 +1325,7 @@ function pararPartida() {
     document.getElementById('btn-parar').style.display = 'none';
     document.getElementById('btn-panic').style.display = 'none';
     document.getElementById('selector-paraules').style.display = '';
-    document.getElementById('indicador').textContent = 'Escull un nivell de dificultat per començar';
+    document.getElementById('indicador').innerHTML = 'Escull un nivell de dificultat per començar.003cbr003e003cbr003ePosa a prova la teva agilitat mental. Entrena la memòria a curt termini i la retenció de seqüències.003cbr003e003cbr003eTria un nivell per començar i recorda: respecta sempre l0027ordre, encara que la frase sigui fàcil!';
 }
 
 // ============================================================
@@ -1648,7 +1648,7 @@ function tancarModal() {
     document.getElementById('btn-parar').style.display = 'none';
     document.getElementById('btn-panic').style.display = 'none';
     document.getElementById('selector-paraules').style.display = '';
-    document.getElementById('indicador').textContent = 'Escull un nivell de dificultat per començar';
+    document.getElementById('indicador').innerHTML = 'Escull un nivell de dificultat per començar.003cbr003e003cbr003ePosa a prova la teva agilitat mental. Entrena la memòria a curt termini i la retenció de seqüències.003cbr003e003cbr003eTria un nivell per començar i recorda: respecta sempre l0027ordre, encara que la frase sigui fàcil!';
     document.getElementById('indicador').style.borderLeftColor = 'var(--blue-600)';
 }
 

@@ -99,7 +99,7 @@ main{width:100%;max-width:640px;padding:16px 12px 8px;display:flex;flex-directio
 #feedback-err{font-size:.82rem;font-weight:700;text-align:center;color:var(--err);padding:4px 0;min-height:20px;}
 
 /* MITJANA */
-.mitjana-box{background:var(--s800);border-radius:14px;padding:22px 16px;text-align:center;}
+.mitjana-box{background:var(--s800);border-radius:14px;padding:18px 16px;text-align:center;max-width:360px;margin:0 auto;width:100%;}
 .mit-label{font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;}
 .mit-nums{display:flex;align-items:baseline;justify-content:center;margin-bottom:10px;}
 .mit-num{font-size:3.2rem;font-weight:900;line-height:1;letter-spacing:-2px;}
@@ -245,7 +245,7 @@ footer a{color:var(--s400);text-decoration:none;}
 
     <!-- MITJANA 7 DIES -->
     <div class="mitjana-box">
-      <div class="mit-label">Mitjana dels últims 7 dies</div>
+      <div class="mit-label">Mitjana de les últimes set mesures</div>
       <div class="mit-nums">
         <span class="mit-num" id="mit-sis">—</span>
         <span class="mit-sep">/</span>
@@ -259,9 +259,9 @@ footer a{color:var(--s400);text-decoration:none;}
     <div class="card">
       <div class="card-title">Valors de referència · Sistòlica / Diastòlica</div>
       <div class="ref-grid">
-        <div class="ref-box ref-ok"><div class="ref-label">✓ Correcta</div><div class="ref-vals">120–140<br>80–90</div></div>
-        <div class="ref-box ref-warn"><div class="ref-label">⚠ Atenció</div><div class="ref-vals">141–159<br>91–99</div></div>
-        <div class="ref-box ref-err"><div class="ref-label">⚡ Alerta</div><div class="ref-vals">&gt;160<br>&gt;100</div></div>
+        <div class="ref-box ref-err"><div class="ref-label">⚡ Alerta baixa</div><div class="ref-vals">&lt;90<br>&lt;60</div></div>
+        <div class="ref-box ref-ok"><div class="ref-label">✓ Correcta</div><div class="ref-vals">90–139<br>60–89</div></div>
+        <div class="ref-box ref-err"><div class="ref-label">⚡ Alerta alta</div><div class="ref-vals">&gt;139<br>&gt;89</div></div>
       </div>
     </div>
 
@@ -343,8 +343,8 @@ function canviarPerfil() {
 }
 
 function determinarEstat(sis, dia) {
-  if (sis >= 160 || dia >= 100) return { color:'var(--err)', bg:'var(--errl)', text:'Alerta', emoji:'⚡' };
-  if (sis > 140 || dia > 90)   return { color:'var(--warn)', bg:'var(--warnl)', text:'Atenció', emoji:'⚠' };
+  if (sis < 90 || dia < 60)   return { color:'var(--err)', bg:'var(--errl)', text:'Alerta baixa', emoji:'⬇' };
+  if (sis > 139 || dia > 89)  return { color:'var(--err)', bg:'var(--errl)', text:'Alerta alta', emoji:'⚡' };
   return { color:'var(--ok)', bg:'var(--okl)', text:'Correcta', emoji:'✓' };
 }
 
@@ -434,10 +434,8 @@ function actualitzarInterficie() {
     llista.appendChild(div);
   });
 
-  // Mitjana 7 dies
-  const ara = Date.now();
-  const setDies = 7 * 24 * 3600 * 1000;
-  const recents = dades.filter(d => (ara - d.timestamp) < setDies);
+  // Mitjana últimes 7 mesures
+  const recents = dades.slice(0, 7);
 
   if (recents.length >= 1) {
     const mSis = Math.round(recents.reduce((a,b) => a+b.sis, 0) / recents.length);
@@ -447,7 +445,7 @@ function actualitzarInterficie() {
     document.getElementById('mit-sis').style.color = estat.color;
     document.getElementById('mit-dia').textContent = mDia;
     document.getElementById('mit-dia').style.color = estat.color;
-    const txt = recents.length === 1 ? '1 mesura aquesta setmana' : `${recents.length} mesures dels últims 7 dies`;
+    const txt = recents.length === 1 ? '1 mesura' : `Darreres ${recents.length} mesures`;
     document.getElementById('mit-sub').textContent = txt;
     document.getElementById('mit-pill').innerHTML =
       `<span class="mit-pill" style="background:${estat.bg};color:${estat.color};">${estat.emoji} ${estat.text}</span>`;
@@ -456,7 +454,7 @@ function actualitzarInterficie() {
     document.getElementById('mit-sis').style.color = 'rgba(255,255,255,.25)';
     document.getElementById('mit-dia').textContent = '—';
     document.getElementById('mit-dia').style.color = 'rgba(255,255,255,.25)';
-    document.getElementById('mit-sub').textContent = 'Cap mesura els últims 7 dies';
+    document.getElementById('mit-sub').textContent = 'Cap mesura enregistrada';
     document.getElementById('mit-pill').innerHTML = '';
   }
 }
