@@ -191,6 +191,11 @@ footer a{color:var(--s400);text-decoration:none;}
       <button class="btn-acc btn-comp" onclick="comprovar()">✓ Comprova</button>
       <button class="btn-acc btn-barr" onclick="barrejar()">🔀 Barreja</button>
     </div>
+    <div class="accions" style="margin-top:5px;">
+      <button class="btn-acc" id="btn-pista"
+        style="background:#ede9fe;color:#7c3aed;grid-column:1/-1;flex:1;"
+        onclick="donarPista()">💡 Pista (−5 pts)</button>
+    </div>
     <div id="feedback"></div>
 
     <!-- Definició de la paraula encertada -->
@@ -234,6 +239,7 @@ footer a{color:var(--s400);text-decoration:none;}
       <tr><td>Paraula de 6+ lletres trobada</td><td>+20 pts</td></tr>
       <tr><td>Grup complet sense errors</td><td>+15 pts extra</td></tr>
       <tr><td>Temps exhaurit</td><td>−5 pts</td></tr>
+      <tr><td>💡 Pista (revela una lletra)</td><td>−5 pts</td></tr>
     </table>
     <button class="btn-tancar" onclick="tancarAjuda()">Entesos, juguem! 🚀</button>
   </div>
@@ -506,6 +512,7 @@ function iniciarGrup() {
   refrescaSolucio();
   feedback('');
   refrescaTrobades();
+  pistaActual = null;
   iniciarCrono();
 }
 
@@ -608,6 +615,52 @@ function barrejar() {
   selec = [];
   refrescaSolucio();
   dibuixarLletres(RONDES[rondaActual].grups[grupActual].l);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// PISTA — revela la primera lletra d'una paraula no trobada
+// ══════════════════════════════════════════════════════════════════════════════
+let pistesUsades = 0;
+let pistaActual = null; // { paraula, lletresRevelades: Set }
+
+function donarPista() {
+  const grup = RONDES[rondaActual].grups[grupActual];
+  const pendents = grup.solucions.filter(e => !trobadesCrup.has(e.s));
+  if (!pendents.length) return;
+
+  // Escollir la paraula pendent més curta si no en tenim una ja en curs
+  if (!pistaActual || !pendents.find(e => e.s === pistaActual.paraula)) {
+    const ordre = [...pendents].sort((a, b) => a.s.length - b.s.length);
+    pistaActual = { paraula: ordre[0].s, lletresRevelades: new Set() };
+  }
+
+  const paraula = pistaActual.paraula;
+  // Revelar la primera lletra no revelada
+  let revelada = false;
+  for (let i = 0; i < paraula.length; i++) {
+    if (!pistaActual.lletresRevelades.has(i)) {
+      pistaActual.lletresRevelades.add(i);
+      revelada = true;
+      break;
+    }
+  }
+  if (!revelada) return; // totes les lletres ja revelades
+
+  pistesUsades++;
+  punts = Math.max(0, punts - 5);
+  refrescaMarcadors();
+
+  // Construir el text de pista: _ per a les no revelades, lletra per a les revelades
+  const text = paraula.split('').map((ll, i) =>
+    pistaActual.lletresRevelades.has(i) ? ll : '_'
+  ).join(' ');
+
+  feedback(`💡 Pista: ${text}`, '#7c3aed');
+
+  // Si s'han revelat totes les lletres, restablir per a la propera pista
+  if (pistaActual.lletresRevelades.size === paraula.length) {
+    pistaActual = null;
+  }
 }
 
 // ══════════════════════════════════════════════════════════════════════════════

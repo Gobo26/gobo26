@@ -19,6 +19,8 @@
             --cell-sel:   #bfdbfe;
             --cell-fixed: #f8fafc;
             --cell-error: #fee2e2;
+            --cell-same:  #dbeafe;
+            --cell-notes: #f0fdf4;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,7 +32,7 @@
             color: var(--text);
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* tot en una pantalla */
+            overflow: hidden;
         }
 
         /* HEADER */
@@ -54,6 +56,17 @@
         }
 
         .header-left svg { opacity: 0.9; }
+
+        /* TIMER */
+        #timer-display {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #93c5fd;
+            letter-spacing: 2px;
+            font-variant-numeric: tabular-nums;
+            min-width: 58px;
+            text-align: right;
+        }
 
         #gobo-logo {
             display: none;
@@ -105,8 +118,46 @@
             color: white;
         }
         .controls button.primary:hover { background: #1d4ed8; }
+        .controls button.active-diff {
+            background: #1e293b;
+            border-color: #1e293b;
+            color: white;
+        }
 
-        /* TAULELL — ocupa el màxim d'espai disponible */
+        /* TOOLBAR: desfer, notes, pista */
+        .toolbar {
+            display: flex;
+            gap: 5px;
+            flex-shrink: 0;
+            width: 100%;
+            max-width: 420px;
+        }
+        .tool-btn {
+            flex: 1;
+            padding: 6px 4px;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            background: white;
+            color: var(--text);
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+        }
+        .tool-btn:hover { background: #e2e8f0; }
+        .tool-btn.notes-on {
+            background: #dcfce7;
+            border-color: #16a34a;
+            color: #15803d;
+        }
+        .tool-btn:disabled { opacity: 0.4; cursor: default; }
+
+        /* TAULELL */
         .game-board {
             display: grid;
             grid-template-columns: repeat(9, 1fr);
@@ -115,7 +166,6 @@
             border: 2px solid var(--line-thick);
             border-radius: 4px;
             gap: 0;
-            /* Mòbil: quasi tot l'ample de pantalla */
             width: min(92vw, 92vw);
             height: min(92vw, 92vw);
             box-shadow: 0 4px 16px rgba(0,0,0,0.12);
@@ -135,23 +185,44 @@
             border-right:  1px solid var(--line-thin);
             border-bottom: 1px solid var(--line-thin);
             font-size: clamp(14px, 5vw, 26px);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Eliminar vores externes */
         .cell:nth-child(9n)   { border-right: none; }
         .cell:nth-child(n+73) { border-bottom: none; }
 
-        /* Línies gruixudes de bloc */
         .cell.right-thick  { border-right:  2px solid var(--line-thick); }
         .cell.bottom-thick { border-bottom: 2px solid var(--line-thick); }
 
-        /* Estats */
         .cell:hover    { background: var(--cell-hover); }
         .cell.fixed    { background: var(--cell-fixed); color: var(--text-fixed); cursor: default; }
         .cell.fixed:hover { background: var(--cell-fixed); }
         .cell.selected { background: var(--cell-sel) !important; }
+        .cell.same-num { background: var(--cell-same); }
         .cell.user-input { color: var(--text-user); }
         .cell.error    { background: var(--cell-error) !important; color: var(--text-error); }
+
+        /* NOTES (mini números) */
+        .cell.has-notes { font-size: 0; }
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            inset: 0;
+        }
+        .note-num {
+            font-size: clamp(6px, 1.8vw, 10px);
+            font-weight: 700;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
 
         /* MISSATGE */
         .status {
@@ -163,7 +234,7 @@
             flex-shrink: 0;
         }
 
-        /* TECLAT NUMÈRIC — botons grans i fàcils de tocar */
+        /* TECLAT NUMÈRIC */
         .numpad {
             display: grid;
             grid-template-columns: repeat(10, 1fr);
@@ -187,8 +258,9 @@
             transition: background 0.15s;
         }
         .num-btn:hover { background: #e2e8f0; }
-        .num-btn.del   { background: #fee2e2; border-color: #fca5a5; color: #dc2626; font-size: clamp(12px, 3.5vw, 18px); }
+        .num-btn.del { background: #fee2e2; border-color: #fca5a5; color: #dc2626; font-size: clamp(12px, 3.5vw, 18px); }
         .num-btn.del:hover { background: #fecaca; }
+        .num-btn.notes-mode { background: #dcfce7; border-color: #86efac; color: #15803d; }
 
         /* FOOTER */
         footer {
@@ -211,6 +283,39 @@
         }
         footer a:hover { opacity: 0.8; }
 
+        /* MODAL VICTÒRIA */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,.65);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.actiu { display: flex; }
+        .modal {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 22px 22px;
+            max-width: 340px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,.3);
+            text-align: center;
+        }
+        .modal-emoji { font-size: 3rem; margin-bottom: 8px; }
+        .modal-titol { font-size: 1.3rem; font-weight: 900; color: #1e293b; margin-bottom: 6px; }
+        .modal-temps { font-size: 1.1rem; font-weight: 700; color: #2563eb; margin-bottom: 16px; }
+        .modal-text  { font-size: .85rem; color: #475569; margin-bottom: 18px; }
+        .btn-modal { font-family: 'Montserrat',sans-serif; background: #2563eb; color: white; border: none; border-radius: 12px; padding: 13px 28px; font-size: .9rem; font-weight: 700; cursor: pointer; width: 100%; }
+        .btn-modal:hover { background: #1d4ed8; }
+
+        /* CONFETI */
+        .confeti-c { position: fixed; inset: 0; pointer-events: none; z-index: 300; overflow: hidden; }
+        .confeti-p { position: absolute; top: -20px; animation: cau linear forwards; }
+        @keyframes cau { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
         /* ESCRIPTORI */
         @media (min-width: 640px) {
             #gobo-logo { display: flex; }
@@ -219,6 +324,8 @@
                 height: min(60vmin, 440px);
             }
             .numpad { width: min(60vmin, 440px); }
+            .toolbar { width: min(60vmin, 440px); }
+            .controls { width: min(60vmin, 440px); }
             .cell { font-size: clamp(14px, 3vmin, 26px); }
             main { justify-content: space-evenly; }
         }
@@ -235,6 +342,7 @@
             </svg>
             SUDOKU
         </div>
+        <span id="timer-display">0:00</span>
         <a href="https://ja.cat/appgobo" target="_blank" rel="noopener noreferrer" id="gobo-logo">
             <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
                 <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
@@ -247,10 +355,16 @@
     <!-- MAIN -->
     <main>
         <div class="controls">
-            <button onclick="newGame('easy')">Fàcil</button>
-            <button onclick="newGame('medium')">Mitjà</button>
-            <button onclick="newGame('hard')">Difícil</button>
+            <button id="btn-facil"  onclick="newGame('easy')">Fàcil</button>
+            <button id="btn-mitja"  onclick="newGame('medium')">Mitjà</button>
+            <button id="btn-dificil" onclick="newGame('hard')">Difícil</button>
             <button class="primary" onclick="checkSolution()">Comprovar</button>
+        </div>
+
+        <div class="toolbar">
+            <button class="tool-btn" id="btn-desfer" onclick="desfer()" title="Desfer">↩ Desfer</button>
+            <button class="tool-btn" id="btn-notes" onclick="toggleNotes()" title="Mode notes">✏️ Notes</button>
+            <button class="tool-btn" id="btn-pista" onclick="donarPista()" title="Pista">💡 Pista</button>
         </div>
 
         <div id="board" class="game-board"></div>
@@ -284,17 +398,87 @@
         </a>
     </footer>
 
+    <!-- MODAL VICTÒRIA -->
+    <div class="modal-overlay" id="modal-victora">
+        <div class="modal">
+            <div class="modal-emoji">🎉</div>
+            <div class="modal-titol">Sudoku completat!</div>
+            <div class="modal-temps" id="modal-temps-text"></div>
+            <div class="modal-text" id="modal-body"></div>
+            <button class="btn-modal" onclick="document.getElementById('modal-victora').classList.remove('actiu')">Tanca</button>
+        </div>
+    </div>
+
+    <!-- CONFETI -->
+    <div class="confeti-c" id="confeti"></div>
+
     <script>
         let board = [], solution = [], selectedCell = null;
+        let notesBoard = [];          // notes[r][c] = Set de números candidats
+        let notesMode = false;
+        let historial = [];           // [{row, col, prev, prevNotes, isnotes}]
+        let currentDifficulty = 'easy';
+        let pistes = 3;
 
+        // ── TIMER ────────────────────────────────────────────────────────────
+        let timerInterval = null;
+        let timerSeconds = 0;
+        let timerRunning = false;
+
+        function startTimer() {
+            stopTimer();
+            timerSeconds = 0;
+            updateTimerDisplay();
+            timerRunning = true;
+            timerInterval = setInterval(() => {
+                timerSeconds++;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+            timerRunning = false;
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60);
+            const s = timerSeconds % 60;
+            document.getElementById('timer-display').textContent =
+                m + ':' + String(s).padStart(2, '0');
+        }
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            return m > 0 ? `${m} min ${s} seg` : `${s} seg`;
+        }
+
+        // ── JOCS ─────────────────────────────────────────────────────────────
         window.onload = () => newGame('easy');
 
         function newGame(difficulty) {
+            currentDifficulty = difficulty;
+            pistes = 3;
+            document.getElementById('btn-pista').textContent = '💡 Pista (3)';
+            document.getElementById('btn-pista').disabled = false;
+
+            // Destacar dificultat activa
+            ['btn-facil','btn-mitja','btn-dificil'].forEach(id =>
+                document.getElementById(id).classList.remove('active-diff'));
+            const map = { easy:'btn-facil', medium:'btn-mitja', hard:'btn-dificil' };
+            document.getElementById(map[difficulty]).classList.add('active-diff');
+
             generateSudoku();
             removeNumbers(difficulty);
+            notesBoard = Array(9).fill(null).map(() => Array(9).fill(null).map(() => new Set()));
+            historial = [];
+            notesMode = false;
+            updateNotesUI();
             renderBoard();
             document.getElementById('message').textContent = '';
             selectedCell = null;
+            startTimer();
         }
 
         function generateSudoku() {
@@ -360,18 +544,15 @@
             }
         }
 
+        // ── RENDER ────────────────────────────────────────────────────────────
         function renderBoard() {
             const container = document.getElementById('board');
             container.innerHTML = '';
-
             for (let i = 0; i < 9; i++) {
                 for (let j = 0; j < 9; j++) {
                     const div = document.createElement('div');
                     div.classList.add('cell');
-
-                    /* Línies gruixudes a la dreta dels blocs (columnes 2 i 5) */
                     if (j === 2 || j === 5) div.classList.add('right-thick');
-                    /* Línies gruixudes a sota dels blocs (files 2 i 5) */
                     if (i === 2 || i === 5) div.classList.add('bottom-thick');
 
                     if (board[i][j] !== 0) {
@@ -382,42 +563,189 @@
                         div.dataset.row = i;
                         div.dataset.col = j;
                         div.onclick = () => selectCell(div);
+                        renderCellContent(div, i, j);
                     }
                     container.appendChild(div);
                 }
             }
         }
 
-        function selectCell(div) {
-            if (selectedCell) selectedCell.classList.remove('selected');
-            selectedCell = div;
-            div.classList.add('selected');
-        }
+        function renderCellContent(div, r, c) {
+            const notes = notesBoard[r][c];
+            const num = parseInt(div.textContent) || 0;
 
-        function inputNumber(num) {
-            if (!selectedCell) return;
-            if (num === 'delete') {
-                selectedCell.textContent = '';
-                selectedCell.classList.remove('error');
+            // If has real number
+            if (num > 0) {
+                div.classList.remove('has-notes');
+                div.innerHTML = num;
+                return;
+            }
+            // If has notes
+            if (notes && notes.size > 0) {
+                div.classList.add('has-notes');
+                const grid = document.createElement('div');
+                grid.className = 'notes-grid';
+                for (let n = 1; n <= 9; n++) {
+                    const span = document.createElement('span');
+                    span.className = 'note-num';
+                    span.textContent = notes.has(n) ? n : '';
+                    grid.appendChild(span);
+                }
+                div.innerHTML = '';
+                div.appendChild(grid);
             } else {
-                selectedCell.textContent = num;
-                selectedCell.classList.remove('error');
+                div.classList.remove('has-notes');
+                div.innerHTML = '';
             }
         }
 
+        function refreshAllCells() {
+            document.querySelectorAll('.cell.user-input').forEach(div => {
+                const r = parseInt(div.dataset.row), c = parseInt(div.dataset.col);
+                renderCellContent(div, r, c);
+            });
+        }
+
+        // ── SELECCIÓ ────────────────────────────────────────────────────────
+        function selectCell(div) {
+            // Eliminar selecció i subratllats anteriors
+            document.querySelectorAll('.cell.selected, .cell.same-num').forEach(el => {
+                el.classList.remove('selected', 'same-num');
+            });
+
+            selectedCell = div;
+            div.classList.add('selected');
+
+            // Subratllar celes amb el mateix número
+            const selNum = parseInt(div.textContent) || 0;
+            if (selNum > 0) {
+                document.querySelectorAll('.cell').forEach(el => {
+                    if (el !== div) {
+                        const txt = parseInt(el.textContent) || 0;
+                        if (txt === selNum && !el.classList.contains('has-notes')) {
+                            el.classList.add('same-num');
+                        }
+                    }
+                });
+            }
+        }
+
+        // ── INPUT ─────────────────────────────────────────────────────────────
+        function inputNumber(num) {
+            if (!selectedCell) return;
+            const r = parseInt(selectedCell.dataset.row);
+            const c = parseInt(selectedCell.dataset.col);
+            const prevVal = parseInt(selectedCell.textContent) || 0;
+            const prevNotes = new Set(notesBoard[r][c]);
+
+            if (notesMode && num !== 'delete') {
+                // Mode notes: toggle el número
+                historial.push({ row: r, col: c, prev: prevVal, prevNotes: new Set(prevNotes), isNotes: true });
+                if (notesBoard[r][c].has(num)) notesBoard[r][c].delete(num);
+                else notesBoard[r][c].add(num);
+                renderCellContent(selectedCell, r, c);
+            } else if (num === 'delete') {
+                historial.push({ row: r, col: c, prev: prevVal, prevNotes: new Set(prevNotes), isNotes: false });
+                selectedCell.textContent = '';
+                selectedCell.classList.remove('error');
+                notesBoard[r][c].clear();
+                renderCellContent(selectedCell, r, c);
+            } else {
+                // Mode normal: posar número
+                historial.push({ row: r, col: c, prev: prevVal, prevNotes: new Set(prevNotes), isNotes: false });
+                notesBoard[r][c].clear();
+                selectedCell.textContent = num;
+                selectedCell.classList.remove('error', 'has-notes');
+                // Actualitzar subratllat
+                selectCell(selectedCell);
+            }
+        }
+
+        // ── DESFER ────────────────────────────────────────────────────────────
+        function desfer() {
+            if (!historial.length) return;
+            const last = historial.pop();
+            const { row, col, prev, prevNotes } = last;
+            const div = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+            if (!div) return;
+            notesBoard[row][col] = new Set(prevNotes);
+            if (prev > 0) {
+                div.textContent = prev;
+                div.classList.remove('error', 'has-notes');
+            } else {
+                div.textContent = '';
+                div.classList.remove('error');
+            }
+            renderCellContent(div, row, col);
+        }
+
+        // ── NOTES ─────────────────────────────────────────────────────────────
+        function toggleNotes() {
+            notesMode = !notesMode;
+            updateNotesUI();
+        }
+
+        function updateNotesUI() {
+            const btn = document.getElementById('btn-notes');
+            btn.classList.toggle('notes-on', notesMode);
+            btn.textContent = notesMode ? '✏️ Notes ON' : '✏️ Notes';
+            document.querySelectorAll('.num-btn:not(.del)').forEach(b =>
+                b.classList.toggle('notes-mode', notesMode));
+        }
+
+        // ── PISTA ─────────────────────────────────────────────────────────────
+        function donarPista() {
+            if (pistes <= 0) return;
+            // Buscar celes buides i mostrar-ne una aleatòria
+            const buides = [];
+            document.querySelectorAll('.cell.user-input').forEach(div => {
+                const r = parseInt(div.dataset.row), c = parseInt(div.dataset.col);
+                const v = parseInt(div.textContent) || 0;
+                if (v === 0 || div.classList.contains('error')) buides.push({ div, r, c });
+            });
+            if (!buides.length) return;
+            const target = buides[Math.floor(Math.random() * buides.length)];
+            const { div, r, c } = target;
+            notesBoard[r][c].clear();
+            div.textContent = solution[r][c];
+            div.classList.remove('error', 'has-notes');
+            div.style.color = '#9333ea'; // violeta per pistes
+            pistes--;
+            document.getElementById('btn-pista').textContent = `💡 Pista (${pistes})`;
+            if (pistes === 0) document.getElementById('btn-pista').disabled = true;
+            selectCell(div);
+        }
+
+        // ── TECLAT FÍSIC ───────────────────────────────────────────────────────
         document.addEventListener('keydown', e => {
             if (!selectedCell) return;
             if (e.key >= '1' && e.key <= '9') inputNumber(parseInt(e.key));
             else if (e.key === 'Backspace' || e.key === 'Delete') inputNumber('delete');
+            else if (e.key === 'z' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); desfer(); }
+            else if (e.key === 'n') toggleNotes();
+            // Navegació amb tecles de fletxa
+            else if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+                const r = parseInt(selectedCell.dataset.row);
+                const c = parseInt(selectedCell.dataset.col);
+                let nr = r, nc = c;
+                if (e.key === 'ArrowUp')    nr = Math.max(0, r - 1);
+                if (e.key === 'ArrowDown')  nr = Math.min(8, r + 1);
+                if (e.key === 'ArrowLeft')  nc = Math.max(0, c - 1);
+                if (e.key === 'ArrowRight') nc = Math.min(8, c + 1);
+                const next = document.querySelector(`.cell[data-row="${nr}"][data-col="${nc}"]`);
+                if (next) selectCell(next);
+            }
         });
 
+        // ── COMPROVAR ─────────────────────────────────────────────────────────
         function checkSolution() {
             const cells = document.querySelectorAll('.cell.user-input');
             let errors = 0, filled = 0;
             cells.forEach(cell => {
                 const r = parseInt(cell.dataset.row), c = parseInt(cell.dataset.col);
                 const val = parseInt(cell.textContent);
-                if (cell.textContent !== '') {
+                if (cell.textContent && !cell.classList.contains('has-notes') && val > 0) {
                     filled++;
                     if (val !== solution[r][c]) { cell.classList.add('error'); errors++; }
                     else cell.classList.remove('error');
@@ -428,11 +756,41 @@
                 msg.textContent = `Tens ${errors} error${errors>1?'s':''}. Continua!`;
                 msg.style.color = '#dc2626';
             } else if (filled === cells.length) {
+                stopTimer();
                 msg.textContent = '🎉 Felicitats! Sudoku completat!';
                 msg.style.color = '#16a34a';
+                mostrarVictoria();
             } else {
                 msg.textContent = 'De moment tot correcte, però no has acabat.';
                 msg.style.color = '#2563eb';
+            }
+        }
+
+        function mostrarVictoria() {
+            const difNom = { easy: 'Fàcil', medium: 'Mitjà', hard: 'Difícil' };
+            document.getElementById('modal-temps-text').textContent =
+                `Temps: ${formatTime(timerSeconds)}`;
+            document.getElementById('modal-body').textContent =
+                `Dificultat: ${difNom[currentDifficulty]} · Pistes usades: ${3 - pistes}/3`;
+            document.getElementById('modal-victora').classList.add('actiu');
+            llençarConfeti();
+        }
+
+        function llençarConfeti() {
+            const cont = document.getElementById('confeti');
+            cont.innerHTML = '';
+            const cs = ['#2563eb','#16a34a','#f59e0b','#dc2626','#7c3aed'];
+            for (let i = 0; i < 40; i++) {
+                const p = document.createElement('div');
+                p.className = 'confeti-p';
+                p.style.left = Math.random()*100 + 'vw';
+                p.style.width = p.style.height = (6 + Math.random()*8) + 'px';
+                p.style.backgroundColor = cs[Math.floor(Math.random()*cs.length)];
+                p.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                p.style.animationDuration = (1.5 + Math.random()*2) + 's';
+                p.style.animationDelay = Math.random()*0.6 + 's';
+                cont.appendChild(p);
+                p.addEventListener('animationend', () => p.remove());
             }
         }
 

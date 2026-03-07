@@ -8,7 +8,6 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
-/* ── LAYOUT FIX: cap pantalla fa scroll ── */
 html,body{
   font-family:'Montserrat',sans-serif;
   background:#f1f5f9;color:#334155;
@@ -23,120 +22,190 @@ header{
   padding:0 12px;height:48px;flex-shrink:0;
   display:flex;align-items:center;justify-content:space-between;
   position:relative;z-index:50;
+  transition:background .5s;
 }
 .hd-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:white;z-index:1;}
 .hd-title{position:absolute;left:50%;transform:translateX(-50%);font-size:.88rem;font-weight:800;white-space:nowrap;pointer-events:none;}
 .hd-right{display:flex;align-items:center;gap:6px;z-index:1;}
-.hd-badge{background:rgba(255,255,255,.12);padding:3px 9px;border-radius:20px;font-size:.75rem;font-weight:700;}
+.hd-badge{background:rgba(255,255,255,.12);padding:3px 9px;border-radius:20px;font-size:.75rem;font-weight:700;cursor:pointer;transition:background .2s;}
+.hd-badge:hover{background:rgba(255,255,255,.22);}
 .hd-temps{background:rgba(239,68,68,.25);padding:3px 9px;border-radius:20px;font-size:.8rem;font-weight:900;color:#fca5a5;display:none;}
 .hd-temps.urg{background:rgba(239,68,68,.6);color:white;animation:blink .6s infinite;}
+.hd-rang{font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:20px;display:none;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
 
 /* ── ÀREA SCROLLABLE ── */
-.scroll-area{
-  flex:1;overflow-y:auto;overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-}
+.scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
 .scroll-area::-webkit-scrollbar{width:4px;}
 .scroll-area::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px;}
 
 /* ── FOOTER ── */
-footer{
-  background:#1e293b;color:#94a3b8;
-  text-align:center;padding:6px;
-  font-size:.65rem;font-weight:600;flex-shrink:0;
-}
+footer{background:#1e293b;color:#94a3b8;text-align:center;padding:6px;font-size:.65rem;font-weight:600;flex-shrink:0;}
 footer a{color:#94a3b8;text-decoration:none;}
 
 /* ── PANTALLES ── */
-.pagina{max-width:560px;margin:0 auto;padding:14px 12px 16px;display:none;flex-direction:column;gap:12px;animation:pop .28s ease;}
+.pagina{max-width:560px;margin:0 auto;padding:14px 12px 16px;display:none;flex-direction:column;gap:12px;}
 .pagina.activa{display:flex;}
-@keyframes pop{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── TRANSICIONS ── */
+.fade-in{animation:fadeSlide .35s cubic-bezier(.22,1,.36,1) both;}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pop{from{opacity:0;transform:scale(.88);}to{opacity:1;transform:scale(1);}}
+@keyframes shake{0%,100%{transform:translateX(0);}25%,75%{transform:translateX(-5px);}50%{transform:translateX(5px);}}
+@keyframes bal{0%,100%{transform:rotate(-5deg);}50%{transform:rotate(5deg);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+@keyframes pulsar{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
 
 /* ── INICI ── */
 .hero{text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 0 4px;}
 .hero-em{font-size:3.2rem;}
 .hero-tit{font-size:1.4rem;font-weight:900;color:#1e293b;line-height:1.2;}
 .hero-sub{font-size:.78rem;font-weight:600;color:#64748b;line-height:1.55;max-width:360px;}
+
+/* Carta de l'Albert */
+.carta-albert{background:#fef3c7;border:2px solid #fde68a;border-radius:12px;padding:14px 16px;font-size:.8rem;font-weight:600;color:#78350f;line-height:1.7;position:relative;font-style:italic;}
+.carta-albert::before{content:'✉️ Carta de l\'Oncle Albert';display:block;font-style:normal;font-size:.58rem;font-weight:900;text-transform:uppercase;letter-spacing:.7px;color:#b45309;margin-bottom:8px;}
+.carta-albert .firma{display:block;margin-top:10px;font-weight:800;font-style:normal;text-align:right;}
+
+/* Toggle Zen */
+.zen-toggle{display:flex;align-items:center;justify-content:space-between;background:white;border-radius:10px;padding:10px 14px;box-shadow:0 2px 6px rgba(0,0,0,.06);}
+.zen-lbl{font-size:.8rem;font-weight:700;color:#334155;}
+.zen-lbl span{font-size:.7rem;color:#64748b;font-weight:600;display:block;margin-top:1px;}
+.toggle-sw{width:44px;height:26px;background:#e2e8f0;border-radius:99px;cursor:pointer;position:relative;transition:background .2s;border:none;flex-shrink:0;}
+.toggle-sw.on{background:#2563eb;}
+.toggle-sw::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:white;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.toggle-sw.on::after{left:21px;}
+
 .card{background:white;border-radius:12px;padding:12px 14px;box-shadow:0 2px 6px rgba(0,0,0,.07);}
 .card h3{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#2563eb;margin-bottom:6px;}
 .card ul{padding-left:14px;display:flex;flex-direction:column;gap:3px;}
 .card li{font-size:.77rem;font-weight:600;color:#475569;line-height:1.4;}
-.estat-ant{background:#eff6ff;border:2px solid #bfdbfe;border-radius:10px;padding:8px 12px;font-size:.78rem;font-weight:700;color:#1d4ed8;text-align:center;display:none;}
-.btn-ppal{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1rem;background:#2563eb;color:white;border:none;border-radius:12px;padding:14px;cursor:pointer;width:100%;box-shadow:0 4px 0 #1d4ed8;-webkit-tap-highlight-color:transparent;}
+.estat-ant{background:#eff6ff;border:2px solid #bfdbfe;border-radius:10px;padding:8px 12px;font-size:.78rem;font-weight:700;color:#1d4ed8;text-align:center;}
+.btn-ppal{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1rem;background:#2563eb;color:white;border:none;border-radius:12px;padding:14px;cursor:pointer;width:100%;box-shadow:0 4px 0 #1d4ed8;-webkit-tap-highlight-color:transparent;transition:opacity .15s;}
 .btn-ppal:active{transform:translateY(4px);box-shadow:none;}
+.btn-ppal:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+/* ── DIFICULTAT ── */
+.dif-tit{font-size:1.1rem;font-weight:900;color:#1e293b;text-align:center;}
+.dif-sub{font-size:.78rem;font-weight:600;color:#64748b;text-align:center;line-height:1.5;}
+.dif-grid{display:flex;flex-direction:column;gap:10px;}
+.dif-card{background:white;border:2.5px solid #e2e8f0;border-radius:14px;padding:14px 16px;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;gap:14px;}
+.dif-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.1);}
+.dif-card:active{transform:scale(.97);}
+.dif-card.sel{border-width:3px;}
+.dif-em{font-size:2rem;flex-shrink:0;}
+.dif-info{flex:1;}
+.dif-nom{font-size:.95rem;font-weight:900;color:#1e293b;}
+.dif-desc{font-size:.72rem;font-weight:600;color:#64748b;margin-top:3px;line-height:1.4;}
+.dif-pills{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;}
+.pill{font-size:.6rem;font-weight:800;padding:2px 8px;border-radius:99px;}
 
 /* ── MAPA ── */
 .mapa-info{text-align:center;font-size:.78rem;font-weight:700;color:#64748b;}
 .inv-zona{background:white;border-radius:12px;padding:10px 12px;box-shadow:0 2px 6px rgba(0,0,0,.07);}
 .inv-tit{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#94a3b8;margin-bottom:6px;}
 .inv-items{display:flex;flex-wrap:wrap;gap:6px;min-height:24px;}
-.inv-item{background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;color:#334155;animation:pop .25s ease;}
+.inv-item{background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;color:#334155;cursor:pointer;transition:all .15s;}
+.inv-item:hover{background:#e0f2fe;border-color:#7dd3fc;color:#0c4a6e;}
 .inv-buit{font-size:.72rem;font-weight:600;color:#cbd5e1;font-style:italic;}
 .sales-tit{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#94a3b8;text-align:center;}
 .mapa-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+/* Sales amb colors */
 .sala-card{background:white;border-radius:12px;padding:12px 10px;box-shadow:0 2px 6px rgba(0,0,0,.07);border:2px solid #e2e8f0;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent;}
-.sala-card.disp:hover{border-color:#2563eb;box-shadow:0 4px 14px rgba(37,99,235,.15);}
+.sala-card.disp:hover{box-shadow:0 4px 14px rgba(0,0,0,.15);transform:translateY(-2px);}
 .sala-card.disp:active{transform:scale(.97);}
-.sala-card.comp{border-color:#22c55e;background:#f0fdf4;pointer-events:none;}
+.sala-card.comp{pointer-events:none;}
 .sala-card.bloq{opacity:.4;pointer-events:none;}
 .sala-card.final-c{grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:10px;}
+.sala-card[data-sala="sala"].disp:hover{border-color:#3b82f6;}
+.sala-card[data-sala="bibli"].disp:hover{border-color:#d97706;}
+.sala-card[data-sala="lab"].disp:hover{border-color:#16a34a;}
+.sala-card[data-sala="final"].disp:hover{border-color:#a855f7;}
+.sala-card[data-sala="secret"].disp:hover{border-color:#ec4899;}
+.sala-card.comp[data-sala="sala"]{border-color:#3b82f6;background:#eff6ff;}
+.sala-card.comp[data-sala="bibli"]{border-color:#d97706;background:#fef3c7;}
+.sala-card.comp[data-sala="lab"]{border-color:#16a34a;background:#f0fdf4;}
+.sala-card.comp[data-sala="final"]{border-color:#a855f7;background:#faf5ff;}
+.sala-card.comp[data-sala="secret"]{border-color:#ec4899;background:#fdf2f8;}
 .sala-em{font-size:1.8rem;}
 .sala-nom{font-size:.72rem;font-weight:800;color:#1e293b;text-align:center;}
 .sala-desc{font-size:.6rem;font-weight:600;color:#64748b;text-align:center;line-height:1.3;}
+
+/* Barra de progrés per sala */
+.sala-prog{width:100%;height:5px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin-top:2px;}
+.sala-prog-bar{height:100%;border-radius:99px;transition:width .5s ease;}
+
 .s-badge{font-size:.56rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:20px;}
 .sb-lliure{background:rgba(37,99,235,.1);color:#2563eb;}
 .sb-pend{background:rgba(251,191,36,.15);color:#b45309;}
 .sb-fet{background:rgba(34,197,94,.15);color:#16a34a;}
 .sb-bloq{background:rgba(100,116,139,.1);color:#64748b;}
+.sb-secret{background:rgba(236,72,153,.15);color:#9d174d;}
 .mapa-peu{font-size:.68rem;font-weight:700;color:#94a3b8;text-align:center;}
+
+/* ── MISSATGE NARRATIU ── */
+.narr-box{background:#1e293b;color:#e2e8f0;border-radius:12px;padding:14px 16px;font-size:.8rem;font-weight:600;line-height:1.7;font-style:italic;position:relative;animation:fadeSlide .5s ease;}
+.narr-box::before{content:'📖 Descoberta';display:block;font-style:normal;font-size:.55rem;font-weight:900;text-transform:uppercase;letter-spacing:.7px;color:#60a5fa;margin-bottom:6px;}
+.narr-sala::before{content:'🚪 Entres a la sala';}
 
 /* ── ENIGMA ── */
 .e-nav{display:flex;align-items:center;justify-content:space-between;}
 .btn-back{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.78rem;background:#f1f5f9;color:#334155;border:2px solid #e2e8f0;border-radius:8px;padding:6px 12px;cursor:pointer;}
 .btn-saltar{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.78rem;background:#fef9c3;color:#854d0e;border:2px solid #fde68a;border-radius:8px;padding:6px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .e-prog{font-size:.68rem;font-weight:700;color:#94a3b8;}
-.e-cap{background:#1e293b;color:white;border-radius:10px 10px 0 0;padding:10px 14px;display:flex;align-items:center;gap:8px;}
+.e-cap{color:white;border-radius:10px 10px 0 0;padding:10px 14px;display:flex;align-items:center;gap:8px;transition:background .4s;}
 .e-tit{font-size:.8rem;font-weight:800;flex:1;}
-.e-num{background:#2563eb;border-radius:20px;padding:2px 9px;font-size:.68rem;font-weight:900;white-space:nowrap;}
-.e-cos{background:white;border-radius:0 0 10px 10px;border-left:4px solid #2563eb;padding:12px 14px;font-size:.84rem;font-weight:600;color:#334155;line-height:1.6;}
+.e-num{border-radius:20px;padding:2px 9px;font-size:.68rem;font-weight:900;white-space:nowrap;background:rgba(255,255,255,.2);}
+.e-cos{background:white;border-radius:0 0 10px 10px;padding:12px 14px;font-size:.84rem;font-weight:600;color:#334155;line-height:1.6;border-left:4px solid #2563eb;transition:border-color .4s;}
 .e-cos em{color:#7c3aed;font-style:normal;font-weight:800;}
+/* Accent colors per sala */
+.e-cos.sala-sala{border-left-color:#3b82f6;}
+.e-cos.sala-bibli{border-left-color:#d97706;}
+.e-cos.sala-lab{border-left-color:#16a34a;}
+.e-cos.sala-final{border-left-color:#a855f7;}
+.e-cos.sala-secret{border-left-color:#ec4899;}
+.e-cap.sala-sala{background:#1d4ed8;}
+.e-cap.sala-bibli{background:#92400e;}
+.e-cap.sala-lab{background:#15803d;}
+.e-cap.sala-final{background:#6b21a8;}
+.e-cap.sala-secret{background:#9d174d;}
 
-/* Bloc codi */
+/* Codis, Morse, Qwerty */
 .codi-bloc{background:#1e293b;color:#4ade80;font-family:monospace;font-size:.95rem;font-weight:700;border-radius:8px;padding:8px 12px;margin:8px 0;letter-spacing:2px;word-break:break-all;line-height:1.7;user-select:all;}
-
-/* Morse: cel·les grans */
 .morse-grid{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
 .morse-lletra{display:flex;flex-direction:column;align-items:center;gap:3px;background:#0f172a;border-radius:8px;padding:6px 8px;min-width:44px;}
 .morse-sims{display:flex;gap:3px;align-items:center;min-height:18px;}
 .m-punt{width:10px;height:10px;border-radius:50%;background:#4ade80;flex-shrink:0;}
 .m-ratlla{width:24px;height:10px;border-radius:5px;background:#4ade80;flex-shrink:0;}
 .morse-sep{width:2px;height:32px;background:#1e293b;flex-shrink:0;align-self:center;}
-
-/* Qwerty taula */
 .qwerty-ref{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:8px 10px;margin:8px 0;}
 .qwerty-tit{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#64748b;margin-bottom:5px;}
 .qwerty-fila{display:flex;gap:4px;margin-bottom:3px;flex-wrap:wrap;}
 .q-key{background:#e2e8f0;border-radius:4px;padding:2px 5px;font-size:.7rem;font-weight:800;color:#1e293b;font-family:monospace;white-space:nowrap;}
 .q-key span{color:#2563eb;}
-
-/* Quadrat màgic */
 .qmagic{display:grid;grid-template-columns:repeat(3,40px);gap:4px;margin:8px auto;width:fit-content;}
 .qcell{width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-weight:900;border-radius:6px;font-size:.95rem;}
 .qcell.dark{background:#1e293b;color:white;}
-.qcell.acc{background:#2563eb;color:white;}
+.qcell.acc{background:#7c3aed;color:white;}
+
+/* Teclat telèfon */
+.telef-ref{background:#1e293b;border-radius:8px;padding:10px;margin:8px 0;}
+.telef-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
+.telef-key{background:#334155;border-radius:6px;padding:6px 4px;text-align:center;}
+.telef-num{font-size:1.1rem;font-weight:900;color:white;font-family:monospace;line-height:1;}
+.telef-llet{font-size:.55rem;font-weight:700;color:#94a3b8;letter-spacing:.5px;}
 
 /* Req zona */
 .req-zona{background:#fef9c3;border:1.5px solid #fde68a;border-radius:8px;padding:7px 10px;font-size:.76rem;font-weight:700;color:#78350f;display:none;}
 
-/* Pregunta / input */
+/* Pregunta/input */
 .e-preg{font-size:.86rem;font-weight:700;color:#1e293b;line-height:1.5;}
 .inp-zona{display:flex;gap:7px;}
 .inp-r{font-family:'Montserrat',sans-serif;flex:1;padding:11px 12px;font-size:1.05rem;font-weight:800;border:2px solid #e2e8f0;border-radius:10px;color:#1e293b;background:white;outline:none;transition:border-color .2s;text-transform:uppercase;letter-spacing:2px;}
 .inp-r:focus{border-color:#2563eb;}
 .inp-r.ok{border-color:#22c55e;}
 .inp-r.err{border-color:#ef4444;animation:shake .32s ease;}
-@keyframes shake{0%,100%{transform:translateX(0);}25%,75%{transform:translateX(-5px);}50%{transform:translateX(5px);}}
 .btn-ok{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1rem;background:#2563eb;color:white;border:none;border-radius:10px;padding:0 16px;cursor:pointer;box-shadow:0 3px 0 #1d4ed8;min-height:48px;-webkit-tap-highlight-color:transparent;}
 .btn-ok:active{transform:translateY(3px);box-shadow:none;}
 .btn-ok:disabled{background:#94a3b8;box-shadow:0 3px 0 #64748b;cursor:not-allowed;transform:none;}
@@ -155,25 +224,10 @@ footer a{color:#94a3b8;text-decoration:none;}
 .fb.err{background:#fee2e2;color:#991b1b;border:2px solid #fca5a5;}
 .fb.pis{background:#fef9c3;color:#854d0e;border:2px solid #fde68a;}
 .fb.ok{background:#dcfce7;color:#14532d;border:2px solid #86efac;}
-
 .btn-seg{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;background:#22c55e;color:white;border:none;border-radius:10px;padding:12px;cursor:pointer;width:100%;box-shadow:0 4px 0 #16a34a;display:none;animation:pop .2s ease;-webkit-tap-highlight-color:transparent;}
 .btn-seg:active{transform:translateY(4px);box-shadow:none;}
 
-/* FINAL / GAMEOVER */
-.fin-hero{text-align:center;padding:12px 6px 4px;display:flex;flex-direction:column;align-items:center;gap:8px;}
-.fin-em{font-size:3.5rem;animation:bal 2.5s ease infinite;}
-@keyframes bal{0%,100%{transform:rotate(-5deg);}50%{transform:rotate(5deg);}}
-.fin-tit{font-size:1.5rem;font-weight:900;color:#1e293b;}
-.fin-sub{font-size:.82rem;font-weight:600;color:#64748b;line-height:1.55;max-width:360px;}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.stat{background:white;border-radius:10px;padding:12px 8px;box-shadow:0 2px 6px rgba(0,0,0,.07);text-align:center;display:flex;flex-direction:column;gap:3px;}
-.stat-n{font-size:1.7rem;font-weight:900;color:#2563eb;}
-.stat-l{font-size:.58rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;}
-.fin-nota{background:#fef9c3;border:2px solid #fde68a;border-radius:10px;padding:12px;font-size:.82rem;font-weight:600;color:#78350f;line-height:1.6;text-align:center;}
-.btn-sec{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;background:#334155;color:white;border:none;border-radius:10px;padding:12px;cursor:pointer;width:100%;box-shadow:0 4px 0 #1e293b;-webkit-tap-highlight-color:transparent;}
-.btn-sec:active{transform:translateY(4px);box-shadow:none;}
-
-#cv{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100;}
+/* César interactiu */
 .cesar-selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0;}
 .cesar-col{display:flex;flex-direction:column;align-items:center;gap:4px;}
 .cesar-xif{font-size:.7rem;font-weight:700;color:#94a3b8;font-family:monospace;letter-spacing:1px;}
@@ -181,13 +235,51 @@ footer a{color:#94a3b8;text-decoration:none;}
 .cesar-btn:active{background:#dbeafe;border-color:#2563eb;}
 .cesar-lletra{width:48px;height:52px;background:#1e293b;color:#4ade80;font-family:monospace;font-size:1.5rem;font-weight:900;border-radius:8px;display:flex;align-items:center;justify-content:center;border:2px solid #334155;transition:background .15s;}
 .cesar-lletra.ok{background:#166534;color:#4ade80;}
-.cesar-ok-btn{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1rem;background:#2563eb;color:white;border:none;border-radius:10px;padding:12px;cursor:pointer;width:100%;box-shadow:0 3px 0 #1d4ed8;margin-top:4px;}
+
+/* ── MODAL INVENTARI ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.vis{display:flex;}
+.modal-box{background:white;border-radius:16px;padding:20px 18px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:pop .25s ease;}
+.modal-tit{font-size:1rem;font-weight:900;color:#1e293b;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.modal-sub{font-size:.75rem;font-weight:600;color:#64748b;margin-bottom:14px;line-height:1.5;}
+.modal-desc{background:#f8fafc;border-radius:8px;padding:10px 12px;font-size:.8rem;font-weight:600;color:#334155;line-height:1.6;font-style:italic;border-left:3px solid #2563eb;}
+.btn-tancar{font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:800;background:#1e293b;color:white;border:none;border-radius:10px;padding:11px;width:100%;cursor:pointer;margin-top:14px;}
+.btn-tancar:hover{background:#334155;}
+
+/* ── FINAL / GAMEOVER ── */
+.fin-hero{text-align:center;padding:12px 6px 4px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.fin-em{font-size:3.5rem;animation:bal 2.5s ease infinite;}
+.fin-tit{font-size:1.5rem;font-weight:900;color:#1e293b;}
+.fin-sub{font-size:.82rem;font-weight:600;color:#64748b;line-height:1.55;max-width:360px;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.stat{background:white;border-radius:10px;padding:12px 8px;box-shadow:0 2px 6px rgba(0,0,0,.07);text-align:center;display:flex;flex-direction:column;gap:3px;}
+.stat-n{font-size:1.7rem;font-weight:900;color:#2563eb;}
+.stat-l{font-size:.58rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;}
+
+/* Rang gran */
+.rang-gran{background:linear-gradient(135deg,#1e293b,#334155);border-radius:14px;padding:16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.rang-em{font-size:2.8rem;animation:pulsar 2s ease infinite;}
+.rang-nom{font-size:1.1rem;font-weight:900;color:white;}
+.rang-desc{font-size:.72rem;font-weight:600;color:#94a3b8;line-height:1.5;max-width:280px;}
+
+.fin-nota{background:#fef9c3;border:2px solid #fde68a;border-radius:10px;padding:12px;font-size:.82rem;font-weight:600;color:#78350f;line-height:1.6;text-align:center;}
+.btn-sec{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;background:#334155;color:white;border:none;border-radius:10px;padding:12px;cursor:pointer;width:100%;box-shadow:0 4px 0 #1e293b;-webkit-tap-highlight-color:transparent;}
+.btn-sec:active{transform:translateY(4px);box-shadow:none;}
+.btn-compartir{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.85rem;background:#0ea5e9;color:white;border:none;border-radius:10px;padding:11px;cursor:pointer;width:100%;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-compartir:hover{background:#0284c7;}
+.btn-compartir:active{opacity:.8;}
+
+/* Secret room badge especial */
+.secret-avís{background:linear-gradient(135deg,#831843,#9d174d);border-radius:12px;padding:12px 14px;color:white;font-size:.78rem;font-weight:700;line-height:1.5;text-align:center;display:none;}
+.secret-avís.vis{display:block;animation:fadeSlide .5s ease;}
+
+#cv{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100;}
 </style>
 </head>
 <body>
 <canvas id="cv"></canvas>
 
-<header>
+<header id="header">
   <a class="hd-logo" href="https://ja.cat/appgobo" target="_self">
     <svg width="30" height="30" viewBox="0 0 40 46" fill="none">
       <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
@@ -197,62 +289,120 @@ footer a{color:#94a3b8;text-decoration:none;}
   </a>
   <span class="hd-title">L'Oncle Albert</span>
   <div class="hd-right">
+    <div class="hd-rang" id="hdr-rang"></div>
     <div class="hd-temps" id="hdr-t">⏱ <span id="hdr-ts">–</span></div>
-    <div class="hd-badge" id="hdr-inv" style="display:none;">🎒 <span id="hdr-in">0</span></div>
+    <div class="hd-badge" id="hdr-inv" style="display:none;" onclick="obrirInventariModal()">🎒 <span id="hdr-in">0</span></div>
   </div>
 </header>
 
 <div class="scroll-area" id="scroll-area">
 
 <!-- ════ INICI ════ -->
-<div class="pagina activa" id="pg-inici">
+<div class="pagina activa fade-in" id="pg-inici">
   <div class="hero">
     <div class="hero-em">🔍</div>
     <div class="hero-tit">El Misteri de<br>l'Oncle Albert</div>
-    <div class="hero-sub">L'Oncle Albert era criptògraf. Va deixar el seu despatx com un laberint d'enigmes. Explora les habitacions, desxifra els codis i combina els objectes que trobaràs per obrir la caixa forta.</div>
+    <div class="hero-sub">Una aventura de criptografia i lògica. Explora les habitacions, resol els enigmes i descobreix el secret de l'Albert.</div>
+  </div>
+  <div class="carta-albert">
+    Si esteu llegint això, és que heu trobat el meu escriptori tal com el vaig deixar. No és un accident. Tot el que necessiteu per obrir la caixa forta és a les tres habitacions d'aquesta casa. Cadascun dels enigmes que hi trobareu us donarà una peça. Combineu-les amb intel·ligència.
+    <span class="firma">— Albert, criptògraf</span>
   </div>
   <div class="card">
     <h3>Com es juga</h3>
     <ul>
-      <li>🗺️ Explora <strong>3 habitacions</strong> lliurement (10 enigmes en total).</li>
-      <li>⏱️ Cada enigma té compte enrere. Si s'acaba, perds 1 vida.</li>
-      <li>❤️ Tens <strong>5 vides</strong> per a tota la partida.</li>
-      <li>🔦 Pots demanar pista en qualsevol moment: costa <strong>1 vida</strong>.</li>
-      <li>🎒 Recull objectes i <strong>combina'ls</strong> per al repte final.</li>
-      <li>🔀 Enigmes i números <strong>aleatoris</strong> a cada partida.</li>
+      <li>🗺️ Explora <strong>3 habitacions</strong> lliurement. 10 enigmes en total.</li>
+      <li>⏱️ Cada enigma té compte enrere (menys en mode Zen).</li>
+      <li>❤️ Tens vides: si n'esgotes, s'acaba la partida.</li>
+      <li>🔦 Les pistes costen vides. Pensa bé abans de demanar-les.</li>
+      <li>🎒 Recull objectes i combina'ls per al repte final.</li>
+      <li>🌸 Si acabes sense pistes, s'obre una <strong>sala secreta</strong>.</li>
     </ul>
+  </div>
+  <div class="zen-toggle">
+    <div class="zen-lbl">
+      Mode Zen 🧘
+      <span>Sense compte enrere. Juga al teu ritme.</span>
+    </div>
+    <button class="toggle-sw" id="zen-sw" onclick="toggleZen()" aria-label="Mode Zen"></button>
   </div>
   <div class="estat-ant" id="estat-ant" style="display:none;">
     <div style="margin-bottom:8px;">📌 Tens una partida guardada</div>
     <div style="display:flex;gap:8px;flex-direction:column;">
-      <button class="btn-ppal" id="btn-reprendre" onclick="reprendre()" style="background:#22c55e;box-shadow:0 4px 0 #16a34a;">↩ Reprendre la partida</button>
-      <button class="btn-sec" id="btn-nova" onclick="novaPartida()" style="font-size:.85rem;padding:11px;">✨ Començar una nova partida</button>
+      <button class="btn-ppal" onclick="reprendre()" style="background:#22c55e;box-shadow:0 4px 0 #16a34a;">↩ Reprendre la partida</button>
+      <button class="btn-sec" onclick="novaPartida()" style="font-size:.85rem;padding:11px;">✨ Comenzar una nova partida</button>
     </div>
   </div>
-  <button class="btn-ppal" id="btn-comecar" onclick="comecar()">Comença l'aventura →</button>
+  <button class="btn-ppal" id="btn-comecar" onclick="mostrarDificultat()">Comença l'aventura →</button>
+</div>
+
+<!-- ════ DIFICULTAT ════ -->
+<div class="pagina fade-in" id="pg-dificultat">
+  <div class="dif-tit">🕵️ Escull el teu nivell</div>
+  <div class="dif-sub">Quin tipus de detectiu ets?</div>
+  <div class="dif-grid">
+    <div class="dif-card" onclick="triarDificultat('aprenent')" data-d="aprenent">
+      <div class="dif-em">🌱</div>
+      <div class="dif-info">
+        <div class="dif-nom" style="color:#16a34a;">Aprenent</div>
+        <div class="dif-desc">Per a qui explora per primer cop els enigmes de l'Albert. Temps generós i pistes gratuïtes.</div>
+        <div class="dif-pills">
+          <span class="pill" style="background:#dcfce7;color:#15803d;">7 vides</span>
+          <span class="pill" style="background:#dcfce7;color:#15803d;">+30% temps</span>
+          <span class="pill" style="background:#dcfce7;color:#15803d;">Pistes gratuïtes</span>
+        </div>
+      </div>
+    </div>
+    <div class="dif-card sel" onclick="triarDificultat('normal')" data-d="normal" style="border-color:#2563eb;">
+      <div class="dif-em">🔎</div>
+      <div class="dif-info">
+        <div class="dif-nom" style="color:#2563eb;">Inspector</div>
+        <div class="dif-desc">L'experiència clàssica tal com l'Albert la va dissenyar. Ni massa fàcil ni massa difícil.</div>
+        <div class="dif-pills">
+          <span class="pill" style="background:#dbeafe;color:#1d4ed8;">5 vides</span>
+          <span class="pill" style="background:#dbeafe;color:#1d4ed8;">Temps normal</span>
+          <span class="pill" style="background:#dbeafe;color:#1d4ed8;">Pista: −1 vida</span>
+        </div>
+      </div>
+    </div>
+    <div class="dif-card" onclick="triarDificultat('detectiu')" data-d="detectiu">
+      <div class="dif-em">🧠</div>
+      <div class="dif-info">
+        <div class="dif-nom" style="color:#dc2626;">Detectiu Expert</div>
+        <div class="dif-desc">Per als qui ja coneixen l'Albert. Menys temps, menys vides, pistes molt costoses.</div>
+        <div class="dif-pills">
+          <span class="pill" style="background:#fee2e2;color:#991b1b;">3 vides</span>
+          <span class="pill" style="background:#fee2e2;color:#991b1b;">−25% temps</span>
+          <span class="pill" style="background:#fee2e2;color:#991b1b;">Pista: −2 vides</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-ppal" id="btn-comencar-dif" onclick="comecar()">Comencem! →</button>
 </div>
 
 <!-- ════ MAPA ════ -->
-<div class="pagina" id="pg-mapa">
+<div class="pagina fade-in" id="pg-mapa">
   <div class="mapa-info" id="mapa-info">Tria una habitació per explorar</div>
   <div class="inv-zona">
-    <div class="inv-tit">🎒 Inventari</div>
+    <div class="inv-tit">🎒 Inventari <span style="font-weight:600;font-size:.55rem;color:#94a3b8;">(clica un objecte per veure'n la història)</span></div>
     <div class="inv-items" id="inv-items"><span class="inv-buit">Encara no tens cap objecte</span></div>
   </div>
   <div class="sales-tit">— Habitacions —</div>
   <div class="mapa-grid" id="mapa-grid"></div>
+  <div class="secret-avís" id="secret-avis">🌸 <strong>Sala Secreta desblocada!</strong> Has resolt tots els enigmes sense demanar cap pista. L'Albert ha deixat una cambra amagada per a tu.</div>
   <div class="mapa-peu" id="mapa-peu"></div>
 </div>
 
 <!-- ════ ENIGMA ════ -->
-<div class="pagina" id="pg-enigma">
+<div class="pagina fade-in" id="pg-enigma">
   <div class="e-nav">
     <button class="btn-back" onclick="tornarMapa()">← Mapa</button>
     <span class="e-prog" id="e-prog">–</span>
-    <button class="btn-saltar" onclick="saltarEnigma()" id="btn-saltar">⏭ Deixar per més tard</button>
+    <button class="btn-saltar" onclick="saltarEnigma()" id="btn-saltar">⏭ Més tard</button>
   </div>
   <div>
-    <div class="e-cap">
+    <div class="e-cap" id="e-cap">
       <span id="ee">🔍</span>
       <span class="e-tit" id="et">–</span>
       <span class="e-num" id="en">–</span>
@@ -268,20 +418,18 @@ footer a{color:#94a3b8;text-decoration:none;}
     <button class="btn-ok" id="btn-ok" onclick="comprova()">→</button>
   </div>
   <div class="meta">
-    <div class="vides-zona">
+    <div class="vides-zona" id="vides-zona">
       <span class="vl">Vides:</span>
-      <span class="vida" id="v1">❤️</span><span class="vida" id="v2">❤️</span>
-      <span class="vida" id="v3">❤️</span><span class="vida" id="v4">❤️</span>
-      <span class="vida" id="v5">❤️</span>
     </div>
-    <button class="btn-pista" id="btn-pista" onclick="demanaPista()">🔦 Pista (−1❤️)</button>
+    <button class="btn-pista" id="btn-pista" onclick="demanaPista()">🔦 Pista</button>
   </div>
   <div class="fb" id="fb"></div>
+  <div class="narr-box" id="narr-enigma" style="display:none;"></div>
   <button class="btn-seg" id="btn-seg" onclick="seguentAccio()">–</button>
 </div>
 
 <!-- ════ GAME OVER ════ -->
-<div class="pagina" id="pg-go">
+<div class="pagina fade-in" id="pg-go">
   <div class="fin-hero">
     <div class="fin-em" style="animation:none;">💀</div>
     <div class="fin-tit">Sense vides</div>
@@ -292,11 +440,16 @@ footer a{color:#94a3b8;text-decoration:none;}
 </div>
 
 <!-- ════ FINAL ════ -->
-<div class="pagina" id="pg-final">
+<div class="pagina fade-in" id="pg-final">
   <div class="fin-hero">
     <div class="fin-em">📦</div>
     <div class="fin-tit">Misteri resolt!</div>
-    <div class="fin-sub">Has obert la caixa forta de l'Oncle Albert i descobert el seu tresor més preuat.</div>
+    <div class="fin-sub" id="fin-revelacio">–</div>
+  </div>
+  <div class="rang-gran" id="rang-gran">
+    <div class="rang-em" id="fin-rang-em">🔎</div>
+    <div class="rang-nom" id="fin-rang-nom">–</div>
+    <div class="rang-desc" id="fin-rang-desc">–</div>
   </div>
   <div class="stats">
     <div class="stat"><span class="stat-n" id="fn-e">–</span><span class="stat-l">Enigmes</span></div>
@@ -304,15 +457,27 @@ footer a{color:#94a3b8;text-decoration:none;}
     <div class="stat"><span class="stat-n" id="fn-v">–</span><span class="stat-l">Vides</span></div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-    <div class="stat"><span class="stat-n" id="fn-temps">–</span><span class="stat-l">Temps partida</span></div>
+    <div class="stat"><span class="stat-n" id="fn-temps">–</span><span class="stat-l">Temps</span></div>
     <div class="stat" style="border:2px solid #fde68a;"><span class="stat-n" id="fn-rec" style="color:#f59e0b;">–</span><span class="stat-l">⏱ Rècord</span></div>
     <div class="stat"><span class="stat-n" id="fn-nparts">–</span><span class="stat-l">Partides</span></div>
   </div>
   <div class="fin-nota" id="fin-nota">–</div>
+  <button class="btn-compartir" onclick="compartirResultat()">📤 Compartir resultat</button>
   <button class="btn-sec" onclick="reiniciar()">↺ Tornar a jugar</button>
 </div>
 
 </div><!-- fi scroll-area -->
+
+<!-- MODAL INVENTARI -->
+<div class="modal-overlay" id="modal-inv">
+  <div class="modal-box">
+    <div class="modal-tit" id="minv-tit">–</div>
+    <div class="modal-sub" id="minv-sub">–</div>
+    <div class="modal-desc" id="minv-desc">–</div>
+    <button class="btn-tancar" onclick="tancarModalInv()">Tanca</button>
+  </div>
+</div>
+
 <footer>Una aplicació de <a href="https://ja.cat/appgobo" target="_self">Gobo26</a></footer>
 
 <script>
@@ -321,6 +486,7 @@ footer a{color:#94a3b8;text-decoration:none;}
 // ════════════════════════════════════════
 const AC=(()=>{try{return new(window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}})();
 document.addEventListener('pointerdown',()=>{if(AC&&AC.state==='suspended')AC.resume();},{once:true});
+
 function bip(f,d,t='triangle',v=0.2,dl=0){
   if(!AC)return;
   const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+dl;
@@ -328,12 +494,25 @@ function bip(f,d,t='triangle',v=0.2,dl=0){
   g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(0.001,s+d);
   o.start(s);o.stop(s+d+.01);
 }
-const soOk=()=>[[523,.12],[659,.14],[784,.18],[1046,.28]].forEach(([f,d],i)=>bip(f,d,'triangle',.28,i*.1));
-const soErr=()=>bip(180,.3,'sawtooth',.35);
-const soUrg=()=>{bip(440,.09,'square',.2,0);bip(440,.09,'square',.2,.15);};
+const soOk  =()=>[[523,.12],[659,.14],[784,.18],[1046,.28]].forEach(([f,d],i)=>bip(f,d,'triangle',.28,i*.1));
+const soErr =()=>bip(180,.3,'sawtooth',.35);
+const soUrg =()=>{bip(440,.09,'square',.2,0);bip(440,.09,'square',.2,.15);};
 const soItem=()=>{bip(880,.08,'triangle',.2,0);bip(1174,.12,'triangle',.2,.1);};
 const soFinal=()=>[[523,.18],[587,.18],[659,.18],[784,.22],[880,.22],[1046,.35]].forEach(([f,d],i)=>bip(f,d,'triangle',.28,i*.18));
-const soGO=()=>[[392,.2],[349,.2],[311,.2],[262,.4]].forEach(([f,d],i)=>bip(f,d,'triangle',.28,i*.22));
+const soGO  =()=>[[392,.2],[349,.2],[311,.2],[262,.4]].forEach(([f,d],i)=>bip(f,d,'triangle',.28,i*.22));
+const soSecret=()=>{bip(220,.4,'sine',.06,0);bip(277,.4,'sine',.06,.25);bip(370,.6,'sine',.08,.5);};
+
+// Sons ambientals per sala (breu motiu musical)
+function soAmbient(sala){
+  const motius={
+    sala:  [[220,.15,'sine',.04],[330,.15,'sine',.04,.2]],
+    bibli: [[440,.2,'triangle',.03],[554,.2,'triangle',.03,.25]],
+    lab:   [[330,.15,'square',.02],[660,.15,'square',.02,.2]],
+    final: [[110,.3,'sine',.05],[165,.3,'sine',.05,.3]],
+    secret:[[110,.5,'sine',.04],[138,.5,'sine',.04,.4],[165,.7,'sine',.05,.8]],
+  };
+  (motius[sala]||[]).forEach(([f,d,t,v,dl=0])=>bip(f,d,t,v,dl));
+}
 
 // ════════════════════════════════════════
 // CONFETTI
@@ -341,48 +520,68 @@ const soGO=()=>[[392,.2],[349,.2],[311,.2],[262,.4]].forEach(([f,d],i)=>bip(f,d,
 function confetti(){
   const cv=document.getElementById('cv'),c=cv.getContext('2d');
   cv.width=window.innerWidth;cv.height=window.innerHeight;
-  const cols=['#2563eb','#22c55e','#f59e0b','#ef4444','#a855f7','#06b6d4'];
-  const ps=Array.from({length:120},()=>({x:Math.random()*cv.width,y:-20-Math.random()*80,vx:(Math.random()-.5)*5,vy:3+Math.random()*4,rot:Math.random()*360,vr:(Math.random()-.5)*10,w:7+Math.random()*8,h:4+Math.random()*5,col:cols[0|Math.random()*cols.length],a:1}));
-  let t=0,fr;
-  (function draw(){c.clearRect(0,0,cv.width,cv.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;if(t>55)p.a=Math.max(0,p.a-.018);c.save();c.globalAlpha=p.a;c.translate(p.x,p.y);c.rotate(p.rot*Math.PI/180);c.fillStyle=p.col;c.fillRect(-p.w/2,-p.h/2,p.w,p.h);c.restore();});t++;if(t<160)fr=requestAnimationFrame(draw);else c.clearRect(0,0,cv.width,cv.height);})();
+  const cols=['#2563eb','#22c55e','#f59e0b','#ef4444','#a855f7','#06b6d4','#ec4899'];
+  const ps=Array.from({length:140},()=>({x:Math.random()*cv.width,y:-20-Math.random()*80,vx:(Math.random()-.5)*5,vy:3+Math.random()*4,rot:Math.random()*360,vr:(Math.random()-.5)*10,w:7+Math.random()*8,h:4+Math.random()*5,col:cols[0|Math.random()*cols.length],a:1}));
+  let t=0;
+  (function draw(){c.clearRect(0,0,cv.width,cv.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;if(t>55)p.a=Math.max(0,p.a-.018);c.save();c.globalAlpha=p.a;c.translate(p.x,p.y);c.rotate(p.rot*Math.PI/180);c.fillStyle=p.col;c.fillRect(-p.w/2,-p.h/2,p.w,p.h);c.restore();});t++;if(t<170)requestAnimationFrame(draw);else c.clearRect(0,0,cv.width,cv.height);})();
 }
 
 // ════════════════════════════════════════
-// GENERACIÓ ALEATÒRIA DE PARÀMETRES
+// DIFICULTAT
+// ════════════════════════════════════════
+const DIFS={
+  aprenent:{vides:7,mult:1.3,pistaCost:0,label:'Aprenent',color:'#16a34a'},
+  normal:  {vides:5,mult:1.0,pistaCost:1,label:'Inspector',color:'#2563eb'},
+  detectiu:{vides:3,mult:.75, pistaCost:2,label:'Detectiu Expert',color:'#dc2626'},
+};
+let difSelec='normal';
+
+function mostrarDificultat(){mostrarPg('pg-dificultat');}
+
+function triarDificultat(d){
+  difSelec=d;
+  document.querySelectorAll('.dif-card').forEach(el=>{
+    const sel=el.dataset.d===d;
+    el.classList.toggle('sel',sel);
+    const colors={aprenent:'#16a34a',normal:'#2563eb',detectiu:'#dc2626'};
+    el.style.borderColor=sel?(colors[d]||'#e2e8f0'):'#e2e8f0';
+  });
+}
+
+// ════════════════════════════════════════
+// GENERACIÓ ALEATÒRIA
 // ════════════════════════════════════════
 function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function shuffle(arr){return [...arr].sort(()=>Math.random()-.5);}
 function pick(arr){return arr[randInt(0,arr.length-1)];}
 
-// César: genera desplaçament aleatori (entre 4 i 11, evitem 1,2,3 massa fàcils i 13+ massa llargs)
 function generarCesar(){
   const desp=randInt(3,11);
   const xifra=s=>s.split('').map(c=>{const code=c.charCodeAt(0);if(code>=65&&code<=90)return String.fromCharCode(((code-65+desp)%26)+65);return c;}).join('');
-  // Paraules a desxifrar (el "nom secret") - 5 a 7 lletres, variades
-  const paraulesSec=['TRESOR','MISTERI','ENIGMA','LLAPIS','MIRALL','FLAIRE','CAVALL','TARDOR','HIVERN','ESPIGA','BRUIXA','PLANTA','CAMELL','GLOBUS','PREMIA','ESPASA','TEMPLE','FORMIG','GARRAF','OLIVES'];
-  const clau=pick(paraulesSec);
-  const clau_xifrada=xifra(clau);
-  return {desp,clau_xifrada,resposta:clau};
+  // Pool ampliat a 40 paraules
+  const pool=['TRESOR','MISTERI','ENIGMA','LLAPIS','MIRALL','FLAIRE','CAVALL','TARDOR','HIVERN','ESPIGA',
+               'BRUIXA','PLANTA','CAMELL','GLOBUS','PREMIA','ESPASA','TEMPLE','GARRAF','OLIVES','CASTOR',
+               'FORMIG','DRAGON','MUSICA','SOMIAR','RIURES','CARTRO','PORTER','GIRAFA','BLAUET','PEDRER',
+               'VINTENA','LLACOR','PASTIS','CIGALA','FALCIO','MURTRA','TIMBAL','PONSEM','DOLCET','ESCUMA'];
+  const clau=pick(pool);
+  return {desp,clau_xifrada:xifra(clau),resposta:clau};
 }
 
-// Rellotge: hora i minuts aleatoris, suma aleatòria
 function generarRellotge(){
-  const h=randInt(2,11),m=randInt(11,58);
-  const suma=randInt(7,99);
-  const res=(h*m)+suma;
-  return {h,m,suma,res:String(res)};
+  const h=randInt(2,11),m=randInt(11,58),suma=randInt(7,99);
+  return {h,m,suma,res:String((h*m)+suma)};
 }
 
-// Morse: word aleatòria de 4-5 lletres senzilles
 function generarMorse(){
-  const MORSE={'A':'.-','B':'-...','C':'-.-.','D':'-..','E':'.','F':'..-.','G':'--.','H':'....','I':'..','J':'.---','K':'-.-','L':'.-..','M':'--','N':'-.','O':'---','P':'.--.','Q':'--.-','R':'.-.','S':'...','T':'-','U':'..-','V':'...-','W':'.--','X':'-..-','Y':'-.--','Z':'--..'};
-  const paraules=['CODI','FORN','GRIS','LLOP','MARC','NAUS','OLOR','POLS','ROCA','SALT','TRON','VILA','ZONA','ALBA','BRUM','CLAU','DRAC','FRED','GUST'];
-  const p=pick(paraules);
-  const morse=p.split('').map(c=>MORSE[c]||'?');
-  return {paraula:p,morse,resposta:p};
+  const MORSE={A:'.-',B:'-...',C:'-.-.',D:'-.',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..'};
+  // Pool ampliat a 30 paraules
+  const pool=['CODI','FORN','GRIS','LLOP','MARC','NAUS','OLOR','POLS','ROCA','SALT',
+               'TRON','VILA','ZONA','ALBA','BRUM','CLAU','DRAC','FRED','GUST','HORT',
+               'IRIS','JOIA','KART','LEMA','MUSA','NORA','OBRE','PLOM','QUER','ROSA'];
+  const p=pick(pool);
+  return {paraula:p,morse:p.split('').map(c=>MORSE[c]||'?'),resposta:p};
 }
 
-// Mapa coordenades: 5 punts X i 5 Y aleatoris
 function generarMapa(){
   const xs=Array.from({length:5},()=>randInt(1,9));
   const ys=Array.from({length:5},()=>randInt(1,9));
@@ -391,96 +590,147 @@ function generarMapa(){
   return {xs,ys,sumX,sumY,res:String(sumX*sumY)};
 }
 
-// Biblioteca: nombre de llibres aleatori (senar, entre 31 i 61)
 function generarBiblio(){
-  let n=randInt(16,30)*2+1; // sempre senar
-  const mig=Math.ceil(n/2);
-  return {n,mig:String(mig)};
+  const n=randInt(16,30)*2+1;
+  return {n,mig:String(Math.ceil(n/2))};
 }
 
-// Fibonacci multiplicador
 function generarFibo(){
-  // Índex de la seqüència a mostrar: mostrem fins a un element i el jugador ha de trobar el proper × factor
   const fib=[1,1,2,3,5,8,13,21,34,55,89];
-  const idx=randInt(5,8); // mostrem fins fib[idx], el proper és fib[idx+1]
+  const idx=randInt(5,8);
   const shown=fib.slice(0,idx+1);
   const proper=fib[idx+1];
   const factor=randInt(2,5);
   return {shown,proper,factor,res:String(proper*factor)};
 }
 
-// Qwerty: paraula aleatòria de 4-5 lletres, xifrada amb shift dreta QWERTY
 function generarQwerty(){
-  // mapa shift dret (cada lletra → la del costat dret a QWERTY)
-  const QMAP={Q:'W',W:'E',E:'R',R:'T',T:'Y',Y:'U',U:'I',I:'O',O:'P',P:'[',
-               A:'S',S:'D',D:'F',F:'G',G:'H',H:'J',J:'K',K:'L',L:';',
-               Z:'X',X:'C',C:'V',V:'B',B:'N',N:'M',M:','};
-  // inversa: per donar la paraula xifrada i demanar l'original
-  const QINV={};
-  Object.entries(QMAP).forEach(([k,v])=>{QINV[v]=k;});
-  const paraules=['CODI','GRIS','FORN','LLOP','SALT','ROCA','MARC','VILA','ALBA','CLAU','DRAC','FRED'];
-  const p=pick(paraules);
-  // xifra: cada lletra de p → la del costat dret
+  const QMAP={Q:'W',W:'E',E:'R',R:'T',T:'Y',Y:'U',U:'I',I:'O',O:'P',
+              A:'S',S:'D',D:'F',F:'G',G:'H',H:'J',J:'K',K:'L',
+              Z:'X',X:'C',C:'V',V:'B',B:'N',N:'M'};
+  // Pool ampliat a 25 paraules
+  const pool=['CODI','GRIS','FORN','SALT','ROCA','MARC','VILA','ALBA','CLAU','DRAC',
+               'FRED','BOLA','DONA','GEST','BONS','CONS','NOMS','MINA','NOVA','VOLT',
+               'TONA','MANS','FANG','VENT','COMA'];
+  const p=pick(pool);
   const xifrada=p.split('').map(c=>QMAP[c]||c).join('');
   return {original:p,xifrada,resposta:p};
 }
 
-// Quadrat màgic: genera un quadrat vàlid amb suma S aleatòria i amaga la casella central
 function generarQMagic(){
-  // Generem un quadrat màgic 3×3 basat en el Lo Shu amb un offset aleatori
-  const offset=randInt(0,6)*2; // 0,2,4,6,8,10,12
-  // Lo Shu base: 2,7,6 / 9,5,1 / 4,3,8 (suma 15)
+  const offset=randInt(0,6)*2;
   const base=[2,7,6,9,5,1,4,3,8];
   const qm=base.map(v=>v+offset);
-  const suma=15+3*offset;
-  // El centre és qm[4]
-  const centre=qm[4];
-  return {qm,suma,centre:String(centre)};
+  return {qm,suma:15+3*offset,centre:String(qm[4])};
 }
 
-// Fórmula lab: paraules catalanes amb nombre de lletres aleatori
 function generarFormula(){
-  // Tria 3 paraules aleatòries de longituds molt variades (entre 2 i 8)
-  const PARAULES=[
-    'OR','BO',                                              // 2
-    'SAL','GAS','OLI','FER','CEL','MAR','MEL','COR','RIM', // 3
-    'FANG','ROCA','VENT','PLOM','ZINC','FRED','BROM','FORN',// 4
-    'PLATA','PEDRA','TERRA','COURE','LLUNA','FLAMA','SUCRE',// 5
-    'SOFRE','SILICI','ARGENT','BRONZE','NITRAT','CENDRA',   // 6
-    'CARBONI','CALCITA','CLORURS','GRANITA','SULFURS',      // 7
-    'MAGNESIA','ALUMINIS','CRISTALL','MINERALS',            // 8
-  ];
-  // Tria 3 paraules que tinguin totes longituds DIFERENTS i la diferència màxima sigui gran
+  const PARAULES=['OR','BO','SAL','GAS','OLI','FER','CEL','MAR','MEL','COR',
+                  'FANG','ROCA','VENT','PLOM','ZINC','FRED','BROM','FORN',
+                  'PLATA','PEDRA','TERRA','COURE','LLUNA','FLAMA','SUCRE',
+                  'SOFRE','SILICI','ARGENT','BRONZE','NITRAT','CENDRA',
+                  'CARBONI','CALCITA','CLORURS','GRANITA','SULFURS',
+                  'MAGNESIA','ALUMINIS','CRISTALL','MINERALS'];
   let p1,p2,p3,tries=0;
-  do {
-    const barreg=[...PARAULES].sort(()=>Math.random()-.5);
-    p1=barreg[0]; p2=barreg[1]; p3=barreg[2];
-    tries++;
-  } while(tries<50 && (p1.length===p2.length||p2.length===p3.length||p1.length===p3.length||Math.max(p1.length,p2.length,p3.length)-Math.min(p1.length,p2.length,p3.length)<3));
-  // Ordena per longitud per presentar-les de menor a major
+  do{
+    const b=[...PARAULES].sort(()=>Math.random()-.5);
+    p1=b[0];p2=b[1];p3=b[2];tries++;
+  }while(tries<50&&(p1.length===p2.length||p2.length===p3.length||p1.length===p3.length||Math.max(p1.length,p2.length,p3.length)-Math.min(p1.length,p2.length,p3.length)<3));
   [p1,p2,p3]=[p1,p2,p3].sort((a,b)=>a.length-b.length);
-  const res=String(p1.length+p2.length+p3.length);
-  return {p1,p2,p3,res};
+  return {p1,p2,p3,res:String(p1.length+p2.length+p3.length)};
 }
 
+// NOU: Endevinalla
+function generarEndevinalla(){
+  const pool=[
+    {preg:'Soc llarga i prima. Em trenques si m\'arronses. Em fas servir per traçar línies rectes. Qui soc?',res:'REGLA'},
+    {preg:'Tinc fulles però no soc planta. Tinc pàgines però no soc calendari. Tinc tapa però no soc cassola. Qui soc?',res:'LLIBRE'},
+    {preg:'Com més em treus, més gran em fas. Qui soc?',res:'FORAT'},
+    {preg:'Sempre corro però mai no me\'n vaig. Tinc lleres però no soc carretera. Qui soc?',res:'RIU'},
+    {preg:'Tinc agulles però no cuso. Tinc esfera però no soc planeta. Et dic les hores sense parlar. Qui soc?',res:'RELLOTGE'},
+    {preg:'Quan em fas gran, em fas petit. Quan em fas petit, em fas gran. Qui soc?',res:'FORAT'},
+    {preg:'Pujo i baixo però no me\'n vaig de casa. Qui soc?',res:'ESCALES'},
+    {preg:'Tinc dents però no mastego. Tinc claus però no obro. Qui soc?',res:'PIANO'},
+  ];
+  return pick(pool);
+}
+
+// NOU: Xifra del telèfon
+function generarTelefon(){
+  // Cada tecla: número → grup de lletres
+  const KEYPAD={
+    A:['2',1],B:['2',2],C:['2',3],
+    D:['3',1],E:['3',2],F:['3',3],
+    G:['4',1],H:['4',2],I:['4',3],
+    J:['5',1],K:['5',2],L:['5',3],
+    M:['6',1],N:['6',2],O:['6',3],
+    P:['7',1],R:['7',3],S:['7',4],
+    T:['8',1],U:['8',2],V:['8',3],
+  };
+  // Paraules que usen NOMÉS les lletres del keypad
+  const pool=['COTA','BOLA','FORT','DONA','GRIS','MENT','MINA','NOVA','POLS','ROBA',
+               'SALT','TONA','VOLT','BONS','CONS','GEST','NOMS','OLOT','LENT','GOTA',
+               'BORM','FONTS','GROC','LOMS','MONS'];
+  const valid=pool.filter(w=>w.split('').every(c=>KEYPAD[c]));
+  const p=pick(valid);
+  const encoded=p.split('').map(c=>{const[num,pos]=KEYPAD[c];return `${num}-${pos}`;}).join('  ');
+  return {paraula:p,encoded,resposta:p};
+}
 
 // ════════════════════════════════════════
-// VENGEN ELS ENIGMES (amb paràmetres injectats)
+// NARRATIVA PER ENIGMA
+// ════════════════════════════════════════
+const NARR_ENIGMA={
+  d1:'La paraula es revela. Una de les moltes claus que Albert va deixar en el seu camí.',
+  d2:'L\'hora exacta en que Albert va aturar el rellotge. Potser no va ser un accident.',
+  d3:'El telegrama portat de molt lluny. En codi Morse, com sempre feia Albert en les seves comunicacions secretes.',
+  d4:'Les coordenades del mapa assenyalen un punt al jardí del darrere. Guardes la informació amb cura.',
+  b1:'El llibre del mig. Albert ho deia sempre: "L\'equilibri és al centre de tot."',
+  b2:'La seqüència que l\'Albert tant estimava. Fibonacci, la firma de la natura en cada cosa.',
+  b3:'La màquina d\'escriure d\'Albert xifrava els seus escrits automàticament. Ara saps com funcionava.',
+  l1:'El quadrat màgic. Albert el dibuixava quan estava pendent d\'un problema difícil. Un ritual.',
+  l2:'La fórmula amagada entre els compostos del laboratori. Química i criptografia: les dues passions d\'Albert.',
+  s1:'L\'endevinalla que Albert posava als seus alumnes el primer dia de classe. "Si ho saps, avança."',
+  s2:'Un vell mòbil a la tauleta de nit. Per miracle, la bateria aguanta. Té un missatge xifrat.',
+  f1:'La caixa s\'obre amb un clic suau. Dins, hi ha un sobre tancat amb el segell de l\'Albert.',
+};
+const NARR_SALA={
+  sala:  'El despatx de l\'Albert es conserva tal com ell el va deixar. Olor de paper vell i tinta. La llum de sobretaula, encesa.',
+  bibli: 'Milers de volums s\'apilen fins al sostre. Alguns, antics i relligats en pell. L\'Albert llegia molt. Potser massa.',
+  lab:   'Aparells estranys. Ampolles de líquids de colors. Una pissarra coberta d\'equacions. Tot, en perfecte ordre.',
+  secret:'Darrere d\'un prestatge de la biblioteca hi ha una porta dissimulada. Condueix a una petita cambra que no apareix als plànols de la casa.',
+};
+
+// Descripcions dels objectes de l'inventari (per al modal)
+const INV_DESC={
+  d1: (nom)=>`Trobes la paraula "${nom.replace('Paraula: ','')}" escrita en un paper. L'Albert la va xifrar per protegir-la. Ara és teva.`,
+  d2: (nom)=>`Un número escrit al dors del rellotge: ${nom.replace('Nota rellotge: ','')}. El rellotge va quedar aturat en aquell precís moment. Per alguna raó.`,
+  d3: (nom)=>`El telegrama deia "${nom.replace('Telegrama: ','')}" en codi Morse. Va arribar fa molts anys. El missatge, breu i clar.`,
+  d4: (nom)=>`El codi del mapa és ${nom.replace('Codi mapa: ','')}. Les coordenades assenyalen un punt específic. Potser el jardí darrere la casa.`,
+  b1: (nom)=>`${nom}. L'Albert guardava els seus secrets més preuats amagats entre les pàgines. "Al mig de tot hi ha la veritat," deia.`,
+  b2: (nom)=>`Combinació del pany: ${nom.replace('Combinació pany: ','')}. Generada a partir de la seqüència de Fibonacci. L'Albert confiava en la natura.`,
+  b3: (nom)=>`La paraula "${nom.replace('Paraula QWERTY: ','')}" xifrada amb el mètode QWERTY. Un sistema que l'Albert va inventar ell sol.`,
+  l1: (nom)=>`El número ${nom.replace('Número central: ','')} ocupa el centre del quadrat màgic. L'equilibri perfecte que l'Albert perseguia en tot.`,
+  l2: (nom)=>`La fórmula dóna ${nom.replace('Fórmula: ','')}. L'Albert combinava paraules i nombres com un alquimista modern.`,
+  s1: (nom)=>`La resposta a l'endevinalla: "${nom.replace('Endevinalla: ','')}". L'Albert la posava als seus alumnes per veure com pensaven.`,
+  s2: (nom)=>`El codi del telèfon: "${nom.replace('Telèfon: ','')}". Un missatge d'antics temps, quan els telèfons tenien botons i les paraules, pes.`,
+};
+
+// ════════════════════════════════════════
+// CONSTRUIR ENIGMES
 // ════════════════════════════════════════
 function construirEnigmes(params){
-  const {cesar,rellotge,morse,mapa,biblio,fibo,qwerty,qmagic,formula}=params;
-
-  // Morse HTML: cel·les visuals grans
+  const {cesar,rellotge,morse,mapa,biblio,fibo,qwerty,qmagic,formula,endevinalla,telefon}=params;
   const MORSE_MAP={A:'.-',B:'-...',C:'-.-.',D:'-.',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..'};
-  function morseHTML(paraula){
-    return `<div class="morse-grid">${paraula.split('').map((c,i)=>{
-      const sims=MORSE_MAP[c]||'';
-      const cels=sims.split('').map(s=>s==='.'?'<div class="m-punt"></div>':'<div class="m-ratlla"></div>').join('');
-      return `<div class="morse-lletra"><div class="morse-sims">${cels}</div></div>${i<paraula.length-1?'<div class="morse-sep"></div>':''}`;
+
+  function morseHTML(p){
+    return `<div class="morse-grid">${p.split('').map((c,i)=>{
+      const s=MORSE_MAP[c]||'';
+      const cels=s.split('').map(x=>x==='.'?'<div class="m-punt"></div>':'<div class="m-ratlla"></div>').join('');
+      return `<div class="morse-lletra"><div class="morse-sims">${cels}</div></div>${i<p.length-1?'<div class="morse-sep"></div>':''}`;
     }).join('')}</div>`;
   }
 
-  // Qwerty taula de referència
   const qwertyRefHTML=`<div class="qwerty-ref">
     <div class="qwerty-tit">Teclat QWERTY — cada lletra xifrada és la del costat esquerre de la que veus</div>
     <div class="qwerty-fila">${'QWERTYUIOP'.split('').map((c,i,a)=>i<a.length-1?`<span class="q-key">${a[i+1]}<span>→${c}</span></span>`:'').join('')}</div>
@@ -488,169 +738,181 @@ function construirEnigmes(params){
     <div class="qwerty-fila">${'ZXCVBNM'.split('').map((c,i,a)=>i<a.length-1?`<span class="q-key">${a[i+1]}<span>→${c}</span></span>`:'').join('')}</div>
   </div>`;
 
-  // Quadrat màgic HTML
   const {qm,suma,centre}=qmagic;
   const qmagicHTML=`<div class="qmagic">${qm.map((v,i)=>i===4?`<div class="qcell acc">?</div>`:`<div class="qcell dark">${v}</div>`).join('')}</div>`;
 
+  // Teclat telèfon HTML
+  const telefonRefHTML=`<div class="telef-ref">
+    <div style="font-size:.58rem;font-weight:800;color:#4ade80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;text-align:center;">📱 Teclat telèfon — número-posició = lletra</div>
+    <div class="telef-grid">
+      ${[['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PRS'],['8','TUV'],['',''],['','']]
+        .map(([n,ll])=>n?`<div class="telef-key"><div class="telef-num">${n}</div><div class="telef-llet">${ll}</div></div>`:'<div></div>').join('')}
+    </div>
+    <div style="font-size:.68rem;color:#4ade80;text-align:center;margin-top:6px;font-family:monospace;letter-spacing:2px;">${telefon.encoded}</div>
+  </div>`;
+
   return [
     // ── DESPATX ──
-    {
-      id:'d1',sala:'sala',titol:'La carta xifrada',emoji:'✉️',
+    {id:'d1',sala:'sala',titol:'La carta xifrada',emoji:'✉️',
       textFn:()=>{
-        const lletres=cesar.clau_xifrada.split('');
-        window._cesarState=[...lletres];
-        const cols=lletres.map((c,i)=>{
-          return `<div class="cesar-col">
-            <span class="cesar-xif">${c}</span>
-            <button class="cesar-btn" onclick="cesarCanvia(${i},1)">▲</button>
-            <div class="cesar-lletra" id="cesar-l-${i}">${c}</div>
-            <button class="cesar-btn" onclick="cesarCanvia(${i},-1)">▼</button>
-          </div>`;
-        }).join('');
+        const ll=cesar.clau_xifrada.split('');
+        window._cesarState=[...ll];
+        const cols=ll.map((c,i)=>`<div class="cesar-col">
+          <span class="cesar-xif">${c}</span>
+          <button class="cesar-btn" onclick="cesarCanvia(${i},1)">▲</button>
+          <div class="cesar-lletra" id="cesar-l-${i}">${c}</div>
+          <button class="cesar-btn" onclick="cesarCanvia(${i},-1)">▼</button>
+        </div>`).join('');
         return `Has trobat una carta a l'escriptori. El text diu:<br><br>
           <em>«He xifrat una paraula secreta desplaçant cada lletra <strong>${cesar.desp} posicions cap enrere</strong> a l'alfabet.»</em><br><br>
           Prem ▲ o ▼ per canviar cada lletra fins trobar la paraula original:<br>
           <div class="cesar-selector">${cols}</div>
           <em style="font-size:.75rem;color:#64748b;">Quan tinguis les lletres correctes, escriu la paraula al camp de resposta.</em>`;
       },
-      pregunta:`Quina paraula formen les lletres que has trobat?`,
+      pregunta:'Quina paraula formen les lletres que has trobat?',
       respostes:[cesar.resposta],
-      objecte:{emoji:'🔑',nom:`Paraula: ${cesar.resposta}`},
+      objecte:{emoji:'🔑',nom:`Paraula: ${cesar.resposta}`,idE:'d1'},
       temps:0,
-      pista:`Desplaça cada lletra ${cesar.desp} posicions cap enrere. La primera lletra xifrada és "${cesar.clau_xifrada[0]}", desplaçada ${cesar.desp} cap enrere és "${String.fromCharCode(((cesar.clau_xifrada[0].charCodeAt(0)-65-cesar.desp+26)%26)+65)}".`
+      pista:`Desplaça cada lletra ${cesar.desp} posicions cap enrere. La primera: "${cesar.clau_xifrada[0]}" → "${String.fromCharCode(((cesar.clau_xifrada[0].charCodeAt(0)-65-cesar.desp+26)%26)+65)}".`
     },
-    {
-      id:'d2',sala:'sala',titol:'El rellotge aturat',emoji:'🕰️',
-      textFn:()=>`El rellotge de paret ha quedat aturat a les <strong>${rellotge.h}:${String(rellotge.m).padStart(2,'0')}</strong>.<br><br>
+    {id:'d2',sala:'sala',titol:'El rellotge aturat',emoji:'🕰️',
+      textFn:()=>`Al saló hi ha un rellotge de paret aturat a les <strong>${rellotge.h}:${String(rellotge.m).padStart(2,'0')}</strong>.<br><br>
         Al dors hi ha escrit: <em>«Multiplica l'hora pels minuts, suma ${rellotge.suma}, i trobaràs el codi»</em>.`,
       pregunta:`Calcula: (${rellotge.h} × ${rellotge.m}) + ${rellotge.suma} = ?`,
       respostes:[rellotge.res],
-      objecte:{emoji:'📄',nom:`Nota rellotge: ${rellotge.res}`},
+      objecte:{emoji:'📄',nom:`Nota rellotge: ${rellotge.res}`,idE:'d2'},
       temps:55,
       pista:`${rellotge.h} × ${rellotge.m} = ${rellotge.h*rellotge.m}. ${rellotge.h*rellotge.m} + ${rellotge.suma} = ${rellotge.res}.`
     },
-    {
-      id:'d3',sala:'sala',titol:'El telegrama Morse',emoji:'📡',
+    {id:'d3',sala:'sala',titol:'El telegrama Morse',emoji:'📡',
       textFn:()=>{
-        const MT={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..'};
+        const MT=MORSE_MAP;
         function simHTML(s){return s.split('').map(c=>c==='.'?'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;"></span>':'<span style="display:inline-block;width:20px;height:8px;border-radius:4px;background:#4ade80;"></span>').join('<span style="display:inline-block;width:3px;"></span>');}
-        const lletres='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-        const refCels=lletres.map(l=>`<div style="display:inline-flex;flex-direction:column;align-items:center;gap:3px;background:#0f172a;border-radius:6px;padding:5px 6px;margin:2px;">
+        const refCels='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l=>`<div style="display:inline-flex;flex-direction:column;align-items:center;gap:3px;background:#0f172a;border-radius:6px;padding:5px 6px;margin:2px;">
           <div style="display:flex;align-items:center;gap:2px;">${simHTML(MT[l])}</div>
           <span style="font-size:.75rem;font-weight:900;color:white;font-family:monospace;">${l}</span>
         </div>`).join('');
         const refHTML=`<div style="background:#1e293b;border-radius:8px;padding:8px 6px;margin:8px 0;">
-          <div style="font-size:.62rem;font-weight:800;color:#4ade80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;text-align:center;">📋 Diccionari Morse — símbol → lletra</div>
+          <div style="font-size:.62rem;font-weight:800;color:#4ade80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;text-align:center;">📋 Diccionari Morse</div>
           <div style="display:flex;flex-wrap:wrap;gap:3px;justify-content:center;">${refCels}</div>
         </div>`;
-        return `Al calaix de l'escriptori hi ha un telegrama. Cada bloc és una lletra del missatge:<br>${morseHTML(morse.paraula)}<br>${refHTML}`;
+        return `Al calaix de l'escriptori hi ha un telegrama. Cada bloc és una lletra:<br>${morseHTML(morse.paraula)}<br>${refHTML}`;
       },
       pregunta:`Desxifra el codi Morse. Quina paraula formen les ${morse.paraula.length} lletres?`,
       respostes:[morse.resposta],
-      objecte:{emoji:'📰',nom:`Telegrama: ${morse.paraula}`},
+      objecte:{emoji:'📰',nom:`Telegrama: ${morse.paraula}`,idE:'d3'},
       temps:100,
       pista:`Les lletres en ordre: ${morse.paraula.split('').map((c,i)=>`${c}=${morse.morse[i]}`).join(' · ')}`
     },
-    {
-      id:'d4',sala:'sala',titol:'El mapa de coordenades',emoji:'🗺️',
+    {id:'d4',sala:'sala',titol:'El mapa de coordenades',emoji:'🗺️',
       textFn:()=>`A la paret hi ha un vell mapa quadriculat amb creus marcades. Una nota diu:<br><br>
         <em>«Suma les X: ${mapa.xs.join(', ')}. Suma les Y: ${mapa.ys.join(', ')}. La clau és X×Y»</em>.`,
       pregunta:`Calcula: (${mapa.xs.join('+')} = ${mapa.sumX}) × (${mapa.ys.join('+')} = ${mapa.sumY}) = ?`,
       respostes:[mapa.res],
-      objecte:{emoji:'🗺️',nom:`Codi mapa: ${mapa.res}`},
+      objecte:{emoji:'🗺️',nom:`Codi mapa: ${mapa.res}`,idE:'d4'},
       temps:60,
       pista:`Suma X: ${mapa.sumX}. Suma Y: ${mapa.sumY}. ${mapa.sumX} × ${mapa.sumY} = ${mapa.res}.`
     },
-
     // ── BIBLIOTECA ──
-    {
-      id:'b1',sala:'bibli',titol:'El llibre del mig',emoji:'📖',
+    {id:'b1',sala:'bibli',titol:'El llibre del mig',emoji:'📖',
       textFn:()=>`En una prestatgeria hi ha exactament <strong>${biblio.n} llibres</strong> numerats de l'1 al ${biblio.n}. L'Oncle Albert deia: <em>«Al llibre del mig sempre hi amago el secret»</em>.`,
       pregunta:`Quin és el número de posició del llibre del mig d'una col·lecció de ${biblio.n}?`,
       respostes:[biblio.mig],
-      objecte:{emoji:'📒',nom:`Llibre #${biblio.mig}`},
+      objecte:{emoji:'📒',nom:`Llibre #${biblio.mig}`,idE:'b1'},
       temps:40,
       pista:`El mig de ${biblio.n} elements: (${biblio.n}+1)/2 = ${biblio.mig}.`
     },
-    {
-      id:'b2',sala:'bibli',titol:'La seqüència oculta',emoji:'🔢',
+    {id:'b2',sala:'bibli',titol:'La seqüència oculta',emoji:'🔢',
       textFn:()=>`Dins del Llibre #${biblio.mig} hi ha un full amb una seqüència incompleta:<br><br>
         <div style="background:#1e293b;color:#4ade80;font-family:monospace;font-size:1.2rem;font-weight:900;border-radius:8px;padding:12px 16px;text-align:center;letter-spacing:3px;margin:8px 0;">${fibo.shown.join('  ·  ')}  ·  <span style="color:#f59e0b;">?</span></div>
-        <em>«Troba el número que substitueix la <span style="color:#b45309;font-style:normal;font-weight:800;">?</span> i multiplica'l per ${fibo.factor}.»</em>`,
+        <em>«Troba el número que substitueix la ? i multiplica'l per ${fibo.factor}.»</em>`,
       pregunta:`Quin número va on hi ha la ? Multiplica'l per ${fibo.factor}. Quin és el resultat?`,
       respostes:[fibo.res],
-      objecte:{emoji:'🔩',nom:`Combinació pany: ${fibo.res}`},
+      objecte:{emoji:'🔩',nom:`Combinació pany: ${fibo.res}`,idE:'b2'},
       temps:55,
-      pista:`La seqüència de Fibonacci: cada terme = suma dels dos anteriors. El proper a ${fibo.shown[fibo.shown.length-1]} és ${fibo.proper}. ${fibo.proper} × ${fibo.factor} = ${fibo.res}.`
+      pista:`Fibonacci: cada terme = suma dels dos anteriors. El proper a ${fibo.shown[fibo.shown.length-1]} és ${fibo.proper}. ${fibo.proper} × ${fibo.factor} = ${fibo.res}.`
     },
-    {
-      id:'b3',sala:'bibli',titol:'El missatge xifrat QWERTY',emoji:'⌨️',
+    {id:'b3',sala:'bibli',titol:'El missatge xifrat QWERTY',emoji:'⌨️',
       textFn:()=>`Darrere d'un diccionari antic hi ha un paper enganxat. El missatge sembla incomprensible:<br><br>
         <div class="codi-bloc">${qwerty.xifrada}</div>
         <em>L'Oncle Albert xifrava desplaçant cada lletra cap a l'esquerra al teclat QWERTY.</em><br>${qwertyRefHTML}`,
-      pregunta:`Desxifra el missatge QWERTY: cada lletra del codi és la que estava a la dreta de la lletra original. Escriu la paraula original.`,
+      pregunta:'Desxifra el missatge QWERTY: cada lletra del codi és la que estava a la dreta de l\'original.',
       respostes:[qwerty.resposta],
-      objecte:{emoji:'📜',nom:`Paraula QWERTY: ${qwerty.original}`},
+      objecte:{emoji:'📜',nom:`Paraula QWERTY: ${qwerty.original}`,idE:'b3'},
       temps:90,
-      pista:`"${qwerty.xifrada[0]}" ve de la lletra que té a l'esquerra al teclat. Consulta la taula: ${qwerty.xifrada.split('').map(c=>`${c}→?`).join(', ')}.`
+      pista:`"${qwerty.xifrada[0]}" ve de la lletra que té a l\'esquerra al teclat. Consulta la taula.`
     },
-
     // ── LABORATORI ──
-    {
-      id:'l1',sala:'lab',titol:'El quadrat màgic',emoji:'🔳',
+    {id:'l1',sala:'lab',titol:'El quadrat màgic',emoji:'🔳',
       textFn:()=>`A la pissarra hi ha un quadrat màgic <strong>3×3</strong> incomplet (suma màgica = ${suma}):<br>${qmagicHTML}
         <em style="font-size:.78rem;">«En un quadrat màgic, files, columnes i diagonals sumen sempre el mateix»</em>`,
-      pregunta:`Quin número falta al centre (cel·la blava) perquè totes les files sumin ${suma}?`,
+      pregunta:`Quin número falta al centre (cel·la morada) perquè totes les files sumin ${suma}?`,
       respostes:[centre],
-      objecte:{emoji:'📐',nom:`Número central: ${centre}`},
+      objecte:{emoji:'📐',nom:`Número central: ${centre}`,idE:'l1'},
       temps:80,
       pista:`Fila central: ${qm[3]} + ? + ${qm[5]} = ${suma}. ? = ${suma} - ${qm[3]} - ${qm[5]} = ${centre}.`
     },
-    {
-      id:'l2',sala:'lab',titol:'La fórmula secreta',emoji:'⚗️',
+    {id:'l2',sala:'lab',titol:'La fórmula secreta',emoji:'⚗️',
       textFn:()=>`A la pissarra hi ha escrit:<br><br>
         <em>«CLAU = lletres(${formula.p1}) + lletres(${formula.p2}) + lletres(${formula.p3})»</em><br><br>
         Tot en català, és clar.`,
       pregunta:`Compta les lletres: "${formula.p1}" + "${formula.p2}" + "${formula.p3}" = ?`,
       respostes:[formula.res],
-      objecte:{emoji:'🧪',nom:`Fórmula: ${formula.res}`},
+      objecte:{emoji:'🧪',nom:`Fórmula: ${formula.res}`,idE:'l2'},
       temps:50,
       pista:`"${formula.p1}" té ${formula.p1.length} lletres. "${formula.p2}" en té ${formula.p2.length}. "${formula.p3}" en té ${formula.p3.length}. Total: ${formula.res}.`
     },
-
+    // ── SALA SECRETA ──
+    {id:'s1',sala:'secret',titol:'L\'endevinalla de l\'Albert',emoji:'🎭',
+      textFn:()=>`A la paret hi ha un marc antic amb una inscripció cal·ligrafiada:<br><br>
+        <div style="background:#831843;color:#fce7f3;border-radius:10px;padding:14px 16px;font-size:.95rem;font-weight:700;line-height:1.7;font-style:italic;margin:8px 0;">"${endevinalla.preg}"</div>
+        <em style="font-size:.75rem;color:#64748b;">— L'Oncle Albert posava aquesta endevinalla als seus alumnes el primer dia de classe.</em>`,
+      pregunta:'Respon a l\'endevinalla. Qui és?',
+      respostes:[endevinalla.res],
+      objecte:{emoji:'🎭',nom:`Endevinalla: ${endevinalla.res}`,idE:'s1'},
+      temps:60,
+      pista:`Pensa en objectes de la vida quotidiana. La resposta és un substantiu en majúscules.`
+    },
+    {id:'s2',sala:'secret',titol:'La xifra del telèfon',emoji:'📱',
+      textFn:()=>`A la tauleta de nit hi ha un vell mòbil. Per miracle, la bateria aguanta. Té un missatge de text. El remitent: "A".<br><br>
+        El missatge usa el sistema de tecles numèriques: cada número indica la tecla, i la posició indica la lletra (1a, 2a, 3a...).<br>
+        ${telefonRefHTML}`,
+      pregunta:'Desxifra el missatge del telèfon. Quina paraula amaga?',
+      respostes:[telefon.resposta],
+      objecte:{emoji:'📱',nom:`Telèfon: ${telefon.paraula}`,idE:'s2'},
+      temps:90,
+      pista:`El codi és "${telefon.encoded}". Cada parella número-posició és una lletra. Ex: 2-1=A, 2-2=B, 2-3=C.`
+    },
     // ── FINAL ──
-    {
-      id:'f1',sala:'final',titol:'La Caixa Forta',emoji:'🔐',
+    {id:'f1',sala:'final',titol:'La Caixa Forta',emoji:'🔐',
       textFn:()=>{
-        // Codi final: darreres 2 xifres de rellotge.res + fibo.res + centre del quadrat
         const r=rellotge.res;
         const d2=r.length>=2?r.slice(-2):r.padStart(2,'0');
         const fb=fibo.res;
         const cm=centre;
         const codi=`${d2}${fb}${cm}`;
-        // Suma dígits
         const sumD=codi.split('').reduce((a,c)=>a+parseInt(c),0);
         const codiF=sumD>20?String(parseInt(codi)+1):codi;
-        params.codiF=codiF; // guardem per la resposta
+        params.codiF=codiF;
         return `Davant teu hi ha la caixa forta. Una placa diu:<br><br>
           <em>«El codi es construeix:<br>
           ① Darreres <strong>2 xifres</strong> de la Nota rellotge (${r} → <strong>${d2}</strong>)<br>
           ② La <strong>Combinació del pany</strong> sencera (<strong>${fb}</strong>)<br>
           ③ El <strong>Número central</strong> del quadrat (<strong>${cm}</strong>)<br>
           ④ Concatena: ${d2}·${fb}·${cm} = <strong>${codi}</strong></em><br><br>
-          <em style="font-size:.78rem;">Comprovació: si la suma de tots els dígits del codi > 20, suma 1 al codi final. (Suma: ${sumD}${sumD>20?' > 20 → suma 1':' ≤ 20 → no cal canvi'})</em>`;
+          <em style="font-size:.78rem;">Comprovació: si la suma dels dígits > 20, suma 1 al codi. (Suma: ${sumD}${sumD>20?' > 20 → suma 1':' ≤ 20 → no cal'})</em>`;
       },
-      pregunta:`Introdueix el codi final de la caixa forta.`,
+      pregunta:'Introdueix el codi final de la caixa forta.',
       respostes:()=>{
         const r=rellotge.res;
         const d2=r.length>=2?r.slice(-2):r.padStart(2,'0');
         const codi=`${d2}${fibo.res}${qmagic.centre}`;
         const sumD=codi.split('').reduce((a,c)=>a+parseInt(c),0);
         const codiF=sumD>20?String(parseInt(codi)+1):codi;
-        return [codi, codiF];
+        return [codi,codiF];
       },
       requereix:['d2','b2','l1'],
-      reqText:`Necessites la Nota rellotge, la Combinació del pany i el Número central del quadrat.`,
+      reqText:'Necessites la Nota rellotge, la Combinació del pany i el Número central del quadrat.',
       temps:150,
       pista:()=>{
         const r=rellotge.res;
@@ -666,16 +928,19 @@ function construirEnigmes(params){
 // ════════════════════════════════════════
 // ESTAT
 // ════════════════════════════════════════
-let E={vides:5,resolts:[],inventari:[],pistes:0,ordre:{},iniciat:false,actual:null,timerId:null,seguentFn:null,params:null,tempsInici:null};
+let E={
+  vides:5,resolts:[],inventari:[],pistes:0,ordre:{},
+  iniciat:false,actual:null,timerId:null,seguentFn:null,
+  params:null,tempsInici:null,dificultat:'normal',zenMode:false,
+  secretDesblocat:false,secretMostrat:false,
+};
 
-function saveE(){const s={...E,timerId:null,seguentFn:null};localStorage.setItem('albert4',JSON.stringify(s));}
+function saveE(){localStorage.setItem('albert5',JSON.stringify({...E,timerId:null,seguentFn:null}));}
 function loadE(){
-  const r=localStorage.getItem('albert4');
+  const r=localStorage.getItem('albert5');
   if(!r)return false;
   try{const s=JSON.parse(r);if(!s.iniciat)return false;Object.assign(E,s);return true;}catch(e){return false;}
 }
-
-// Reconstruïm els enigmes amb els params guardats
 let ENIGMES=[];
 function reconstruirEnigmes(){ENIGMES=construirEnigmes(E.params);}
 
@@ -687,42 +952,41 @@ function reconstruirEnigmes(){ENIGMES=construirEnigmes(E.params);}
     reconstruirEnigmes();
     document.getElementById('estat-ant').style.display='block';
     document.getElementById('btn-comecar').style.display='none';
+    if(E.zenMode)document.getElementById('zen-sw').classList.add('on');
   }
 })();
 
-function reprendre(){
-  mostrarPg('pg-mapa');
-  renderMapa();
-}
+function reprendre(){mostrarPg('pg-mapa');renderMapa();}
 
 function novaPartida(){
-  if(!confirm('Segur que vols abandonar la partida guardada i començar de nou?'))return;
+  if(!confirm('Segur que vols abandonar la partida guardada i comenzar de nou?'))return;
   reiniciar();
 }
 
-function saltarEnigma(){
-  // Deixa l'enigma actual per més tard: el mou al final de la cua de la sala
-  const eng=ENIGMES.find(e=>e.id===E.actual);
-  if(!eng)return;
-  const sid=eng.sala;
-  const ordre=E.ordre[sid]||[];
-  const idx=ordre.indexOf(eng.id);
-  if(idx>=0){
-    ordre.splice(idx,1);
-    ordre.push(eng.id);
-    E.ordre[sid]=ordre;
-    saveE();
-  }
-  aturarTimer();
-  E.actual=null;
-  mostrarPg('pg-mapa');
-  renderMapa();
+let _zenMode=false;
+function toggleZen(){
+  _zenMode=!_zenMode;
+  document.getElementById('zen-sw').classList.toggle('on',_zenMode);
+}
+
+function mostrarDificultat(){mostrarPg('pg-dificultat');}
+
+function triarDificultat(d){
+  difSelec=d;
+  document.querySelectorAll('.dif-card').forEach(el=>{
+    const sel=el.dataset.d===d;
+    el.classList.toggle('sel',sel);
+    const colors={aprenent:'#16a34a',normal:'#2563eb',detectiu:'#dc2626'};
+    el.style.borderColor=sel?(colors[d]||'#e2e8f0'):'#e2e8f0';
+  });
 }
 
 function comecar(){
-  if(!E.iniciat){
-    // Genera tots els paràmetres aleatoris
-    E.params={
+  const dif=DIFS[difSelec]||DIFS.normal;
+  E={
+    vides:dif.vides,resolts:[],inventari:[],pistes:0,ordre:{},
+    iniciat:true,actual:null,timerId:null,seguentFn:null,
+    params:{
       cesar:generarCesar(),
       rellotge:generarRellotge(),
       morse:generarMorse(),
@@ -731,17 +995,21 @@ function comecar(){
       fibo:generarFibo(),
       qwerty:generarQwerty(),
       qmagic:generarQMagic(),
-      formula:generarFormula()
-    };
-    reconstruirEnigmes();
-    E.iniciat=true;
-    E.tempsInici=Date.now();
-    // Barreja l'ordre dins de cada sala
-    const perSala={};
-    ENIGMES.forEach(e=>{if(!perSala[e.sala])perSala[e.sala]=[];perSala[e.sala].push(e.id);});
-    Object.keys(perSala).forEach(s=>{E.ordre[s]=[...perSala[s]].sort(()=>Math.random()-.5);});
-    saveE();
-  }
+      formula:generarFormula(),
+      endevinalla:generarEndevinalla(),
+      telefon:generarTelefon(),
+    },
+    tempsInici:Date.now(),
+    dificultat:difSelec,
+    zenMode:_zenMode,
+    secretDesblocat:false,
+    secretMostrat:false,
+  };
+  reconstruirEnigmes();
+  const perSala={};
+  ENIGMES.forEach(e=>{if(!perSala[e.sala])perSala[e.sala]=[];perSala[e.sala].push(e.id);});
+  Object.keys(perSala).forEach(s=>{E.ordre[s]=[...perSala[s]].sort(()=>Math.random()-.5);});
+  saveE();
   mostrarPg('pg-mapa');
   renderMapa();
 }
@@ -753,44 +1021,135 @@ const SALES=[
   {id:'sala', nom:'El Despatx',    emoji:'🖊️', desc:'On Albert treballava. Cartes i documents per tot arreu.'},
   {id:'bibli',nom:'La Biblioteca', emoji:'📚', desc:'Milers de llibres amb secrets amagats.'},
   {id:'lab',  nom:'El Laboratori', emoji:'🔬', desc:'Aparells estranys i experiments inacabats.'},
-  {id:'final',nom:'La Caixa Forta',emoji:'🔐', desc:'Bloquejada. Cal combinar els objectes de totes les sales.',final:true}
+  {id:'secret',nom:'La Cambra Secreta',emoji:'🌸',desc:'Una cambra amagada que l\'Albert preparà per als millors.'},
+  {id:'final',nom:'La Caixa Forta',emoji:'🔐', desc:'Bloquejada. Cal combinar els objectes de totes les sales.',final:true},
 ];
+const SALA_PROG_COLOR={sala:'#3b82f6',bibli:'#d97706',lab:'#16a34a',secret:'#ec4899',final:'#a855f7'};
+
+function comprovarSecretDesblocat(){
+  // Es desbloqueja si s'han resolt tots els enigmes normals sense pistes
+  const normals=['d1','d2','d3','d4','b1','b2','b3','l1','l2'];
+  const totes=normals.every(id=>E.resolts.includes(id));
+  if(totes&&E.pistes===0&&!E.secretDesblocat){
+    E.secretDesblocat=true;
+    saveE();
+  }
+}
 
 function renderMapa(){
+  comprovarSecretDesblocat();
   const grid=document.getElementById('mapa-grid');
   grid.innerHTML='';
-  const salesNormals=SALES.filter(s=>!s.final);
+  const salesNormals=SALES.filter(s=>!s.final&&s.id!=='secret');
   const totesFetes=salesNormals.every(s=>ENIGMES.filter(e=>e.sala===s.id).every(e=>E.resolts.includes(e.id)));
 
-  SALES.forEach(sala=>{
+  // Sales a mostrar
+  const salesMostrar=SALES.filter(s=>s.id!=='secret'||(E.secretDesblocat||E.resolts.some(id=>['s1','s2'].includes(id))));
+
+  salesMostrar.forEach(sala=>{
     const enigmesSala=ENIGMES.filter(e=>e.sala===sala.id);
     const nR=enigmesSala.filter(e=>E.resolts.includes(e.id)).length;
     const tot=enigmesSala.length;
-    const comp=nR===tot,esFinal=!!sala.final,bloq=esFinal&&!totesFetes;
+    const comp=nR===tot&&tot>0;
+    const esFinal=!!sala.final;
+    const bloq=esFinal&&!totesFetes;
+    const esSecret=sala.id==='secret';
+
     const d=document.createElement('div');
+    d.dataset.sala=sala.id;
     d.className='sala-card'+(esFinal?' final-c':'')+(comp?' comp':bloq?' bloq':' disp');
+    if(d.className.includes('fade-in')){}
+
     let bdg,bc;
     if(comp){bdg='✅ Completada';bc='sb-fet';}
     else if(bloq){bdg='🔒 Bloquejada';bc='sb-bloq';}
+    else if(esSecret){bdg='🌸 Secreta';bc='sb-secret';}
     else if(nR>0){bdg=`${nR}/${tot} fets`;bc='sb-pend';}
     else{bdg='Explorar';bc='sb-lliure';}
-    d.innerHTML=`<span class="sala-em">${sala.emoji}</span><div style="flex:1"><div class="sala-nom">${sala.nom}</div><div class="sala-desc">${sala.desc}</div></div><span class="s-badge ${bc}">${bdg}</span>`;
-    if(!comp&&!bloq)d.onclick=()=>entrarSala(sala.id);
+
+    const pctBar=tot>0?Math.round(nR/tot*100):0;
+    const progHTML=esFinal?'':`<div class="sala-prog"><div class="sala-prog-bar" style="width:${pctBar}%;background:${SALA_PROG_COLOR[sala.id]||'#2563eb'};"></div></div>`;
+
+    if(esFinal){
+      d.innerHTML=`<span class="sala-em">${sala.emoji}</span><div style="flex:1"><div class="sala-nom">${sala.nom}</div><div class="sala-desc">${sala.desc}</div></div><span class="s-badge ${bc}">${bdg}</span>`;
+    } else {
+      d.innerHTML=`<span class="sala-em">${sala.emoji}</span>
+        <div class="sala-nom">${sala.nom}</div>
+        <div class="sala-desc">${sala.desc}</div>
+        ${progHTML}
+        <span class="s-badge ${bc}">${bdg}</span>`;
+    }
+    if(!comp&&!bloq)d.onclick=()=>entrarSalaAmb(sala.id);
     grid.appendChild(d);
   });
+
+  // Avís sala secreta
+  const avís=document.getElementById('secret-avis');
+  if(E.secretDesblocat&&!E.secretMostrat){
+    avís.classList.add('vis');
+    soSecret();
+    E.secretMostrat=true;saveE();
+  } else if(!E.secretDesblocat){
+    avís.classList.remove('vis');
+  }
+
   renderInv();
-  document.getElementById('mapa-peu').textContent=`❤️ ${E.vides} vides · 🔦 ${E.pistes} pistes usades · 🎒 ${E.inventari.length} objectes`;
+  const dif=DIFS[E.dificultat]||DIFS.normal;
+  document.getElementById('mapa-peu').textContent=`❤️ ${E.vides} vides · 🔦 ${E.pistes} pistes · 🎒 ${E.inventari.length} objectes · ${dif.label}`;
+
+  // Rang al header
+  const rang=calcularRang();
+  const hr=document.getElementById('hdr-rang');
+  hr.textContent=rang.label;
+  hr.style.background=rang.bg;
+  hr.style.color=rang.color;
+  hr.style.display='block';
 }
 
 function renderInv(){
   const z=document.getElementById('inv-items');
-  if(!E.inventari.length){z.innerHTML='<span class="inv-buit">Encara no tens cap objecte</span>';document.getElementById('hdr-inv').style.display='none';}
-  else{z.innerHTML=E.inventari.map(o=>`<div class="inv-item">${o.emoji} ${o.nom}</div>`).join('');document.getElementById('hdr-inv').style.display='flex';document.getElementById('hdr-in').textContent=E.inventari.length;}
+  if(!E.inventari.length){
+    z.innerHTML='<span class="inv-buit">Encara no tens cap objecte</span>';
+    document.getElementById('hdr-inv').style.display='none';
+  } else {
+    z.innerHTML=E.inventari.map(o=>`<div class="inv-item" onclick="obrirModalInvItem('${o.idE}')">${o.emoji} ${o.nom}</div>`).join('');
+    document.getElementById('hdr-inv').style.display='flex';
+    document.getElementById('hdr-in').textContent=E.inventari.length;
+  }
+}
+
+// ════════════════════════════════════════
+// RANG DE DETECTIU
+// ════════════════════════════════════════
+function calcularRang(){
+  const n=E.resolts.length;
+  const p=E.pistes;
+  if(n===0) return {label:'🔍 Observador',bg:'rgba(255,255,255,.1)',color:'white'};
+  if(n<4)   return {label:'📋 Auxiliar',bg:'rgba(255,255,255,.12)',color:'#e2e8f0'};
+  if(n<7)   return {label:'🔎 Agent',bg:'rgba(37,99,235,.3)',color:'#93c5fd'};
+  if(n<10)  return {label:'👮 Inspector',bg:'rgba(245,158,11,.3)',color:'#fde68a'};
+  if(p===0) return {label:'🧠 Gran Mestre',bg:'rgba(168,85,247,.4)',color:'#e9d5ff'};
+  if(p<=2)  return {label:'🕵️ Detectiu',bg:'rgba(34,197,94,.3)',color:'#bbf7d0'};
+  return    {label:'🏅 Cap Inspector',bg:'rgba(239,68,68,.3)',color:'#fca5a5'};
+}
+
+function calcularRangFinal(temps,pistes,vides){
+  const min=Math.floor(temps/60000);
+  if(pistes===0&&vides>=4&&min<20) return {em:'🧠',nom:'Gran Mestre',desc:'Perfecte. Zero pistes, vides intactes i rapidesa. L\'Albert estaria orgullós.'};
+  if(pistes===0&&vides>=2)         return {em:'🕵️',nom:'Detectiu Expert',desc:'Sense ajudes i amb capçalera alta. Un autèntic criptògraf.'};
+  if(pistes<=2&&vides>=2)          return {em:'👮',nom:'Inspector Cap',desc:'Amb una mica d\'ajuda has trobat el camí. Molt bona feina.'};
+  if(pistes<=4)                    return {em:'🔎',nom:'Inspector',desc:'L\'experiència de l\'Albert ha calgut, però ho has superat.'};
+  return                                  {em:'📋',nom:'Agent',desc:'La missió s\'ha complert. Torna-ho a intentar per pujar de rang.'};
 }
 
 // ════════════════════════════════════════
 // ENIGMA
 // ════════════════════════════════════════
+function entrarSalaAmb(sid){
+  soAmbient(sid);
+  entrarSala(sid);
+}
+
 function entrarSala(sid){
   const ordre=E.ordre[sid]||[];
   const id=ordre.find(i=>!E.resolts.includes(i));
@@ -802,6 +1161,13 @@ function entrarSala(sid){
 function carregarEnigma(eng){
   E.actual=eng.id;aturarTimer();
   mostrarPg('pg-enigma');
+
+  // Aplicar colors de sala
+  const capEl=document.getElementById('e-cap');
+  const cosEl=document.getElementById('ec');
+  capEl.className='e-cap sala-'+eng.sala;
+  cosEl.className='e-cos sala-'+eng.sala;
+
   const ordre=E.ordre[eng.sala]||[];
   const pos=ordre.indexOf(eng.id);
   const tot=ordre.length;
@@ -812,7 +1178,6 @@ function carregarEnigma(eng){
   document.getElementById('ec').innerHTML=eng.textFn();
   document.getElementById('ep').textContent=eng.pregunta;
 
-  // Requeriments
   const rz=document.getElementById('req-z'),bo=document.getElementById('btn-ok'),inp=document.getElementById('inp');
   if(eng.requereix&&eng.requereix.length){
     const ok=eng.requereix.every(id=>E.resolts.includes(id));
@@ -822,12 +1187,35 @@ function carregarEnigma(eng){
 
   inp.value='';inp.className='inp-r';
   setTimeout(()=>{if(!inp.disabled)inp.focus();},300);
-  actualVides();
+
+  // Vides dinàmiques
+  const dif=DIFS[E.dificultat]||DIFS.normal;
+  const maxV=dif.vides;
+  const vzEl=document.getElementById('vides-zona');
+  vzEl.innerHTML='<span class="vl">Vides:</span>';
+  for(let i=1;i<=maxV;i++){
+    const sp=document.createElement('span');
+    sp.className='vida'+(i>E.vides?' perd':'');
+    sp.id='v'+i;sp.textContent='❤️';
+    vzEl.appendChild(sp);
+  }
+
+  // Pista — cost variable per dificultat
+  const pistaCost=dif.pistaCost;
+  const btnP=document.getElementById('btn-pista');
+  if(pistaCost===0){
+    btnP.textContent='🔦 Pista (gratuïta)';
+    btnP.disabled=false;
+  } else {
+    btnP.textContent=`🔦 Pista (−${pistaCost}❤️)`;
+    btnP.disabled=(E.vides<=pistaCost);
+  }
+
   document.getElementById('fb').style.display='none';
+  document.getElementById('narr-enigma').style.display='none';
   document.getElementById('btn-seg').style.display='none';
-  document.getElementById('btn-pista').disabled=(E.vides<=1);
-  iniciarTimer(eng.temps);
-  // Scroll al capdamunt
+  const temps=E.zenMode?0:Math.round((eng.temps||0)*(DIFS[E.dificultat]?.mult||1));
+  iniciarTimer(temps);
   document.getElementById('scroll-area').scrollTop=0;
 }
 
@@ -835,12 +1223,7 @@ function carregarEnigma(eng){
 // TIMER
 // ════════════════════════════════════════
 function iniciarTimer(seg){
-  if(seg===0){
-    // Sense límit de temps
-    const ht=document.getElementById('hdr-t');
-    if(ht)ht.style.display='none';
-    return;
-  }
+  if(seg===0){const ht=document.getElementById('hdr-t');if(ht)ht.style.display='none';return;}
   aturarTimer();let r=seg;
   const ht=document.getElementById('hdr-t'),ts=document.getElementById('hdr-ts');
   ht.style.display='flex';ht.className='hd-temps';
@@ -850,33 +1233,26 @@ function iniciarTimer(seg){
 function aturarTimer(){if(E.timerId){clearInterval(E.timerId);E.timerId=null;}const ht=document.getElementById('hdr-t');if(ht){ht.style.display='none';ht.className='hd-temps';}}
 
 // ════════════════════════════════════════
-// COMPROVAR
-// ════════════════════════════════════════
-// ════════════════════════════════════════
 // CESAR INTERACTIU
 // ════════════════════════════════════════
-function cesarCanvia(idx, dir){
+function cesarCanvia(idx,dir){
   if(!window._cesarState)return;
   const actual=window._cesarState[idx];
-  const code=actual.charCodeAt(0);
-  const nou=String.fromCharCode(((code-65+dir+26)%26)+65);
+  const nou=String.fromCharCode(((actual.charCodeAt(0)-65+dir+26)%26)+65);
   window._cesarState[idx]=nou;
   const el=document.getElementById('cesar-l-'+idx);
-  if(el){
-    el.textContent=nou;
-    // Actualitza l'input amb la paraula actual
-    const inp=document.getElementById('inp');
-    if(inp)inp.value=window._cesarState.join('');
-  }
+  if(el){el.textContent=nou;document.getElementById('inp').value=window._cesarState.join('');}
 }
 
-function norm(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim();}
+// ════════════════════════════════════════
+// COMPROVAR
+// ════════════════════════════════════════
+function norm(s){return(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim();}
 
 function comprova(){
   const eng=ENIGMES.find(e=>e.id===E.actual);if(!eng)return;
   const inp=document.getElementById('inp'),val=norm(inp.value);
   if(!val)return;
-  // Respostes pot ser array o funció
   const rs=typeof eng.respostes==='function'?eng.respostes():eng.respostes;
   const ok=rs.some(r=>norm(String(r))===val);
   const fb=document.getElementById('fb');fb.style.display='block';
@@ -890,11 +1266,20 @@ function comprova(){
     if(!E.resolts.includes(eng.id))E.resolts.push(eng.id);
     let msgObj='';
     if(eng.objecte&&!E.inventari.some(o=>o.idE===eng.id)){
-      E.inventari.push({...eng.objecte,idE:eng.id});soItem();
+      E.inventari.push({...eng.objecte});soItem();
       msgObj=`<br>🎒 <strong>Obtingut:</strong> ${eng.objecte.emoji} ${eng.objecte.nom}`;
     }
     saveE();
     fb.className='fb ok';fb.innerHTML=`✅ Correcte!${msgObj}`;
+
+    // Mostrar missatge narratiu
+    const narr=NARR_ENIGMA[eng.id];
+    if(narr){
+      const narrEl=document.getElementById('narr-enigma');
+      narrEl.textContent=narr;
+      narrEl.style.display='block';
+    }
+
     const bs=document.getElementById('btn-seg');bs.style.display='block';
     if(eng.sala==='final'){bs.textContent='🏆 Obrir el tresor →';E.seguentFn=mostrarFinal;}
     else{
@@ -917,33 +1302,84 @@ function perdVida(msg,perTemps,fb){
   if(E.vides<=0){fb.className='fb err';fb.innerHTML=(msg||'❌ Resposta incorrecta.');aturarTimer();setTimeout(()=>mostrarGameOver(),1500);return;}
   fb.className='fb err';
   fb.innerHTML=msg||(perTemps?`⌛ Temps esgotat! Et queden <strong>${E.vides} vides</strong>.`:`❌ Incorrecte. Et queden <strong>${E.vides} vides</strong>.`);
-  document.getElementById('btn-pista').disabled=(E.vides<=1);
-  if(perTemps){const eng=ENIGMES.find(e=>e.id===E.actual);if(eng)iniciarTimer(Math.round(eng.temps*.75));}
+  const dif=DIFS[E.dificultat]||DIFS.normal;
+  document.getElementById('btn-pista').disabled=(E.vides<=dif.pistaCost);
+  if(perTemps){const eng=ENIGMES.find(e=>e.id===E.actual);if(eng)iniciarTimer(Math.round((eng.temps||0)*(DIFS[E.dificultat]?.mult||1)*.75));}
 }
 
 // ════════════════════════════════════════
 // PISTA
 // ════════════════════════════════════════
 function demanaPista(){
-  const eng=ENIGMES.find(e=>e.id===E.actual);if(!eng||E.vides<=1)return;
-  E.vides--;E.pistes++;saveE();actualVides();
-  document.getElementById('btn-pista').disabled=true;
+  const eng=ENIGMES.find(e=>e.id===E.actual);if(!eng)return;
+  const dif=DIFS[E.dificultat]||DIFS.normal;
+  const cost=dif.pistaCost;
+  if(cost>0&&E.vides<=cost)return;
+  E.vides-=cost;E.pistes++;saveE();actualVides();
+  document.getElementById('btn-pista').disabled=(cost>0&&E.vides<=cost);
   const txt=typeof eng.pista==='function'?eng.pista():eng.pista;
   const fb=document.getElementById('fb');
-  fb.className='fb pis';fb.innerHTML=`🔦 <strong>Pista (−1❤️):</strong> ${txt}`;fb.style.display='block';
+  fb.className='fb pis';
+  fb.innerHTML=`🔦 <strong>Pista${cost>0?` (−${cost}❤️)`:' (gratuïta)'}:</strong> ${txt}`;
+  fb.style.display='block';
 }
 
 // ════════════════════════════════════════
-// NAV + FINAL
+// MODAL INVENTARI
 // ════════════════════════════════════════
-function actualVides(){[1,2,3,4,5].forEach(i=>{const el=document.getElementById('v'+i);if(el)el.className='vida'+(i>E.vides?' perd':'');});}
+function obrirInventariModal(){
+  // Mostra tots els objectes en llista
+  if(!E.inventari.length)return;
+  const o=E.inventari[0];
+  obrirModalInvItem(o.idE);
+}
+
+function obrirModalInvItem(idE){
+  const o=E.inventari.find(x=>x.idE===idE);
+  if(!o)return;
+  document.getElementById('minv-tit').innerHTML=`${o.emoji} ${o.nom}`;
+  document.getElementById('minv-sub').textContent=`Obtingut a: ${nomSala(ENIGMES.find(e=>e.id===idE)?.sala||'')}`;
+  const descFn=INV_DESC[idE];
+  document.getElementById('minv-desc').textContent=descFn?descFn(o.nom):'Un objecte misteriós de l\'Oncle Albert.';
+  document.getElementById('modal-inv').classList.add('vis');
+}
+
+function tancarModalInv(){document.getElementById('modal-inv').classList.remove('vis');}
+document.getElementById('modal-inv').addEventListener('click',function(e){if(e.target===this)tancarModalInv();});
+
+function nomSala(sid){return({sala:'El Despatx',bibli:'La Biblioteca',lab:'El Laboratori',secret:'La Cambra Secreta',final:'La Caixa Forta'})[sid]||sid;}
+
+// ════════════════════════════════════════
+// NAVEGACIÓ + FINAL
+// ════════════════════════════════════════
+function actualVides(){
+  const dif=DIFS[E.dificultat]||DIFS.normal;
+  for(let i=1;i<=dif.vides;i++){
+    const el=document.getElementById('v'+i);
+    if(el)el.className='vida'+(i>E.vides?' perd':'');
+  }
+}
+
 function mostrarPg(id){
-  document.querySelectorAll('.pagina').forEach(p=>p.classList.remove('activa'));
-  document.getElementById(id).classList.add('activa');
+  document.querySelectorAll('.pagina').forEach(p=>{p.classList.remove('activa');});
+  const p=document.getElementById(id);
+  p.classList.add('activa');
+  void p.offsetWidth; // reflow per reiniciar animació
+  p.classList.add('fade-in');
+  setTimeout(()=>p.classList.remove('fade-in'),400);
   document.getElementById('scroll-area').scrollTop=0;
 }
+
 function tornarMapa(){aturarTimer();E.actual=null;mostrarPg('pg-mapa');renderMapa();}
 function seguentAccio(){if(E.seguentFn)E.seguentFn();}
+
+function saltarEnigma(){
+  const eng=ENIGMES.find(e=>e.id===E.actual);if(!eng)return;
+  const sid=eng.sala,ordre=E.ordre[sid]||[];
+  const idx=ordre.indexOf(eng.id);
+  if(idx>=0){ordre.splice(idx,1);ordre.push(eng.id);E.ordre[sid]=ordre;saveE();}
+  aturarTimer();E.actual=null;mostrarPg('pg-mapa');renderMapa();
+}
 
 function mostrarGameOver(){
   aturarTimer();soGO();
@@ -954,50 +1390,79 @@ function mostrarGameOver(){
 }
 
 function tempsFormat(ms){
-  const s=Math.floor(ms/1000);
-  const m=Math.floor(s/60);
-  const ss=s%60;
+  const s=Math.floor(ms/1000),m=Math.floor(s/60),ss=s%60;
   return m>0?`${m}m ${ss}s`:`${ss}s`;
 }
+
+// Missatge narratiu final (revela el secret)
+const REVELACIO_FINAL=`A l'interior de la caixa forta hi havia un sobre. L'obres amb mans tremoloses. Dins: una fotografia en blanc i negre. L'Albert, jove i somrient, davant d'un edifici familiar. Al dors, escrit amb la seva lletra clara: "Per a qui trobi això: el tresor no és or. El tresor ets tu, capaç de resoldre l'impossible. — Albert"`;
 
 function mostrarFinal(){
   aturarTimer();soFinal();confetti();setTimeout(confetti,1200);
   document.getElementById('hdr-inv').style.display='none';
-  document.getElementById('fn-e').textContent=ENIGMES.length;
+  document.getElementById('fin-revelacio').textContent=REVELACIO_FINAL;
+  document.getElementById('fn-e').textContent=E.resolts.length;
   document.getElementById('fn-p').textContent=E.pistes;
   document.getElementById('fn-v').textContent=E.vides;
 
-  // Calcular temps de la partida
   const tempsMs=E.tempsInici?Date.now()-E.tempsInici:0;
-
-  // Rècords globals (persistents entre partides)
-  let rec=JSON.parse(localStorage.getItem('albert4_rec')||'{"millor":null,"nparts":0}');
+  let rec=JSON.parse(localStorage.getItem('albert5_rec')||'{"millor":null,"nparts":0}');
   rec.nparts=(rec.nparts||0)+1;
   let nouRec=false;
   if(!rec.millor||tempsMs<rec.millor){rec.millor=tempsMs;nouRec=true;}
-  localStorage.setItem('albert4_rec',JSON.stringify(rec));
+  localStorage.setItem('albert5_rec',JSON.stringify(rec));
 
   document.getElementById('fn-temps').textContent=tempsFormat(tempsMs);
   document.getElementById('fn-rec').textContent=rec.millor?tempsFormat(rec.millor):'–';
   document.getElementById('fn-nparts').textContent=rec.nparts;
 
-  let nota;
-  if(E.pistes===0&&E.vides>=4)nota='⭐⭐⭐ Impecable! Has resolt tots els enigmes sense cap ajuda. Ets un criptògraf nat. L\'Oncle Albert estaria molt orgullós.';
-  else if(E.pistes<=2&&E.vides>=2)nota='⭐⭐ Molt bé! Amb una mica d\'ajuda has trobat el camí. L\'Oncle Albert somriu des d\'on sigui.';
-  else nota='⭐ Ho has aconseguit! Els enigmes d\'Albert no eren fàcils. Cada partida et farà millor.';
+  // Rang final
+  const rf=calcularRangFinal(tempsMs,E.pistes,E.vides);
+  document.getElementById('fin-rang-em').textContent=rf.em;
+  document.getElementById('fin-rang-nom').textContent=rf.nom;
+  document.getElementById('fin-rang-desc').textContent=rf.desc;
+
+  let nota='';
+  if(E.pistes===0&&E.vides>=(DIFS[E.dificultat]?.vides||5)-1)nota='⭐⭐⭐ Impecable! Sense cap ajuda i amb totes les vides. Criptògraf nat.';
+  else if(E.pistes<=2&&E.vides>=2)nota='⭐⭐ Molt bé! Amb molt poca ajuda has trobat el camí.';
+  else nota='⭐ Ho has aconseguit! Els enigmes d\'Albert no eren fàcils. Torna-hi per millorar!';
   if(nouRec&&rec.nparts>1)nota+=' 🏅 Nou rècord de velocitat!';
   document.getElementById('fin-nota').textContent=nota;
+
+  // Desar estadístiques per compartir
+  window._lastResult={rang:rf.nom,temps:tempsFormat(tempsMs),pistes:E.pistes,vides:E.vides,enigmes:E.resolts.length,dif:(DIFS[E.dificultat]?.label||'Inspector')};
+
   mostrarPg('pg-final');
-  localStorage.removeItem('albert4');
+  localStorage.removeItem('albert5');
+}
+
+function compartirResultat(){
+  const r=window._lastResult||{};
+  const txt=`🔐 L'Oncle Albert · Gobo26\n${r.rang||'Inspector'} · ${r.dif||'Normal'}\n⏱ ${r.temps||'—'} · ❤️ ${r.vides||'—'} vides\n🔦 ${r.pistes||0} pistes · 🧩 ${r.enigmes||0} enigmes\nhttps://ja.cat/appgobo`;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(txt).then(()=>{
+      const b=document.querySelector('.btn-compartir');
+      b.textContent='✅ Copiat al porta-retalls!';
+      setTimeout(()=>{b.innerHTML='📤 Compartir resultat';},2500);
+    }).catch(()=>fallbackCompartir(txt));
+  } else fallbackCompartir(txt);
+}
+
+function fallbackCompartir(txt){
+  if(navigator.share){navigator.share({title:"L'Oncle Albert",text:txt});}
+  else{prompt('Copia aquest text:',txt);}
 }
 
 function reiniciar(){
-  aturarTimer();localStorage.removeItem('albert4');
-  E={vides:5,resolts:[],inventari:[],pistes:0,ordre:{},iniciat:false,actual:null,timerId:null,seguentFn:null,params:null};
-  ENIGMES=[];
+  aturarTimer();
+  localStorage.removeItem('albert5');
+  E={vides:5,resolts:[],inventari:[],pistes:0,ordre:{},iniciat:false,actual:null,timerId:null,seguentFn:null,params:null,tempsInici:null,dificultat:'normal',zenMode:false,secretDesblocat:false,secretMostrat:false};
+  ENIGMES=[];_zenMode=false;
+  document.getElementById('zen-sw').classList.remove('on');
   document.getElementById('estat-ant').style.display='none';
   document.getElementById('btn-comecar').style.display='block';
   document.getElementById('hdr-inv').style.display='none';
+  document.getElementById('hdr-rang').style.display='none';
   mostrarPg('pg-inici');
 }
 </script>

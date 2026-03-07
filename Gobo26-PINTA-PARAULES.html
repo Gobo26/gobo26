@@ -172,7 +172,16 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
 <div id="pantalla-inici">
     <div id="inici-titol">🎨 PINTA<br>PARAULES</div>
     <div id="inici-sub">Clica el color de la <strong>tinta</strong> amb la qual està escrita cada paraula.<br>Ignora el que diu!</div>
-    <button id="btn-preparats" onclick="comencarComptaEnrere()">ESTIC PREPARAT!</button>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+        <button id="btn-normal" onclick="triarModeIInici('normal')"
+            style="font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;background:#1e293b;color:white;border:3px solid #2563eb;border-radius:14px;padding:14px 28px;cursor:pointer;min-width:140px;">
+            🎯 Normal
+        </button>
+        <button id="btn-facil" onclick="triarModeIInici('facil')"
+            style="font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;background:#1e293b;color:white;border:3px solid #16a34a;border-radius:14px;padding:14px 28px;cursor:pointer;min-width:140px;">
+            🌿 Fàcil
+        </button>
+    </div>
     <div id="compte-enrere"></div>
 </div>
 
@@ -234,9 +243,9 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
         <div class="ajuda-pas"><div class="ajuda-ico">🧠</div><div class="ajuda-txt"><strong>L'efecte Stroop:</strong> cada paraula està escrita en un color diferent del que diu. El teu cervell ha d'ignorar el significat i fixar-se en el color de la tinta.</div></div>
         <div class="ajuda-pas"><div class="ajuda-ico">👆</div><div class="ajuda-txt"><strong>Com jugar:</strong> clica una paraula de l'esquerra i després el pot del color <em>de la tinta</em>. Si diu <em>VERMELL</em> escrit en blau, clica el pot <strong>blau</strong>.</div></div>
         <div class="ajuda-pas"><div class="ajuda-ico">🎯</div><div class="ajuda-txt"><strong>L'objectiu:</strong> fer les 6 parelles correctes abans que s'acabi el compte enrere.</div></div>
-        <div class="ajuda-pas"><div class="ajuda-ico">⏱️</div><div class="ajuda-txt"><strong>Temps per pantalla:</strong> comences amb <strong>24 segons</strong>. Cada pantalla superada redueix el temps: 24 → 22 → 20 → 18 → 16 → 14 → 13 → 12 → 11 → 10 → 8s.</div></div>
-        <div class="ajuda-pas"><div class="ajuda-ico">🔄</div><div class="ajuda-txt"><strong>Temps esgotat:</strong> les paraules i colors es barregen de nou i ho tornes a intentar. Tens fins a <strong>3 intents</strong> per pantalla.</div></div>
-        <div class="ajuda-pas"><div class="ajuda-ico">💔</div><div class="ajuda-txt"><strong>3 intents fallats:</strong> tornes a la pantalla 1 amb 24 segons. Es guarda la pantalla màxima assolida com a rècord.</div></div>
+        <div class="ajuda-pas"><div class="ajuda-ico">⏱️</div><div class="ajuda-txt"><strong>Temps per pantalla (Normal):</strong> comences amb <strong>24s</strong>. Cada pantalla superada redueix el temps fins a 8s. <strong>Mode Fàcil:</strong> comences amb 40s i tens 4 intents per pantalla.</div></div>
+        <div class="ajuda-pas"><div class="ajuda-ico">🔄</div><div class="ajuda-txt"><strong>Temps esgotat:</strong> les paraules i colors es barregen de nou i ho tornes a intentar. Tens fins a <strong>3 intents</strong> (Normal) o <strong>4 intents</strong> (Fàcil) per pantalla.</div></div>
+        <div class="ajuda-pas"><div class="ajuda-ico">💔</div><div class="ajuda-txt"><strong>Intents esgotats:</strong> tornes a la pantalla 1. Es guarda la pantalla màxima assolida com a rècord.</div></div>
         <div class="ajuda-pas"><div class="ajuda-ico">🔥</div><div class="ajuda-txt"><strong>Puntuació:</strong> +10 per encert, -5 per error. Cada 3 encerts seguits +5 bonus. Cada pantalla superada +20 extra.</div></div>
         <button class="btn-tancar" onclick="tancarAjuda()">Entesos! A jugar 🎮</button>
     </div>
@@ -262,11 +271,17 @@ const COLORS = [
     { nom:'LILA',    hex:'#a855f7' },
 ];
 
-const SEQUENCIA_TEMPS = [24,22,20,18,16,14,13,12,11,10,8];
-const TEMPS_INICI = SEQUENCIA_TEMPS[0];
+const SEQUENCIES_TEMPS = {
+    normal: [24,22,20,18,16,14,13,12,11,10,8],
+    facil:  [40,37,34,31,28,25,22,20,18,16,14],
+};
+const MAX_FALLOS_PER_MODE = { normal: 2, facil: 3 };
+let modeJoc = 'normal';
+let SEQUENCIA_TEMPS = SEQUENCIES_TEMPS.normal;
+let TEMPS_INICI = SEQUENCIA_TEMPS[0];
 const TEMPS_MINIM = 8;
 const MAX_INTENTS = 3;
-const MAX_FALLOS = 2;
+let MAX_FALLOS = 2;
 
 // ── ESTAT ──────────────────────────────────────────────────────────────────
 let seleccionada = null;
@@ -314,20 +329,28 @@ function confeti(n=50){
     },i*25);
 }
 
+// ── TRIAR MODE I INICIAR ───────────────────────────────────────────────────
+function triarModeIInici(m){
+    modeJoc = m;
+    SEQUENCIA_TEMPS = SEQUENCIES_TEMPS[m];
+    TEMPS_INICI = SEQUENCIA_TEMPS[0];
+    MAX_FALLOS = MAX_FALLOS_PER_MODE[m];
+    comencarComptaEnrere();
+}
+
 // ── INICIAR (des de zero) ──────────────────────────────────────────────────
 function iniciar(){
     punts=0; ratxa=0; pantalla=1; intents=0; fallos=0;
     limitTemps=TEMPS_INICI;
     document.getElementById('overlay').classList.remove('vis');
     document.getElementById('pantalla-inici').classList.remove('ocult');
-    document.getElementById('btn-preparats').style.display='';
     document.getElementById('compte-enrere').style.display='none';
     actualitzarMarcadors();
     mostrarRecs();
 }
 
 function comencarComptaEnrere(){
-    document.getElementById('btn-preparats').style.display='none';
+    document.getElementById('pantalla-inici').classList.add('ocult');
     const ce=document.getElementById('compte-enrere');
     ce.style.display='block';
     let n=3;
@@ -341,8 +364,8 @@ function comencarComptaEnrere(){
         } else {
             clearInterval(t);
             ce.textContent='';
+            ce.style.display='none';
             so(880,'sine',.3,.08);
-            document.getElementById('pantalla-inici').classList.add('ocult');
             novaPartida();
         }
     },1000);
@@ -533,7 +556,7 @@ function actualitzarMarcadors(){
     document.getElementById('xip-punts').textContent=punts;
     document.getElementById('xip-ratxa').textContent=ratxa;
     document.getElementById('xip-pantalla').textContent=pantalla;
-    document.getElementById('xip-intents').textContent=fallos+'/'+MAX_FALLOS;
+    document.getElementById('xip-intents').textContent=fallos+'/'+(MAX_FALLOS+1);
     const millor=recs.length>0?recs[0].pantalla:'—';
     document.getElementById('xip-rec').textContent=millor;
 }

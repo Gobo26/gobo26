@@ -320,6 +320,9 @@
         .btn-nova:hover { background: var(--primari-fosc); }
         .btn-reset { background: #e2e8f0; color: var(--text); }
         .btn-reset:hover { background: #cbd5e1; }
+        .btn-mode { background: #e2e8f0; color: var(--text); border: 2.5px solid transparent; }
+        .btn-mode:hover { background: #cbd5e1; }
+        .btn-mode.actiu { background: var(--primari); color: white; border-color: var(--primari-fosc); }
 
         /* ===== FOOTER ===== */
         footer {
@@ -524,6 +527,12 @@
         </div>
     </div>
 
+    <!-- MODE -->
+    <div class="controls">
+        <button class="btn btn-mode" id="btn-mode-ia" onclick="setMode('ia')" style="font-size:clamp(.65rem,2vw,.82rem)">🤖 vs IA</button>
+        <button class="btn btn-mode" id="btn-mode-2j" onclick="setMode('2j')" style="font-size:clamp(.65rem,2vw,.82rem)">👥 2 Jugadors</button>
+    </div>
+
     <!-- CONTROLS -->
     <div class="controls">
         <button class="btn btn-nova" onclick="novaPartida()">▶ Nova Partida</button>
@@ -551,6 +560,14 @@
         <div class="bloc">
             <strong>Les peces i qui comença</strong>
             Cada partida nova, el joc tria peces emoji aleatòries i sempre diferents per a tu i per a la màquina. El torn inicial s'alterna: una partida comences tu, la següent comença la màquina. 🎲
+        </div>
+
+        <div class="bloc">
+            <strong>Mode de joc</strong>
+            <table>
+                <tr><td>🤖 vs IA</td><td>Juga sol contra la màquina. Dificultat progressiva.</td></tr>
+                <tr><td>👥 2 Jugadors</td><td>Dos jugadors al mateix dispositiu, per torns.</td></tr>
+            </table>
         </div>
 
         <div class="bloc">
@@ -589,10 +606,23 @@
     const NOMS_NIVELL  = ['Principiant','Intermedi','Expert'];
     const COLORS_NIVELL = ['#16a34a','#d97706','#dc2626'];
 
+    let mode = 'ia'; // 'ia' | '2j'
+
+    function setMode(m) {
+        mode = m;
+        document.getElementById('btn-mode-ia').classList.toggle('actiu', m === 'ia');
+        document.getElementById('btn-mode-2j').classList.toggle('actiu', m === '2j');
+        // Actualitzar etiquetes del marcador
+        document.querySelector('.marca-card.maquina .nom').textContent = m === '2j' ? 'Jugador 2' : 'Màquina';
+        document.getElementById('peca-maquina').textContent = m === '2j' ? '🎮' : '🤖';
+        novaPartida();
+    }
+
     let estat = ["","","","","","","","",""];
     let jocActiu = false;
     let icona_jugador = '';
     let icona_maquina = '';
+    let torn_2j = 'J'; // en mode 2j: 'J' o 'M' (però els dos som jugadors)
     // torn_inicial: true = jugador comença, false = màquina comença. Alterna cada partida.
     let torn_inicial = true;
 
@@ -665,14 +695,15 @@
         triarPeces();
         estat = ["","","","","","","","",""];
         jocActiu = true;
+        torn_2j = 'J';
         cel_les.forEach(c => { c.textContent = ''; c.className = 'cella'; });
         actualitzarUI();
 
-        if (torn_inicial) {
-            // Comença el jugador
+        if (mode === '2j') {
+            setMissatge('Torn del Jugador 1 ' + icona_jugador, '');
+        } else if (torn_inicial) {
             setMissatge('El teu torn! ' + icona_jugador + ' endavant 💪', '');
         } else {
-            // Comença la màquina
             setMissatge('Ara comença la màquina... ' + icona_maquina, '');
             jocActiu = false;
             setTimeout(torMaquina, 700);
@@ -689,12 +720,23 @@
     function clickCella(e) {
         const idx = parseInt(e.currentTarget.dataset.index);
         if (!jocActiu || estat[idx] !== '') return;
-        ferMoviment(idx, 'J');
-        if (comprovar()) return;
-        if (!estat.includes('')) { fiPartida('empat'); return; }
-        jocActiu = false;
-        setMissatge('La màquina pensa... ' + icona_maquina, '');
-        setTimeout(torMaquina, 550);
+
+        if (mode === '2j') {
+            // Mode 2 jugadors: alternar entre J i M (però els dos controlen)
+            ferMoviment(idx, torn_2j);
+            if (comprovar()) return;
+            if (!estat.includes('')) { fiPartida('empat'); return; }
+            torn_2j = torn_2j === 'J' ? 'M' : 'J';
+            const nom = torn_2j === 'J' ? 'Jugador 1 ' + icona_jugador : 'Jugador 2 ' + icona_maquina;
+            setMissatge('Torn de ' + nom, '');
+        } else {
+            ferMoviment(idx, 'J');
+            if (comprovar()) return;
+            if (!estat.includes('')) { fiPartida('empat'); return; }
+            jocActiu = false;
+            setMissatge('La màquina pensa... ' + icona_maquina, '');
+            setTimeout(torMaquina, 550);
+        }
     }
 
     function torMaquina() {
@@ -765,20 +807,29 @@
         if (resultat === 'jugador') {
             punts_jugador++;
             localStorage.setItem('3r_vict_j', punts_jugador);
-            const nouNivell = getNivellActual();
-            if (nouNivell > nivell_anterior) {
-                nivells_assolits++;
-                localStorage.setItem('3r_nivells', nivells_assolits);
-                nivell_anterior = nouNivell;
-                setMissatge('🏆 Nou nivell! Ets ' + NOMS_NIVELL[nouNivell] + '! 🎉', 'guanya');
+            if (mode === '2j') {
+                setMissatge('🏆 Ha guanyat el Jugador 1 ' + icona_jugador + '!', 'guanya');
             } else {
-                setMissatge('✨ Has guanyat! Molt bé, ' + icona_jugador + '!', 'guanya');
+                const nouNivell = getNivellActual();
+                if (nouNivell > nivell_anterior) {
+                    nivells_assolits++;
+                    localStorage.setItem('3r_nivells', nivells_assolits);
+                    nivell_anterior = nouNivell;
+                    setMissatge('🏆 Nou nivell! Ets ' + NOMS_NIVELL[nouNivell] + '! 🎉', 'guanya');
+                } else {
+                    setMissatge('✨ Has guanyat! Molt bé, ' + icona_jugador + '!', 'guanya');
+                }
             }
             llençarConfeti();
         } else if (resultat === 'maquina') {
             punts_maquina++;
             localStorage.setItem('3r_vict_m', punts_maquina);
-            setMissatge('😅 Ha guanyat la màquina ' + icona_maquina + '. Revenja!', 'perd');
+            if (mode === '2j') {
+                setMissatge('🏆 Ha guanyat el Jugador 2 ' + icona_maquina + '!', 'guanya');
+                llençarConfeti();
+            } else {
+                setMissatge('😅 Ha guanyat la màquina ' + icona_maquina + '. Revenja!', 'perd');
+            }
         } else {
             setMissatge('🤝 Empat! Nova oportunitat.', 'empat');
         }
@@ -820,8 +871,8 @@
     cel_les.forEach(c => c.addEventListener('click', clickCella));
 
     // Arrencada
+    setMode('ia');
     actualitzarUI();
-    novaPartida();
 </script>
 </body>
 </html>
