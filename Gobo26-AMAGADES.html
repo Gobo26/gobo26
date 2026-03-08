@@ -90,8 +90,13 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 .boto-gran.sec{background:white;color:var(--s700);border:2px solid var(--s300);box-shadow:none;}
 
 /* RÈCORDS */
-#record-panel{width:100%;max-width:680px;background:white;border:1px solid var(--s200);padding:16px 20px;border-radius:12px;display:none;}
-#record-panel h3{color:var(--s700);font-size:.85rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;}
+#record-panel{width:100%;max-width:680px;background:white;border:1px solid var(--s200);border-radius:12px;display:none;overflow:hidden;}
+#record-panel h3{color:var(--s700);font-size:.85rem;text-transform:uppercase;letter-spacing:2px;margin:0;}
+.collapsible-header{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;cursor:pointer;user-select:none;}
+.collapsible-header:hover{background:var(--s100);}
+.collapsible-arrow{font-size:.75rem;color:var(--s400);transition:transform .25s ease;display:inline-block;}
+.collapsible-arrow.obert{transform:rotate(180deg);}
+.collapsible-body{padding:0 20px 16px;}
 .rec-caps{display:grid;grid-template-columns:1fr 60px 60px 60px;font-size:.7rem;font-weight:700;color:var(--s400);text-transform:uppercase;padding:0 4px;margin-bottom:4px;text-align:center;}
 .rec-row{display:grid;grid-template-columns:1fr 60px 60px 60px;padding:6px 4px;border-bottom:1px solid var(--s200);font-size:.82rem;font-weight:700;color:var(--s700);text-align:center;align-items:center;}
 .rec-row:last-child{border-bottom:none;}
@@ -99,8 +104,8 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 .rec-row .val{color:var(--blue);font-size:.78rem;}
 
 /* ESTADÍSTIQUES */
-#estadistiques{width:100%;max-width:680px;background:white;border:1px solid var(--s200);padding:20px;border-radius:12px;display:none;}
-#estadistiques h2{text-align:center;font-size:1rem;font-weight:900;color:var(--s800);text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;}
+#estadistiques{width:100%;max-width:680px;background:white;border:1px solid var(--s200);border-radius:12px;display:none;overflow:hidden;}
+#estadistiques h2{font-size:1rem;font-weight:900;color:var(--s800);text-transform:uppercase;letter-spacing:2px;margin:0;}
 .fila-stat{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:.9rem;}
 .fila-stat:last-of-type{border-bottom:none;}
 .stat-val{font-weight:900;color:var(--blue);}
@@ -185,23 +190,33 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
 
     <!-- RÈCORDS -->
     <div id="record-panel">
-        <h3>🏅 Millors marques</h3>
-        <div class="rec-caps"><span>Nivell</span><span>🥇 1r</span><span>🥈 2n</span><span>🎮 Jug.</span></div>
-        <div class="rec-row" id="rec-row-3" style="display:none"><span>3 paraules</span><span class="val" id="rec-3-1">—</span><span class="val" id="rec-3-2">—</span><span class="val" id="rec-3-j">—</span></div>
-        <div class="rec-row" id="rec-row-4" style="display:none"><span>4 paraules</span><span class="val" id="rec-4-1">—</span><span class="val" id="rec-4-2">—</span><span class="val" id="rec-4-j">—</span></div>
-        <div class="rec-row" id="rec-row-5" style="display:none"><span>5 paraules</span><span class="val" id="rec-5-1">—</span><span class="val" id="rec-5-2">—</span><span class="val" id="rec-5-j">—</span></div>
-        <div class="rec-row" id="rec-row-6" style="display:none"><span>6 paraules</span><span class="val" id="rec-6-1">—</span><span class="val" id="rec-6-2">—</span><span class="val" id="rec-6-j">—</span></div>
+        <div class="collapsible-header" onclick="togglePanel('record-panel')">
+            <h3>🏅 Millors marques</h3>
+            <span class="collapsible-arrow" id="arrow-record-panel">▼</span>
+        </div>
+        <div class="collapsible-body" id="body-record-panel" style="display:none">
+            <div class="rec-caps"><span>Nivell</span><span>🥇 1r</span><span>🥈 2n</span><span>🎮 Jug.</span></div>
+            <div class="rec-row" id="rec-row-3" style="display:none"><span>3 paraules</span><span class="val" id="rec-3-1">—</span><span class="val" id="rec-3-2">—</span><span class="val" id="rec-3-j">—</span></div>
+            <div class="rec-row" id="rec-row-4" style="display:none"><span>4 paraules</span><span class="val" id="rec-4-1">—</span><span class="val" id="rec-4-2">—</span><span class="val" id="rec-4-j">—</span></div>
+            <div class="rec-row" id="rec-row-5" style="display:none"><span>5 paraules</span><span class="val" id="rec-5-1">—</span><span class="val" id="rec-5-2">—</span><span class="val" id="rec-5-j">—</span></div>
+            <div class="rec-row" id="rec-row-6" style="display:none"><span>6 paraules</span><span class="val" id="rec-6-1">—</span><span class="val" id="rec-6-2">—</span><span class="val" id="rec-6-j">—</span></div>
+        </div>
     </div>
 
     <!-- ESTADÍSTIQUES -->
     <div id="estadistiques">
-        <h2>📊 Estadístiques</h2>
-        <div class="fila-stat"><span>🥇 Victòria al 1r intent</span><span class="stat-val" id="st-v1">0</span></div>
-        <div class="fila-stat"><span>🥈 Victòria al 2n intent</span><span class="stat-val" id="st-v2">0</span></div>
-        <div class="fila-stat"><span>💀 Derrotes</span><span class="stat-val" id="st-d">0</span></div>
-        <div class="fila-stat"><span>🎮 Partides totals</span><span class="stat-val" id="st-t">0</span></div>
-        <div style="text-align:center;margin-top:12px;">
-            <span style="cursor:pointer;font-size:.8rem;color:var(--s600);text-decoration:underline;" onclick="esborrarDades()">Esborrar dades</span>
+        <div class="collapsible-header" onclick="togglePanel('estadistiques')">
+            <h2>📊 Estadístiques</h2>
+            <span class="collapsible-arrow" id="arrow-estadistiques">▼</span>
+        </div>
+        <div class="collapsible-body" id="body-estadistiques" style="display:none">
+            <div class="fila-stat"><span>🥇 Victòria al 1r intent</span><span class="stat-val" id="st-v1">0</span></div>
+            <div class="fila-stat"><span>🥈 Victòria al 2n intent</span><span class="stat-val" id="st-v2">0</span></div>
+            <div class="fila-stat"><span>💀 Derrotes</span><span class="stat-val" id="st-d">0</span></div>
+            <div class="fila-stat"><span>🎮 Partides totals</span><span class="stat-val" id="st-t">0</span></div>
+            <div style="text-align:center;margin-top:12px;">
+                <span style="cursor:pointer;font-size:.8rem;color:var(--s600);text-decoration:underline;" onclick="esborrarDades()">Esborrar dades</span>
+            </div>
         </div>
     </div>
 </main>
@@ -517,6 +532,14 @@ function llençarConfeti(){
 function vibrar(p){if(navigator.vibrate)navigator.vibrate(p);}
 
 // ─── ESTADÍSTIQUES ────────────────────────────────────────────────────────────
+function togglePanel(id){
+    const body=document.getElementById('body-'+id);
+    const arrow=document.getElementById('arrow-'+id);
+    const obert=body.style.display!=='none';
+    body.style.display=obert?'none':'block';
+    arrow.classList.toggle('obert',!obert);
+}
+
 function actualitzarStats(){
     document.getElementById('st-v1').textContent=stats.v1||0;
     document.getElementById('st-v2').textContent=stats.v2||0;

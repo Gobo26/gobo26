@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>MAONS – Gobo26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f1f5f9;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── HEADER GOBO26 ── */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: #1e293b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            height: 52px;
+            flex-shrink: 0;
+        }
+
+        .logo-hex {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 8px;
+        }
+
+        .hex-wrap {
+            position: relative;
+            width: 36px;
+            height: 36px;
+        }
+
+        .hex-svg { width: 36px; height: 36px; }
+
+        .hex-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -52%);
+            font-size: 7px;
+            font-weight: 900;
+            color: #1e293b;
+            line-height: 1;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .site-name {
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .header-title {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #fbbf24;
+            letter-spacing: 2px;
+        }
+
+        /* ── MARCADOR ── */
+        #hud {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            background: #1e293b;
+            flex-shrink: 0;
+        }
+
+        .hud-pill {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hud-pill span.val {
+            color: #fbbf24;
+            font-size: 1rem;
+        }
+
+        .hud-vides {
+            display: flex;
+            gap: 4px;
+        }
+
+        .vida { font-size: 1rem; transition: transform 0.2s; }
+        .vida.perduda { opacity: 0.2; transform: scale(0.7); }
+
+        /* ── ÀREA DE JOC ── */
+        #zona-joc {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #pantalla-joc {
+            background: #0f172a;
+            border: 3px solid #2563eb;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(37,99,235,0.4), inset 0 0 60px rgba(0,0,0,0.5);
+            cursor: none;
+            display: block;
+            touch-action: none;
+        }
+
+        /* ── OVERLAY MISSATGE ── */
+        #overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15,23,42,0.88);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            border-radius: 6px;
+        }
+
+        #overlay.ocult { display: none; }
+
+        .caixa-missatge {
+            background: #1e293b;
+            border: 3px solid #2563eb;
+            border-radius: 20px;
+            padding: 28px 36px;
+            text-align: center;
+            max-width: 340px;
+            width: 90%;
+            box-shadow: 0 0 40px rgba(37,99,235,0.5);
+        }
+
+        .caixa-missatge h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fbbf24;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .caixa-missatge p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .caixa-missatge .punts-finals {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #22d3ee;
+            margin: 10px 0 18px;
+        }
+
+        #btn-joc {
+            background: #2563eb;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: background 0.2s, transform 0.1s;
+            min-height: 48px;
+            width: 100%;
+        }
+
+        #btn-joc:hover { background: #1d4ed8; }
+        #btn-joc:active { transform: scale(0.97); }
+
+        /* ── POWER-UPS INDICADOR ── */
+        #power-up-bar {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .pu-badge {
+            background: rgba(37,99,235,0.8);
+            border: 2px solid #60a5fa;
+            border-radius: 8px;
+            padding: 3px 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+            animation: pu-pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pu-pulse {
+            0%,100% { box-shadow: 0 0 4px #2563eb; }
+            50% { box-shadow: 0 0 12px #60a5fa; }
+        }
+
+        /* ── CONFETTI ── */
+        .confetti-piece {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            animation: confetti-fall 1.2s ease-out forwards;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @keyframes confetti-fall {
+            0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(200px) rotate(720deg); }
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #1e293b;
+            color: #64748b;
+            text-align: center;
+            font-size: 0.7rem;
+            padding: 5px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER GOBO26 -->
+<header>
+    <a href="https://ja.cat/appgobo" target="_self" class="logo-hex" title="Gobo26">
+        <div class="hex-wrap">
+            <svg class="hex-svg" viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 2L37.3 12V32L20 42L2.7 32V12L20 2Z" fill="#2563eb"/>
+                <path d="M20 2L37.3 12V32L20 42L2.7 32V12L20 2Z" stroke="#60a5fa" stroke-width="1.5"/>
+            </svg>
+            <div class="hex-text">GOBO<br>26</div>
+        </div>
+        <span class="site-name">Gobo26</span>
+    </a>
+    <div class="header-title">MAONS</div>
+    <div style="width:80px"></div>
+</header>
+
+<!-- HUD -->
+<div id="hud">
+    <div class="hud-pill">Nivell <span class="val" id="txt-nivell">1</span></div>
+    <div class="hud-pill">Punts <span class="val" id="txt-punts">0</span></div>
+    <div class="hud-pill">🏆 <span class="val" id="txt-record">0</span></div>
+    <div class="hud-pill hud-vides" id="hud-vides">
+        <span class="vida" id="v1">❤️</span>
+        <span class="vida" id="v2">❤️</span>
+        <span class="vida" id="v3">❤️</span>
+    </div>
+</div>
+
+<!-- ZONA JOC -->
+<div id="zona-joc">
+    <canvas id="pantalla-joc"></canvas>
+
+    <!-- Overlay missatge -->
+    <div id="overlay">
+        <div class="caixa-missatge">
+            <h2 id="titol-overlay">MAONS</h2>
+            <p id="text-overlay">Trenca tots els maons amb la pilota. No la deixis caure!</p>
+            <div class="punts-finals" id="punts-overlay" style="display:none">0</div>
+            <button id="btn-joc" onclick="comencarJoc()">JUGAR!</button>
+        </div>
+    </div>
+
+    <!-- Power-up actiu -->
+    <div id="power-up-bar"></div>
+</div>
+
+<footer>Una aplicació de Gobo26</footer>
+
+<script>
+// ══════════════════════════════════════════════
+//  MAONS – Gobo26  |  by Joan / Gobo26
+// ══════════════════════════════════════════════
+
+const canvas = document.getElementById("pantalla-joc");
+const ctx    = canvas.getContext("2d");
+const overlay = document.getElementById("overlay");
+
+// ── Mides canvas adaptatives ──
+function ajustarCanvas() {
+    const zona = document.getElementById("zona-joc");
+    const maxW = Math.min(zona.clientWidth - 12, 760);
+    const maxH = Math.min(zona.clientHeight - 12, 520);
+    const ratio = Math.min(maxW / 760, maxH / 520);
+    canvas.width  = Math.floor(760 * ratio);
+    canvas.height = Math.floor(520 * ratio);
+    escala = ratio;
+    // Reajusta posicions
+    if (!jocEnMarxa) {
+        palaX = (canvas.width - palaAmple) / 2;
+        pilX  = canvas.width / 2;
+        pilY  = canvas.height - 60 * escala;
+    }
+}
+let escala = 1;
+window.addEventListener("resize", ajustarCanvas);
+
+// ── ESTAT ──
+let punts = 0, nivell = 1, vides = 3;
+let record = parseInt(localStorage.getItem("maonsRecord") || "0");
+let jocEnMarxa = false, esperantLlançament = false;
+
+// ── PILOTA ──
+let pilX, pilY, pilDX, pilDY;
+const PILOTA_RADI_BASE = 10;
+let pilotaRadi;
+
+// ── PALA ──
+let palaX, palaAmple, palaAlt;
+const PALA_Y_OFFSET = 14;
+let palaMouDreta = false, palaMouEsquerra = false;
+const PALA_VEL = 8;
+
+// ── BLOCS ──
+const COL_BLOCS = 8;
+let filBlocs;
+const MARGE_ESQ = 20, MARGE_DALT = 55;
+const GAP = 5;
+let ampleBloc, altBloc;
+let blocs = [];
+
+// ── POWER-UPS ──
+let powerUps = []; // {x,y,tipus,vy}
+let powerUpsActius = {}; // tipus -> ticks restants
+const PU_DURADA = 600; // ticks ~10s a 60fps
+
+const TIPUS_PU = {
+    PALA_GRAN:   { emoji: "⬛", label: "Pala gran",   color: "#22d3ee" },
+    BOLA_LENTA:  { emoji: "🐢", label: "Bola lenta",  color: "#86efac" },
+    MULTI_BOLA:  { emoji: "✨", label: "+Pilota",     color: "#f9a8d4" },
+    EXTRA_VIDA:  { emoji: "❤️",  label: "+Vida",       color: "#f87171" },
+    BOLA_FOGO:   { emoji: "🔥", label: "Foc!",        color: "#fb923c" },
+};
+
+// Pilotes múltiples
+let pilotes = []; // [{x,y,dx,dy}]
+
+// ── PARTÍCULES / EFECTES ──
+let particules = [];
+let flamarades = []; // per bola de foc
+
+// ── SONS (AudioContext) ──
+let audioCtx = null;
+function getAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+}
+function soRebota(freq=440, dur=0.05) {
+    try {
+        const ac = getAudio();
+        const o = ac.createOscillator();
+        const g = ac.createGain();
+        o.connect(g); g.connect(ac.destination);
+        o.frequency.setValueAtTime(freq, ac.currentTime);
+        o.frequency.exponentialRampToValueAtTime(freq*0.8, ac.currentTime+dur);
+        g.gain.setValueAtTime(0.15, ac.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime+dur);
+        o.start(); o.stop(ac.currentTime+dur);
+    } catch(e){}
+}
+function soBloc(freq=300) { soRebota(freq, 0.08); }
+function soVida()   { soRebota(200, 0.3); }
+function soVictoria() {
+    [523,659,784,1047].forEach((f,i) => setTimeout(()=>soRebota(f,0.2),i*100));
+}
+function soPowerUp() {
+    [400,600,800].forEach((f,i) => setTimeout(()=>soRebota(f,0.1),i*60));
+}
+
+// ── CONFETTI ──
+function llançarConfetti(n=30) {
+    const colors = ["#2563eb","#fbbf24","#22d3ee","#f472b6","#86efac","#f87171"];
+    for(let i=0;i<n;i++) {
+        const el = document.createElement("div");
+        el.className = "confetti-piece";
+        el.style.left = (Math.random()*100) + "vw";
+        el.style.top  = (Math.random()*30) + "vh";
+        el.style.background = colors[Math.floor(Math.random()*colors.length)];
+        el.style.animationDelay = (Math.random()*0.5)+"s";
+        el.style.animationDuration = (0.8+Math.random()*0.8)+"s";
+        document.body.appendChild(el);
+        setTimeout(()=>el.remove(), 1600);
+    }
+}
+
+// ── VIBRAR ──
+function vibrar(ms=30) {
+    try { navigator.vibrate && navigator.vibrate(ms); } catch(e){}
+}
+
+// ── PARTÍCULES BLOC ──
+function crearParticules(bx, by, color, nFoc=false) {
+    for(let i=0;i<8;i++) {
+        const angle = (Math.PI*2/8)*i + Math.random()*0.5;
+        const speed = 2 + Math.random()*3;
+        particules.push({
+            x: bx, y: by,
+            vx: Math.cos(angle)*speed,
+            vy: Math.sin(angle)*speed,
+            vida: 30 + Math.floor(Math.random()*20),
+            color: nFoc ? "#fb923c" : color,
+            r: 3+Math.random()*4
+        });
+    }
+}
+
+// ── INICIALITZAR ──
+function inicialitzar() {
+    ajustarCanvas();
+    pilotaRadi = Math.max(7, Math.floor(PILOTA_RADI_BASE * escala));
+    palaAmple  = Math.floor(110 * escala);
+    palaAlt    = Math.floor(14 * escala);
+    ampleBloc  = Math.floor((canvas.width - MARGE_ESQ*2*escala - GAP*(COL_BLOCS-1)*escala) / COL_BLOCS);
+    altBloc    = Math.floor(28 * escala);
+    filBlocs   = Math.min(3 + Math.floor((nivell-1)/2), 7);
+    blocs = [];
+    for(let c=0;c<COL_BLOCS;c++) {
+        blocs[c] = [];
+        for(let r=0;r<filBlocs;r++) {
+            const fila = r;
+            let resistencia = 1;
+            if(nivell >= 3 && r < 2) resistencia = 2; // maons durs als nivells alts
+            if(nivell >= 5 && r === 0) resistencia = 3;
+            let tipusPU = null;
+            if(Math.random() < 0.12) {
+                const keys = Object.keys(TIPUS_PU);
+                tipusPU = keys[Math.floor(Math.random()*keys.length)];
+            }
+            blocs[c][r] = {
+                estat: resistencia,
+                max: resistencia,
+                tipusPU
+            };
+        }
+    }
+    powerUps = [];
+    powerUpsActius = {};
+    particules = [];
+    pilotes = [];
+    palaX = (canvas.width - palaAmple) / 2;
+    posicioInici();
+}
+
+function posicioInici() {
+    pilX = canvas.width / 2;
+    pilY = canvas.height - palaAlt - PALA_Y_OFFSET * escala - pilotaRadi - 2;
+    const vel = (3.5 + nivell * 0.4) * escala;
+    pilDX = vel * (Math.random() > 0.5 ? 1 : -1);
+    pilDY = -vel;
+    esperantLlançament = true;
+    pilotes = [];
+}
+
+// ── COORDENADES BLOC ──
+function blocCoords(c, r) {
+    const mE = MARGE_ESQ * escala;
+    const mD = MARGE_DALT * escala;
+    const g  = GAP * escala;
+    return {
+        x: mE + c*(ampleBloc+g),
+        y: mD + r*(altBloc+g)
+    };
+}
+
+// ── COLOR BLOC ──
+const PALETA_BLOCS = [
+    ["#ef4444","#fca5a5"], // vermell
+    ["#f97316","#fdba74"], // taronja
+    ["#eab308","#fde047"], // groc
+    ["#22c55e","#86efac"], // verd
+    ["#06b6d4","#67e8f9"], // cian
+    ["#6366f1","#a5b4fc"], // violeta
+    ["#ec4899","#f9a8d4"], // rosa
+];
+
+function colorBloc(r, resistencia, maxRes) {
+    const [base, clar] = PALETA_BLOCS[r % PALETA_BLOCS.length];
+    if(maxRes <= 1) return { base, clar };
+    // Maó danyat → més fosc
+    if(resistencia < maxRes) return { base:"#475569", clar:"#94a3b8" };
+    return { base, clar };
+}
+
+// ── DIBUIX BLOCS ──
+function dibuixaBlocs() {
+    for(let c=0;c<COL_BLOCS;c++) {
+        for(let r=0;r<filBlocs;r++) {
+            const b = blocs[c][r];
+            if(b.estat <= 0) continue;
+            const {x,y} = blocCoords(c,r);
+            const {base, clar} = colorBloc(r, b.estat, b.max);
+            // Fons bloc
+            ctx.beginPath();
+            ctx.roundRect(x, y, ampleBloc, altBloc, 5);
+            ctx.fillStyle = base;
+            ctx.fill();
+            // Gradient brillantor
+            const gr = ctx.createLinearGradient(x,y,x,y+altBloc*0.4);
+            gr.addColorStop(0, "rgba(255,255,255,0.3)");
+            gr.addColorStop(1, "rgba(255,255,255,0)");
+            ctx.fillStyle = gr;
+            ctx.fill();
+            // Vora
+            ctx.strokeStyle = clar;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            ctx.closePath();
+            // Si té power-up → emoji petit
+            if(b.tipusPU && b.estat > 0) {
+                ctx.font = `${Math.floor(14*escala)}px serif`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(TIPUS_PU[b.tipusPU].emoji, x+ampleBloc/2, y+altBloc/2);
+            }
+            // Número si resistència > 1
+            if(b.max > 1) {
+                ctx.font = `bold ${Math.floor(12*escala)}px Montserrat`;
+                ctx.fillStyle = "rgba(255,255,255,0.9)";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(b.estat, x+ampleBloc/2, y+altBloc/2);
+            }
+        }
+    }
+}
+
+// ── DIBUIX PALA ──
+function dibuixaPala() {
+    const py = canvas.height - palaAlt - PALA_Y_OFFSET * escala;
+    const gr = ctx.createLinearGradient(palaX, py, palaX, py+palaAlt);
+    gr.addColorStop(0, "#60a5fa");
+    gr.addColorStop(1, "#2563eb");
+    ctx.beginPath();
+    ctx.roundRect(palaX, py, palaAmple, palaAlt, 6);
+    ctx.fillStyle = gr;
+    ctx.fill();
+    ctx.strokeStyle = "#93c5fd";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.closePath();
+    // Brillantor
+    ctx.beginPath();
+    ctx.roundRect(palaX+6, py+2, palaAmple-12, 4, 2);
+    ctx.fillStyle = "rgba(255,255,255,0.4)";
+    ctx.fill();
+    ctx.closePath();
+}
+
+// ── DIBUIX PILOTA ──
+function dibuixaPilota(px, py, foc=false) {
+    if(foc) {
+        // Aureola de foc
+        const gf = ctx.createRadialGradient(px,py,1,px,py,pilotaRadi*2.5);
+        gf.addColorStop(0,"rgba(251,146,60,0.8)");
+        gf.addColorStop(1,"rgba(251,146,60,0)");
+        ctx.beginPath();
+        ctx.arc(px, py, pilotaRadi*2.5, 0, Math.PI*2);
+        ctx.fillStyle = gf;
+        ctx.fill();
+    }
+    const gr = ctx.createRadialGradient(px-pilotaRadi*0.3, py-pilotaRadi*0.3, 1, px, py, pilotaRadi);
+    gr.addColorStop(0, foc ? "#fff7ed" : "#fef9c3");
+    gr.addColorStop(0.6, foc ? "#fb923c" : "#fbbf24");
+    gr.addColorStop(1,   foc ? "#dc2626" : "#d97706");
+    ctx.beginPath();
+    ctx.arc(px, py, pilotaRadi, 0, Math.PI*2);
+    ctx.fillStyle = gr;
+    ctx.fill();
+    ctx.strokeStyle = foc ? "#f97316" : "#f59e0b";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.closePath();
+}
+
+// ── DIBUIX POWER-UPS FLOTANTS ──
+function dibuixaPowerUps() {
+    for(let pu of powerUps) {
+        ctx.font = `${Math.floor(20*escala)}px serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.shadowColor = TIPUS_PU[pu.tipus].color;
+        ctx.shadowBlur = 12;
+        ctx.fillText(TIPUS_PU[pu.tipus].emoji, pu.x, pu.y);
+        ctx.shadowBlur = 0;
+    }
+}
+
+// ── DIBUIX PARTÍCULES ──
+function dibuixaParticules() {
+    for(let p of particules) {
+        ctx.globalAlpha = p.vida / 50;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        ctx.closePath();
+    }
+    ctx.globalAlpha = 1;
+}
+
+// ── DIBUIX FONS ──
+function dibuixaFons() {
+    ctx.fillStyle = "#0f172a";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    // Quadrícula subtil
+    ctx.strokeStyle = "rgba(37,99,235,0.07)";
+    ctx.lineWidth = 1;
+    for(let x=0;x<canvas.width;x+=40*escala) {
+        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,canvas.height); ctx.stroke();
+    }
+    for(let y=0;y<canvas.height;y+=40*escala) {
+        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width,y); ctx.stroke();
+    }
+}
+
+// ── ACTUALITZAR POWER-UPS ACTIUS ──
+function actualitzarPowerUpsActius() {
+    const bar = document.getElementById("power-up-bar");
+    bar.innerHTML = "";
+    for(let [tipus, ticks] of Object.entries(powerUpsActius)) {
+        if(ticks <= 0) { delete powerUpsActius[tipus]; continue; }
+        powerUpsActius[tipus]--;
+        const b = document.createElement("div");
+        b.className = "pu-badge";
+        b.style.background = TIPUS_PU[tipus].color+"cc";
+        b.textContent = TIPUS_PU[tipus].emoji + " " + TIPUS_PU[tipus].label;
+        bar.appendChild(b);
+    }
+    // Aplicar efectes
+    if(powerUpsActius["PALA_GRAN"] > 0) {
+        palaAmple = Math.floor(170 * escala);
+    } else {
+        palaAmple = Math.floor(110 * escala);
+    }
+}
+
+// ── ACTUALITZAR HUD ──
+function actualitzarHUD() {
+    document.getElementById("txt-punts").innerText = punts;
+    document.getElementById("txt-nivell").innerText = nivell;
+    document.getElementById("txt-record").innerText = record;
+    for(let i=1;i<=3;i++) {
+        const v = document.getElementById("v"+i);
+        if(i <= vides) v.classList.remove("perduda");
+        else           v.classList.add("perduda");
+    }
+}
+
+// ── COL·LISIÓ PILOTA ──
+function colPilota(px, py, pdx, pdy, esFoc) {
+    let ndx = pdx, ndy = pdy;
+    const py2 = canvas.height - palaAlt - PALA_Y_OFFSET * escala;
+
+    // Parets
+    if(px + pdx > canvas.width - pilotaRadi || px + pdx < pilotaRadi) {
+        ndx = -pdx;
+        soRebota(300);
+    }
+    if(py + pdy < pilotaRadi) {
+        ndy = -pdy;
+        soRebota(350);
+    }
+
+    // Pala
+    if(pdy > 0 && py + pdy >= py2 - pilotaRadi &&
+       py + pdy <= py2 + palaAlt + pilotaRadi &&
+       px >= palaX - pilotaRadi && px <= palaX + palaAmple + pilotaRadi) {
+        // Angle en funció de la posició a la pala
+        const rel = (px - palaX) / palaAmple; // 0..1
+        const angle = (rel - 0.5) * Math.PI * 0.7;
+        const vel = Math.sqrt(ndx*ndx+ndy*ndy);
+        ndx = vel * Math.sin(angle);
+        ndy = -Math.abs(vel * Math.cos(angle));
+        soRebota(500);
+        vibrar(15);
+    }
+
+    // Blocs
+    for(let c=0;c<COL_BLOCS;c++) {
+        for(let r=0;r<filBlocs;r++) {
+            const b = blocs[c][r];
+            if(b.estat <= 0) continue;
+            const {x:bx, y:by} = blocCoords(c,r);
+            if(px > bx - pilotaRadi && px < bx + ampleBloc + pilotaRadi &&
+               py > by - pilotaRadi && py < by + altBloc + pilotaRadi) {
+                // Detectar costat
+                const solapEsq = px - (bx - pilotaRadi);
+                const solapDre = (bx + ampleBloc + pilotaRadi) - px;
+                const solapDalt = py - (by - pilotaRadi);
+                const solapBaix = (by + altBloc + pilotaRadi) - py;
+                const minSolap = Math.min(solapEsq, solapDre, solapDalt, solapBaix);
+                if(minSolap === solapDalt || minSolap === solapBaix) ndy = -pdy;
+                else ndx = -pdx;
+
+                b.estat--;
+                const {base} = colorBloc(r, b.estat+1, b.max);
+                crearParticules(bx+ampleBloc/2, by+altBloc/2, base, esFoc);
+                vibrar(10);
+
+                const freqs = [400,500,600,700,800];
+                soBloc(freqs[r % freqs.length]);
+
+                let ptsBonif = 10 + r*5 + (b.max-1)*15;
+                punts += ptsBonif;
+                if(punts > record) {
+                    record = punts;
+                    localStorage.setItem("maonsRecord", record);
+                }
+
+                // Power-up cau si el bloc es destrueix i tenia PU
+                if(b.estat <= 0 && b.tipusPU) {
+                    powerUps.push({x:bx+ampleBloc/2, y:by+altBloc/2, tipus:b.tipusPU, vy:2*escala});
+                }
+                // Bola de foc destrueix sense rebotar
+                if(esFoc) { b.estat = 0; }
+            }
+        }
+    }
+    return {ndx, ndy};
+}
+
+// ── RECOLLIR POWER-UP ──
+function recollirPowerUp() {
+    const py2 = canvas.height - palaAlt - PALA_Y_OFFSET * escala;
+    powerUps = powerUps.filter(pu => {
+        pu.y += pu.vy;
+        if(pu.y >= py2 && pu.y <= py2+palaAlt+20 && pu.x >= palaX && pu.x <= palaX+palaAmple) {
+            activarPowerUp(pu.tipus);
+            return false;
+        }
+        return pu.y < canvas.height + 30;
+    });
+}
+
+function activarPowerUp(tipus) {
+    soPowerUp();
+    vibrar(40);
+    llançarConfetti(15);
+    if(tipus === "EXTRA_VIDA") {
+        if(vides < 5) vides++;
+        actualitzarHUD();
+    } else if(tipus === "MULTI_BOLA") {
+        // Afegeix 2 pilotes extra
+        const vel = Math.sqrt(pilDX*pilDX+pilDY*pilDY);
+        for(let i=0;i<2;i++) {
+            const angle = -Math.PI/2 + (Math.random()-0.5)*Math.PI/2;
+            pilotes.push({x:pilX, y:pilY, dx:vel*Math.cos(angle), dy:vel*Math.sin(angle)});
+        }
+        powerUpsActius[tipus] = PU_DURADA;
+    } else {
+        powerUpsActius[tipus] = PU_DURADA;
+    }
+}
+
+// ── VICTÒRIA ──
+function comprovarVictoria() {
+    for(let c=0;c<COL_BLOCS;c++)
+        for(let r=0;r<filBlocs;r++)
+            if(blocs[c][r].estat > 0) return false;
+    return true;
+}
+
+function nivelSuperat() {
+    jocEnMarxa = false;
+    soVictoria();
+    llançarConfetti(60);
+    nivell++;
+    mostrarOverlay("NIVELL SUPERAT! 🎉", `Vas al nivell ${nivell}. Bon treball!`, punts, "CONTINUAR →");
+}
+
+// ── PÈRDUA VIDA ──
+function perdreVida() {
+    vides--;
+    soVida();
+    vibrar(200);
+    actualitzarHUD();
+    if(vides <= 0) {
+        finalDeJoc();
+    } else {
+        posicioInici();
+    }
+}
+
+function finalDeJoc() {
+    jocEnMarxa = false;
+    const msg = punts > record ? "Nou rècord! 🏆" : "Torna-ho a intentar!";
+    mostrarOverlay("S'HA ACABAT 😢", msg, punts, "TORNAR A JUGAR");
+    punts = 0; nivell = 1; vides = 3;
+}
+
+// ── OVERLAY ──
+function mostrarOverlay(titol, text, pts, btnText) {
+    document.getElementById("titol-overlay").innerText = titol;
+    document.getElementById("text-overlay").innerText = text;
+    const pe = document.getElementById("punts-overlay");
+    if(pts !== null) { pe.style.display = "block"; pe.innerText = pts + " pts"; }
+    else pe.style.display = "none";
+    document.getElementById("btn-joc").innerText = btnText;
+    overlay.classList.remove("ocult");
+}
+
+// ── LOOP PRINCIPAL ──
+function loop() {
+    if(!jocEnMarxa) return;
+
+    dibuixaFons();
+    dibuixaBlocs();
+    dibuixaParticules();
+    dibuixaPowerUps();
+    dibuixaPala();
+
+    const esFoc = !!powerUpsActius["BOLA_FOGO"];
+
+    if(esperantLlançament) {
+        // Pilota enganxada a la pala
+        pilX = palaX + palaAmple/2;
+        pilY = canvas.height - palaAlt - PALA_Y_OFFSET*escala - pilotaRadi - 2;
+        dibuixaPilota(pilX, pilY, esFoc);
+        // Indicador parpellejant
+        if(Math.floor(Date.now()/400)%2===0) {
+            ctx.font = `bold ${Math.floor(14*escala)}px Montserrat`;
+            ctx.fillStyle = "#fbbf24";
+            ctx.textAlign = "center";
+            ctx.fillText("Clica o toca per llançar!", canvas.width/2, canvas.height/2+30*escala);
+        }
+    } else {
+        // Mou pilota principal
+        pilX += pilDX; pilY += pilDY;
+        const r = colPilota(pilX, pilY, pilDX, pilDY, esFoc);
+        pilDX = r.ndx; pilDY = r.ndy;
+        // Clamp velocitat
+        const vel = Math.sqrt(pilDX*pilDX+pilDY*pilDY);
+        const velMax = (8+nivell*0.5)*escala;
+        const velMin = (3+nivell*0.3)*escala;
+        if(vel > velMax) { pilDX *= velMax/vel; pilDY *= velMax/vel; }
+        if(vel < velMin && pilDY!==0) { pilDX *= velMin/vel; pilDY *= velMin/vel; }
+        // Bola lenta
+        if(powerUpsActius["BOLA_LENTA"]>0) { pilDX *= 0.995; pilDY *= 0.995; }
+        dibuixaPilota(pilX, pilY, esFoc);
+
+        // Caiguda
+        if(pilY > canvas.height + pilotaRadi*2) {
+            if(pilotes.length === 0) perdreVida();
+            else { pilotes = []; } // Si hi ha pilotes extra, no perdem vida
+        }
+
+        // Pilotes extra
+        pilotes = pilotes.filter(p => {
+            p.x += p.dx; p.y += p.dy;
+            const rr = colPilota(p.x, p.y, p.dx, p.dy, esFoc);
+            p.dx = rr.ndx; p.dy = rr.ndy;
+            if(p.y > canvas.height + pilotaRadi*2) return false;
+            dibuixaPilota(p.x, p.y, esFoc);
+            return true;
+        });
+
+        recollirPowerUp();
+        if(comprovarVictoria()) { nivelSuperat(); return; }
+    }
+
+    // Mou pala
+    if(palaMouDreta && palaX < canvas.width - palaAmple) palaX += PALA_VEL*escala;
+    if(palaMouEsquerra && palaX > 0) palaX -= PALA_VEL*escala;
+    palaX = Math.max(0, Math.min(canvas.width - palaAmple, palaX));
+
+    // Actualitza partícules
+    particules = particules.filter(p => {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.15; p.vida--;
+        return p.vida > 0;
+    });
+
+    actualitzarPowerUpsActius();
+    actualitzarHUD();
+    requestAnimationFrame(loop);
+}
+
+// ── COMENCAR JOC ──
+function comencarJoc() {
+    overlay.classList.add("ocult");
+    inicialitzar();
+    jocEnMarxa = true;
+    loop();
+}
+
+// ── LLANÇAR PILOTA (clic/toc sobre canvas) ──
+function llançar() {
+    if(!jocEnMarxa) return;
+    if(esperantLlançament) {
+        esperantLlançament = false;
+    }
+}
+
+canvas.addEventListener("click", llançar);
+canvas.addEventListener("touchstart", llançar, {passive:false});
+
+// ── RATOLÍ ──
+canvas.addEventListener("mousemove", e => {
+    const rect = canvas.getBoundingClientRect();
+    const relX = e.clientX - rect.left;
+    palaX = relX - palaAmple/2;
+});
+
+// ── TÀCTIL ──
+canvas.addEventListener("touchmove", e => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const relX = touch.clientX - rect.left;
+    // Escalar coordenada si canvas és diferent del CSS
+    const scaleX = canvas.width / rect.width;
+    palaX = relX * scaleX - palaAmple/2;
+}, {passive:false});
+
+// ── TECLAT ──
+document.addEventListener("keydown", e => {
+    if(e.key==="ArrowRight") palaMouDreta = true;
+    else if(e.key==="ArrowLeft") palaMouEsquerra = true;
+    else if(e.key===" ") llançar();
+});
+document.addEventListener("keyup", e => {
+    if(e.key==="ArrowRight") palaMouDreta = false;
+    else if(e.key==="ArrowLeft") palaMouEsquerra = false;
+});
+
+// ── INICIAR ──
+ajustarCanvas();
+mostrarOverlay(
+    "MAONS 🧱",
+    "Mou la pala per fer rebotar la pilota i trenca tots els maons. Recull els power-ups que cauen!",
+    null,
+    "JUGAR! 🎮"
+);
+</script>
+</body>
+</html>

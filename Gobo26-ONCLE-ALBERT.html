@@ -274,6 +274,53 @@ footer a{color:#94a3b8;text-decoration:none;}
 .secret-avís.vis{display:block;animation:fadeSlide .5s ease;}
 
 #cv{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100;}
+
+/* ══ TECLAT PERSONALITZAT GOBO26 ══ */
+.teclat-gobo{
+  display:none;flex-direction:column;
+  background:#dde3ea;border-top:2px solid #c5cdd6;
+  padding:5px 8px 8px;gap:4px;flex-shrink:0;
+  width:100%;
+}
+.teclat-gobo.visible{display:flex;}
+.teclat-fila{display:flex;gap:4px;justify-content:center;}
+.tg-tecla{
+  flex:1;min-height:48px;max-width:52px;
+  background:white;border:none;border-radius:8px;
+  box-shadow:0 3px 0 #b0bac4;cursor:pointer;
+  font-family:'Montserrat',sans-serif;font-weight:700;
+  color:#1e293b;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  user-select:none;-webkit-tap-highlight-color:transparent;
+  padding:2px 1px;
+}
+.tg-tecla:active{transform:translateY(3px);box-shadow:0 0 0 #b0bac4;}
+.tg-tecla .tg-ll{font-size:1rem;line-height:1;}
+.tg-tecla .tg-sub{font-size:.42rem;color:#64748b;font-weight:600;letter-spacing:.5px;margin-top:1px;line-height:1;}
+.tg-acc{
+  flex:1.6;max-width:70px;min-height:48px;
+  background:#adb5bd;color:white;border:none;border-radius:8px;
+  box-shadow:0 3px 0 #8d9399;cursor:pointer;
+  font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  user-select:none;-webkit-tap-highlight-color:transparent;
+}
+.tg-acc:active{transform:translateY(3px);box-shadow:0 0 0 #8d9399;}
+.tg-acc.ok{background:#2563eb;box-shadow:0 3px 0 #1a4fa8;font-size:.9rem;}
+.tg-acc.ok:active{box-shadow:0 0 0 #1a4fa8;}
+/* Display de resposta (substitueix input en mòbil) */
+.inp-display{
+  flex:1;font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:800;
+  padding:11px 12px;border:2px solid #e2e8f0;border-radius:10px;
+  color:#1e293b;background:white;min-height:48px;
+  display:none;align-items:center;
+  text-transform:uppercase;letter-spacing:2px;
+  cursor:pointer;user-select:none;
+}
+.inp-display.actiu{border-color:#2563eb;background:#eff6ff;}
+.inp-display.ok{border-color:#16a34a;background:#f0fdf4;}
+.inp-display.err{border-color:#dc2626;background:#fef2f2;}
+.inp-display .cursor{display:inline-block;width:2px;height:1.1em;background:#2563eb;margin-left:2px;vertical-align:middle;animation:blink-c 1s step-end infinite;}
+@keyframes blink-c{50%{opacity:0;}}
 </style>
 </head>
 <body>
@@ -412,9 +459,12 @@ footer a{color:#94a3b8;text-decoration:none;}
   <div class="req-zona" id="req-z">🎒 <span id="req-t">–</span></div>
   <div class="e-preg" id="ep">–</div>
   <div class="inp-zona">
+    <!-- Input natiu (desktop) -->
     <input type="text" id="inp" class="inp-r" placeholder="RESPOSTA…"
            autocomplete="off" autocorrect="off" autocapitalize="characters"
            onkeydown="if(event.key==='Enter')comprova()">
+    <!-- Display tàctil (mòbil) -->
+    <div class="inp-display" id="inp-display" onclick="tgActivar()"></div>
     <button class="btn-ok" id="btn-ok" onclick="comprova()">→</button>
   </div>
   <div class="meta">
@@ -753,7 +803,7 @@ function construirEnigmes(params){
 
   return [
     // ── DESPATX ──
-    {id:'d1',sala:'sala',titol:'La carta xifrada',emoji:'✉️',
+    {id:'d1',inputMode:'alfa',sala:'sala',titol:'La carta xifrada',emoji:'✉️',
       textFn:()=>{
         const ll=cesar.clau_xifrada.split('');
         window._cesarState=[...ll];
@@ -775,7 +825,7 @@ function construirEnigmes(params){
       temps:0,
       pista:`Desplaça cada lletra ${cesar.desp} posicions cap enrere. La primera: "${cesar.clau_xifrada[0]}" → "${String.fromCharCode(((cesar.clau_xifrada[0].charCodeAt(0)-65-cesar.desp+26)%26)+65)}".`
     },
-    {id:'d2',sala:'sala',titol:'El rellotge aturat',emoji:'🕰️',
+    {id:'d2',inputMode:'num',sala:'sala',titol:'El rellotge aturat',emoji:'🕰️',
       textFn:()=>`Al saló hi ha un rellotge de paret aturat a les <strong>${rellotge.h}:${String(rellotge.m).padStart(2,'0')}</strong>.<br><br>
         Al dors hi ha escrit: <em>«Multiplica l'hora pels minuts, suma ${rellotge.suma}, i trobaràs el codi»</em>.`,
       pregunta:`Calcula: (${rellotge.h} × ${rellotge.m}) + ${rellotge.suma} = ?`,
@@ -784,7 +834,7 @@ function construirEnigmes(params){
       temps:55,
       pista:`${rellotge.h} × ${rellotge.m} = ${rellotge.h*rellotge.m}. ${rellotge.h*rellotge.m} + ${rellotge.suma} = ${rellotge.res}.`
     },
-    {id:'d3',sala:'sala',titol:'El telegrama Morse',emoji:'📡',
+    {id:'d3',inputMode:'alfa',sala:'sala',titol:'El telegrama Morse',emoji:'📡',
       textFn:()=>{
         const MT=MORSE_MAP;
         function simHTML(s){return s.split('').map(c=>c==='.'?'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;"></span>':'<span style="display:inline-block;width:20px;height:8px;border-radius:4px;background:#4ade80;"></span>').join('<span style="display:inline-block;width:3px;"></span>');}
@@ -804,7 +854,7 @@ function construirEnigmes(params){
       temps:100,
       pista:`Les lletres en ordre: ${morse.paraula.split('').map((c,i)=>`${c}=${morse.morse[i]}`).join(' · ')}`
     },
-    {id:'d4',sala:'sala',titol:'El mapa de coordenades',emoji:'🗺️',
+    {id:'d4',inputMode:'num',sala:'sala',titol:'El mapa de coordenades',emoji:'🗺️',
       textFn:()=>`A la paret hi ha un vell mapa quadriculat amb creus marcades. Una nota diu:<br><br>
         <em>«Suma les X: ${mapa.xs.join(', ')}. Suma les Y: ${mapa.ys.join(', ')}. La clau és X×Y»</em>.`,
       pregunta:`Calcula: (${mapa.xs.join('+')} = ${mapa.sumX}) × (${mapa.ys.join('+')} = ${mapa.sumY}) = ?`,
@@ -814,7 +864,7 @@ function construirEnigmes(params){
       pista:`Suma X: ${mapa.sumX}. Suma Y: ${mapa.sumY}. ${mapa.sumX} × ${mapa.sumY} = ${mapa.res}.`
     },
     // ── BIBLIOTECA ──
-    {id:'b1',sala:'bibli',titol:'El llibre del mig',emoji:'📖',
+    {id:'b1',inputMode:'num',sala:'bibli',titol:'El llibre del mig',emoji:'📖',
       textFn:()=>`En una prestatgeria hi ha exactament <strong>${biblio.n} llibres</strong> numerats de l'1 al ${biblio.n}. L'Oncle Albert deia: <em>«Al llibre del mig sempre hi amago el secret»</em>.`,
       pregunta:`Quin és el número de posició del llibre del mig d'una col·lecció de ${biblio.n}?`,
       respostes:[biblio.mig],
@@ -822,7 +872,7 @@ function construirEnigmes(params){
       temps:40,
       pista:`El mig de ${biblio.n} elements: (${biblio.n}+1)/2 = ${biblio.mig}.`
     },
-    {id:'b2',sala:'bibli',titol:'La seqüència oculta',emoji:'🔢',
+    {id:'b2',inputMode:'num',sala:'bibli',titol:'La seqüència oculta',emoji:'🔢',
       textFn:()=>`Dins del Llibre #${biblio.mig} hi ha un full amb una seqüència incompleta:<br><br>
         <div style="background:#1e293b;color:#4ade80;font-family:monospace;font-size:1.2rem;font-weight:900;border-radius:8px;padding:12px 16px;text-align:center;letter-spacing:3px;margin:8px 0;">${fibo.shown.join('  ·  ')}  ·  <span style="color:#f59e0b;">?</span></div>
         <em>«Troba el número que substitueix la ? i multiplica'l per ${fibo.factor}.»</em>`,
@@ -832,7 +882,7 @@ function construirEnigmes(params){
       temps:55,
       pista:`Fibonacci: cada terme = suma dels dos anteriors. El proper a ${fibo.shown[fibo.shown.length-1]} és ${fibo.proper}. ${fibo.proper} × ${fibo.factor} = ${fibo.res}.`
     },
-    {id:'b3',sala:'bibli',titol:'El missatge xifrat QWERTY',emoji:'⌨️',
+    {id:'b3',inputMode:'alfa',sala:'bibli',titol:'El missatge xifrat QWERTY',emoji:'⌨️',
       textFn:()=>`Darrere d'un diccionari antic hi ha un paper enganxat. El missatge sembla incomprensible:<br><br>
         <div class="codi-bloc">${qwerty.xifrada}</div>
         <em>L'Oncle Albert xifrava desplaçant cada lletra cap a l'esquerra al teclat QWERTY.</em><br>${qwertyRefHTML}`,
@@ -843,7 +893,7 @@ function construirEnigmes(params){
       pista:`"${qwerty.xifrada[0]}" ve de la lletra que té a l\'esquerra al teclat. Consulta la taula.`
     },
     // ── LABORATORI ──
-    {id:'l1',sala:'lab',titol:'El quadrat màgic',emoji:'🔳',
+    {id:'l1',inputMode:'num',sala:'lab',titol:'El quadrat màgic',emoji:'🔳',
       textFn:()=>`A la pissarra hi ha un quadrat màgic <strong>3×3</strong> incomplet (suma màgica = ${suma}):<br>${qmagicHTML}
         <em style="font-size:.78rem;">«En un quadrat màgic, files, columnes i diagonals sumen sempre el mateix»</em>`,
       pregunta:`Quin número falta al centre (cel·la morada) perquè totes les files sumin ${suma}?`,
@@ -852,7 +902,7 @@ function construirEnigmes(params){
       temps:80,
       pista:`Fila central: ${qm[3]} + ? + ${qm[5]} = ${suma}. ? = ${suma} - ${qm[3]} - ${qm[5]} = ${centre}.`
     },
-    {id:'l2',sala:'lab',titol:'La fórmula secreta',emoji:'⚗️',
+    {id:'l2',inputMode:'num',sala:'lab',titol:'La fórmula secreta',emoji:'⚗️',
       textFn:()=>`A la pissarra hi ha escrit:<br><br>
         <em>«CLAU = lletres(${formula.p1}) + lletres(${formula.p2}) + lletres(${formula.p3})»</em><br><br>
         Tot en català, és clar.`,
@@ -863,7 +913,7 @@ function construirEnigmes(params){
       pista:`"${formula.p1}" té ${formula.p1.length} lletres. "${formula.p2}" en té ${formula.p2.length}. "${formula.p3}" en té ${formula.p3.length}. Total: ${formula.res}.`
     },
     // ── SALA SECRETA ──
-    {id:'s1',sala:'secret',titol:'L\'endevinalla de l\'Albert',emoji:'🎭',
+    {id:'s1',inputMode:'alfa',sala:'secret',titol:'L\'endevinalla de l\'Albert',emoji:'🎭',
       textFn:()=>`A la paret hi ha un marc antic amb una inscripció cal·ligrafiada:<br><br>
         <div style="background:#831843;color:#fce7f3;border-radius:10px;padding:14px 16px;font-size:.95rem;font-weight:700;line-height:1.7;font-style:italic;margin:8px 0;">"${endevinalla.preg}"</div>
         <em style="font-size:.75rem;color:#64748b;">— L'Oncle Albert posava aquesta endevinalla als seus alumnes el primer dia de classe.</em>`,
@@ -873,7 +923,7 @@ function construirEnigmes(params){
       temps:60,
       pista:`Pensa en objectes de la vida quotidiana. La resposta és un substantiu en majúscules.`
     },
-    {id:'s2',sala:'secret',titol:'La xifra del telèfon',emoji:'📱',
+    {id:'s2',inputMode:'alfa',sala:'secret',titol:'La xifra del telèfon',emoji:'📱',
       textFn:()=>`A la tauleta de nit hi ha un vell mòbil. Per miracle, la bateria aguanta. Té un missatge de text. El remitent: "A".<br><br>
         El missatge usa el sistema de tecles numèriques: cada número indica la tecla, i la posició indica la lletra (1a, 2a, 3a...).<br>
         ${telefonRefHTML}`,
@@ -884,7 +934,7 @@ function construirEnigmes(params){
       pista:`El codi és "${telefon.encoded}". Cada parella número-posició és una lletra. Ex: 2-1=A, 2-2=B, 2-3=C.`
     },
     // ── FINAL ──
-    {id:'f1',sala:'final',titol:'La Caixa Forta',emoji:'🔐',
+    {id:'f1',inputMode:'num',sala:'final',titol:'La Caixa Forta',emoji:'🔐',
       textFn:()=>{
         const r=rellotge.res;
         const d2=r.length>=2?r.slice(-2):r.padStart(2,'0');
@@ -1186,7 +1236,13 @@ function carregarEnigma(eng){
   }else{rz.style.display='none';bo.disabled=false;inp.disabled=false;}
 
   inp.value='';inp.className='inp-r';
-  setTimeout(()=>{if(!inp.disabled)inp.focus();},300);
+  tgValorActual='';
+  if(esMobilTG()){
+    tgConfigurar(eng.inputMode||'num');
+    tgActualitzarDisplay();
+  } else {
+    setTimeout(()=>{if(!inp.disabled)inp.focus();},300);
+  }
 
   // Vides dinàmiques
   const dif=DIFS[E.dificultat]||DIFS.normal;
@@ -1251,6 +1307,7 @@ function norm(s){return(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').t
 
 function comprova(){
   const eng=ENIGMES.find(e=>e.id===E.actual);if(!eng)return;
+  if(esMobilTG()){document.getElementById('inp').value=tgValorActual;}
   const inp=document.getElementById('inp'),val=norm(inp.value);
   if(!val)return;
   const rs=typeof eng.respostes==='function'?eng.respostes():eng.respostes;
@@ -1298,7 +1355,12 @@ function perdVida(msg,perTemps,fb){
   fb.style.display='block';
   soErr();if(navigator.vibrate)navigator.vibrate([80,40,80]);
   document.getElementById('inp').className='inp-r err';
-  setTimeout(()=>{document.getElementById('inp').className='inp-r';document.getElementById('inp').value='';},400);
+  setTimeout(()=>{
+    document.getElementById('inp').className='inp-r';
+    document.getElementById('inp').value='';
+    tgValorActual='';
+    tgActualitzarDisplay();
+  },400);
   if(E.vides<=0){fb.className='fb err';fb.innerHTML=(msg||'❌ Resposta incorrecta.');aturarTimer();setTimeout(()=>mostrarGameOver(),1500);return;}
   fb.className='fb err';
   fb.innerHTML=msg||(perTemps?`⌛ Temps esgotat! Et queden <strong>${E.vides} vides</strong>.`:`❌ Incorrecte. Et queden <strong>${E.vides} vides</strong>.`);
@@ -1465,6 +1527,98 @@ function reiniciar(){
   document.getElementById('hdr-rang').style.display='none';
   mostrarPg('pg-inici');
 }
+
+// ════════════════════════════════════════
+// TECLAT PERSONALITZAT GOBO26
+// ════════════════════════════════════════
+const esMobilTG = () => ('ontouchstart' in window) || window.innerWidth <= 768;
+let tgMode = 'alfa';      // 'alfa' | 'num'
+let tgValorActual = '';
+let tgTeclatActiu = false;
+
+function tgConfigurar(mode) {
+  tgMode = mode || 'alfa';
+  const teclat = document.getElementById('teclat-gobo');
+  const inp    = document.getElementById('inp');
+  const disp   = document.getElementById('inp-display');
+  if (!teclat || !inp || !disp) return;
+
+  // Mostrar display, amagar input natiu
+  inp.style.display  = 'none';
+  disp.style.display = 'flex';
+
+  // Bloquejar teclat natiu
+  inp.addEventListener('touchstart', e => e.preventDefault(), {passive:false});
+  inp.addEventListener('focus', () => inp.blur());
+
+  // Mostrar/amagar files correctes
+  document.querySelectorAll('.tg-fila-alfa').forEach(f => f.style.display = (mode==='alfa') ? 'flex' : 'none');
+  document.querySelectorAll('.tg-fila-num').forEach(f  => f.style.display = (mode==='num')  ? 'flex' : 'none');
+
+  teclat.classList.add('visible');
+  tgTeclatActiu = true;
+  tgActualitzarDisplay();
+}
+
+function tgTancar() {
+  const teclat = document.getElementById('teclat-gobo');
+  if (teclat) teclat.classList.remove('visible');
+  tgTeclatActiu = false;
+  const disp = document.getElementById('inp-display');
+  if (disp) disp.classList.remove('actiu');
+}
+
+function tgActivar() {
+  if (!tgTeclatActiu) {
+    document.getElementById('teclat-gobo').classList.add('visible');
+    tgTeclatActiu = true;
+  }
+  const disp = document.getElementById('inp-display');
+  if (disp) disp.classList.add('actiu');
+}
+
+function tgLetra(event, c) {
+  event.preventDefault();
+  if (!tgTeclatActiu) return;
+  const maxLen = tgMode === 'num' ? 8 : 16;
+  if (tgValorActual.length >= maxLen) return;
+  tgValorActual += c;
+  tgActualitzarDisplay();
+}
+
+function tgEsborrar(event) {
+  event.preventDefault();
+  tgValorActual = tgValorActual.slice(0, -1);
+  tgActualitzarDisplay();
+}
+
+function tgOK(event) {
+  event.preventDefault();
+  document.getElementById('inp').value = tgValorActual;
+  comprova();
+}
+
+function tgActualitzarDisplay() {
+  const disp = document.getElementById('inp-display');
+  if (!disp) return;
+  disp.classList.toggle('actiu', tgTeclatActiu);
+  disp.innerHTML = tgValorActual
+    ? tgValorActual + (tgTeclatActiu ? '<span class="cursor"></span>' : '')
+    : (tgTeclatActiu ? '<span class="cursor"></span>' : '<span style="color:#94a3b8;font-size:.9rem;font-weight:600;letter-spacing:1px;">RESPOSTA…</span>');
+}
+
+// Inicialitzar en carregar
+window.addEventListener('DOMContentLoaded', () => {
+  if (esMobilTG()) {
+    // No fem res fins que es carregui un enigma
+    const inp = document.getElementById('inp');
+    if (inp) {
+      inp.addEventListener('touchstart', e => e.preventDefault(), {passive:false});
+      inp.addEventListener('focus', () => inp.blur());
+    }
+  }
+});
+
 </script>
 </body>
 </html>
