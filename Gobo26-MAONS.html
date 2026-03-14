@@ -33,40 +33,9 @@
             flex-shrink: 0;
         }
 
-        .logo-hex {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            gap: 8px;
-        }
-
-        .hex-wrap {
-            position: relative;
-            width: 36px;
-            height: 36px;
-        }
-
-        .hex-svg { width: 36px; height: 36px; }
-
-        .hex-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -52%);
-            font-size: 7px;
-            font-weight: 900;
-            color: #1e293b;
-            line-height: 1;
-            text-align: center;
-            letter-spacing: -0.5px;
-        }
-
-        .site-name {
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            letter-spacing: 0.5px;
-        }
+        .logo { display:flex; align-items:center; gap:8px; text-decoration:none; }
+        .logo-txt { font-size:.9rem; font-weight:900; color:white; letter-spacing:-.5px; }
+        .logo-txt span { color:#3b82f6; }
 
         .header-title {
             font-size: 1.1rem;
@@ -257,15 +226,13 @@
 
 <!-- HEADER GOBO26 -->
 <header>
-    <a href="https://ja.cat/appgobo" target="_self" class="logo-hex" title="Gobo26">
-        <div class="hex-wrap">
-            <svg class="hex-svg" viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 2L37.3 12V32L20 42L2.7 32V12L20 2Z" fill="#2563eb"/>
-                <path d="M20 2L37.3 12V32L20 42L2.7 32V12L20 2Z" stroke="#60a5fa" stroke-width="1.5"/>
-            </svg>
-            <div class="hex-text">GOBO<br>26</div>
-        </div>
-        <span class="site-name">Gobo26</span>
+    <a href="https://ja.cat/appgobo" class="logo">
+        <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
+            <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+        </svg>
+        <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <div class="header-title">MAONS</div>
     <div style="width:80px"></div>

@@ -22,17 +22,6 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 0.7rem 1.2rem; position: sticky; top: 0; z-index: 50; gap: 0.5rem;
   }
-  .logo { display: none; text-decoration: none; }
-  @media (min-width: 480px) { .logo { display: flex; align-items: center; gap: 0.5rem; } }
-  .logo-hex {
-    width: 42px; height: 42px; background: #1e293b; border: 2px solid #fff;
-    clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
-    display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1;
-  }
-  .logo-hex span:first-child { font-size: 0.55rem; font-weight: 900; letter-spacing: 1px; color: #fff; }
-  .logo-hex span:last-child  { font-size: 0.6rem; font-weight: 900; color: #60a5fa; }
-  .header-center { display: flex; align-items: center; gap: 0.5rem; flex: 1; justify-content: center; }
-  .header-title  { font-size: 1.05rem; font-weight: 900; letter-spacing: 0.04em; white-space: nowrap; }
   .btn-ajuda {
     background: #475569; border: none; color: #fff; width: 28px; height: 28px;
     border-radius: 50%; font-size: 0.95rem; font-weight: 900; cursor: pointer;
@@ -250,12 +239,12 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
 
 <header>
     <a href="https://ja.cat/appgobo" class="logo">
-        <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
-            <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
-            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-size="8" font-weight="900">GOBO</text>
-            <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#3b82f6" font-family="Montserrat,sans-serif" font-size="7" font-weight="900">26</text>
+        <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
+            <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
-        <span class="logo-txt">GOBO<span>26</span></span>
+        <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">El Mestre Joier</span>
 </header>

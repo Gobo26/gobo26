@@ -25,8 +25,9 @@ header{
   height:50px;padding:0 12px;display:flex;align-items:center;
   justify-content:space-between;flex-shrink:0;
 }
-.logo-link{display:flex;align-items:center;gap:8px;text-decoration:none;color:#fff}
-.logo-hex{width:32px;height:32px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:#fff}
+.logo-txt{font-size:.9rem;font-weight:900;color:white;letter-spacing:-.5px;}
+.logo-txt span{color:#3b82f6;}
 .hdr-title{font-size:13px;font-weight:700;color:#e2e8f0}
 .hdr-btns{display:flex;gap:6px}
 .hbtn{
@@ -135,12 +136,13 @@ footer{
 <body>
 
 <header>
-  <a class="logo-link" href="https://ja.cat/appgobo" target="_self">
-    <svg class="logo-hex" viewBox="0 0 100 115" fill="none">
-      <polygon points="50,5 95,27.5 95,87.5 50,110 5,87.5 5,27.5" fill="#2563eb"/>
-      <text x="50" y="52" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="800" font-size="28">GOBO</text>
-      <text x="50" y="82" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="800" font-size="28">26</text>
+  <a class="logo" href="https://ja.cat/appgobo">
+    <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
+      <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
+      <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
+      <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
     </svg>
+    <span class="logo-txt">Gobo<span>26</span></span>
   </a>
   <span class="hdr-title">🎨 Acoloreix</span>
   <div class="hdr-btns">
