@@ -22,134 +22,171 @@
 body{font-family:'Montserrat',sans-serif;background:#f1f5f9;color:#334155;min-height:100vh;overflow-x:hidden;}
 
 /* ── HEADER ── */
-header{background:#1e293b;color:white;padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+header{background:#0f172a;color:white;padding:0 20px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.35);}
 .hd-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:white;}
-.hd-logo-text{font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;}
-.hd-tagline{font-size:.65rem;font-weight:600;color:#64748b;letter-spacing:.08em;}
+.hd-logo-text{font-size:.78rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;}
+.hd-tagline{font-size:.63rem;font-weight:600;color:#475569;letter-spacing:.06em;display:none;}
+@media(min-width:480px){.hd-tagline{display:block;}}
+
+/* ── HERO BANNER ── */
+.hero{background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 55%,#1d4ed8 100%);color:white;padding:48px 20px 56px;text-align:center;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:40px;background:#f1f5f9;clip-path:ellipse(55% 100% at 50% 100%);}
+.hero-eyebrow{font-size:.65rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:#93c5fd;margin-bottom:14px;}
+.hero-tit{font-size:clamp(2.2rem,7vw,3.6rem);font-weight:900;line-height:1;letter-spacing:-.04em;margin-bottom:14px;}
+.hero-tit em{color:#60a5fa;font-style:normal;}
+.hero-sub{font-size:clamp(.9rem,2.5vw,1.05rem);font-weight:500;color:#cbd5e1;line-height:1.7;max-width:500px;margin:0 auto 28px;}
+
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:32px;}
+.pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:6px 14px;font-size:.75rem;font-weight:700;color:white;backdrop-filter:blur(4px);}
+
+.hero-counter{display:inline-flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:14px 22px;backdrop-filter:blur(6px);}
+.hc-num{font-size:1.8rem;font-weight:900;color:#60a5fa;line-height:1;letter-spacing:-.03em;}
+.hc-text{text-align:left;}
+.hc-label{font-size:.72rem;font-weight:700;color:white;line-height:1.3;}
+.hc-sub{font-size:.6rem;font-weight:500;color:#93c5fd;margin-top:2px;}
 
 /* ── MAIN ── */
-main{max-width:960px;margin:0 auto;padding:32px 16px 80px;}
+main{max-width:1040px;margin:0 auto;padding:32px 16px 80px;}
 
-/* ── HERO ── */
-.hero{text-align:center;padding:28px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;animation:popIn .5s ease both;}
-.hero-tit{font-size:clamp(2rem,6vw,3rem);font-weight:900;color:#1e293b;line-height:1.05;letter-spacing:-.03em;}
-.hero-tit em{color:#2563eb;font-style:normal;}
-.hero-taglines{display:flex;flex-direction:column;gap:6px;max-width:560px;margin-top:4px;}
-.tagline-1{font-size:.95rem;font-weight:600;color:#334155;line-height:1.6;}
+/* ── SECCIONS ── */
+.seccio{margin-bottom:44px;}
 
-/* ── COMPTADOR ── */
-.temps-card{display:flex;align-items:center;gap:16px;background:white;border-radius:16px;border:2px solid #e2e8f0;padding:16px 22px;max-width:400px;width:100%;box-shadow:0 4px 16px rgba(37,99,235,.07);margin-top:8px;animation:popIn .5s .2s ease both;}
-.temps-icon{font-size:2rem;flex-shrink:0;}
-.temps-cos{flex:1;}
-.temps-num{font-size:1.9rem;font-weight:900;color:#2563eb;line-height:1;letter-spacing:-.03em;}
-.temps-label{font-size:.72rem;font-weight:700;color:#64748b;margin-top:3px;}
-.temps-sub{font-size:.62rem;color:#94a3b8;margin-top:2px;font-style:italic;}
-@media(max-width:480px){.temps-card{padding:12px 16px;gap:12px;}.temps-num{font-size:1.5rem;}}
-
-/* ── SEPARADOR GRAN ── */
-.sep{display:flex;align-items:center;gap:16px;margin:36px 0 16px;}
-.sep-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,#cbd5e1,transparent);}
-.sep-txt{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.28em;color:#94a3b8;}
-
-/* ── BLOCS DE GRUP ── */
-.grup-bloc {
-  background: white;
-  border-radius: 20px;
-  border: 2px solid #e2e8f0;
-  padding: 22px 20px 24px;
-  margin-bottom: 28px;
-  box-shadow: 0 4px 20px rgba(0,0,0,.05);
-  animation: slideUp .5s ease both;
-}
-.grup-bloc:nth-child(1){animation-delay:.05s;}
-.grup-bloc:nth-child(2){animation-delay:.15s;}
-
-.grup-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
-  padding-bottom: 14px;
-  border-bottom: 2px solid #f1f5f9;
-}
-.grup-icon { font-size: 1.8rem; line-height: 1; }
-.grup-titols {}
-.grup-title { font-size: 1rem; font-weight: 900; color: #1e293b; letter-spacing: -.01em; }
-.grup-subtitle { font-size: .75rem; color: #64748b; font-weight: 500; margin-top: 2px; }
+.sec-cap{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #e2e8f0;}
+.sec-icona{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+.sec-icona.blau{background:linear-gradient(135deg,#dbeafe,#bfdbfe);}
+.sec-icona.verd{background:linear-gradient(135deg,#dcfce7,#bbf7d0);}
+.sec-icona.lila{background:linear-gradient(135deg,#ede9fe,#ddd6fe);}
+.sec-titols{flex:1;}
+.sec-title{font-size:1.05rem;font-weight:900;color:#0f172a;letter-spacing:-.02em;}
+.sec-sub{font-size:.75rem;color:#64748b;font-weight:500;margin-top:2px;}
+.sec-badge{font-size:.6rem;font-weight:800;padding:3px 10px;border-radius:99px;text-transform:uppercase;letter-spacing:.12em;margin-left:auto;flex-shrink:0;}
+.sec-badge.blau{background:#dbeafe;color:#1d4ed8;}
 
 /* ── GRID APPS ── */
-.app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
-@media(max-width:420px){.app-grid{grid-template-columns:1fr 1fr;gap:10px;}}
+.app-grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);}
+@media(min-width:480px){.app-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:680px){.app-grid{grid-template-columns:repeat(4,1fr);}}
+@media(min-width:900px){.app-grid{grid-template-columns:repeat(5,1fr);}}
 
-.app-card{background:#f8fafc;border:2px solid #e2e8f0;border-radius:14px;padding:16px 12px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;transition:all .2s;-webkit-tap-highlight-color:transparent;}
-.app-card:hover{border-color:#2563eb;background:white;box-shadow:0 6px 20px rgba(37,99,235,.13);transform:translateY(-3px);}
+/* ── TARGETA APP ── */
+.app-card{background:white;border:2px solid #e2e8f0;border-radius:16px;padding:18px 12px 16px;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;transition:transform .18s,box-shadow .18s,border-color .18s;-webkit-tap-highlight-color:transparent;position:relative;}
+.app-card:hover{border-color:#2563eb;box-shadow:0 8px 28px rgba(37,99,235,.15);transform:translateY(-4px);}
 .app-card:active{transform:translateY(0);box-shadow:none;}
-.app-icon{font-size:2rem;line-height:1;}
-.app-name{font-size:.75rem;font-weight:800;color:#1e293b;line-height:1.3;}
-.app-desc{font-size:.68rem;color:#64748b;line-height:1.4;font-weight:500;}
+.app-icon{font-size:2.2rem;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.1));}
+.app-name{font-size:.75rem;font-weight:800;color:#0f172a;line-height:1.3;}
+.app-desc{font-size:.67rem;color:#64748b;line-height:1.45;font-weight:500;}
+
+/* Distintiu "NOU" */
+.nou-badge{position:absolute;top:-8px;right:-8px;background:linear-gradient(135deg,#dc2626,#ef4444);color:white;font-size:.55rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:99px;box-shadow:0 2px 8px rgba(220,38,38,.45);}
+
+/* ── TARGETA AMIC (blocs Amics) ── */
+.amics-grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);}
+@media(min-width:480px){.amics-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:680px){.amics-grid{grid-template-columns:repeat(4,1fr);}}
+@media(min-width:900px){.amics-grid{grid-template-columns:repeat(5,1fr);}}
+
+/* ── BANNER DESTACAT (opcional) ── */
+.banner-nou{background:linear-gradient(135deg,#1e293b,#1e3a8a);border-radius:20px;padding:22px 24px;display:flex;align-items:center;gap:20px;margin-bottom:20px;text-decoration:none;color:white;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 24px rgba(30,58,138,.3);}
+.banner-nou:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(30,58,138,.4);}
+.banner-nou-icon{font-size:2.8rem;flex-shrink:0;}
+.banner-nou-cos{flex:1;}
+.banner-nou-etiqueta{font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.2em;color:#93c5fd;margin-bottom:4px;}
+.banner-nou-nom{font-size:1.2rem;font-weight:900;letter-spacing:-.02em;}
+.banner-nou-desc{font-size:.8rem;font-weight:500;color:#cbd5e1;margin-top:4px;line-height:1.5;}
+.banner-nou-arrow{font-size:1.8rem;opacity:.6;flex-shrink:0;}
+@media(max-width:480px){.banner-nou{padding:16px;gap:14px;}.banner-nou-nom{font-size:1rem;}.banner-nou-icon{font-size:2.2rem;}}
 
 /* ── BIO ── */
-.bio-section{margin-top:40px;animation:slideUp .5s .3s ease both;}
-.bio-card{background:white;border-radius:18px;border:2px solid #e2e8f0;padding:24px 28px;display:flex;gap:20px;align-items:flex-start;box-shadow:0 4px 16px rgba(0,0,0,.05);}
+.bio-card{background:white;border-radius:18px;border:2px solid #e2e8f0;padding:24px 26px;display:flex;gap:18px;align-items:flex-start;box-shadow:0 4px 16px rgba(0,0,0,.05);margin-top:8px;}
 .bio-avatar{font-size:2.8rem;flex-shrink:0;line-height:1;}
 .bio-label{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.28em;color:#2563eb;margin-bottom:8px;}
 .bio-text{font-size:.88rem;color:#475569;line-height:1.75;font-weight:500;}
 .bio-text strong{color:#1e293b;font-weight:800;}
-@media(max-width:520px){.bio-card{flex-direction:column;gap:12px;padding:20px;}.bio-avatar{font-size:2.2rem;}}
+@media(max-width:520px){.bio-card{flex-direction:column;gap:10px;padding:18px;}.bio-avatar{font-size:2.2rem;}}
 
 /* ── FOOTER ── */
-footer{background:#1e293b;color:#64748b;text-align:center;padding:12px;font-size:.65rem;font-weight:600;}
-footer a{color:#64748b;text-decoration:none;}
+footer{background:#0f172a;color:#475569;text-align:center;padding:14px;font-size:.65rem;font-weight:600;}
+footer a{color:#475569;text-decoration:none;}
 
 /* ── ANIMACIONS ── */
-@keyframes popIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes popIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+.hero{animation:popIn .5s ease both;}
+.seccio{animation:slideUp .5s ease both;}
+.seccio:nth-child(1){animation-delay:.05s;}
+.seccio:nth-child(2){animation-delay:.12s;}
+.seccio:nth-child(3){animation-delay:.19s;}
+.seccio:nth-child(4){animation-delay:.26s;}
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
   <a class="hd-logo" href="https://ja.cat/appgobo" target="_self">
-    <svg width="30" height="30" viewBox="0 0 40 46" fill="none">
+    <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
       <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
       <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
       <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
     </svg>
     <span class="hd-logo-text">Gobo26</span>
   </a>
-  <span class="hd-tagline">Jocs i eines gratuïtes</span>
+  <span class="hd-tagline">Jocs i eines gratuïtes · Sense anuncis</span>
 </header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">El gimnàs mental en català</div>
+  <h1 class="hero-tit"><em>Gobo26</em><br>Juga. Aprèn. Gaudiex.</h1>
+  <p class="hero-sub">Jocs i eines gratuïts per a totes les edats. Sense anuncis, sense presses, al teu ritme.</p>
+  <div class="hero-pills">
+    <span class="pill">🆓 100% gratuït</span>
+    <span class="pill">🚫 Sense anuncis</span>
+    <span class="pill">📱 Mòbil i ordinador</span>
+    <span class="pill">🇨🇦 En català</span>
+  </div>
+  <div class="hero-counter">
+    <div class="hc-num" id="temps-total">–</div>
+    <div class="hc-text">
+      <div class="hc-label">hores de cervell actiu<br>entre tots els jugadors</div>
+      <div class="hc-sub">i segueix creixent ara mateix…</div>
+    </div>
+  </div>
+</div>
 
 <main>
 
-  <!-- HERO -->
-  <div class="hero">
-    <h1 class="hero-tit"><em>Gobo26</em><br>Gimnàs Mental i Creatiu</h1>
-    <div class="hero-taglines">
-      <p class="tagline-1">🧩 Jocs gratuïts per mantenir la ment desperta. Sense anuncis. Sense presses. Al teu ritme.</p>
-    </div>
-    <div class="temps-card">
-      <div class="temps-icon">⏱️</div>
-      <div class="temps-cos">
-        <div class="temps-num" id="temps-total">–</div>
-        <div class="temps-label">hores de cervell actiu entre tots els jugadors</div>
-        <div class="temps-sub">i segueix creixent ara mateix…</div>
+  <!-- ── NOVETAT: PARAULA SECRETA ── -->
+  <div class="seccio">
+    <a class="banner-nou" href="Gobo26-PARAULA-SECRETA.html" target="_self">
+      <div class="banner-nou-icon">🔐</div>
+      <div class="banner-nou-cos">
+        <div class="banner-nou-etiqueta">✨ Novetat</div>
+        <div class="banner-nou-nom">Paraula Secreta</div>
+        <div class="banner-nou-desc">Endevina la paraula oculta lletra a lletra — estil Wordle en català. 3 nivells de dificultat.</div>
       </div>
-    </div>
+      <div class="banner-nou-arrow">›</div>
+    </a>
   </div>
 
-  <div class="sep"><div class="sep-line"></div><div class="sep-txt">Totes les aplicacions</div><div class="sep-line"></div></div>
-
-  <!-- GRUP 1: JOCS I MEMÒRIA -->
-  <div class="grup-bloc">
-    <div class="grup-header">
-      <span class="grup-icon">🎮</span>
-      <div class="grup-titols">
-        <div class="grup-title">Jocs i Memòria</div>
-        <div class="grup-subtitle">Reptes numèrics, de paraules i memòria per exercitar la ment</div>
+  <!-- ── JOCS I MEMÒRIA ── -->
+  <div class="seccio">
+    <div class="sec-cap">
+      <div class="sec-icona blau">🎮</div>
+      <div class="sec-titols">
+        <div class="sec-title">Jocs i Memòria</div>
+        <div class="sec-sub">Reptes numèrics, de paraules i memòria per exercitar la ment</div>
       </div>
+      <span class="sec-badge blau">18 apps</span>
     </div>
     <div class="app-grid">
+      <a class="app-card" href="Gobo26-PARAULA-SECRETA.html" target="_self">
+        <span class="nou-badge">NOU</span>
+        <div class="app-icon">🔐</div>
+        <div class="app-name">Paraula Secreta</div>
+        <div class="app-desc">Endevina la paraula oculta lletra a lletra</div>
+      </a>
       <a class="app-card" href="Gobo26-SUDOKU.html" target="_self">
         <div class="app-icon">🔲</div>
         <div class="app-name">Sudoku</div>
@@ -165,7 +202,6 @@ footer a{color:#64748b;text-decoration:none;}
         <div class="app-name">Cascada Numèrica</div>
         <div class="app-desc">Seqüències de números en cascada</div>
       </a>
-
       <a class="app-card" href="Gobo26-AMAGADES.html" target="_self">
         <div class="app-icon">🔍</div>
         <div class="app-name">Amagades</div>
@@ -219,7 +255,7 @@ footer a{color:#64748b;text-decoration:none;}
       <a class="app-card" href="Gobo26-LA_BOTIGA.html" target="_self">
         <div class="app-icon">🏪</div>
         <div class="app-name">La Botiga</div>
-        <div class="app-desc">Calcula el canvi correcte donant les monedes justes</div>
+        <div class="app-desc">Calcula el canvi donant les monedes justes</div>
       </a>
       <a class="app-card" href="Gobo26-INTRUS.html" target="_self">
         <div class="app-icon">🔍</div>
@@ -234,19 +270,20 @@ footer a{color:#64748b;text-decoration:none;}
       <a class="app-card" href="Gobo26-ONCLE-ALBERT.html" target="_self">
         <div class="app-icon">🔐</div>
         <div class="app-name">L'Oncle Albert</div>
-        <div class="app-desc">Escape room amb enigmes de xifres i codis secrets</div>
+        <div class="app-desc">Escape room amb enigmes de xifres i codis</div>
       </a>
     </div>
   </div>
 
-  <!-- GRUP 2: EINES I CURIOSITATS -->
-  <div class="grup-bloc">
-    <div class="grup-header">
-      <span class="grup-icon">🛠️</span>
-      <div class="grup-titols">
-        <div class="grup-title">Eines i Curiositats</div>
-        <div class="grup-subtitle">Utilitats per al cos, la salut i la música</div>
+  <!-- ── EINES I CURIOSITATS ── -->
+  <div class="seccio">
+    <div class="sec-cap">
+      <div class="sec-icona verd">🛠️</div>
+      <div class="sec-titols">
+        <div class="sec-title">Eines i Curiositats</div>
+        <div class="sec-sub">Utilitats per al cos, la salut i la música</div>
       </div>
+      <span class="sec-badge blau">5 apps</span>
     </div>
     <div class="app-grid">
       <a class="app-card" href="Gobo26-GIMNAS-CASA.html" target="_self">
@@ -277,16 +314,16 @@ footer a{color:#64748b;text-decoration:none;}
     </div>
   </div>
 
-  <!-- GRUP 3: PROJECTES I GRUPS -->
-  <div class="grup-bloc">
-    <div class="grup-header">
-      <span class="grup-icon">🌐</span>
-      <div class="grup-titols">
-        <div class="grup-title">Amics de Gobo26</div>
-        <div class="grup-subtitle">Artesania, música coral, havaneres</div>
+  <!-- ── AMICS DE GOBO26 ── -->
+  <div class="seccio">
+    <div class="sec-cap">
+      <div class="sec-icona lila">🌐</div>
+      <div class="sec-titols">
+        <div class="sec-title">Amics de Gobo26</div>
+        <div class="sec-sub">Artesania, música coral, havaneres i més</div>
       </div>
     </div>
-    <div class="app-grid" style="grid-template-columns:repeat(auto-fill,minmax(130px,1fr));">
+    <div class="amics-grid">
 
       <a class="app-card" href="https://www.instagram.com/fetdefils/" target="_blank" rel="noopener">
         <div class="app-icon">
@@ -416,13 +453,9 @@ footer a{color:#64748b;text-decoration:none;}
         <div class="app-icon">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
             <circle cx="24" cy="24" r="22" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/>
-            <!-- Gràfica creixent -->
             <polyline points="10,34 18,26 24,29 32,18 38,13" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Fletxa amunt -->
             <polyline points="34,10 38,13 35,17" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Eix X -->
             <line x1="10" y1="36" x2="40" y2="36" stroke="#86efac" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- Moneda -->
             <circle cx="14" cy="20" r="5" fill="#22c55e" opacity=".85"/>
             <text x="14" y="23" text-anchor="middle" font-size="7" font-weight="bold" fill="white" font-family="Montserrat,sans-serif">€</text>
           </svg>
@@ -435,15 +468,12 @@ footer a{color:#64748b;text-decoration:none;}
         <div class="app-icon">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
             <circle cx="24" cy="24" r="22" fill="#fdf4ff" stroke="#9333ea" stroke-width="2"/>
-            <!-- Guitarra estilitzada -->
             <ellipse cx="24" cy="30" rx="8" ry="7" fill="#c084fc" opacity=".8"/>
             <ellipse cx="24" cy="30" rx="4" ry="3.5" fill="#9333ea" opacity=".5"/>
             <rect x="22.5" y="12" width="3" height="20" rx="1.5" fill="#9333ea"/>
             <rect x="19" y="13" width="10" height="4" rx="1.5" fill="#7e22ce"/>
-            <!-- Clavilles -->
             <circle cx="19" cy="12" r="1.5" fill="#7e22ce"/>
             <circle cx="29" cy="12" r="1.5" fill="#7e22ce"/>
-            <!-- Cordes -->
             <line x1="21" y1="17" x2="21" y2="30" stroke="#e9d5ff" stroke-width="1" opacity=".7"/>
             <line x1="24" y1="17" x2="24" y2="30" stroke="#e9d5ff" stroke-width="1" opacity=".7"/>
             <line x1="27" y1="17" x2="27" y2="30" stroke="#e9d5ff" stroke-width="1" opacity=".7"/>
@@ -457,10 +487,10 @@ footer a{color:#64748b;text-decoration:none;}
   </div>
 
   <!-- BIO -->
-  <div class="bio-section">
+  <div class="seccio">
     <div class="bio-card">
       <div class="bio-avatar">👤</div>
-      <div class="bio-cos">
+      <div>
         <div class="bio-label">Sobre Gobo26</div>
         <p class="bio-text"><strong>Gobo26 és un projecte personal</strong> on experimento amb intel·ligència artificial per crear jocs i eines útils, senzilles i sense anuncis. Fet amb calma. Pensat per a persones curioses.</p>
       </div>

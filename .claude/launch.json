@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "Gobo26 static server",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", ".", "--listen", "3000", "--no-clipboard"],
-      "port": 3000
+      "name": "gobo26",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "C:\\Users\\joanj\\Desktop\\Gobo26\\gobo26\\.claude\\serve.bat"],
+      "port": 5173
     }
   ]
 }
