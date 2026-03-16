@@ -53,15 +53,9 @@
             flex-shrink: 0;
         }
 
-        .header-logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            flex-shrink: 0;
-        }
-
-        .hex-svg { width: clamp(26px, 5vw, 34px); height: clamp(26px, 5vw, 34px); }
+        .logo { display:flex; align-items:center; gap:8px; text-decoration:none; flex-shrink:0; }
+        .logo-txt { font-size:.9rem; font-weight:900; color:white; letter-spacing:-.5px; }
+        .logo-txt span { color:#3b82f6; }
 
         .header-titols {
             flex: 1;
@@ -453,12 +447,13 @@
 
 <!-- HEADER -->
 <header>
-    <a class="header-logo" href="https://ja.cat/appgobo" target="_self" title="Gobo26">
-        <svg class="hex-svg" viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 2L37 11.5V29.5L20 39L3 29.5V11.5L20 2Z" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
-            <text x="20" y="20" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="800" font-size="9">GOBO</text>
-            <text x="20" y="31" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="800" font-size="9">26</text>
+    <a class="logo" href="https://ja.cat/appgobo">
+        <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
+            <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
+        <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <div class="header-titols">
         <h1>3 en Ratlla</h1>

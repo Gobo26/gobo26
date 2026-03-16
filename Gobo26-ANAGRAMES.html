@@ -22,7 +22,6 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);display:flex;flex-
 /* ── HEADER ── */
 header{width:100%;background:var(--s800);border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
 .logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
-.logo-hex{width:36px;height:36px;flex-shrink:0;}
 .logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-.5px;}
 .logo-txt span{color:var(--blue2);}
 .hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
@@ -141,12 +140,12 @@ footer a{color:var(--s400);text-decoration:none;}
 
 <header>
   <a class="logo" href="https://ja.cat/appgobo" target="_self">
-    <svg class="logo-hex" viewBox="0 0 40 40">
-      <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#2563eb" stroke="#3b82f6" stroke-width="1.5"/>
-      <text x="20" y="16" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="9" fill="white">GOBO</text>
-      <text x="20" y="28" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="10" fill="#93c5fd">26</text>
+    <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
+      <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
+      <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
+      <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
     </svg>
-    <span class="logo-txt">GOBO<span>26</span></span>
+    <span class="logo-txt">Gobo<span>26</span></span>
   </a>
   <span class="hdr-title">🔤 Anagrames</span>
   <button id="btn-ajuda" onclick="obrirAjuda()">?</button>
