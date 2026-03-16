@@ -41,16 +41,6 @@ header{background:#0f172a;color:white;padding:0 20px;height:54px;display:flex;al
 /* ── MAIN ── */
 main{max-width:1040px;margin:0 auto;padding:28px 16px 80px;}
 
-/* ── BANNER NOVETAT ── */
-.banner-nou{background:linear-gradient(135deg,#1e293b,#1e3a8a);border-radius:20px;padding:22px 24px;display:flex;align-items:center;gap:20px;margin-bottom:28px;text-decoration:none;color:white;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 24px rgba(30,58,138,.3);}
-.banner-nou:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(30,58,138,.4);}
-.banner-nou-icon{font-size:2.8rem;flex-shrink:0;}
-.banner-nou-cos{flex:1;}
-.banner-nou-etiqueta{font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.2em;color:#93c5fd;margin-bottom:4px;}
-.banner-nou-nom{font-size:1.2rem;font-weight:900;letter-spacing:-.02em;}
-.banner-nou-desc{font-size:.8rem;font-weight:500;color:#cbd5e1;margin-top:4px;line-height:1.5;}
-.banner-nou-arrow{font-size:1.8rem;opacity:.6;flex-shrink:0;}
-@media(max-width:480px){.banner-nou{padding:16px;gap:14px;}.banner-nou-nom{font-size:1rem;}.banner-nou-icon{font-size:2.2rem;}}
 
 /* ── SECCIÓ DESPLEGABLE ── */
 .seccio{margin-bottom:12px;}
@@ -138,7 +128,7 @@ footer a{color:#475569;text-decoration:none;}
 @keyframes popIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 .hero{animation:popIn .5s ease both;}
-.banner-nou{animation:slideUp .4s .05s ease both;}
+
 .seccio{animation:slideUp .4s ease both;}
 .seccio:nth-child(1){animation-delay:.08s;}
 .seccio:nth-child(2){animation-delay:.14s;}
@@ -175,16 +165,6 @@ footer a{color:#475569;text-decoration:none;}
 
 <main>
 
-  <!-- NOVETAT -->
-  <a class="banner-nou" href="Gobo26-PARAULA-SECRETA.html" target="_self">
-    <div class="banner-nou-icon">🔐</div>
-    <div class="banner-nou-cos">
-      <div class="banner-nou-etiqueta">✨ Novetat</div>
-      <div class="banner-nou-nom">Paraula Secreta</div>
-      <div class="banner-nou-desc">Endevina la paraula oculta lletra a lletra — estil Wordle. 3 nivells de dificultat.</div>
-    </div>
-    <div class="banner-nou-arrow">›</div>
-  </a>
 
   <!-- ── JOCS I MEMÒRIA ── -->
   <div class="seccio" id="s-jocs">
@@ -203,7 +183,6 @@ footer a{color:#475569;text-decoration:none;}
       <div class="sec-cos-inner">
         <div class="app-grid">
           <a class="app-card c-blau" href="Gobo26-PARAULA-SECRETA.html" target="_self">
-            <span class="nou-badge">NOU</span>
             <div class="app-icon-wrap">🔐</div>
             <div class="app-name">Paraula Secreta</div>
             <div class="app-desc">Endevina la paraula oculta lletra a lletra</div>

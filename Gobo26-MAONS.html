@@ -14,7 +14,7 @@
             color: #334155;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            min-height: 100dvh;
             overflow: hidden;
         }
 
@@ -282,11 +282,11 @@ const overlay = document.getElementById("overlay");
 // ── Mides canvas adaptatives ──
 function ajustarCanvas() {
     const zona = document.getElementById("zona-joc");
-    const maxW = Math.min(zona.clientWidth - 12, 760);
-    const maxH = Math.min(zona.clientHeight - 12, 520);
-    const ratio = Math.min(maxW / 760, maxH / 520);
-    canvas.width  = Math.floor(760 * ratio);
-    canvas.height = Math.floor(520 * ratio);
+    const maxW = Math.min(zona.clientWidth - 12, 420);
+    const maxH = Math.min(zona.clientHeight - 12, 640);
+    const ratio = Math.min(maxW / 420, maxH / 640);
+    canvas.width  = Math.floor(420 * ratio);
+    canvas.height = Math.floor(640 * ratio);
     escala = ratio;
     // Reajusta posicions
     if (!jocEnMarxa) {

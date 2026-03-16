@@ -59,13 +59,13 @@ footer a{color:#94a3b8;text-decoration:none;}
 @keyframes pulsar{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
 
 /* ── INICI ── */
-.hero{text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 0 4px;}
-.hero-em{font-size:3.2rem;}
-.hero-tit{font-size:1.4rem;font-weight:900;color:#1e293b;line-height:1.2;}
-.hero-sub{font-size:.78rem;font-weight:600;color:#64748b;line-height:1.55;max-width:360px;}
+.hero{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0 2px;}
+.hero-em{font-size:2.2rem;}
+.hero-tit{font-size:1.15rem;font-weight:900;color:#1e293b;line-height:1.2;}
+.hero-sub{font-size:.76rem;font-weight:600;color:#64748b;line-height:1.5;max-width:360px;}
 
 /* Carta de l'Albert */
-.carta-albert{background:#fef3c7;border:2px solid #fde68a;border-radius:12px;padding:14px 16px;font-size:.8rem;font-weight:600;color:#78350f;line-height:1.7;position:relative;font-style:italic;}
+.carta-albert{background:#fef3c7;border:2px solid #fde68a;border-radius:12px;padding:10px 14px;font-size:.78rem;font-weight:600;color:#78350f;line-height:1.6;position:relative;font-style:italic;}
 .carta-albert::before{content:'✉️ Carta de l\'Oncle Albert';display:block;font-style:normal;font-size:.58rem;font-weight:900;text-transform:uppercase;letter-spacing:.7px;color:#b45309;margin-bottom:8px;}
 .carta-albert .firma{display:block;margin-top:10px;font-weight:800;font-style:normal;text-align:right;}
 
@@ -520,6 +520,66 @@ footer a{color:#94a3b8;text-decoration:none;}
 </div>
 
 </div><!-- fi scroll-area -->
+
+<!-- TECLAT PERSONALITZAT GOBO26 -->
+<div class="teclat-gobo" id="teclat-gobo">
+  <!-- Files numèriques -->
+  <div class="teclat-fila tg-fila-num">
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'1')" onclick="tgLetra(event,'1')"><span class="tg-ll">1</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'2')" onclick="tgLetra(event,'2')"><span class="tg-ll">2</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'3')" onclick="tgLetra(event,'3')"><span class="tg-ll">3</span></button>
+  </div>
+  <div class="teclat-fila tg-fila-num">
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'4')" onclick="tgLetra(event,'4')"><span class="tg-ll">4</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'5')" onclick="tgLetra(event,'5')"><span class="tg-ll">5</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'6')" onclick="tgLetra(event,'6')"><span class="tg-ll">6</span></button>
+  </div>
+  <div class="teclat-fila tg-fila-num">
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'7')" onclick="tgLetra(event,'7')"><span class="tg-ll">7</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'8')" onclick="tgLetra(event,'8')"><span class="tg-ll">8</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'9')" onclick="tgLetra(event,'9')"><span class="tg-ll">9</span></button>
+  </div>
+  <div class="teclat-fila tg-fila-num">
+    <button class="tg-acc" ontouchstart="tgEsborrar(event)" onclick="tgEsborrar(event)">⌫</button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'0')" onclick="tgLetra(event,'0')"><span class="tg-ll">0</span></button>
+    <button class="tg-acc ok" ontouchstart="tgOK(event)" onclick="tgOK(event)">→</button>
+  </div>
+  <!-- Files alfabètiques -->
+  <div class="teclat-fila tg-fila-alfa">
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'Q')" onclick="tgLetra(event,'Q')"><span class="tg-ll">Q</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'W')" onclick="tgLetra(event,'W')"><span class="tg-ll">W</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'E')" onclick="tgLetra(event,'E')"><span class="tg-ll">E</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'R')" onclick="tgLetra(event,'R')"><span class="tg-ll">R</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'T')" onclick="tgLetra(event,'T')"><span class="tg-ll">T</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'Y')" onclick="tgLetra(event,'Y')"><span class="tg-ll">Y</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'U')" onclick="tgLetra(event,'U')"><span class="tg-ll">U</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'I')" onclick="tgLetra(event,'I')"><span class="tg-ll">I</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'O')" onclick="tgLetra(event,'O')"><span class="tg-ll">O</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'P')" onclick="tgLetra(event,'P')"><span class="tg-ll">P</span></button>
+  </div>
+  <div class="teclat-fila tg-fila-alfa">
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'A')" onclick="tgLetra(event,'A')"><span class="tg-ll">A</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'S')" onclick="tgLetra(event,'S')"><span class="tg-ll">S</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'D')" onclick="tgLetra(event,'D')"><span class="tg-ll">D</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'F')" onclick="tgLetra(event,'F')"><span class="tg-ll">F</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'G')" onclick="tgLetra(event,'G')"><span class="tg-ll">G</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'H')" onclick="tgLetra(event,'H')"><span class="tg-ll">H</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'J')" onclick="tgLetra(event,'J')"><span class="tg-ll">J</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'K')" onclick="tgLetra(event,'K')"><span class="tg-ll">K</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'L')" onclick="tgLetra(event,'L')"><span class="tg-ll">L</span></button>
+  </div>
+  <div class="teclat-fila tg-fila-alfa">
+    <button class="tg-acc" ontouchstart="tgEsborrar(event)" onclick="tgEsborrar(event)">⌫</button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'Z')" onclick="tgLetra(event,'Z')"><span class="tg-ll">Z</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'X')" onclick="tgLetra(event,'X')"><span class="tg-ll">X</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'C')" onclick="tgLetra(event,'C')"><span class="tg-ll">C</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'V')" onclick="tgLetra(event,'V')"><span class="tg-ll">V</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'B')" onclick="tgLetra(event,'B')"><span class="tg-ll">B</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'N')" onclick="tgLetra(event,'N')"><span class="tg-ll">N</span></button>
+    <button class="tg-tecla" ontouchstart="tgLetra(event,'M')" onclick="tgLetra(event,'M')"><span class="tg-ll">M</span></button>
+    <button class="tg-acc ok" ontouchstart="tgOK(event)" onclick="tgOK(event)">→</button>
+  </div>
+</div>
 
 <!-- MODAL INVENTARI -->
 <div class="modal-overlay" id="modal-inv">

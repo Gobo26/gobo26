@@ -294,6 +294,11 @@
             display: flex;
             gap: 8px;
             flex-shrink: 0;
+            position: sticky;
+            bottom: 0;
+            background: var(--fons);
+            padding-top: 2px;
+            padding-bottom: max(env(safe-area-inset-bottom, 0px), 2px);
         }
 
         .btn {
