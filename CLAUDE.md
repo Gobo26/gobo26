@@ -52,6 +52,7 @@ Quan es facin canvis significatius al projecte (nova app, canvi d'arquitectura, 
 | Data | Canvi |
 |------|-------|
 | 2026-03-14 | Configuració inicial: git, SSH, GitHub Actions deploy a GitHub Pages |
+| 2026-03-16 | Nova app: Gobo26-Herbes.html — guia d'herbes mediterrànies amb oracle, saviesa de les àvies, fitxes de 25 plantes amb tradicions i rituals |
 
 ---
 

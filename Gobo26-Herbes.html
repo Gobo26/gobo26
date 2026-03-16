@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Herbes mediterrànies – Gobo26</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --s800: #1e293b;
+      --s700: #334155;
+      --s600: #475569;
+      --s400: #94a3b8;
+      --s200: #e2e8f0;
+      --s100: #f1f5f9;
+      --blue: #2563eb;
+      --green: #16a34a;
+      --red: #dc2626;
+      --amber: #d97706;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--s100);
+      color: var(--s800);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--s800);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .logo-link { text-decoration: none; flex-shrink: 0; }
+
+    .logo-hex { width: 40px; height: 40px; }
+
+    header h1 {
+      color: white;
+      font-size: 1.15rem;
+      font-weight: 700;
+      flex: 1;
+      text-align: center;
+    }
+
+    .header-spacer { width: 40px; flex-shrink: 0; }
+
+    /* ORACLE */
+    .oracle-section {
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);
+      padding: 36px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .oracle-section h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    }
+
+    .oracle-subtitle {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 26px;
+    }
+
+    .oracle-card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px 24px;
+      max-width: 420px;
+      margin: 0 auto 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      display: none;
+    }
+
+    .oracle-card.visible {
+      display: block;
+      animation: popIn 0.4s ease;
+    }
+
+    .oracle-emoji {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .oracle-herb-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--s800);
+      margin-bottom: 2px;
+    }
+
+    .oracle-herb-sci {
+      font-size: 0.8rem;
+      color: var(--s600);
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+
+    .oracle-message {
+      font-size: 1.05rem;
+      color: var(--s700);
+      line-height: 1.6;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .oracle-suggestion {
+      font-size: 0.9rem;
+      color: var(--s600);
+      line-height: 1.55;
+      background: var(--s100);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-style: italic;
+    }
+
+    .btn-oracle {
+      background: white;
+      color: #065f46;
+      border: none;
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-oracle:hover { transform: scale(1.04); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+    .btn-oracle:active { transform: scale(0.97); }
+
+    /* SAVIESA */
+    .saviesa-section {
+      background: linear-gradient(135deg, #fef9c3, #fef08a);
+      padding: 26px 20px;
+      text-align: center;
+    }
+
+    .saviesa-section h3 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #92400e;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+
+    .saviesa-quote {
+      font-size: 1.1rem;
+      color: #78350f;
+      font-style: italic;
+      font-weight: 600;
+      line-height: 1.6;
+      max-width: 480px;
+      margin: 0 auto 16px;
+      min-height: 2.4em;
+    }
+
+    .saviesa-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-sav {
+      background: #92400e;
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-sav:hover { background: #78350f; }
+
+    /* CATALOG */
+    .catalog-section {
+      padding: 28px 16px 40px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .catalog-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .catalog-top h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--s800);
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .ftab {
+      padding: 7px 14px;
+      border-radius: 50px;
+      border: 2px solid var(--s200);
+      background: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+      color: var(--s600);
+    }
+
+    .ftab.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+
+    .plant-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+      gap: 13px;
+    }
+
+    .plant-card {
+      background: white;
+      border-radius: 16px;
+      padding: 18px 12px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.15s, box-shadow 0.15s;
+      border: 2px solid transparent;
+    }
+
+    .plant-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .plant-card:active { transform: translateY(-1px); }
+
+    .pc-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+    }
+
+    .plant-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--s800);
+      margin-bottom: 4px;
+    }
+
+    .plant-sci {
+      font-size: 0.68rem;
+      color: var(--s400);
+      font-style: italic;
+      margin-bottom: 8px;
+    }
+
+    .cat-badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 50px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* Category colours */
+    .cat-aromatica .pc-icon { background: #d1fae5; }
+    .cat-aromatica .cat-badge { background: #d1fae5; color: #065f46; }
+
+    .cat-cuina .pc-icon { background: #fef3c7; }
+    .cat-cuina .cat-badge { background: #fef3c7; color: #92400e; }
+
+    .cat-calmant .pc-icon { background: #ede9fe; }
+    .cat-calmant .cat-badge { background: #ede9fe; color: #5b21b6; }
+
+    .cat-especia .pc-icon { background: #ffe4e6; }
+    .cat-especia .cat-badge { background: #ffe4e6; color: #9f1239; }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-width: 580px;
+      max-height: 92vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease;
+    }
+
+    .modal-hdr {
+      padding: 22px 22px 14px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      background: white;
+      border-bottom: 1px solid var(--s200);
+      z-index: 10;
+    }
+
+    .m-emoji { font-size: 4rem; display: block; margin-bottom: 6px; }
+
+    .m-title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--s800);
+      margin-bottom: 2px;
+    }
+
+    .m-sci {
+      font-size: 0.82rem;
+      color: var(--s600);
+      font-style: italic;
+      margin-bottom: 3px;
+    }
+
+    .m-family { font-size: 0.72rem; color: var(--s400); }
+
+    .m-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--s100);
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--s600);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .m-close:hover { background: var(--s200); }
+
+    .modal-body { padding: 18px 22px 36px; }
+
+    .info-block { margin-bottom: 20px; }
+
+    .info-block h4 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      margin-bottom: 9px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .info-block p {
+      font-size: 0.97rem;
+      line-height: 1.72;
+      color: var(--s700);
+    }
+
+    .ritual-box {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border-radius: 14px;
+      padding: 16px;
+      border-left: 4px solid var(--green);
+    }
+
+    .r-step {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 9px;
+    }
+
+    .r-step:last-child { margin-bottom: 0; }
+
+    .r-num {
+      background: var(--green);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .r-text {
+      font-size: 0.92rem;
+      color: var(--s700);
+      line-height: 1.55;
+    }
+
+    .disclaimer {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.78rem;
+      color: #9a3412;
+      text-align: center;
+      line-height: 1.55;
+      margin-top: 20px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 22px 20px;
+      font-size: 0.75rem;
+      color: var(--s400);
+    }
+
+    /* ANIMATIONS */
+    @keyframes popIn {
+      0%   { transform: scale(0.8); opacity: 0; }
+      65%  { transform: scale(1.04); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(80px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 480px) {
+      .plant-grid { grid-template-columns: repeat(2, 1fr); }
+      .oracle-section h2 { font-size: 1.25rem; }
+      header h1 { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="https://ja.cat/appgobo" class="logo-link" target="_blank" rel="noopener">
+    <svg class="logo-hex" viewBox="0 0 40 40" fill="none">
+      <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#2563eb"/>
+      <text x="20" y="26" text-anchor="middle" fill="white"
+            font-family="Montserrat,sans-serif" font-weight="900" font-size="10">G26</text>
+    </svg>
+  </a>
+  <h1>🌿 Herbes mediterrànies</h1>
+  <div class="header-spacer"></div>
+</header>
+
+<!-- ORACLE -->
+<section class="oracle-section">
+  <h2>✨ Oracle de les herbes</h2>
+  <p class="oracle-subtitle">Cada dia, una planta et porta un missatge</p>
+
+  <div class="oracle-card" id="oracleCard">
+    <span class="oracle-emoji" id="oEmoji"></span>
+    <div class="oracle-herb-name" id="oNom"></div>
+    <div class="oracle-herb-sci" id="oSci"></div>
+    <div class="oracle-message" id="oMsg"></div>
+    <div class="oracle-suggestion" id="oSug"></div>
+  </div>
+
+  <button class="btn-oracle" id="btnOracle" onclick="showOracle()">
+    🌿 Descobreix la teva herba d'avui
+  </button>
+</section>
+
+<!-- SAVIESA -->
+<section class="saviesa-section">
+  <h3>🧓 Saviesa de les àvies</h3>
+  <div class="saviesa-quote" id="saviesaText"></div>
+  <div class="saviesa-nav">
+    <button class="btn-sav" onclick="moveSaviesa(-1)" aria-label="Anterior">&#9664;</button>
+    <button class="btn-sav" onclick="moveSaviesa(1)"  aria-label="Següent">&#9654;</button>
+  </div>
+</section>
+
+<!-- CATÀLEG -->
+<section class="catalog-section">
+  <div class="catalog-top">
+    <h2>Guia de plantes</h2>
+    <div class="filter-tabs">
+      <button class="ftab active" onclick="filtrar('all', this)">Totes</button>
+      <button class="ftab" onclick="filtrar('aromatica', this)">Aromàtiques</button>
+      <button class="ftab" onclick="filtrar('cuina', this)">Cuina</button>
+      <button class="ftab" onclick="filtrar('calmant', this)">Calmants</button>
+      <button class="ftab" onclick="filtrar('especia', this)">Espècies</button>
+    </div>
+  </div>
+  <div class="plant-grid" id="plantGrid"></div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="tancarModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-hdr">
+      <span class="m-emoji" id="mEmoji"></span>
+      <div class="m-title"  id="mTitle"></div>
+      <div class="m-sci"    id="mSci"></div>
+      <div class="m-family" id="mFamily"></div>
+      <button class="m-close" onclick="tancarModal()">✕</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<footer>
+  Gobo26 · Informació cultural i divulgativa · No és un consell mèdic
+</footer>
+
+<script>
+// ─────────────────────────────────────────────
+// DADES DE LES PLANTES
+// ─────────────────────────────────────────────
+var PLANTES = [
+  {
+    id: 'farigola', nom: 'Farigola', nomCientific: 'Thymus vulgaris',
+    familia: 'Lamiaceae', categoria: 'aromatica', emoji: '🌿',
+    on: 'Camps pedregosos i solells de tot el Mediterrani. Creix en bardisses, erms i horts. Molt fàcil de tenir en un test petit a la finestra assolellada.',
+    info: 'Una de les aromàtiques més emblemàtiques del Mediterrani. Conté timol i carvacrol, compostos àmpliament estudiats en fitoteràpia. Tradicionament s\'ha associat al benestar digestiu i respiratori. Les fulles s\'assequen bé i mantenen l\'aroma durant mesos.',
+    tradicio: 'A les cases rurals catalanes es posava farigola a les habitacions per "purificar l\'ambient". Els pastors la cremaven als camps per protegir els ramats. En la cultura popular la farigola és símbol de valentia i força, i es creia que qui en tenia a casa viuria molts anys.',
+    ritual: ['Agafa una branca de farigola fresca o seca.', 'Respira profundament la seva aroma durant uns moments.', 'Pensa en una cosa que t\'ha donat força avui.'],
+    oracleMsg: 'Les coses senzilles també tenen molta força.',
+    oracleSug: 'Avui, cuida d\'alguna cosa petita però important. Un gest senzill pot tenir molt de poder.'
+  },
+  {
+    id: 'romani', nom: 'Romaní', nomCientific: 'Salvia rosmarinus',
+    familia: 'Lamiaceae', categoria: 'aromatica', emoji: '🌱',
+    on: 'Matolls litorals i muntanyes mediterrànies. Creix molt bé en testos i jardins assolellats. Es troba fàcilment en qualsevol supermercat o hipermercat.',
+    info: 'Planta molt aromàtica i versàtil. Conté àcid rosmarínic i antioxidants naturals. En fitoteràpia tradicional s\'ha associat a la millora de la concentració i la memòria. Condiment imprescindible a la cuina mediterrània per a carns, pans i infusions.',
+    tradicio: 'A l\'Antiga Grècia els estudiants portaven romanetes al cap quan estudiaven. A Anglaterra es posava a les tombes en senyal de record. A Catalunya es deia: "Romaní a la porta, salut a la casa." Les núvies portaven romaní al ram per recordar sempre el seu dia especial.',
+    ritual: ['Frota suaument una fulla de romaní entre els dits.', 'Respira l\'aroma i tanca els ulls un moment.', 'Recorda un moment agradable que no vols oblidar.'],
+    oracleMsg: 'Avui és un bon dia per recordar alguna cosa bonica del teu passat.',
+    oracleSug: 'Dedica uns minuts a pensar en una persona estimada o en un record feliç. La memòria és un tresor.'
+  },
+  {
+    id: 'salvia', nom: 'Sàlvia', nomCientific: 'Salvia officinalis',
+    familia: 'Lamiaceae', categoria: 'aromatica', emoji: '🍃',
+    on: 'Originària de les costes mediterrànies. Creix en llocs assolellats i secs. Es cultiva àmpliament en horts i jardins. El nom ve del llatí "salvare" (guarir).',
+    info: 'Una de les plantes medicinals més antigues i valorades de l\'herbolari europeu. Conté tujona i cineol. Tradiconalment s\'ha usat per alleugerir els sofocos de la menopausa i com a digestiu. Molt present a la cuina, especialment en plats de carn.',
+    tradicio: 'L\'adagi medieval deia: "Per que ha de morir un home que té sàlvia al jardí?" A la cultura popular era símbol de saviesa i llarga vida. Es cremava en cerimònies per "netejar" espais. Portar sàlvia a la butxaca protegia dels mals esperits.',
+    ritual: ['Pren una fulla de sàlvia i observa la seva textura suau.', 'Frega-la lleugerament i respira l\'aroma.', 'Fes-te un desig o formula un propòsit per avui.'],
+    oracleMsg: 'Avui tens la saviesa per prendre una bona decisió.',
+    oracleSug: 'Si tens dubtes sobre alguna cosa, para, respira i confia en el teu criteri. La resposta sovint ja és dins teu.'
+  },
+  {
+    id: 'orenga', nom: 'Orenga', nomCientific: 'Origanum vulgare',
+    familia: 'Lamiaceae', categoria: 'aromatica', emoji: '🌸',
+    on: 'Molt comuna a tota la Mediterrània, als marges dels camins, bardisses i prats secs. Creix en terrenys pobres i pedregosos. Fàcil de cultivar en horts i testos.',
+    info: 'Indispensable a la cuina italiana i mediterrània. Rica en carvacrol i timol, compostos estudiats per les seves propietats antioxidants. Tradicionament s\'ha usat com a digestiva i per al benestar respiratori. L\'orenga seca conserva l\'aroma fins i tot millor que fresca.',
+    tradicio: 'A la Grècia Antiga l\'orenga simbolitzava la felicitat. Es creia que si creixia sobre una tomba, l\'ànima del difunt estava en pau. Les parelles s\'hi coronaven per atraure la felicitat matrimonial. Plantar orenga prop de casa porta bona sort.',
+    ritual: ['Pren una mica d\'orenga seca a la palma de la mà.', 'Tanca el puny suaument i pensa en una cosa que t\'alegri.', 'Obre la mà i observa com les fulles cauen lliurement.'],
+    oracleMsg: 'La felicitat és a les coses petites de cada dia.',
+    oracleSug: 'Avui, fixa\'t en tres moments petits que t\'hagin fet sentir bé. Escriu-los si vols. Sovint la felicitat ja hi és.'
+  },
+  {
+    id: 'marduix', nom: 'Marduix', nomCientific: 'Origanum majorana',
+    familia: 'Lamiaceae', categoria: 'aromatica', emoji: '🌿',
+    on: 'Originari del Mediterrani oriental. Es cultiva en horts i jardins assolellats. Menys resistent al fred que l\'orenga. Necessita terra ben drenada.',
+    info: 'Té un aroma dolç i suau, menys intens que l\'orenga. En fitoteràpia s\'ha relacionat amb propietats digestives i calmants suaus. Conté terpinè-4-ol i altres compostos aromàtics. S\'usa a la cuina per a sopes, farcits i aus. En infusió es considera suaument relaxant.',
+    tradicio: 'Els antics egipcis consideraven el marduix una planta sagrada que connectava amb els déus. Al Mediterrani s\'usava per perfumar els banys dels nobles. Es creia que la sola presència del marduix a casa allunyava la melancolia. Era regal de noces per desitjar felicitat.',
+    ritual: ['Prepara una infusió suau de marduix.', 'Seu còmodament i beu-la a poc a poc.', 'Pensa en alguna cosa que vols deixar anar avui.'],
+    oracleMsg: 'Avui et pots permetre una mica de calma i tranquil·litat.',
+    oracleSug: 'Fes una pausa conscient. Ni que sigui cinc minuts. Respira i no pensis en res de manera activa.'
+  },
+  {
+    id: 'fonoll', nom: 'Fonoll', nomCientific: 'Foeniculum vulgare',
+    familia: 'Apiaceae', categoria: 'aromatica', emoji: '🌾',
+    on: 'Molt comú als camps oberts, vores de camins i terrenys incultes de la Mediterrània. Es reconeix fàcilment per les fulles plomoses i l\'olor anisada.',
+    info: 'Planta molt versàtil: se\'n menja el bulb, les fulles, les flors i les llavors. Conté anetol, que li dona l\'aroma anisada. En fitoteràpia tradicional s\'ha usat com a digestiu i carminatiu. Les seves llavors s\'han emprat des de l\'Antiguitat per facilitar la digestió.',
+    tradicio: 'A l\'Antiga Roma els gladiadors bevien infusió de fonoll per guanyar força i coratge. A l\'Edat Mitjana es penjava a les portes per allunyar els mals esperits durant la nit de Sant Joan. A Itàlia es diu que el fonoll porta sort als negocis.',
+    ritual: ['Mastica unes llavors de fonoll lentament.', 'Deixa que el sabor anisada s\'estengui per la boca.', 'Pensa en alguna cosa que vols que floreixi a la teva vida.'],
+    oracleMsg: 'Avui és bon dia per deixar créixer alguna idea o projecte.',
+    oracleSug: 'Dedica uns minuts a pensar en alguna cosa que tens pendent però que t\'agrada. Potser és el moment de donar-hi un petit pas.'
+  },
+  {
+    id: 'llorer', nom: 'Llorer', nomCientific: 'Laurus nobilis',
+    familia: 'Lauraceae', categoria: 'aromatica', emoji: '🏆',
+    on: 'Arbre o arbust propi de la Mediterrània. Creix en boscos i jardins, molt resistent. Les fulles s\'usen seques i es troben fàcilment als supermercats.',
+    info: 'Símbol més antic de la cuina i la cultura mediterrània. Les seves fulles alliberen olis essencials rics en cineol i eugenol. S\'usa per aromatitzar guisats, brous, salses i marinades. En fitoteràpia s\'ha associat a propietats digestives.',
+    tradicio: 'A l\'Antiga Grècia les corones de llorer coronaven els herois, poetes i atletes. D\'aquí ve el mot "llaureat". La paraula "Batxillerat" ve del llatí "bacca lauri" (baies de llorer). Plantar un llorer a casa porta protecció i glòria a la família.',
+    ritual: ['Pren una fulla de llorer i mira-la amb atenció.', 'Escriu o imagina el teu nom en ella mentalment.', 'Pensa: "Avui he fet una petita victòria."'],
+    oracleMsg: 'Mereixes reconeixement pel teu esforç quotidià.',
+    oracleSug: 'Pensa en una cosa que has aconseguit recentment i que potser no has celebrat prou. Et mereixes un aplaudiment.'
+  },
+  {
+    id: 'menta', nom: 'Menta', nomCientific: 'Mentha spicata',
+    familia: 'Lamiaceae', categoria: 'cuina', emoji: '🌿',
+    on: 'Creix espontàniament prop de corrents d\'aigua, llocs humits i ombrejats. Es cultiva molt fàcilment en testos, tot i que pot ser invasiva si se li dona massa espai.',
+    info: 'Una de les plantes aromàtiques més consumides al món. Conté mentol, que li dona la frescor característica. En fitoteràpia s\'ha estudiat el seu ús digestiu. S\'usa en infusions, cuina, postres i còctels. L\'oli essencial diluit s\'aplica a les temples per als maldecaps.',
+    tradicio: 'Segons la mitologia grega, la menta era la nimfa Menthe, estimada per Plutó. Perséfone, gelosa, la va transformar en planta. Plutó li va donar l\'aroma dolça com a consol. A moltes cultures, plantar menta a l\'entrada de casa atrau prosperitat.',
+    ritual: ['Posa una fulla de menta fresca a l\'interior del canell.', 'Respira la frescor uns instants.', 'Pensa: "Avui és un bon dia per començar alguna cosa nova."'],
+    oracleMsg: 'Avui és un bon dia per començar alguna cosa nova.',
+    oracleSug: 'Aquell projecte, hàbit o conversa que posposes: avui podries donar-li un primer petit pas.'
+  },
+  {
+    id: 'alfabrega', nom: 'Alfàbrega', nomCientific: 'Ocimum basilicum',
+    familia: 'Lamiaceae', categoria: 'cuina', emoji: '🌱',
+    on: 'Planta tropical que s\'adapta bé als climes mediterranis a l\'estiu. Es cultiva en testos a les finestres i balcons. Al supermercat se\'n troben plantes fresques fàcilment.',
+    info: 'Essencial a la cuina italiana i mediterrània. Conté linalol i eugenol, compostos aromàtics potents. Cal no cuinar-la massa per no perdre l\'aroma. En fitoteràpia tradicional s\'ha associat a propietats digestives i calmants suaus.',
+    tradicio: 'A Itàlia, una noia amb alfàbrega al balcó indicava que estava enamorada. A Índia, l\'alfàbrega sagrada (tulsi) és dedicada al déu Vishnu. Al Mediterrani es deia que l\'alfàbrega protegia les llars i que si creixia vigorosa, la família era unida i feliç.',
+    ritual: ['Agafa una fulla d\'alfàbrega fresca.', 'Olora-la profundament tres vegades.', 'Pensa en una persona de la teva vida que t\'omple de calor.'],
+    oracleMsg: 'Avui és un bon moment per pensar en algú que estimes.',
+    oracleSug: 'Fes saber a una persona important que la values. Un missatge, una trucada o un somriure pot canviar-li el dia.'
+  },
+  {
+    id: 'julivert', nom: 'Julivert', nomCientific: 'Petroselinum crispum',
+    familia: 'Apiaceae', categoria: 'cuina', emoji: '🌿',
+    on: 'Originari del Mediterrani oriental, es cultiva arreu. Una de les herbes culinàries més comunes als horts i testos domèstics. Creix bé a mig sol.',
+    info: 'Una de les herbes culinàries més usades al món. Ric en vitamina C, vitamina K i antioxidants. S\'usa fresc picat per guarnir i aromatitzar pràcticament qualsevol plat. En fitoteràpia s\'ha usat com a diürètic suau.',
+    tradicio: 'A l\'Antiga Grècia el julivert era associat als funerals i no s\'usava a la cuina. Els romans el van reivindicar com a símbol de festivitat i el posaven a les taules dels banquets. A la cultura popular mediterrània, plantar julivert en terra aliena dona mala sort.',
+    ritual: ['Pica una mica de julivert fresc amb les mans.', 'Respira l\'aroma herbàcia i terral.', 'Pensa en quelcom que vols "adobar" o millorar avui.'],
+    oracleMsg: 'Avui és un bon dia per donar color a alguna cosa grisa.',
+    oracleSug: 'Busca un aspecte de la teva vida que podries millorar amb un toc de creativitat o atenció. Fins i tot el canvi més petit pot transformar el resultat.'
+  },
+  {
+    id: 'anet', nom: 'Anet', nomCientific: 'Anethum graveolens',
+    familia: 'Apiaceae', categoria: 'cuina', emoji: '🌾',
+    on: 'Planta anual que creix en horts i jardins assolellats. Les seves fulles plomoses i les llavors s\'usen a la cuina escandinava i mediterrània.',
+    info: 'Molt conegut per les seves fulles tendres i les llavors aromàtiques. Conté d\'anetofuran i limonè. Tradicionament les llavors s\'han usat com a digestiu. A la cuina escandinava és indispensable per als peixos marinats.',
+    tradicio: 'A l\'Edat Mitjana l\'anet era considerat una planta màgica capaç de trencar encanteris. Els herboristes medievals l\'usaven en rituals de protecció. A Escandinàvia se\'l considera una planta de bona sort.',
+    ritual: ['Pren unes llavors d\'anet a la mà.', 'Escolta el so lleuger quan les agites suaument.', 'Pensa en alguna cosa que vols protegir o cuidar.'],
+    oracleMsg: 'Avui, cuida alguna cosa que et sembla petita però és important.',
+    oracleSug: 'De vegades, el que sembla una bagatella és el que realment importa. Dedica atenció als detalls avui.'
+  },
+  {
+    id: 'melissa', nom: 'Melissa', nomCientific: 'Melissa officinalis',
+    familia: 'Lamiaceae', categoria: 'cuina', emoji: '🌼',
+    on: 'Cultivada àmpliament en horts i jardins per les seves fulles aromàtiques. Creix bé en llocs parcialment assolellats. L\'aroma recorda la llimona i és molt agradable.',
+    info: 'Coneguda com a tarongina, té un aroma suau de llimona. Conté àcid rosmarínic i flavonoides. En fitoteràpia s\'associa a efectes calmants suaus i s\'ha usat per afavorir el son i reduir l\'ansietat lleu. Una de les infusions més consumides a Europa.',
+    tradicio: 'El nom "melissa" ve del grec i significa "abella". Les abelles estimen molt aquesta planta i els apicultors la plantaven prop dels ruscs. A la tradició mediterrània era la planta de la dolçor i la gentilesa. Es deia que qui en tenia a casa tenia un caràcter amable.',
+    ritual: ['Frota una fulla de melissa entre els dits.', 'Tanca els ulls i respira l\'aroma suau de llimona.', 'Pensa: "Avui puc ser amable amb mi mateix/a."'],
+    oracleMsg: 'Potser avui necessites tractarte amb més dolçor.',
+    oracleSug: 'Sigues tan amable amb tu com ho seiries amb una persona estimada. Descansa, perdona\'t i cuida\'t.'
+  },
+  {
+    id: 'camamilla', nom: 'Camamilla', nomCientific: 'Matricaria chamomilla',
+    familia: 'Asteraceae', categoria: 'calmant', emoji: '🌼',
+    on: 'Creix espontàniament en camps, erms i vores de camins. Floreix a la primavera i estiu. Es reconeix per les flors blanques amb centre groc i l\'olor dolça.',
+    info: 'Una de les plantes medicinals més estudiades i consumides del món. Conté apigenina, un flavonoide que interacciona amb els receptors GABA del cervell. Estudis científics avalen el seu ús per a la relaxació suau i la millora del son. En infusió és suau i dolça, ideal per al vespre.',
+    tradicio: 'A l\'Antic Egipte la camamilla era dedicada al sol i als déus guaridors. Es creia que la flor daurada atreia la llum i el benestar. En moltes cultures mediterrànies la mare donava camamilla als nens per calmar-los, una tradició que persisteix avui.',
+    ritual: ['Prepara una tassa d\'infusió de camamilla ben calenta.', 'Seieu còmodament i abraça la tassa amb les dues mans.', 'Beu-la lentament, pensant en el que t\'agrada del teu dia.'],
+    oracleMsg: 'Avui et mereixes una pausa tranquil·la.',
+    oracleSug: 'Prepara\'t una infusió i desconnecta cinc minuts de tot. No et sentis culpable per descansar: ho necessites i t\'ho mereixes.'
+  },
+  {
+    id: 'lavanda', nom: 'Lavanda', nomCientific: 'Lavandula angustifolia',
+    familia: 'Lamiaceae', categoria: 'calmant', emoji: '💜',
+    on: 'Cultivada àmpliament en jardins i camps del Mediterrani. Creix molt bé en llocs secs i assolellats. Els camps de lavanda de la Provença i d\'altres regions mediterrànies són un espectacle visual.',
+    info: 'Coneguda sobretot per l\'oli essencial de les seves flors. Conté linalol i acetat de linalil, compostos estudiats per les seves propietats calmants. L\'oli de lavanda és un dels més usats en aromaterapia. En fitoteràpia s\'associa a la millora del son i la reducció de l\'ansietat suau.',
+    tradicio: 'Els romans afegien lavanda als banys (el nom ve del llatí "lavare", rentar) i perfumaven la roba. A l\'Edat Mitjana les dones posaven lavanda sota els coixins per tenir somnis agradables. A Provença es creu que la lavanda porta amor i felicitat a la llar.',
+    ritual: ['Posa unes flors de lavanda seca a la mà.', 'Tanca els ulls i respira l\'aroma profundament tres vegades.', 'A cada expiració, allibera mentalment una preocupació.'],
+    oracleMsg: 'Potser avui necessites una mica més de calma.',
+    oracleSug: 'Intenta anar més a poc a poc avui. No tot és urgent. Fes cada cosa amb plena atenció i sense pressa.'
+  },
+  {
+    id: 'calendula', nom: 'Calèndula', nomCientific: 'Calendula officinalis',
+    familia: 'Asteraceae', categoria: 'calmant', emoji: '🌻',
+    on: 'Cultivada àmpliament en jardins com a planta ornamental i medicinal. Floreix gairebé tot l\'any en climes suaus. Resisteix bé el fred lleu i creix fàcilment en testos.',
+    info: 'Planta de flors taronges o grogues molt vigorosa. Conté carotenoids, triterpens i flavonoids. En fitoteràpia externa s\'ha estudiat molt el seu ús per al cuidat de la pell irritada i talls lleus. Cremes i ungüents de calèndula són molt comuns a les farmàcies.',
+    tradicio: 'El nom "calèndula" ve del llatí "calendae" (primer dia del mes), perquè floreja al principi de cada mes. A Mèxic és la flor dels morts per excel·lència (Dia de Muertos). A l\'Europa medieval es creia que mirar la calèndula en despertar animava el cor. Era símbol de joia i sol.',
+    ritual: ['Observa una flor de calèndula (o la seva imatge) durant un minut.', 'Fixa\'t en tots els seus colors: el groc, el taronja, el verd.', 'Pensa en alguna cosa brillant i alegre de la teva vida.'],
+    oracleMsg: 'Avui, troba la llum en allò que t\'envolta.',
+    oracleSug: 'Busca un moment de bellesa al teu voltant avui: el sol, una flor, un color agradable. La bellesa petita és una medicina.'
+  },
+  {
+    id: 'malva', nom: 'Malva', nomCientific: 'Malva sylvestris',
+    familia: 'Malvaceae', categoria: 'calmant', emoji: '🌸',
+    on: 'Herba silvestre molt comú als camps, camins i llocs abandonats de tota la Mediterrània i Europa. Té flors liles amb venes fosques molt característiques.',
+    info: 'Planta amb una llarga tradició medicinal. Rica en mucílags, que li donen propietats emol·lients i calmants sobre les mucoses. En fitoteràpia s\'ha usat per alleugerir irritacions de la gola, la tos seca i problemes digestius. L\'infusió de malva és suau i agradable.',
+    tradicio: 'La malva era considerada pels grecs i romans l\'herba de la humilitat i la bondat. Es deia que creixia on vivia gent de bon cor. Al calendari medieval era associada a la Mare de Déu per la seva suavitat. A molts llocs es creia que tenir malva al jardí protegia la família.',
+    ritual: ['Observa unes flors de malva (o una imatge seva).', 'Respira profundament i pensa en algú que et necessita.', 'Envia-li mentalment un pensament càlid i generós.'],
+    oracleMsg: 'Avui, la bondat que ofereixes torna a tu multiplicada.',
+    oracleSug: 'Un petit acte de generositat pot tenir un gran impacte. No cal que sigui gran cosa: un somriure, una ajuda, una paraula amable.'
+  },
+  {
+    id: 'hiperic', nom: 'Hipèric', nomCientific: 'Hypericum perforatum',
+    familia: 'Hypericaceae', categoria: 'calmant', emoji: '🌟',
+    on: 'Creix espontàniament als camps, boscos clars i vores de camins de tota Europa i la Mediterrània. Floreix al juny, als voltants de la festivitat de Sant Joan.',
+    info: 'L\'herba de Sant Joan, una de les plantes medicinals més investigades. Conté hipericina i hiperforina. Alguns estudis han explorat el seu ús en estats d\'ànim baixos. IMPORTANT: pot interaccionar amb molts medicaments. Cal consultar sempre el metge abans d\'usar-la.',
+    tradicio: 'Floreix al voltant del 24 de juny, dia de Sant Joan, i per això rep el seu nom popular. A tota Europa s\'encenien fogueres de Sant Joan i es recollien plantes protectores com l\'hipèric. Es penjava a les portes per allunyar el mal. Era considerada la planta màgica de l\'estiu.',
+    ritual: ['Observa la imatge d\'una flor groga d\'hipèric.', 'Imagina que la seva llum daurada t\'omple de calor interior.', 'Pensa: "La llum és present en mi, fins i tot els dies grisos."'],
+    oracleMsg: 'La llum és dins teu, encara que avui no la vegis.',
+    oracleSug: 'Els dies difícils passen. Avui, fes una cosa petita que acostumi a animar-te: una música, una passejada, un record bonic.'
+  },
+  {
+    id: 'tilla', nom: 'Til·la', nomCientific: 'Tilia platyphyllos',
+    familia: 'Malvaceae', categoria: 'calmant', emoji: '🌳',
+    on: 'Arbre gran comú als parcs, passeigs i boscos d\'Europa i el Mediterrani. Les flors s\'assequen a la primavera-estiu. Una de les infusions més consumides a Europa.',
+    info: 'S\'obté de les flors i bràctees seques del til·ler. Conté flavonoides i mucílags. En fitoteràpia és una de les plantes més usades per afavorir la relaxació i el son. L\'infusió és suau, dolça i agradable.',
+    tradicio: 'Els celtes consideraven el til·ler un arbre sagrat, símbol de llum i vida. A moltes ciutats europees les places principals tenien un til·ler al centre, lloc de reunió i de justícia. A Alemanya i França era l\'arbre dels enamorats, on es feien promeses.',
+    ritual: ['Prepara una infusió de til·la al vespre.', 'Beu-la sense pantalla, assegut còmodament.', 'Deixa que el cos se\'t relaxi gradualment mentre la beus.'],
+    oracleMsg: 'Avui, concedeix-te el do d\'una nit de descans.',
+    oracleSug: 'Prepara\'t per dormir amb calma. Una bona nit de son és una forma de cuidar-te profundament. Et mereixes descansar.'
+  },
+  {
+    id: 'clausolor', nom: 'Clau d\'olor', nomCientific: 'Syzygium aromaticum',
+    familia: 'Myrtaceae', categoria: 'especia', emoji: '🟤',
+    on: 'Originaris de les Illes Moluques (Indonèsia). L\'arbre és tropical i no creix al Mediterrani, però l\'espècia es troba a tots els supermercats sencera o mòlta.',
+    info: 'Els claus d\'olor són els botons florals secs d\'un arbre tropical. Contenen eugenol en gran quantitat, un compost amb propietats antisèptiques. Tradicionament s\'han usat per alleugerir el dolor de dents, i l\'eugenol s\'usa encara en odontologia.',
+    tradicio: 'A la Xina antiga els cortesans mastegaven claus d\'olor per tenir l\'alè fresc quan parlaven amb l\'emperador. Durant les pestes medievals europees s\'usaven pomanders (boles de clau i taronja) per "purificar" l\'aire. Portar claus a la butxaca atreia diners i prosperitat.',
+    ritual: ['Pren un clau d\'olor i olora\'l de prop.', 'Frega\'l entre els dits i respira l\'aroma intens.', 'Pensa en una cosa que vols que floreixi a la teva vida.'],
+    oracleMsg: 'Avui és un bon dia per plantar una nova llavor.',
+    oracleSug: 'Pensa en un projecte, desig o canvi que vols fer realitat. Quin és el primer pas més petit que podries fer avui?'
+  },
+  {
+    id: 'canyella', nom: 'Canyella', nomCientific: 'Cinnamomum verum',
+    familia: 'Lauraceae', categoria: 'especia', emoji: '🍂',
+    on: 'Originària de Sri Lanka i el Sud-Est Asiàtic. S\'obté de l\'escorça interior de l\'arbre de la canyella. Es compra fàcilment en pols o en branquetes a tots els supermercats.',
+    info: 'Una de les espècies més antigues i valuoses de la història. Conté cinnamaldehid, responsable del seu aroma. S\'usa àmpliament en pastisseria, begudes i cuina salada. En fitoteràpia s\'han estudiat possibles efectes sobre els nivells de sucre en sang, sempre amb supervisió mèdica.',
+    tradicio: 'A l\'Antic Egipte era tan valuosa com l\'or. A la Bíblia és mencionada com a ingredient del perfum sagrat. A l\'edat moderna es diu que posar canyella a l\'entrada de casa porta prosperitat. A moltes cultures és una espècia de protecció i bona sort.',
+    ritual: ['Agafa un palet de canyella i olora\'l.', 'Pensa en una cosa per la qual et sents agraït/ada avui.', 'Escriu-la o digue-la en veu alta si vols.'],
+    oracleMsg: 'La gratitud transforma el que tens en suficient.',
+    oracleSug: 'Fes una llista mental de tres coses que tens avui que t\'aporten benestar. La gratitud és un hàbit que transforma la vida.'
+  },
+  {
+    id: 'anis', nom: 'Anís', nomCientific: 'Pimpinella anisum',
+    familia: 'Apiaceae', categoria: 'especia', emoji: '⭐',
+    on: 'Planta anual cultivada als camps de la Mediterrània. Les llavors madures s\'assequen i es comercialitzen. A Catalunya és molt popular per fer l\'anís sec i el ratafia.',
+    info: 'Espècia d\'aroma dolça i característica gràcies a l\'anetol. Tradicionament s\'ha usat com a digestiu i carminatiu. L\'infusió d\'anís és molt popular al Mediterrani. És essencial en molts licors mediterranis com l\'ouzo grec o el pastís francès.',
+    tradicio: 'A la Roma Antiga un pastís d\'anís es menjava al final dels banquets de noces per facilitar la digestió i portar bona sort. A Grècia era considerat afrodisiac. A l\'Europa medieval es posaven llavors d\'anís a l\'interior dels coixins per tenir somnis dolços.',
+    ritual: ['Posa unes llavors d\'anís a la boca i mastega lentament.', 'Deixa que el sabor dolç s\'escampi.', 'Pensa en un desig dolç que t\'agradaria que es complís.'],
+    oracleMsg: 'Avui és un bon dia per concedir-te un petit plaer.',
+    oracleSug: 'No pospossis eternament els petits plaers. Avui, fes alguna cosa petita que t\'agradi de veritat.'
+  },
+  {
+    id: 'coriandre', nom: 'Coriandre', nomCientific: 'Coriandrum sativum',
+    familia: 'Apiaceae', categoria: 'especia', emoji: '🌿',
+    on: 'Cultivat en horts i jardins. Originari del Mediterrani oriental. S\'usa tant les fulles fresques com les llavors seques, amb aromes molt diferenciades.',
+    info: 'Una de les espècies més antigues documentades: apareix en papers egipcis de fa 3.500 anys. Conté linalol, que varia molt entre fulles i llavors. Les opinions sobre el seu gust solen ser extremes: molt odiat o molt estimat. En fitoteràpia s\'han estudiat possibles propietats digestives.',
+    tradicio: 'A la Bíblia, el manà del desert és comparat amb les llavors de coriandre. Als països àrabs i mediterranis es creia que el coriandre tenia propietats que afavorien l\'amor. A moltes cultures, dur llavors de coriandre porta amor i felicitat.',
+    ritual: ['Pren unes llavors de coriandre i olora-les.', 'Agita-les suaument a la palma de la mà.', 'Pensa en algú llunyà que estimes i envia-li un pensament afectuós.'],
+    oracleMsg: 'Avui, el pensament d\'algú que estimes et pot acompanyar.',
+    oracleSug: 'Recorda algú que fa temps que no has vist o que és lluny. Un missatge podria alegrar-li el dia, i el teu també.'
+  },
+  {
+    id: 'comi', nom: 'Comí', nomCientific: 'Cuminum cyminum',
+    familia: 'Apiaceae', categoria: 'especia', emoji: '🌾',
+    on: 'Cultivat en climes càlids del Mediterrani oriental, el Nord d\'Àfrica i l\'Àsia del sud. Les llavors s\'assequen i es venen senceres o mòltes a tots els supermercats.',
+    info: 'Espècia amb un aroma fort, terrós i característic. Molt usat al nord d\'Àfrica (cuscús, tajines), el Pròxim Orient i l\'Índia (curries). Conté cuminaldehid. En fitoteràpia popular s\'ha usat com a digestiu i carminatiu.',
+    tradicio: 'A l\'Edat Mitjana es creia que el comí impedia que les persones o animals fugissin de casa. Les parelles portaven comí a la boda per mantenir-se fidels. A Alemanya, el pa de comí es posava a les mans dels difunts per tenir bon viatge a l\'altre món.',
+    ritual: ['Posa unes llavors de comí a la mà i tanca el puny.', 'Pensa en alguna cosa o persona que vols "retenir" o cuidar.', 'Obre la mà i observa les llavors: el que és teu romandrà.'],
+    oracleMsg: 'Allò que realment importa no s\'escapa: roman si el cuides.',
+    oracleSug: 'Pensa en una relació o valor important que potser no estàs cuidant prou. Avui és un bon dia per dedicar-hi una mica d\'atenció.'
+  }
+];
+
+// ─────────────────────────────────────────────
+// SAVIESES DE LES ÀVIES
+// ─────────────────────────────────────────────
+var SAVIESES = [
+  '"La farigola ho cura tot."',
+  '"Romaní a la porta, salut a la casa."',
+  '"La menta desperta l\'ànima."',
+  '"L\'herba que no coneixes és la que més et pot ajudar."',
+  '"Lavanda a la roba, somnis a la nit."',
+  '"Planta camamilla i trobaràs calma."',
+  '"L\'alfàbrega al balcó porta amor al cor."',
+  '"De la sàlvia n\'has de fer amic, que ella et farà vell."',
+  '"Qui té orenga al jardí, té sort per a tot l\'any."',
+  '"El fonoll cura la panxa, i la panxa fa feliç l\'home."',
+  '"La til·la és la millor medicina per dormir."',
+  '"La melissa és dolça com les abelles que estima."',
+  '"Llorer a la cuina, victòria a la taula."',
+  '"La camamilla de les àvies val més que moltes medicines."',
+  '"La calèndula és el sol del jardí."',
+  '"Un ramet de lavanda sota el coixí, i el malestar queda fora."',
+  '"Qui té menta a casa no li manquen les forces."'
+];
+
+// ─────────────────────────────────────────────
+// ESTAT
+// ─────────────────────────────────────────────
+var saviesaIdx = 0;
+var ultimaOracleId = null;
+
+var CAT_LABELS = {
+  aromatica: 'Aromàtica',
+  cuina: 'Cuina',
+  calmant: 'Calmant',
+  especia: 'Espècia'
+};
+
+// ─────────────────────────────────────────────
+// ORACLE
+// ─────────────────────────────────────────────
+function showOracle() {
+  var candidats = PLANTES.filter(function(p) { return p.id !== ultimaOracleId; });
+  var p = candidats[Math.floor(Math.random() * candidats.length)];
+  ultimaOracleId = p.id;
+
+  document.getElementById('oEmoji').textContent = p.emoji;
+  document.getElementById('oNom').textContent = p.nom;
+  document.getElementById('oSci').textContent = p.nomCientific;
+  document.getElementById('oMsg').textContent = '🌿 ' + p.oracleMsg;
+  document.getElementById('oSug').textContent = p.oracleSug;
+
+  var card = document.getElementById('oracleCard');
+  card.classList.remove('visible');
+  void card.offsetWidth; // reflow per reiniciar l'animació
+  card.classList.add('visible');
+
+  document.getElementById('btnOracle').textContent = '🔮 Consultar de nou';
+}
+
+// ─────────────────────────────────────────────
+// SAVIESA
+// ─────────────────────────────────────────────
+function initSaviesa() {
+  saviesaIdx = Math.floor(Math.random() * SAVIESES.length);
+  renderSaviesa();
+}
+
+function renderSaviesa() {
+  document.getElementById('saviesaText').textContent = SAVIESES[saviesaIdx];
+}
+
+function moveSaviesa(dir) {
+  saviesaIdx = (saviesaIdx + dir + SAVIESES.length) % SAVIESES.length;
+  renderSaviesa();
+}
+
+// ─────────────────────────────────────────────
+// CATÀLEG
+// ─────────────────────────────────────────────
+function renderPlants(filter) {
+  var llista = filter === 'all' ? PLANTES : PLANTES.filter(function(p) { return p.categoria === filter; });
+
+  document.getElementById('plantGrid').innerHTML = llista.map(function(p) {
+    return '<div class="plant-card cat-' + p.categoria + '" onclick="obrirModal(\'' + p.id + '\')">' +
+      '<div class="pc-icon"><span>' + p.emoji + '</span></div>' +
+      '<div class="plant-name">' + p.nom + '</div>' +
+      '<div class="plant-sci">' + p.nomCientific + '</div>' +
+      '<span class="cat-badge">' + (CAT_LABELS[p.categoria] || p.categoria) + '</span>' +
+      '</div>';
+  }).join('');
+}
+
+function filtrar(cat, btn) {
+  document.querySelectorAll('.ftab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  renderPlants(cat);
+}
+
+// ─────────────────────────────────────────────
+// MODAL
+// ─────────────────────────────────────────────
+function obrirModal(id) {
+  var p = null;
+  for (var i = 0; i < PLANTES.length; i++) {
+    if (PLANTES[i].id === id) { p = PLANTES[i]; break; }
+  }
+  if (!p) return;
+
+  document.getElementById('mEmoji').textContent  = p.emoji;
+  document.getElementById('mTitle').textContent  = p.nom;
+  document.getElementById('mSci').textContent    = p.nomCientific;
+  document.getElementById('mFamily').textContent = 'Família: ' + p.familia;
+
+  var passos = p.ritual.map(function(s, i) {
+    return '<div class="r-step">' +
+      '<div class="r-num">' + (i + 1) + '</div>' +
+      '<div class="r-text">' + s + '</div>' +
+      '</div>';
+  }).join('');
+
+  document.getElementById('mBody').innerHTML =
+    '<div class="info-block">' +
+      '<h4 style="color:#065f46">📍 On es troba</h4>' +
+      '<p>' + p.on + '</p>' +
+    '</div>' +
+    '<div class="info-block">' +
+      '<h4 style="color:#1d4ed8">🔬 Fitoteràpia tradicional</h4>' +
+      '<p>' + p.info + '</p>' +
+    '</div>' +
+    '<div class="info-block">' +
+      '<h4 style="color:#7c3aed">🌙 Tradició popular</h4>' +
+      '<p>' + p.tradicio + '</p>' +
+    '</div>' +
+    '<div class="info-block">' +
+      '<h4 style="color:#16a34a">✨ Ritual simpàtic</h4>' +
+      '<div class="ritual-box">' + passos + '</div>' +
+    '</div>' +
+    '<div class="disclaimer">' +
+      '⚠️ <strong>Nota important:</strong> Aquesta informació és exclusivament cultural i divulgativa. ' +
+      'No constitueix consell mèdic ni substitueix l\'assessorament de professionals de la salut.' +
+    '</div>';
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function tancarModal(event) {
+  if (!event || event.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+// ─────────────────────────────────────────────
+// INICIALITZACIÓ
+// ─────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  initSaviesa();
+  renderPlants('all');
+});
+</script>
+</body>
+</html>
