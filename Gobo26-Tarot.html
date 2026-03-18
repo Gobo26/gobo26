@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santuari de Tarot – Gobo26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --fons-fosc: #1a1525;
+        --fons-clar: #2d243e;
+        --color-or: #ffb703;
+        --text-principal: #ffffff;
+        --text-secundari: #e0e0e0;
+        --borde-carta: 4px solid #ffb703;
+        --header-bg: #1e293b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: var(--fons-fosc);
+        color: var(--text-principal);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-size: 18px;
+    }
+
+    /* ===== HEADER GOBO26 ===== */
+    header {
+        background: var(--header-bg);
+        padding: 0 16px;
+        height: clamp(44px, 8vh, 56px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        flex-shrink: 0;
+    }
+
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0; }
+    .logo-txt { font-size: .9rem; font-weight: 900; color: white; letter-spacing: -.5px; }
+    .logo-txt span { color: #3b82f6; }
+
+    .header-titol {
+        flex: 1;
+        text-align: center;
+        font-size: clamp(.85rem, 3vw, 1rem);
+        font-weight: 800;
+        color: var(--color-or);
+        letter-spacing: .05em;
+    }
+
+    .header-spacer { width: 36px; flex-shrink: 0; }
+
+    /* ===== NAV PRINCIPAL ===== */
+    .nav-principal {
+        background: var(--fons-clar);
+        border-bottom: 2px solid rgba(255, 183, 3, 0.3);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        padding: 10px 16px;
+    }
+
+    .nav-btn {
+        background: transparent;
+        color: var(--text-secundari);
+        border: 1.5px solid rgba(255, 183, 3, 0.4);
+        padding: 8px 16px;
+        font-size: .85rem;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        border-radius: 99px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover, .nav-btn:focus {
+        background-color: var(--color-or);
+        color: var(--fons-fosc);
+        border-color: var(--color-or);
+        outline: none;
+    }
+
+    /* ===== MAIN ===== */
+    main {
+        flex-grow: 1;
+        padding: 24px 20px 48px;
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    /* ===== SECCIONS ===== */
+    section { display: none; }
+    section.activa { display: block; animation: fadeIn 0.4s ease; }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes popIn {
+        from { opacity: 0; transform: scale(.85); }
+        to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ===== TÍTOLS ===== */
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--color-or);
+        margin-bottom: 16px;
+        text-align: center;
+    }
+
+    .text-gran {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--text-secundari);
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* ===== CARTA ===== */
+    .carta {
+        width: 180px;
+        height: 290px;
+        perspective: 1000px;
+        margin: 15px auto;
+        cursor: pointer;
+    }
+
+    .carta-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+    }
+
+    .carta.girada .carta-inner {
+        transform: rotateY(180deg);
+        box-shadow: 0 0 30px rgba(255, 183, 3, 0.5);
+    }
+
+    .carta-front, .carta-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: var(--borde-carta);
+        box-sizing: border-box;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .carta-front {
+        background: repeating-linear-gradient(
+            45deg,
+            #2d243e, #2d243e 10px,
+            #1a1525 10px, #1a1525 20px
+        );
+        color: var(--color-or);
+        font-size: 3rem;
+    }
+
+    .carta-front::after { content: "✦"; }
+
+    .carta-back {
+        background: linear-gradient(135deg, #2d243e 0%, #1a1525 100%);
+        transform: rotateY(180deg);
+    }
+
+    .carta-emoji { font-size: 4.5rem; margin-bottom: 12px; }
+    .carta-titol { font-size: 1.2rem; font-weight: 800; color: var(--color-or); margin: 0; }
+    .carta-numero { font-size: 1rem; color: var(--text-secundari); margin-bottom: 8px; font-weight: 600; }
+
+    /* ===== INFO CARTA ===== */
+    .info-carta {
+        background-color: var(--fons-clar);
+        padding: 18px 20px;
+        border-radius: 12px;
+        margin-top: 16px;
+        border-left: 5px solid var(--color-or);
+        font-size: .95rem;
+        line-height: 1.7;
+        color: var(--text-secundari);
+        text-align: left;
+    }
+
+    .info-carta strong { color: var(--color-or); }
+
+    /* ===== BOTONS D'ACCIÓ ===== */
+    .btn {
+        display: inline-block;
+        background-color: var(--fons-fosc);
+        color: var(--text-principal);
+        border: 2px solid var(--color-or);
+        padding: 14px 24px;
+        font-size: 1rem;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .btn:hover, .btn:focus {
+        background-color: var(--color-or);
+        color: var(--fons-fosc);
+        outline: none;
+        box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
+    }
+
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn:disabled:hover { background-color: var(--fons-fosc); color: var(--text-principal); box-shadow: none; }
+
+    .btn-perill {
+        border-color: #ef4444;
+        color: #ef4444;
+    }
+    .btn-perill:hover, .btn-perill:focus {
+        background-color: #ef4444;
+        color: white;
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+    }
+
+    .text-centre { text-align: center; }
+
+    /* ===== OPCIONS TIRADA ===== */
+    .opcions-tirada {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 10px;
+    }
+
+    .btn-tirada {
+        display: block;
+        width: 100%;
+        background: var(--fons-clar);
+        color: var(--text-principal);
+        border: 2px solid rgba(255, 183, 3, 0.5);
+        padding: 22px 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 800;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: left;
+    }
+
+    .btn-tirada:hover, .btn-tirada:focus {
+        border-color: var(--color-or);
+        background: #3a2f50;
+        box-shadow: 0 4px 20px rgba(255, 183, 3, 0.2);
+        outline: none;
+    }
+
+    .btn-tirada small {
+        display: block;
+        font-size: .8rem;
+        font-weight: 500;
+        color: var(--text-secundari);
+        margin-top: 4px;
+    }
+
+    /* ===== ZONA BARREJAR ===== */
+    .zona-barrejar {
+        width: 100%;
+        height: 180px;
+        background-color: var(--fons-clar);
+        border: 3px dashed rgba(255, 183, 3, 0.5);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--color-or);
+        touch-action: none;
+        user-select: none;
+    }
+
+    /* ===== CONTENIDOR CARTES ===== */
+    .contenidor-cartes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 24px;
+    }
+
+    /* ===== RESULTAT LECTURA ===== */
+    #resultat-lectura { margin-top: 24px; }
+
+    /* ===== DIARI ===== */
+    .diari-item {
+        background-color: var(--fons-clar);
+        padding: 18px 20px;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        border: 1px solid rgba(255, 183, 3, 0.3);
+    }
+
+    .diari-item h3 {
+        margin-top: 0;
+        color: var(--color-or);
+        font-size: 1rem;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+    .diari-item p {
+        font-size: .9rem;
+        color: var(--text-secundari);
+        line-height: 1.6;
+        text-align: left;
+        margin-bottom: 4px;
+    }
+
+    /* ===== DICCIONARI ===== */
+    .grid-diccionari {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
+        margin-top: 10px;
+    }
+
+    .item-diccionari {
+        background-color: var(--fons-clar);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 183, 3, 0.3);
+        text-align: center;
+        font-size: .9rem;
+        line-height: 1.6;
+        color: var(--text-secundari);
+    }
+
+    .item-diccionari .carta-emoji { font-size: 3rem; margin-bottom: 8px; }
+    .item-diccionari .carta-titol { margin-bottom: 6px; }
+    .item-diccionari strong { color: var(--color-or); }
+</style>
+</head>
+<body>
+
+<!-- HEADER GOBO26 -->
+<header>
+    <a class="logo" href="https://ja.cat/appgobo" target="_self">
+        <svg width="30" height="34" viewBox="0 0 40 46" fill="none">
+            <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+        </svg>
+        <span class="logo-txt">Gobo<span>26</span></span>
+    </a>
+    <div class="header-titol">✦ Santuari de Tarot</div>
+    <div class="header-spacer"></div>
+</header>
+
+<!-- NAV PRINCIPAL -->
+<nav class="nav-principal">
+    <button class="nav-btn" onclick="canviarPantalla('inici')">Inici</button>
+    <button class="nav-btn" onclick="iniciarTiradaPantalla()">Tirar Cartes</button>
+    <button class="nav-btn" onclick="mostrarDiari()">El meu Diari</button>
+    <button class="nav-btn" onclick="mostrarDiccionari()">Diccionari</button>
+</nav>
+
+<main>
+    <!-- INICI -->
+    <section id="inici" class="activa">
+        <h2>El teu espai de calma</h2>
+        <p class="text-gran">Consell de les cartes per al dia d'avui:</p>
+        <div id="carta-diaria-contenidor"></div>
+    </section>
+
+    <!-- SELECCIÓ TIRADA -->
+    <section id="seleccio-tirada">
+        <h2>Què necessites saber avui?</h2>
+        <p class="text-gran">Tria el tipus de lectura que prefereixes:</p>
+        <div class="opcions-tirada">
+            <button class="btn-tirada" onclick="prepararTirada(1)">
+                🃏 Tirada d'1 Carta
+                <small>Consell ràpid o resposta directa</small>
+            </button>
+            <button class="btn-tirada" onclick="prepararTirada(3)">
+                🃏🃏🃏 Tirada de 3 Cartes
+                <small>Passat, Present i Futur</small>
+            </button>
+        </div>
+    </section>
+
+    <!-- BARREJAR -->
+    <section id="barrejar">
+        <h2>Connecta amb les cartes</h2>
+        <p class="text-gran">Passa el dit per dins del requadre mentre penses en allò que et preocupa.</p>
+        <div class="zona-barrejar" id="zona-touch">Frega aquí per barrejar...</div>
+        <div class="text-centre">
+            <button class="btn" id="btn-continuar-tirada" onclick="mostrarCartes()" disabled>Continuar a la Tirada</button>
+        </div>
+    </section>
+
+    <!-- LECTURA -->
+    <section id="lectura">
+        <h2 id="titol-lectura">La teva Tirada</h2>
+        <p class="text-gran">Toca les cartes per girar-les i descobrir el seu missatge.</p>
+        <div class="contenidor-cartes" id="taula-cartes"></div>
+        <div id="resultat-lectura"></div>
+        <div class="text-centre" style="margin-top: 24px;">
+            <button class="btn" id="btn-guardar" style="display: none;" onclick="guardarAlDiari()">Guardar al Diari</button>
+        </div>
+    </section>
+
+    <!-- DIARI -->
+    <section id="diari">
+        <h2>Diari de Lectures</h2>
+        <p class="text-gran">Les teves tirades guardades per repassar-les.</p>
+        <div id="llista-diari"></div>
+        <div class="text-centre" style="margin-top: 32px;">
+            <button class="btn btn-perill" onclick="esborrarDiari()">Esborrar tot el Diari</button>
+        </div>
+    </section>
+
+    <!-- DICCIONARI -->
+    <section id="diccionari">
+        <h2>Arcans Majors</h2>
+        <p class="text-gran">Les 22 cartes principals del Tarot i el seu significat.</p>
+        <div class="grid-diccionari" id="grid-diccionari"></div>
+    </section>
+</main>
+
+<script>
+    const arcans = [
+        { id: 0,  num: "0",    nom: "El Foll",              emoji: "🃏", clau: "Nous inicis, llibertat, espontaneïtat.",    desc: "Representa un salt de fe. Bon moment per començar de nou sense por, confiant en l'univers." },
+        { id: 1,  num: "I",    nom: "El Mag",               emoji: "🪄", clau: "Poder, habilitat, acció.",                  desc: "Tens totes les eines necessàries per aconseguir el que et proposes. És el moment d'actuar." },
+        { id: 2,  num: "II",   nom: "La Sacerdotessa",      emoji: "🌙", clau: "Intuïció, misteri, veu interior.",          desc: "Escolta la teva intuïció i els teus pressentiments. Les respostes estan dins teu, no a fora." },
+        { id: 3,  num: "III",  nom: "L'Emperadriu",         emoji: "👑", clau: "Abundància, fertilitat, natura.",           desc: "Una energia de creixement i cura. Connecta amb la bellesa, la família i les coses bones de la vida." },
+        { id: 4,  num: "IV",   nom: "L'Emperador",          emoji: "🪑", clau: "Estructura, ordre, estabilitat.",           desc: "Cal posar ordre i establir regles clares. Representa el suport ferm i l'autoritat." },
+        { id: 5,  num: "V",    nom: "El Hierofanta",        emoji: "🏛️", clau: "Tradició, creences, guia.",                desc: "És moment de seguir els mètodes tradicionals o buscar el consell d'un expert o mestre espiritual." },
+        { id: 6,  num: "VI",   nom: "Els Enamorats",        emoji: "💞", clau: "Amor, decisions, harmonia.",               desc: "Parla de relacions profundes, però també d'una tria important que has de fer des del cor." },
+        { id: 7,  num: "VII",  nom: "El Carro",             emoji: "🐎", clau: "Determinació, control, victòria.",          desc: "Avança amb força de voluntat. Superaràs els obstacles si mantens el control de les teves emocions." },
+        { id: 8,  num: "VIII", nom: "La Força",             emoji: "🦁", clau: "Coratge, paciència, control suau.",        desc: "La veritable força no és la violència, sinó la paciència, l'amor i la comprensió per dominar les pors." },
+        { id: 9,  num: "IX",   nom: "L'Ermità",             emoji: "🏮", clau: "Introspecció, solitud, saviesa.",           desc: "Necessites un moment de pausa i solitud per reflexionar. La resposta la trobaràs en el silenci." },
+        { id: 10, num: "X",    nom: "La Roda de la Fortuna",emoji: "🎡", clau: "Canvis, cicles, destí.",                    desc: "La vida dóna voltes. Arriben canvis positius o cops de sort que canvien el rumb de la situació." },
+        { id: 11, num: "XI",   nom: "La Justícia",          emoji: "⚖️", clau: "Equitat, veritat, causa i efecte.",        desc: "El que sembres, reculls. Es farà justícia. Pren decisions basades en la lògica i la veritat." },
+        { id: 12, num: "XII",  nom: "El Penjat",            emoji: "🤸", clau: "Pausa, canvi de perspectiva.",              desc: "De vegades cal aturar-se i mirar les coses des d'un altre angle. Accepta l'espera sense forçar." },
+        { id: 13, num: "XIII", nom: "La Mort",              emoji: "💀", clau: "Finals, transformació, transició.",         desc: "No cal tenir por. És el final d'una etapa per deixar lloc a una cosa nova i millor. Tanca cicles." },
+        { id: 14, num: "XIV",  nom: "La Temprança",         emoji: "🍷", clau: "Equilibri, moderació, calma.",             desc: "Busca el punt mitjà. Cal paciència i barrejar els elements de la teva vida amb harmonia." },
+        { id: 15, num: "XV",   nom: "El Diable",            emoji: "👿", clau: "Lligams, materialisme, mals hàbits.",       desc: "Vigila amb les dependències, les obsessions o sentir-te atrapat per coses materials. Pots alliberar-te." },
+        { id: 16, num: "XVI",  nom: "La Torre",             emoji: "⚡", clau: "Canvi brusc, revelació, caiguda.",          desc: "Una estructura falsa cau de cop. Sembla dur, però neteja el camí per construir alguna cosa real." },
+        { id: 17, num: "XVII", nom: "L'Estrella",           emoji: "⭐", clau: "Esperança, fe, inspiració.",               desc: "Després de la tempesta arriba la calma. Moment de molta llum, protecció i fe en el futur." },
+        { id: 18, num: "XVIII",nom: "La Lluna",             emoji: "🐺", clau: "Il·lusions, pors ocultes, confusió.",       desc: "Les coses no són el que semblen. Compte amb les pors infundades i els enganys. Deixa que la boira s'esvaeixi." },
+        { id: 19, num: "XIX",  nom: "El Sol",               emoji: "☀️", clau: "Alegria, èxit, vitalitat.",                desc: "La millor carta! Promet èxit, salut, energia positiva i resolució feliç de qualsevol problema." },
+        { id: 20, num: "XX",   nom: "El Judici",            emoji: "📯", clau: "Renaixement, perdó, despertar.",           desc: "És moment de despertar, perdonar el passat i avançar cap a una nova vida amb consciència." },
+        { id: 21, num: "XXI",  nom: "El Món",               emoji: "🌍", clau: "Plenitud, èxit final, finalització.",       desc: "Has completat un cicle amb èxit. Sensació d'harmonia total, celebració i sentir-se al lloc adequat." }
+    ];
+
+    let cartesSeleccionades = [];
+    let cartesGirades = 0;
+    let quantitatCartes = 1;
+    let nivellBarrejat = 0;
+
+    function generarHTMLCarta(carta, amagada) {
+        return `
+            <div class="carta ${amagada ? '' : 'girada'}"
+                 ${amagada ? `onclick="girarCarta(this, ${carta.id})"` : ''}>
+                <div class="carta-inner">
+                    <div class="carta-front"></div>
+                    <div class="carta-back">
+                        <div class="carta-numero">${carta.num}</div>
+                        <div class="carta-emoji">${carta.emoji}</div>
+                        <h3 class="carta-titol">${carta.nom}</h3>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function canviarPantalla(id) {
+        document.querySelectorAll('section').forEach(s => s.classList.remove('activa'));
+        document.getElementById(id).classList.add('activa');
+        window.scrollTo(0, 0);
+    }
+
+    function inicialitzarDiaria() {
+        const avui = new Date();
+        // Llavor basada en any + dia de l'any per evitar col·lisions
+        const diaAny = Math.floor((avui - new Date(avui.getFullYear(), 0, 0)) / 86400000);
+        const llavor = avui.getFullYear() * 1000 + diaAny;
+        const carta = arcans[llavor % arcans.length];
+
+        document.getElementById('carta-diaria-contenidor').innerHTML = `
+            ${generarHTMLCarta(carta, false)}
+            <div class="info-carta">
+                <strong>${carta.nom}:</strong> ${carta.desc}
+            </div>
+        `;
+    }
+
+    function iniciarTiradaPantalla() {
+        canviarPantalla('seleccio-tirada');
+    }
+
+    function prepararTirada(quantitat) {
+        quantitatCartes = quantitat;
+        nivellBarrejat = 0;
+        const zona = document.getElementById('zona-touch');
+        zona.innerHTML = "Frega aquí per barrejar...";
+        zona.style.backgroundColor = "var(--fons-clar)";
+        document.getElementById('btn-continuar-tirada').disabled = true;
+        canviarPantalla('barrejar');
+    }
+
+    const zonaTouch = document.getElementById('zona-touch');
+    zonaTouch.addEventListener('touchmove', processarBarrejat, { passive: true });
+    zonaTouch.addEventListener('mousemove', e => { if (e.buttons > 0) processarBarrejat(); });
+
+    function processarBarrejat() {
+        if (nivellBarrejat >= 100) return;
+        nivellBarrejat = Math.min(nivellBarrejat + 2, 100);
+
+        const intensitat = Math.floor((nivellBarrejat / 100) * 200);
+        zonaTouch.style.backgroundColor = `rgb(${intensitat >> 2}, ${intensitat >> 2}, ${intensitat >> 1})`;
+
+        if (nivellBarrejat >= 100) {
+            zonaTouch.innerHTML = "✨ Cartes Barrejades ✨";
+            document.getElementById('btn-continuar-tirada').disabled = false;
+        }
+    }
+
+    function mostrarCartes() {
+        const deck = [...arcans].sort(() => Math.random() - 0.5);
+        cartesSeleccionades = deck.slice(0, quantitatCartes);
+        cartesGirades = 0;
+
+        document.getElementById('taula-cartes').innerHTML =
+            cartesSeleccionades.map(c => generarHTMLCarta(c, true)).join('');
+        document.getElementById('resultat-lectura').innerHTML = '';
+        document.getElementById('btn-guardar').style.display = 'none';
+        document.getElementById('titol-lectura').textContent =
+            quantitatCartes === 1 ? "Tirada d'1 Carta" : "Tirada de 3 Cartes (Passat · Present · Futur)";
+
+        canviarPantalla('lectura');
+    }
+
+    function girarCarta(el, idCarta) {
+        if (el.classList.contains('girada')) return;
+        el.classList.add('girada');
+        cartesGirades++;
+
+        const carta = arcans.find(c => c.id === idCarta);
+        const posicions = ["El Passat", "El Present", "El Futur"];
+        const posText = quantitatCartes === 3
+            ? `<strong style="color:var(--color-or)">${posicions[cartesGirades - 1]}:</strong> ` : '';
+
+        document.getElementById('resultat-lectura').innerHTML += `
+            <div class="info-carta">
+                ${posText}<strong>${carta.nom}</strong><br>
+                <em style="color:#c4b5fd">${carta.clau}</em><br>
+                <span style="margin-top:6px;display:block">${carta.desc}</span>
+            </div>
+        `;
+
+        if (cartesGirades === quantitatCartes) {
+            document.getElementById('btn-guardar').style.display = 'inline-block';
+        }
+    }
+
+    function guardarAlDiari() {
+        const historial = JSON.parse(localStorage.getItem('tarot_diari')) || [];
+        historial.unshift({
+            data: new Date().toLocaleDateString('ca-ES', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            }),
+            tipus: quantitatCartes === 1 ? "1 Carta" : "3 Cartes",
+            cartes: cartesSeleccionades.map(c => c.nom)
+        });
+        localStorage.setItem('tarot_diari', JSON.stringify(historial));
+        alert("Lectura guardada al Diari.");
+        document.getElementById('btn-guardar').style.display = 'none';
+    }
+
+    function mostrarDiari() {
+        const historial = JSON.parse(localStorage.getItem('tarot_diari')) || [];
+        const llista = document.getElementById('llista-diari');
+
+        llista.innerHTML = historial.length === 0
+            ? '<p class="text-gran">Encara no tens cap lectura guardada.</p>'
+            : historial.map(l => `
+                <div class="diari-item">
+                    <h3>${l.data}</h3>
+                    <p><strong>Tirada de:</strong> ${l.tipus}</p>
+                    <p><strong>Cartes:</strong> ${l.cartes.join(' · ')}</p>
+                </div>
+            `).join('');
+
+        canviarPantalla('diari');
+    }
+
+    function esborrarDiari() {
+        if (confirm("Estàs segur que vols esborrar tot l'historial? Aquesta acció no es pot desfer.")) {
+            localStorage.removeItem('tarot_diari');
+            mostrarDiari();
+        }
+    }
+
+    function mostrarDiccionari() {
+        canviarPantalla('diccionari');
+    }
+
+    window.onload = () => {
+        inicialitzarDiaria();
+        document.getElementById('grid-diccionari').innerHTML = arcans.map(carta => `
+            <div class="item-diccionari">
+                <div class="carta-emoji">${carta.emoji}</div>
+                <div class="carta-numero">${carta.num}</div>
+                <h3 class="carta-titol">${carta.nom}</h3>
+                <p style="margin-top:10px"><strong>Paraules clau:</strong><br>${carta.clau}</p>
+                <p style="margin-top:8px">${carta.desc}</p>
+            </div>
+        `).join('');
+    };
+</script>
+</body>
+</html>

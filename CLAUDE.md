@@ -54,6 +54,7 @@ Quan es facin canvis significatius al projecte (nova app, canvi d'arquitectura, 
 | 2026-03-14 | Configuració inicial: git, SSH, GitHub Actions deploy a GitHub Pages |
 | 2026-03-16 | Nova app: Gobo26-Herbes.html — guia d'herbes mediterrànies amb oracle, saviesa de les àvies, fitxes de 25 plantes amb tradicions i rituals |
 | 2026-03-17 | Nova app: Gobo26-DOMINO.html — joc del dominó (jugador vs màquina), lògica completa, interfície Gobo26 estàndard |
+| 2026-03-18 | Nova app: Gobo26-Tarot.html — Santuari de Tarot, tirades d'1 i 3 cartes dels Arcans Majors, diari de lectures (localStorage), diccionari de les 22 cartes |
 
 ---
 
