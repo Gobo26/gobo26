@@ -62,7 +62,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
 </head>
 <body>
 <header>
-    <a href="https://ja.cat/appgobo" class="logo">
+    <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
         <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
             <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
             <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
@@ -71,6 +71,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">Gimnàs a Casa</span>
+    <div style="width:38px"></div>
 </header>
     
     <!-- Contenidor principal: Al mòbil ocupa el 100%, a l'escriptori té mida de telèfon -->
@@ -81,7 +82,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
 
         // --- GOBO26 ---
         const Gobo26Badge = () => (
-            <a href="https://ja.cat/appgobo" target="_self" rel="noopener noreferrer"
+            <a href="https://gobo26.github.io/gobo26/" target="_self" rel="noopener noreferrer"
                className="opacity-30 hover:opacity-70 transition-opacity"
                title="Gobo26">
                 <svg width="24" height="24" viewBox="0 0 100 100" fill="none">
@@ -537,7 +538,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
                         <button onClick={() => setActiveTab('progress')} className={`flex flex-col items-center ${activeTab === 'progress' ? 'text-indigo-600' : 'text-slate-400'}`}><BarChart size={24} /><span className="text-[10px] font-bold mt-1">Progrés</span></button>
                         <button onClick={() => setActiveTab('tips')} className={`flex flex-col items-center ${activeTab === 'tips' ? 'text-indigo-600' : 'text-slate-400'}`}><Lightbulb size={24} /><span className="text-[10px] font-bold mt-1">Consells</span></button>
                     </div>
-                    <a href="https://ja.cat/appgobo" target="_self" rel="noopener noreferrer"
+                    <a href="https://gobo26.github.io/gobo26/" target="_self" rel="noopener noreferrer"
                        style={{display:'inline-flex',alignItems:'center',gap:'4px',opacity:0.35,textDecoration:'none',color:'#94a3b8',fontSize:'0.6rem',fontWeight:600,paddingBottom:'6px',transition:'opacity 0.2s'}}
                        onMouseOver={e=>e.currentTarget.style.opacity=0.8} onMouseOut={e=>e.currentTarget.style.opacity=0.35}>
                         <svg width="10" height="10" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" textAnchor="middle" fill="white" fontSize="26" fontWeight="800" fontFamily="sans-serif">G</text><text x="50" y="68" textAnchor="middle" fill="#1e293b" fontSize="22" fontWeight="700" fontFamily="sans-serif">26</text></svg>
@@ -563,5 +564,13 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<HealthApp />);
     </script>
+<footer style="font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:16px;flex-shrink:0;border-top:1px solid #1e2d45;">
+    <a href="https://gobo26.github.io/gobo26/" target="_self"
+       style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:#94a3b8;text-decoration:none;"
+       onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+        <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
+        Una aplicació de Gobo26
+    </a>
+</footer>
 </body>
 </html>
