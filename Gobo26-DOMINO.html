@@ -131,14 +131,13 @@
             color: #94a3b8;
         }
         .extrem-caixa {
-            width: 62px;
-            height: 62px;
+            width: 66px;
+            height: 66px;
             background: white;
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
+            overflow: hidden;
             border: 2.5px solid #334155;
         }
         .extrem-caixa.esq { border-color: #dc2626; box-shadow: 0 2px 12px rgba(220,38,38,.4), inset 0 1px 0 rgba(255,255,255,.5); }
@@ -207,15 +206,16 @@
         .tauler-toggle:hover { color: var(--text); background: #e2e8f0; }
 
         #tauler-contenidor {
-            background: #dde4ef;
-            border: 2px solid #cbd5e1;
+            background: radial-gradient(ellipse at center, #3a8c3a 0%, #2a6e2a 60%, #1e5a1e 100%);
+            border: 2px solid #1a5a1a;
             border-radius: 12px;
-            min-height: 56px;
-            display: none;
-            padding: 10px 12px;
-            box-shadow: inset 0 2px 6px rgba(0,0,0,.08);
+            min-height: 60px;
+            display: block;
+            padding: 12px 14px;
+            box-shadow: inset 0 3px 10px rgba(0,0,0,.35);
+            overflow-x: auto;
         }
-        #tauler-contenidor.visible { display: block; }
+        #tauler-contenidor.amagat { display: none; }
 
         #tauler {
             display: flex;
@@ -224,7 +224,7 @@
             align-items: center;
         }
         .tauler-buit {
-            color: #94a3b8;
+            color: rgba(255,255,255,.55);
             font-size: .8rem;
             font-weight: 600;
             width: 100%;
@@ -232,47 +232,22 @@
             padding: 8px 0;
         }
 
-        /* Fitxa al tauler (petita, horitzontal) */
+        /* Fitxa al tauler (horitzontal SVG) */
         .fitxa-t {
             background: white;
-            border: 2px solid #475569;
-            border-radius: 5px;
-            width: 52px;
-            height: 28px;
-            display: flex;
-            align-items: center;
+            border: 1.5px solid #334155;
+            border-radius: 6px;
+            width: 76px;
+            height: 38px;
+            display: block;
             flex-shrink: 0;
-            box-shadow: 1px 1px 0 rgba(0,0,0,.15);
+            box-shadow: 1px 2px 5px rgba(0,0,0,.35);
+            overflow: hidden;
         }
         .fitxa-t.nova {
             border-color: var(--verd);
-            box-shadow: 0 0 6px rgba(22,163,74,.5);
+            box-shadow: 0 0 10px rgba(22,163,74,.7);
         }
-        .meitat-t {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-        .sep-t {
-            width: 2px;
-            height: 100%;
-            background: #475569;
-            flex-shrink: 0;
-        }
-
-        /* Pips petites (per tauler) */
-        .pips-s {
-            display: grid;
-            grid-template: repeat(3,1fr) / repeat(3,1fr);
-            gap: 1.5px;
-            padding: 3px;
-            width: 22px;
-            height: 22px;
-        }
-        .pip-s { background: var(--pip); border-radius: 50%; }
-        .pip-s.off { opacity: 0; }
 
         /* ===== MA DEL JUGADOR ===== */
         .zona-jugador {
@@ -310,11 +285,11 @@
             border: 2.5px solid #475569;
             border-radius: 10px;
             width: 58px;
-            height: 100px;
-            display: flex;
-            flex-direction: column;
+            height: 116px;
+            display: block;
+            overflow: hidden;
             cursor: pointer;
-            box-shadow: 3px 3px 0 rgba(0,0,0,.18);
+            box-shadow: 3px 4px 0 rgba(0,0,0,.22);
             transition: transform .15s, box-shadow .15s, border-color .15s, opacity .2s;
             user-select: none;
             flex-shrink: 0;
@@ -347,42 +322,12 @@
             box-shadow: 0 0 0 3px #fed7aa, 3px 3px 0 var(--taronja-fosc);
         }
 
-        .meitat {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2px;
-        }
-        .sep {
-            height: 2.5px;
-            background: #475569;
-            flex-shrink: 0;
-        }
-
-        /* Pips grans (ma del jugador) */
-        .pips-g {
-            display: grid;
-            grid-template: repeat(3,1fr) / repeat(3,1fr);
-            gap: 2.5px;
-            padding: 4px;
-            width: 46px;
-            height: 46px;
-        }
-        .pip-g { background: var(--pip); border-radius: 50%; }
-        .pip-g.off { opacity: 0; }
-
-        /* Pips extrems (panel extrems) */
+        /* Contenidor pips extrems */
         .pips-xl {
-            display: grid;
-            grid-template: repeat(3,1fr) / repeat(3,1fr);
-            gap: 4px;
-            padding: 6px;
-            width: 56px;
-            height: 56px;
+            width: 100%;
+            height: 100%;
+            display: block;
         }
-        .pip-xl { background: var(--pip); border-radius: 50%; }
-        .pip-xl.off { opacity: 0; }
 
         /* Indicadors de can play a quin extrem */
         .fitxa-indicadors {
@@ -581,7 +526,7 @@
     <!-- TAULER (expandible) -->
     <div class="tauler-header">
         <span style="font-size:.7rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.1em">Cadena</span>
-        <button class="tauler-toggle" id="btn-tauler" onclick="toggleTauler()">Veure tauler ▾</button>
+        <button class="tauler-toggle" id="btn-tauler" onclick="toggleTauler()">Amagar tauler ▴</button>
     </div>
     <div id="tauler-contenidor">
         <div id="tauler"><div class="tauler-buit">Tauler buit</div></div>
@@ -643,29 +588,54 @@
     var jocActiu = false;
     var taulerFitxes = [];       // historial de fitxes al tauler
     var fitxaSelec = null;       // fitxa seleccionada {valors, element}
-    var taulerVisible = false;
+    var taulerVisible = true;
 
-    // ===== PIPS =====
-    var PIP_CFG = {
+    // ===== SVG DOMINÓ =====
+    // Posicions dels punts per a cada valor (% de la meitat)
+    var PIP_DOTS = {
         0: [],
-        1: [4],
-        2: [2, 6],
-        3: [2, 4, 6],
-        4: [0, 2, 6, 8],
-        5: [0, 2, 4, 6, 8],
-        6: [0, 2, 3, 5, 6, 8]
+        1: [[50,50]],
+        2: [[72,28],[28,72]],
+        3: [[72,28],[50,50],[28,72]],
+        4: [[28,28],[72,28],[28,72],[72,72]],
+        5: [[28,28],[72,28],[50,50],[28,72],[72,72]],
+        6: [[28,25],[28,50],[28,75],[72,25],[72,50],[72,75]]
     };
 
-    function pipsHTML(n, cls) {
-        var actius = PIP_CFG[n] || [];
-        var set = {};
-        actius.forEach(function(i) { set[i] = true; });
-        var html = '<div class="' + cls + '">';
-        for (var i = 0; i < 9; i++) {
-            var pipCls = cls === 'pips-g' ? 'pip-g' : cls === 'pips-xl' ? 'pip-xl' : 'pip-s';
-            html += '<div class="' + pipCls + (set[i] ? '' : ' off') + '"></div>';
-        }
-        return html + '</div>';
+    function svgMeitat(n, ox, oy, s, r) {
+        return (PIP_DOTS[n] || []).map(function(p) {
+            var cx = (ox + p[0] * s / 100).toFixed(1);
+            var cy = (oy + p[1] * s / 100).toFixed(1);
+            return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#1e293b"/>';
+        }).join('');
+    }
+
+    // Fitxa vertical (mà jugador): CSS posa la vora i el fons, SVG posa la línia i els punts
+    function svgFitxaV(a, b) {
+        var s = 100; var r = 9;
+        return '<svg width="100%" height="100%" viewBox="0 0 '+s+' '+(s*2)+'" xmlns="http://www.w3.org/2000/svg">' +
+            '<line x1="'+(s*0.12)+'" y1="'+s+'" x2="'+(s*0.88)+'" y2="'+s+'" stroke="#cbd5e1" stroke-width="3"/>' +
+            svgMeitat(a, 0, 0, s, r) +
+            svgMeitat(b, 0, s, s, r) +
+            '</svg>';
+    }
+
+    // Fitxa horitzontal (tauler): mateixa idea
+    function svgFitxaH(a, b) {
+        var s = 100; var r = 9;
+        return '<svg width="100%" height="100%" viewBox="0 0 '+(s*2)+' '+s+'" xmlns="http://www.w3.org/2000/svg">' +
+            '<line x1="'+s+'" y1="'+(s*0.12)+'" x2="'+s+'" y2="'+(s*0.88)+'" stroke="#cbd5e1" stroke-width="3"/>' +
+            svgMeitat(a, 0, 0, s, r) +
+            svgMeitat(b, s, 0, s, r) +
+            '</svg>';
+    }
+
+    // Punts sols (per als extrems del tauler)
+    function svgPips(n) {
+        var s = 100; var r = 11;
+        return '<svg width="100%" height="100%" viewBox="0 0 '+s+' '+s+'" xmlns="http://www.w3.org/2000/svg">' +
+            svgMeitat(n, 0, 0, s, r) +
+            '</svg>';
     }
 
     // ===== CREAR FITXES =====
@@ -715,10 +685,7 @@
 
             var el = document.createElement('div');
             el.className = 'fitxa' + (jugable ? ' jugable' : ' no-jugable');
-            el.innerHTML =
-                '<div class="meitat">' + pipsHTML(v[0], 'pips-g') + '</div>' +
-                '<div class="sep"></div>' +
-                '<div class="meitat">' + pipsHTML(v[1], 'pips-g') + '</div>';
+            el.innerHTML = svgFitxaV(v[0], v[1]);
 
             // Indicadors (← →) si és jugable
             if (jugable && extrems[0] !== null) {
@@ -757,8 +724,8 @@
             document.getElementById('centre-info').style.display = '';
             document.getElementById('bloc-esq').style.visibility = '';
             document.getElementById('bloc-dret').style.visibility = '';
-            document.getElementById('pips-esq').innerHTML = pipsHTML(extrems[0], 'pips-xl');
-            document.getElementById('pips-dret').innerHTML = pipsHTML(extrems[1], 'pips-xl');
+            document.getElementById('pips-esq').innerHTML = svgPips(extrems[0]);
+            document.getElementById('pips-dret').innerHTML = svgPips(extrems[1]);
             document.getElementById('val-esq').textContent = extrems[0];
             document.getElementById('val-dret').textContent = extrems[1];
         }
@@ -882,10 +849,7 @@
 
         var el = document.createElement('div');
         el.className = 'fitxa-t nova';
-        el.innerHTML =
-            '<div class="meitat-t">' + pipsHTML(valors[0], 'pips-s') + '</div>' +
-            '<div class="sep-t"></div>' +
-            '<div class="meitat-t">' + pipsHTML(valors[1], 'pips-s') + '</div>';
+        el.innerHTML = svgFitxaH(valors[0], valors[1]);
 
         if (posicio === 'inici') t.insertBefore(el, t.firstChild);
         else t.appendChild(el);
@@ -989,7 +953,7 @@
         taulerVisible = !taulerVisible;
         var cont = document.getElementById('tauler-contenidor');
         var btn = document.getElementById('btn-tauler');
-        cont.classList.toggle('visible', taulerVisible);
+        cont.classList.toggle('amagat', !taulerVisible);
         btn.textContent = taulerVisible ? 'Amagar tauler ▴' : 'Veure tauler ▾';
     }
 
