@@ -13,163 +13,281 @@
             --text: #334155;
             --primari: #2563eb;
             --primari-fosc: #1d4ed8;
-            --header-bg: #1e293b;
+            --s800: #1e293b;
             --blanc: #ffffff;
             --verd: #16a34a;
+            --verd-fosc: #15803d;
             --vermell: #dc2626;
+            --vermell-fosc: #b91c1c;
             --taronja: #ea580c;
+            --taronja-fosc: #c2410c;
             --gris: #94a3b8;
-            --ombra: rgba(0,0,0,0.10);
-            --domino-bg: #ffffff;
-            --domino-bord: #334155;
+            --pip: #1e293b;
         }
 
         html, body {
             font-family: 'Montserrat', sans-serif;
             background: var(--fons);
             color: var(--text);
-            min-height: 100vh;
+            height: 100%;
+            overflow-x: hidden;
         }
 
         /* ===== HEADER ===== */
         header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: var(--header-bg);
-            color: white;
-            padding: 0 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-shrink: 0;
+            width: 100%; background: #1e293b; border-bottom: 1px solid #334155;
+            padding: 10px 16px; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 100; flex-shrink: 0;
         }
-
-        .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0; }
-        .logo-txt { font-size: .9rem; font-weight: 900; color: white; letter-spacing: -.5px; }
+        .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+        .logo-txt { font-size: 1rem; font-weight: 900; color: white; letter-spacing: -0.5px; }
         .logo-txt span { color: #3b82f6; }
-
-        .hdr-title{
-            flex: 1;
-            text-align: center;
-            font-size: clamp(.9rem, 3.5vw, 1.1rem);
-            font-weight: 800;
-            color: white;
-            letter-spacing: -.3px;
+        .hdr-title { font-size: .95rem; font-weight: 700; color: white; letter-spacing: .5px; }
+        #btn-ajuda {
+            font-family: 'Montserrat', sans-serif; font-size: 1.1rem; font-weight: 900;
+            width: 38px; height: 38px; border-radius: 50%; border: 2px solid #3b82f6;
+            background: #2563eb; color: white; cursor: pointer;
+            transition: background .2s, transform .15s; box-shadow: 0 2px 8px rgba(37,99,235,.5);
         }
+        #btn-ajuda:hover { background: #3b82f6; transform: scale(1.1); }
 
-        #btn-ajuda{
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255,255,255,.15);
-            border: 2px solid rgba(255,255,255,.3);
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background .15s;
-            flex-shrink: 0;
-        }
-        #btn-ajuda:hover { background: rgba(255,255,255,.28); }
-
-        /* ===== CONTINGUT PRINCIPAL ===== */
+        /* ===== MAIN ===== */
         main {
-            max-width: 900px;
+            max-width: 640px;
             margin: 0 auto;
-            padding: 20px 16px 40px;
+            padding: 14px 12px 20px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
         /* ===== MISSATGE ===== */
-        #missatges {
+        #missatge {
             background: var(--blanc);
             border-radius: 12px;
-            border-left: 6px solid var(--primari);
-            padding: 14px 18px;
-            font-size: clamp(.9rem, 3vw, 1.1rem);
+            border-left: 5px solid var(--primari);
+            padding: 12px 16px;
+            font-size: .9rem;
             font-weight: 700;
             color: var(--text);
-            box-shadow: 0 2px 8px var(--ombra);
+            box-shadow: 0 2px 6px rgba(0,0,0,.07);
             text-align: center;
+            transition: border-color .3s, color .3s;
         }
-        #missatges.guanya { border-left-color: var(--verd); color: var(--verd); }
-        #missatges.perd   { border-left-color: var(--vermell); color: var(--vermell); }
+        #missatge.guanya { border-left-color: var(--verd); color: var(--verd); }
+        #missatge.perd   { border-left-color: var(--vermell); color: var(--vermell); }
+        #missatge.error  { border-left-color: var(--taronja); color: var(--taronja); }
+        #missatge.maquina { border-left-color: var(--gris); }
 
-        /* ===== INFO MÀQUINA ===== */
+        /* ===== INFO BAR ===== */
         .info-bar {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            background: var(--blanc);
-            border-radius: 12px;
-            padding: 10px 18px;
-            box-shadow: 0 2px 8px var(--ombra);
+            gap: 6px;
         }
-        .info-item {
+        .info-chip {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: .8rem;
+            background: var(--blanc);
+            border-radius: 99px;
+            padding: 6px 14px;
+            font-size: .78rem;
             font-weight: 700;
             color: var(--text);
+            box-shadow: 0 1px 4px rgba(0,0,0,.08);
+            white-space: nowrap;
         }
-        .info-item .num {
-            background: var(--primari);
-            color: white;
-            border-radius: 99px;
-            padding: 2px 10px;
-            font-size: .85rem;
+        .info-chip .xifra {
+            font-size: .95rem;
             font-weight: 900;
+            color: var(--primari);
         }
-        .info-item .num.taronja { background: var(--taronja); }
+        .info-chip .xifra.taronja { color: var(--taronja); }
 
-        /* ===== TAULER ===== */
-        #tauler-contenidor {
-            background: #e2e8f0;
-            border: 3px solid #cbd5e1;
+        /* ===== PANEL EXTREMS ===== */
+        .extrems-panel {
+            background: var(--s800);
             border-radius: 16px;
-            min-height: 110px;
-            display: flex;
-            align-items: center;
-            overflow-x: auto;
             padding: 14px 16px;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,.08);
-            scrollbar-width: thin;
-            scrollbar-color: #94a3b8 transparent;
-        }
-        #tauler {
             display: flex;
-            gap: 6px;
             align-items: center;
-            min-width: min-content;
+            justify-content: space-between;
+            gap: 8px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.18);
         }
-        .tauler-buit {
-            color: #94a3b8;
-            font-size: .85rem;
-            font-weight: 600;
-            width: 100%;
-            text-align: center;
+        .extrem-bloc {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
         }
-
-        /* ===== MÀ DEL JUGADOR ===== */
-        .zona-jugador {
-            background: var(--blanc);
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 2px 8px var(--ombra);
-        }
-        .zona-etiqueta {
-            font-size: .7rem;
+        .extrem-lab {
+            font-size: .62rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: .1em;
+            color: #94a3b8;
+        }
+        .extrem-caixa {
+            width: 62px;
+            height: 62px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2.5px solid #334155;
+        }
+        .extrem-caixa.esq { border-color: #dc2626; box-shadow: 0 2px 12px rgba(220,38,38,.4), inset 0 1px 0 rgba(255,255,255,.5); }
+        .extrem-caixa.dret { border-color: #2563eb; box-shadow: 0 2px 12px rgba(37,99,235,.4), inset 0 1px 0 rgba(255,255,255,.5); }
+        .extrem-val {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: white;
+        }
+
+        .extrems-centre {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .extrems-n {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+        }
+        .extrems-lab2 {
+            font-size: .65rem;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            text-align: center;
+        }
+        .extrems-fletxes {
+            font-size: .7rem;
+            color: #475569;
+            letter-spacing: 2px;
+        }
+
+        .extrems-buit {
+            text-align: center;
+            color: #64748b;
+            font-size: .8rem;
+            font-weight: 700;
+            padding: 4px 0;
+            flex: 1;
+        }
+
+        /* ===== TAULER (expandible) ===== */
+        .tauler-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2px;
+        }
+        .tauler-toggle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: .72rem;
+            font-weight: 700;
             color: var(--gris);
-            margin-bottom: 14px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: color .15s, background .15s;
+        }
+        .tauler-toggle:hover { color: var(--text); background: #e2e8f0; }
+
+        #tauler-contenidor {
+            background: #dde4ef;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            min-height: 56px;
+            display: none;
+            padding: 10px 12px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,.08);
+        }
+        #tauler-contenidor.visible { display: block; }
+
+        #tauler {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            align-items: center;
+        }
+        .tauler-buit {
+            color: #94a3b8;
+            font-size: .8rem;
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
+            padding: 8px 0;
+        }
+
+        /* Fitxa al tauler (petita, horitzontal) */
+        .fitxa-t {
+            background: white;
+            border: 2px solid #475569;
+            border-radius: 5px;
+            width: 52px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            box-shadow: 1px 1px 0 rgba(0,0,0,.15);
+        }
+        .fitxa-t.nova {
+            border-color: var(--verd);
+            box-shadow: 0 0 6px rgba(22,163,74,.5);
+        }
+        .meitat-t {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        .sep-t {
+            width: 2px;
+            height: 100%;
+            background: #475569;
+            flex-shrink: 0;
+        }
+
+        /* Pips petites (per tauler) */
+        .pips-s {
+            display: grid;
+            grid-template: repeat(3,1fr) / repeat(3,1fr);
+            gap: 1.5px;
+            padding: 3px;
+            width: 22px;
+            height: 22px;
+        }
+        .pip-s { background: var(--pip); border-radius: 50%; }
+        .pip-s.off { opacity: 0; }
+
+        /* ===== MA DEL JUGADOR ===== */
+        .zona-jugador {
+            background: var(--blanc);
+            border-radius: 16px;
+            padding: 14px 14px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.07);
+        }
+        .zona-etiqueta {
+            font-size: .68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--gris);
+            margin-bottom: 12px;
             text-align: center;
         }
         #meves-fitxes {
@@ -178,63 +296,125 @@
             justify-content: center;
             gap: 10px;
         }
+        #ma-buida {
+            color: var(--gris);
+            font-size: .85rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 8px 0;
+        }
 
-        /* ===== FITXA ===== */
+        /* ===== FITXA GRAN (ma del jugador) ===== */
         .fitxa {
-            background-color: var(--domino-bg);
-            border: 2.5px solid var(--domino-bord);
-            border-radius: 8px;
-            width: 54px;
-            height: 92px;
+            background: white;
+            border: 2.5px solid #475569;
+            border-radius: 10px;
+            width: 58px;
+            height: 100px;
             display: flex;
             flex-direction: column;
             cursor: pointer;
             box-shadow: 3px 3px 0 rgba(0,0,0,.18);
-            transition: transform .15s, box-shadow .15s;
+            transition: transform .15s, box-shadow .15s, border-color .15s, opacity .2s;
             user-select: none;
             flex-shrink: 0;
+            position: relative;
+            animation: popIn .2s ease both;
         }
-        .fitxa:hover {
-            transform: translateY(-8px);
-            box-shadow: 3px 10px 0 rgba(0,0,0,.15);
+        @keyframes popIn { from { opacity:0; transform:scale(.8) translateY(8px); } to { opacity:1; transform:scale(1) translateY(0); } }
+
+        .fitxa.jugable {
+            border-color: var(--verd);
+            box-shadow: 3px 3px 0 rgba(22,163,74,.35), 0 0 10px rgba(22,163,74,.25);
+            cursor: pointer;
         }
-        .fitxa.horitzontal {
-            width: 92px;
-            height: 54px;
-            flex-direction: row;
+        .fitxa.jugable:hover {
+            transform: translateY(-10px);
+            box-shadow: 3px 10px 0 rgba(22,163,74,.3), 0 0 16px rgba(22,163,74,.3);
         }
+        .fitxa.no-jugable {
+            opacity: 0.35;
+            filter: grayscale(.5);
+            cursor: not-allowed;
+        }
+        .fitxa.seleccionada {
+            border-color: var(--primari);
+            box-shadow: 0 0 0 3px #bfdbfe, 3px 3px 0 var(--primari-fosc);
+            transform: translateY(-14px);
+        }
+        .fitxa.maquina-juga {
+            border-color: var(--taronja);
+            box-shadow: 0 0 0 3px #fed7aa, 3px 3px 0 var(--taronja-fosc);
+        }
+
         .meitat {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
-            font-weight: 900;
-            font-family: 'Montserrat', sans-serif;
+            padding: 2px;
         }
-        .separador {
-            background-color: var(--domino-bord);
+        .sep {
             height: 2.5px;
-            width: 100%;
+            background: #475569;
             flex-shrink: 0;
         }
-        .separador-v {
-            background-color: var(--domino-bord);
-            width: 2.5px;
-            height: 100%;
-            flex-shrink: 0;
+
+        /* Pips grans (ma del jugador) */
+        .pips-g {
+            display: grid;
+            grid-template: repeat(3,1fr) / repeat(3,1fr);
+            gap: 2.5px;
+            padding: 4px;
+            width: 46px;
+            height: 46px;
         }
+        .pip-g { background: var(--pip); border-radius: 50%; }
+        .pip-g.off { opacity: 0; }
+
+        /* Pips extrems (panel extrems) */
+        .pips-xl {
+            display: grid;
+            grid-template: repeat(3,1fr) / repeat(3,1fr);
+            gap: 4px;
+            padding: 6px;
+            width: 56px;
+            height: 56px;
+        }
+        .pip-xl { background: var(--pip); border-radius: 50%; }
+        .pip-xl.off { opacity: 0; }
+
+        /* Indicadors de can play a quin extrem */
+        .fitxa-indicadors {
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 3px;
+            white-space: nowrap;
+        }
+        .fitxa-ind {
+            font-size: .55rem;
+            font-weight: 900;
+            padding: 2px 5px;
+            border-radius: 4px;
+            color: white;
+            line-height: 1.3;
+        }
+        .fitxa-ind.esq { background: var(--vermell); }
+        .fitxa-ind.dret { background: var(--primari); }
 
         /* ===== CONTROLS ===== */
         .controls {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
         }
         .boto {
-            padding: 14px 28px;
-            font-size: .95rem;
+            padding: 13px 22px;
+            font-size: .88rem;
             font-weight: 800;
             font-family: 'Montserrat', sans-serif;
             color: white;
@@ -243,27 +423,106 @@
             border-radius: 12px;
             cursor: pointer;
             box-shadow: 0 4px 0 var(--primari-fosc);
-            transition: transform .1s, box-shadow .1s;
+            transition: transform .1s, box-shadow .1s, opacity .2s;
             letter-spacing: -.2px;
         }
-        .boto:active {
-            box-shadow: 0 1px 0 var(--primari-fosc);
-            transform: translateY(3px);
-        }
-        .boto-passar {
-            background: var(--taronja);
-            box-shadow: 0 4px 0 #c2410c;
-        }
-        .boto-passar:active { box-shadow: 0 1px 0 #c2410c; }
-        .boto-reiniciar {
-            background: #64748b;
-            box-shadow: 0 4px 0 #475569;
-        }
+        .boto:active { box-shadow: 0 1px 0 var(--primari-fosc); transform: translateY(3px); }
+        .boto:disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
+
+        .boto-esq  { background: var(--vermell);  box-shadow: 0 4px 0 var(--vermell-fosc); }
+        .boto-esq:active  { box-shadow: 0 1px 0 var(--vermell-fosc); }
+        .boto-passar { background: var(--taronja); box-shadow: 0 4px 0 var(--taronja-fosc); }
+        .boto-passar:active { box-shadow: 0 1px 0 var(--taronja-fosc); }
+        .boto-cancel { background: #64748b; box-shadow: 0 4px 0 #475569; }
+        .boto-cancel:active { box-shadow: 0 1px 0 #475569; }
+        .boto-reiniciar { background: #64748b; box-shadow: 0 4px 0 #475569; }
         .boto-reiniciar:active { box-shadow: 0 1px 0 #475569; }
 
-        /* ===== ANIMATIONS ===== */
-        @keyframes popIn { from { opacity:0; transform:scale(.85); } to { opacity:1; transform:scale(1); } }
-        .fitxa { animation: popIn .15s ease both; }
+        /* ===== MODAL AJUDA ===== */
+        .modal-fons {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.55);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-fons.obert { display: flex; }
+        .modal-caixa {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 360px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,.3);
+        }
+        .modal-titol {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--s800);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .modal-regles {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .regla {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            font-size: .85rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.4;
+        }
+        .regla-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: -1px;
+        }
+        .modal-llegenda {
+            background: var(--fons);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .llegenda-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .8rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .llegenda-mostra {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .llegenda-mostra.verda { background: var(--verd); }
+        .llegenda-mostra.grisa { background: var(--gris); opacity: .5; }
+        .llegenda-mostra.blava { background: var(--primari); }
+        .modal-btn-tancar {
+            width: 100%;
+            padding: 14px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: .95rem;
+            font-weight: 800;
+            background: var(--s800);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -278,248 +537,74 @@
         </svg>
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
-    <span class="hdr-title">🃣 Dominó</span>
-    <button id="btn-ajuda" onclick="mostrarAjuda()" title="Com jugar">?</button>
+    <span class="hdr-title">🁣 Dominó</span>
+    <button id="btn-ajuda" onclick="obrirAjuda()" title="Com jugar">?</button>
 </header>
 
 <main>
-    <div id="missatges">Benvingut! Tria una fitxa per començar.</div>
+    <!-- MISSATGE ESTAT -->
+    <div id="missatge">El teu torn. Tria una fitxa per començar.</div>
 
+    <!-- INFO BAR -->
     <div class="info-bar">
-        <div class="info-item">
-            Màquina: <span id="num-maquina" class="num taronja">7</span>
+        <div class="info-chip">🤖 Màquina: <span class="xifra taronja" id="num-maquina">7</span></div>
+        <div class="info-chip">🀱 Tauler: <span class="xifra" id="num-tauler">0</span></div>
+        <div class="info-chip">🙋 Tu: <span class="xifra" id="num-jugador">7</span></div>
+    </div>
+
+    <!-- PANEL EXTREMS -->
+    <div class="extrems-panel" id="extrems-panel">
+        <div class="extrem-bloc" id="bloc-esq">
+            <div class="extrem-lab">← Esquerra</div>
+            <div class="extrem-caixa esq" id="caixa-esq">
+                <div class="pips-xl" id="pips-esq"></div>
+            </div>
+            <div class="extrem-val" id="val-esq">—</div>
         </div>
-        <div class="info-item">
-            Tu: <span id="num-jugador" class="num">7</span>
+        <div class="extrems-centre" id="centre-buit">
+            <div class="extrems-buit">Tauler buit — juga la primera fitxa</div>
+        </div>
+        <div class="extrems-centre" id="centre-info" style="display:none">
+            <div class="extrems-fletxes">← ···· →</div>
+            <div class="extrems-n" id="num-tauler2">0</div>
+            <div class="extrems-lab2">fitxes al tauler</div>
+        </div>
+        <div class="extrem-bloc" id="bloc-dret" style="visibility:hidden">
+            <div class="extrem-lab">Dreta →</div>
+            <div class="extrem-caixa dret" id="caixa-dret">
+                <div class="pips-xl" id="pips-dret"></div>
+            </div>
+            <div class="extrem-val" id="val-dret">—</div>
         </div>
     </div>
 
+    <!-- TAULER (expandible) -->
+    <div class="tauler-header">
+        <span style="font-size:.7rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.1em">Cadena</span>
+        <button class="tauler-toggle" id="btn-tauler" onclick="toggleTauler()">Veure tauler ▾</button>
+    </div>
     <div id="tauler-contenidor">
-        <div id="tauler">
-            <div class="tauler-buit">Tauler buit — juga la primera fitxa</div>
-        </div>
+        <div id="tauler"><div class="tauler-buit">Tauler buit</div></div>
     </div>
 
+    <!-- MA DEL JUGADOR -->
     <div class="zona-jugador">
         <div class="zona-etiqueta">Les teves fitxes</div>
         <div id="meves-fitxes"></div>
     </div>
 
-    <div class="controls">
+    <!-- CONTROLS -->
+    <div class="controls" id="controls">
         <button class="boto boto-reiniciar" onclick="reiniciarJoc()">🔄 Nova Partida</button>
-        <button id="btn-passar" class="boto boto-passar" onclick="passarITornMaquina()" style="display:none;">⏭ Passo torn</button>
+        <button id="btn-passar" class="boto boto-passar" onclick="accioPasarTorn()" style="display:none">⏭ Passo torn</button>
+    </div>
+    <div class="controls" id="controls-jugada" style="display:none; margin-top:-4px;">
+        <button id="btn-esq"  class="boto boto-esq"    onclick="jugarSeleccionada(\'esq\')">← Esquerra</button>
+        <button id="btn-dret" class="boto"             onclick="jugarSeleccionada(\'dret\')">Dreta →</button>
+        <button class="boto boto-cancel"               onclick="deseleccionarFitxa()">✕ Cancel·la</button>
     </div>
 </main>
 
-<script>
-    var totesFitxes = [];
-    var maquina = [];
-    var jugador = [];
-    var extrems = [null, null];
-    var jocActiu = false;
-
-    function crearFitxes() {
-        totesFitxes = [];
-        for (var i = 0; i <= 6; i++) {
-            for (var j = i; j <= 6; j++) {
-                totesFitxes.push([i, j]);
-            }
-        }
-    }
-
-    function barrejar(array) {
-        for (var i = array.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var tmp = array[i]; array[i] = array[j]; array[j] = tmp;
-        }
-    }
-
-    function crearVisualFitxa(valors, onclickFn) {
-        var f = document.createElement('div');
-        f.className = 'fitxa';
-        f.innerHTML =
-            '<div class="meitat">' + valors[0] + '</div>' +
-            '<div class="separador"></div>' +
-            '<div class="meitat">' + valors[1] + '</div>';
-        if (onclickFn) f.onclick = function() { onclickFn(valors); };
-        return f;
-    }
-
-    function crearVisualTauler(valors) {
-        var f = document.createElement('div');
-        f.className = 'fitxa horitzontal';
-        f.innerHTML =
-            '<div class="meitat">' + valors[0] + '</div>' +
-            '<div class="separador-v"></div>' +
-            '<div class="meitat">' + valors[1] + '</div>';
-        return f;
-    }
-
-    function actualitzarInterficie() {
-        var cont = document.getElementById('meves-fitxes');
-        cont.innerHTML = '';
-        jugador.forEach(function(v) {
-            cont.appendChild(crearVisualFitxa(v, jugarJugador));
-        });
-        document.getElementById('num-maquina').innerText = maquina.length;
-        document.getElementById('num-jugador').innerText = jugador.length;
-
-        var btnP = document.getElementById('btn-passar');
-        btnP.style.display = (jocActiu && !potJugar(jugador)) ? 'block' : 'none';
-    }
-
-    function potJugar(ma) {
-        if (extrems[0] === null) return true;
-        return ma.some(function(f) { return f[0] === extrems[0] || f[1] === extrems[0] || f[0] === extrems[1] || f[1] === extrems[1]; });
-    }
-
-    function afegirAlTauler(valors, posicio) {
-        var t = document.getElementById('tauler');
-        // Eliminar missatge buit si existeix
-        var buit = t.querySelector('.tauler-buit');
-        if (buit) buit.remove();
-        var visual = crearVisualTauler(valors);
-        if (posicio === 'inici') t.insertBefore(visual, t.firstChild);
-        else t.appendChild(visual);
-        // Fer scroll al final
-        var contenidor = document.getElementById('tauler-contenidor');
-        contenidor.scrollLeft = (posicio === 'inici') ? 0 : contenidor.scrollWidth;
-    }
-
-    function jugarJugador(valors) {
-        if (!jocActiu) return;
-        var f = [valors[0], valors[1]];
-        var exit = false;
-
-        if (extrems[0] === null) {
-            // Primera fitxa del joc
-            extrems = [f[0], f[1]];
-            afegirAlTauler(f, 'final');
-            exit = true;
-        } else if (f[0] === extrems[1]) {
-            extrems[1] = f[1];
-            afegirAlTauler(f, 'final');
-            exit = true;
-        } else if (f[1] === extrems[1]) {
-            extrems[1] = f[0];
-            afegirAlTauler([f[1], f[0]], 'final');
-            exit = true;
-        } else if (f[1] === extrems[0]) {
-            extrems[0] = f[0];
-            afegirAlTauler(f, 'inici');
-            exit = true;
-        } else if (f[0] === extrems[0]) {
-            extrems[0] = f[1];
-            afegirAlTauler([f[1], f[0]], 'inici');
-            exit = true;
-        }
-
-        if (exit) {
-            jugador = jugador.filter(function(x) { return !(x[0] === valors[0] && x[1] === valors[1]); });
-            setMissatge("Molt bé! Ara li toca a la màquina...", '');
-            checkFinal();
-            if (jocActiu) {
-                actualitzarInterficie();
-                setTimeout(tornMaquina, 900);
-            } else {
-                actualitzarInterficie();
-            }
-        } else {
-            alert("Aquesta fitxa no encaixa ara. Prova-la a l'altre extrem o tria'n una altra.");
-        }
-    }
-
-    function tornMaquina() {
-        if (!jocActiu) return;
-        var index = -1;
-        for (var i = 0; i < maquina.length; i++) {
-            var f = maquina[i];
-            if (f[0] === extrems[0] || f[1] === extrems[0] || f[0] === extrems[1] || f[1] === extrems[1]) {
-                index = i;
-                break;
-            }
-        }
-
-        if (index !== -1) {
-            var f = [maquina[index][0], maquina[index][1]];
-            if (f[0] === extrems[1]) {
-                extrems[1] = f[1];
-                afegirAlTauler(f, 'final');
-            } else if (f[1] === extrems[1]) {
-                extrems[1] = f[0];
-                afegirAlTauler([f[1], f[0]], 'final');
-            } else if (f[1] === extrems[0]) {
-                extrems[0] = f[0];
-                afegirAlTauler(f, 'inici');
-            } else {
-                extrems[0] = f[1];
-                afegirAlTauler([f[1], f[0]], 'inici');
-            }
-            maquina.splice(index, 1);
-            setMissatge("La màquina ha mogut. El teu torn!", '');
-        } else {
-            setMissatge("La màquina no pot moure i passa torn. Et toca!", '');
-        }
-        checkFinal();
-        actualitzarInterficie();
-    }
-
-    function passarITornMaquina() {
-        setMissatge("Has passat torn. Juga la màquina...", '');
-        actualitzarInterficie();
-        setTimeout(tornMaquina, 700);
-    }
-
-    function checkFinal() {
-        if (jugador.length === 0) {
-            setMissatge("🎉 FELICITATS! Has guanyat la partida!", 'guanya');
-            jocActiu = false;
-        } else if (maquina.length === 0) {
-            setMissatge("Ha guanyat la màquina. Torna-ho a provar!", 'perd');
-            jocActiu = false;
-        } else if (!potJugar(jugador) && !potJugar(maquina)) {
-            var ptsJ = jugador.reduce(function(s, f) { return s + f[0] + f[1]; }, 0);
-            var ptsM = maquina.reduce(function(s, f) { return s + f[0] + f[1]; }, 0);
-            if (ptsJ < ptsM) setMissatge("Joc bloquejat! Guanyes tu (menys punts). 🎉", 'guanya');
-            else if (ptsM < ptsJ) setMissatge("Joc bloquejat! Guanya la màquina (menys punts).", 'perd');
-            else setMissatge("Joc bloquejat! Empat!", '');
-            jocActiu = false;
-        }
-    }
-
-    function setMissatge(text, cls) {
-        var el = document.getElementById('missatges');
-        el.innerText = text;
-        el.className = cls;
-    }
-
-    function reiniciarJoc() {
-        crearFitxes();
-        barrejar(totesFitxes);
-        jugador = totesFitxes.slice(0, 7).map(function(f) { return [f[0], f[1]]; });
-        maquina = totesFitxes.slice(7, 14).map(function(f) { return [f[0], f[1]]; });
-        extrems = [null, null];
-        var t = document.getElementById('tauler');
-        t.innerHTML = '<div class="tauler-buit">Tauler buit — juga la primera fitxa</div>';
-        setMissatge("El teu torn. Tria una fitxa per començar.", '');
-        jocActiu = true;
-        actualitzarInterficie();
-    }
-
-    function mostrarAjuda() {
-        alert(
-            "🁣 COM JUGAR AL DOMINÓ\n\n" +
-            "• Clica una fitxa per jugar-la al tauler.\n" +
-            "• La fitxa ha de coincidir amb un dels extrems del tauler.\n" +
-            "• Si no pots jugar cap fitxa, prem 'Passo torn'.\n" +
-            "• Guanya qui primer es quedi sense fitxes.\n" +
-            "• Si el joc queda bloquejat, guanya qui tingui menys punts."
-        );
-    }
-
-    // Iniciar al carregar
-    reiniciarJoc();
-</script>
 <footer style="font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:16px;flex-shrink:0;border-top:1px solid #1e2d45;">
     <a href="https://gobo26.github.io/gobo26/" target="_self"
        style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:#94a3b8;text-decoration:none;"
@@ -528,5 +613,398 @@
         Una aplicació de Gobo26
     </a>
 </footer>
+
+<!-- MODAL AJUDA -->
+<div class="modal-fons" id="modal-ajuda" onclick="tancarAjuda(event)">
+    <div class="modal-caixa">
+        <div class="modal-titol">🁣 Com jugar al Dominó</div>
+        <div class="modal-regles">
+            <div class="regla"><span class="regla-icon">🃏</span><span>Tens 7 fitxes. La màquina també en té 7.</span></div>
+            <div class="regla"><span class="regla-icon">✅</span><span>Clica una <b>fitxa verda</b> per jugar-la. Si encaixa als dos extrems, tria on posar-la.</span></div>
+            <div class="regla"><span class="regla-icon">🔴🔵</span><span>El quadre <b style="color:#dc2626">vermell</b> mostra el valor de l'esquerra. El <b style="color:#2563eb">blau</b>, el de la dreta.</span></div>
+            <div class="regla"><span class="regla-icon">⏭</span><span>Si cap fitxa encaixa, prem <b>Passo torn</b>.</span></div>
+            <div class="regla"><span class="regla-icon">🏆</span><span>Guanya qui primer es quedi sense fitxes. Si el joc es bloqueja, guanya qui té menys punts a la mà.</span></div>
+        </div>
+        <div class="modal-llegenda">
+            <div class="llegenda-item"><div class="llegenda-mostra verda"></div>Fitxa que pots jugar</div>
+            <div class="llegenda-item"><div class="llegenda-mostra grisa"></div>Fitxa que no pots jugar ara</div>
+            <div class="llegenda-item"><div class="llegenda-mostra blava"></div>Fitxa seleccionada — tria l'extrem</div>
+        </div>
+        <button class="modal-btn-tancar" onclick="tancarAjuda()">Entès!</button>
+    </div>
+</div>
+
+<script>
+    // ===== ESTAT DEL JOC =====
+    var totesFitxes = [];
+    var maquina = [];
+    var jugador = [];
+    var extrems = [null, null];  // [esquerra, dreta]
+    var jocActiu = false;
+    var taulerFitxes = [];       // historial de fitxes al tauler
+    var fitxaSelec = null;       // fitxa seleccionada {valors, element}
+    var taulerVisible = false;
+
+    // ===== PIPS =====
+    var PIP_CFG = {
+        0: [],
+        1: [4],
+        2: [2, 6],
+        3: [2, 4, 6],
+        4: [0, 2, 6, 8],
+        5: [0, 2, 4, 6, 8],
+        6: [0, 2, 3, 5, 6, 8]
+    };
+
+    function pipsHTML(n, cls) {
+        var actius = PIP_CFG[n] || [];
+        var set = {};
+        actius.forEach(function(i) { set[i] = true; });
+        var html = '<div class="' + cls + '">';
+        for (var i = 0; i < 9; i++) {
+            var pipCls = cls === 'pips-g' ? 'pip-g' : cls === 'pips-xl' ? 'pip-xl' : 'pip-s';
+            html += '<div class="' + pipCls + (set[i] ? '' : ' off') + '"></div>';
+        }
+        return html + '</div>';
+    }
+
+    // ===== CREAR FITXES =====
+    function crearFitxes() {
+        totesFitxes = [];
+        for (var i = 0; i <= 6; i++)
+            for (var j = i; j <= 6; j++)
+                totesFitxes.push([i, j]);
+    }
+
+    function barrejar(arr) {
+        for (var i = arr.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+        }
+    }
+
+    // ===== LÒGICA =====
+    function potJugarA(f, costat) {
+        if (extrems[0] === null) return true;
+        var ext = costat === 'esq' ? extrems[0] : extrems[1];
+        return f[0] === ext || f[1] === ext;
+    }
+
+    function potJugarAlgun(ma) {
+        if (extrems[0] === null) return ma.length > 0;
+        return ma.some(function(f) {
+            return f[0] === extrems[0] || f[1] === extrems[0] ||
+                   f[0] === extrems[1] || f[1] === extrems[1];
+        });
+    }
+
+    // ===== INTERFÍCIE =====
+    function actualitzarMa() {
+        var cont = document.getElementById('meves-fitxes');
+        cont.innerHTML = '';
+
+        if (jugador.length === 0) {
+            cont.innerHTML = '<div id="ma-buida">Sense fitxes!</div>';
+            return;
+        }
+
+        jugador.forEach(function(v) {
+            var pEsq = potJugarA(v, 'esq');
+            var pDret = potJugarA(v, 'dret');
+            var jugable = pEsq || pDret;
+
+            var el = document.createElement('div');
+            el.className = 'fitxa' + (jugable ? ' jugable' : ' no-jugable');
+            el.innerHTML =
+                '<div class="meitat">' + pipsHTML(v[0], 'pips-g') + '</div>' +
+                '<div class="sep"></div>' +
+                '<div class="meitat">' + pipsHTML(v[1], 'pips-g') + '</div>';
+
+            // Indicadors (← →) si és jugable
+            if (jugable && extrems[0] !== null) {
+                var indHTML = '<div class="fitxa-indicadors">';
+                if (pEsq) indHTML += '<div class="fitxa-ind esq">←</div>';
+                if (pDret) indHTML += '<div class="fitxa-ind dret">→</div>';
+                indHTML += '</div>';
+                el.innerHTML += indHTML;
+            }
+
+            if (jugable) {
+                el.onclick = (function(vals, elem) {
+                    return function() { seleccionarFitxa(vals, elem); };
+                })(v, el);
+            }
+
+            cont.appendChild(el);
+        });
+
+        document.getElementById('num-jugador').textContent = jugador.length;
+        document.getElementById('num-maquina').textContent = maquina.length;
+    }
+
+    function actualitzarExtrems() {
+        var n = taulerFitxes.length;
+        document.getElementById('num-tauler').textContent = n;
+        document.getElementById('num-tauler2').textContent = n;
+
+        if (extrems[0] === null) {
+            document.getElementById('centre-buit').style.display = '';
+            document.getElementById('centre-info').style.display = 'none';
+            document.getElementById('bloc-esq').style.visibility = 'hidden';
+            document.getElementById('bloc-dret').style.visibility = 'hidden';
+        } else {
+            document.getElementById('centre-buit').style.display = 'none';
+            document.getElementById('centre-info').style.display = '';
+            document.getElementById('bloc-esq').style.visibility = '';
+            document.getElementById('bloc-dret').style.visibility = '';
+            document.getElementById('pips-esq').innerHTML = pipsHTML(extrems[0], 'pips-xl');
+            document.getElementById('pips-dret').innerHTML = pipsHTML(extrems[1], 'pips-xl');
+            document.getElementById('val-esq').textContent = extrems[0];
+            document.getElementById('val-dret').textContent = extrems[1];
+        }
+    }
+
+    function actualitzarControls() {
+        var btnPassar = document.getElementById('btn-passar');
+        btnPassar.style.display = (jocActiu && !potJugarAlgun(jugador)) ? 'inline-flex' : 'none';
+    }
+
+    function actualitzarTot() {
+        actualitzarMa();
+        actualitzarExtrems();
+        actualitzarControls();
+    }
+
+    // ===== SELECCIÓ DE FITXA =====
+    function seleccionarFitxa(valors, element) {
+        if (!jocActiu) return;
+
+        var pEsq = potJugarA(valors, 'esq');
+        var pDret = potJugarA(valors, 'dret');
+
+        // Primera jugada: qualsevol fitxa va bé, no cal triar costat
+        if (extrems[0] === null) {
+            jugarFitxaAlTauler(valors, 'final');
+            return;
+        }
+
+        // Si ja estava seleccionada: deseleccionar
+        if (fitxaSelec && fitxaSelec.element === element) {
+            deseleccionarFitxa();
+            return;
+        }
+
+        // Deseleccionar anterior
+        deseleccionarFitxa();
+
+        // Fitxa encaixa a un sol costat: jugar directament
+        if (pEsq && !pDret) { jugarFitxaAlTauler(valors, 'inici'); return; }
+        if (!pEsq && pDret) { jugarFitxaAlTauler(valors, 'final'); return; }
+
+        // Encaixa als dos costats: seleccionar i mostrar botons
+        fitxaSelec = { valors: valors, element: element };
+        element.classList.remove('jugable');
+        element.classList.add('seleccionada');
+
+        document.getElementById('controls').style.display = 'none';
+        document.getElementById('controls-jugada').style.display = 'flex';
+        document.getElementById('btn-esq').disabled = !pEsq;
+        document.getElementById('btn-dret').disabled = !pDret;
+    }
+
+    function deseleccionarFitxa() {
+        if (fitxaSelec) {
+            fitxaSelec.element.classList.remove('seleccionada');
+            fitxaSelec.element.classList.add('jugable');
+            fitxaSelec = null;
+        }
+        document.getElementById('controls').style.display = 'flex';
+        document.getElementById('controls-jugada').style.display = 'none';
+    }
+
+    function jugarSeleccionada(costat) {
+        if (!fitxaSelec) return;
+        var valors = fitxaSelec.valors;
+        deseleccionarFitxa();
+        jugarFitxaAlTauler(valors, costat === 'esq' ? 'inici' : 'final');
+    }
+
+    // ===== JUGAR FITXA =====
+    function jugarFitxaAlTauler(valors, posicioPreferent) {
+        var f = [valors[0], valors[1]];
+        var posicio;
+
+        if (extrems[0] === null) {
+            // Primera fitxa
+            extrems = [f[0], f[1]];
+            posicio = 'final';
+            afegirFitxaVisual(f, posicio);
+        } else if (posicioPreferent === 'final') {
+            if (f[0] === extrems[1]) {
+                extrems[1] = f[1]; posicio = 'final';
+            } else {
+                extrems[1] = f[0]; f = [f[1], f[0]]; posicio = 'final';
+            }
+            afegirFitxaVisual(f, posicio);
+        } else {
+            if (f[1] === extrems[0]) {
+                extrems[0] = f[0]; posicio = 'inici';
+            } else {
+                extrems[0] = f[1]; f = [f[1], f[0]]; posicio = 'inici';
+            }
+            afegirFitxaVisual(f, posicio);
+        }
+
+        // Eliminar de la mà
+        jugador = jugador.filter(function(x) {
+            return !(x[0] === valors[0] && x[1] === valors[1]);
+        });
+
+        setMissatge('Molt bé! Ara li toca a la màquina…', '');
+        checkFinal();
+        if (jocActiu) {
+            actualitzarTot();
+            setTimeout(tornMaquina, 950);
+        } else {
+            actualitzarTot();
+        }
+    }
+
+    function afegirFitxaVisual(valors, posicio) {
+        taulerFitxes.push(valors.slice());
+
+        var t = document.getElementById('tauler');
+        var buit = t.querySelector('.tauler-buit');
+        if (buit) buit.remove();
+
+        // Eliminar destacat anterior
+        t.querySelectorAll('.fitxa-t.nova').forEach(function(el) { el.classList.remove('nova'); });
+
+        var el = document.createElement('div');
+        el.className = 'fitxa-t nova';
+        el.innerHTML =
+            '<div class="meitat-t">' + pipsHTML(valors[0], 'pips-s') + '</div>' +
+            '<div class="sep-t"></div>' +
+            '<div class="meitat-t">' + pipsHTML(valors[1], 'pips-s') + '</div>';
+
+        if (posicio === 'inici') t.insertBefore(el, t.firstChild);
+        else t.appendChild(el);
+
+        // Scroll al nou element
+        var cont = document.getElementById('tauler-contenidor');
+        if (posicio === 'inici') cont.scrollLeft = 0;
+        else cont.scrollLeft = cont.scrollWidth;
+    }
+
+    // ===== TORN MÀQUINA =====
+    function tornMaquina() {
+        if (!jocActiu) return;
+
+        var index = -1;
+        var posicio = 'final';
+        var fitxaJugada = null;
+
+        for (var i = 0; i < maquina.length; i++) {
+            var f = maquina[i];
+            if (f[0] === extrems[1] || f[1] === extrems[1]) {
+                index = i; posicio = 'final'; break;
+            }
+            if (f[0] === extrems[0] || f[1] === extrems[0]) {
+                index = i; posicio = 'inici'; break;
+            }
+        }
+
+        if (index !== -1) {
+            var f = maquina[index].slice();
+            fitxaJugada = f.slice();
+            if (posicio === 'final') {
+                if (f[0] === extrems[1]) { extrems[1] = f[1]; }
+                else { extrems[1] = f[0]; f = [f[1], f[0]]; }
+            } else {
+                if (f[1] === extrems[0]) { extrems[0] = f[0]; }
+                else { extrems[0] = f[1]; f = [f[1], f[0]]; }
+            }
+            afegirFitxaVisual(f, posicio);
+            maquina.splice(index, 1);
+            setMissatge('La màquina ha jugat el [' + fitxaJugada[0] + '|' + fitxaJugada[1] + ']. El teu torn!', 'maquina');
+        } else {
+            setMissatge('La màquina no pot moure i passa torn. Et toca!', 'maquina');
+        }
+
+        checkFinal();
+        actualitzarTot();
+    }
+
+    function accioPasarTorn() {
+        deseleccionarFitxa();
+        setMissatge('Has passat torn. Juga la màquina…', '');
+        actualitzarTot();
+        setTimeout(tornMaquina, 800);
+    }
+
+    // ===== FI DE JOC =====
+    function checkFinal() {
+        if (jugador.length === 0) {
+            setMissatge('🎉 FELICITATS! Has guanyat la partida!', 'guanya');
+            jocActiu = false;
+        } else if (maquina.length === 0) {
+            setMissatge('Ha guanyat la màquina. Torna-ho a provar!', 'perd');
+            jocActiu = false;
+        } else if (!potJugarAlgun(jugador) && !potJugarAlgun(maquina)) {
+            var pJ = jugador.reduce(function(s, f) { return s + f[0] + f[1]; }, 0);
+            var pM = maquina.reduce(function(s, f) { return s + f[0] + f[1]; }, 0);
+            if (pJ < pM) setMissatge('Joc bloquejat! Guanyes tu (' + pJ + ' vs ' + pM + ' pts). 🎉', 'guanya');
+            else if (pM < pJ) setMissatge('Joc bloquejat! Guanya la màquina (' + pM + ' vs ' + pJ + ' pts).', 'perd');
+            else setMissatge('Joc bloquejat! Empat (' + pJ + ' pts)!', '');
+            jocActiu = false;
+        }
+    }
+
+    function setMissatge(text, cls) {
+        var el = document.getElementById('missatge');
+        el.textContent = text;
+        el.className = cls || '';
+    }
+
+    // ===== REINICIAR =====
+    function reiniciarJoc() {
+        deseleccionarFitxa();
+        crearFitxes();
+        barrejar(totesFitxes);
+        jugador = totesFitxes.slice(0, 7).map(function(f) { return [f[0], f[1]]; });
+        maquina = totesFitxes.slice(7, 14).map(function(f) { return [f[0], f[1]]; });
+        extrems = [null, null];
+        taulerFitxes = [];
+
+        var t = document.getElementById('tauler');
+        t.innerHTML = '<div class="tauler-buit">Tauler buit</div>';
+
+        setMissatge('El teu torn. Tria una fitxa per començar.', '');
+        jocActiu = true;
+        actualitzarTot();
+    }
+
+    // ===== TAULER TOGGLE =====
+    function toggleTauler() {
+        taulerVisible = !taulerVisible;
+        var cont = document.getElementById('tauler-contenidor');
+        var btn = document.getElementById('btn-tauler');
+        cont.classList.toggle('visible', taulerVisible);
+        btn.textContent = taulerVisible ? 'Amagar tauler ▴' : 'Veure tauler ▾';
+    }
+
+    // ===== MODAL AJUDA =====
+    function obrirAjuda() {
+        document.getElementById('modal-ajuda').classList.add('obert');
+    }
+    function tancarAjuda(e) {
+        if (!e || e.target === document.getElementById('modal-ajuda')) {
+            document.getElementById('modal-ajuda').classList.remove('obert');
+        }
+    }
+
+    // ===== INIT =====
+    reiniciarJoc();
+</script>
 </body>
 </html>
