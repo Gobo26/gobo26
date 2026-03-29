@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>La Nit de la Coral – Gobo26</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0d0f1a;
+  --bg2:     #131520;
+  --text:    #e8e0f0;
+  --text2:   #c8bedd;
+  --velvet:  #1a0d2e;
+  --gold:    #d4af37;
+  --gold2:   #f0cc55;
+  --rose:    #c4566a;
+  --rose2:   #e0758a;
+  --blue:    #3a5fa0;
+  --ink:     #0d0f1a;
+  --radius:  4px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Lora', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image:
+    radial-gradient(ellipse at 30% 20%, rgba(196,86,106,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 80%, rgba(58,95,160,0.07) 0%, transparent 55%);
+}
+
+header {
+  background: #08090f;
+  border-bottom: 1px solid rgba(212,175,55,0.25);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.logo-hex { display:flex; align-items:center; gap:8px; text-decoration:none; color:var(--text); }
+.logo-hex svg { width:34px; height:34px; }
+.logo-text { font-family:'Montserrat',sans-serif; font-size:11px; line-height:1.2; font-weight:700; }
+.logo-text span { display:block; font-size:9px; font-weight:400; opacity:.5; }
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+
+.header-spacer { width: 52px; }
+
+.screen { display:none; flex-direction:column; flex:1; }
+.screen.active { display:flex; }
+
+/* ── PORTADA ── */
+#screen-cover {
+  align-items:center; justify-content:center;
+  padding:32px 20px; text-align:center; gap:0;
+}
+
+.cover-ornament {
+  font-size:64px; margin-bottom:18px;
+  filter: drop-shadow(0 0 24px rgba(212,175,55,.5));
+  animation: floatIcon 3s ease-in-out infinite;
+}
+@keyframes floatIcon { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+.cover-title {
+  font-family:'Playfair Display',serif;
+  font-size:28px; font-weight:900;
+  color:var(--gold2); letter-spacing:1px; line-height:1.25;
+  margin-bottom:6px;
+  text-shadow:0 2px 16px rgba(212,175,55,.35);
+}
+.cover-subtitle {
+  font-family:'Playfair Display',serif; font-style:italic;
+  font-size:13px; color:rgba(232,224,240,.45);
+  letter-spacing:2px; margin-bottom:28px;
+}
+.cover-sep {
+  width:100px; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:0 auto 24px;
+}
+.cover-intro {
+  font-size:16px; line-height:1.8; color:var(--text2);
+  max-width:340px; font-style:italic; margin-bottom:32px;
+}
+.btn-begin {
+  background:var(--rose); color:white; border:none;
+  border-radius:var(--radius); padding:16px 40px;
+  font-family:'Playfair Display',serif; font-size:14px;
+  font-weight:700; letter-spacing:2px; cursor:pointer;
+  box-shadow:0 4px 20px rgba(196,86,106,.4);
+  transition:all .2s;
+}
+.btn-begin:hover { background:var(--rose2); transform:translateY(-1px); }
+.btn-begin:active { transform:translateY(1px); }
+
+/* ── PANTALLA JOC ── */
+#screen-game { padding:0; flex:1; overflow-y:auto; }
+
+.scene-wrap {
+  max-width:640px; margin:0 auto;
+  padding:24px 20px 40px;
+  display:flex; flex-direction:column; gap:20px;
+}
+
+.scene-art {
+  width:100%; height:140px; border-radius:6px;
+  overflow:hidden; position:relative;
+  border:1px solid rgba(212,175,55,.2); flex-shrink:0;
+}
+.scene-art svg { width:100%; height:100%; }
+
+/* Comptador de temps */
+.time-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(196,86,106,.15);
+  border:1px solid rgba(196,86,106,.3);
+  border-radius:20px; padding:4px 12px;
+  font-family:'Playfair Display',serif;
+  font-size:11px; letter-spacing:1px;
+  color:var(--rose2); width:fit-content;
+}
+
+.scene-chapter {
+  font-family:'Playfair Display',serif;
+  font-size:10px; letter-spacing:3px;
+  color:var(--gold); text-transform:uppercase; opacity:.7;
+}
+.scene-title {
+  font-family:'Playfair Display',serif;
+  font-size:21px; font-weight:700;
+  color:var(--gold2); line-height:1.3;
+}
+.scene-text { font-size:17px; line-height:1.85; color:var(--text2); }
+.scene-text p { margin-bottom:12px; }
+.scene-text p:last-child { margin-bottom:0; }
+.scene-text em { color:var(--gold2); font-style:italic; }
+.scene-text strong { color:#fff; font-weight:600; }
+
+.scene-divider {
+  display:flex; align-items:center; gap:10px;
+  color:rgba(212,175,55,.35); font-size:14px;
+}
+.scene-divider::before,.scene-divider::after {
+  content:''; flex:1; height:1px;
+  background:rgba(212,175,55,.2);
+}
+
+.choices { display:flex; flex-direction:column; gap:10px; }
+
+.choice-btn {
+  background:rgba(212,175,55,.07);
+  border:1px solid rgba(212,175,55,.25);
+  border-radius:var(--radius); padding:14px 18px;
+  color:var(--text); font-family:'Lora',serif;
+  font-size:16px; line-height:1.5; text-align:left;
+  cursor:pointer; transition:all .2s;
+  display:flex; align-items:flex-start; gap:10px;
+}
+.choice-btn:hover {
+  background:rgba(212,175,55,.16);
+  border-color:var(--gold); color:var(--gold2);
+  transform:translateX(4px);
+}
+.choice-btn:active { transform:translateX(2px); }
+.choice-arrow { color:var(--rose); font-size:14px; margin-top:2px; flex-shrink:0; }
+
+.scene-ending { text-align:center; padding:16px 0 0; }
+.ending-badge {
+  display:inline-block; padding:6px 18px; border-radius:20px;
+  font-family:'Playfair Display',serif; font-size:11px;
+  letter-spacing:2px; font-weight:700; margin-bottom:16px;
+}
+.ending-badge.good    { background:rgba(100,200,120,.15); color:#6dc878; border:1px solid rgba(100,200,120,.3); }
+.ending-badge.bad     { background:rgba(196,86,106,.15);  color:var(--rose2); border:1px solid rgba(196,86,106,.3); }
+.ending-badge.neutral { background:rgba(212,175,55,.15);  color:var(--gold2); border:1px solid rgba(212,175,55,.3); }
+
+.btn-restart {
+  background:none; border:1px solid rgba(212,175,55,.35);
+  border-radius:var(--radius); padding:12px 28px;
+  color:var(--gold); font-family:'Playfair Display',serif;
+  font-size:13px; letter-spacing:1px; cursor:pointer;
+  transition:all .2s; margin-top:8px;
+}
+.btn-restart:hover { background:rgba(212,175,55,.1); }
+
+@keyframes sceneIn {
+  from { opacity:0; transform:translateY(12px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.scene-wrap { animation:sceneIn .35s ease forwards; }
+
+footer {
+  text-align:center; padding:12px;
+  font-size:11px; color:rgba(232,224,240,.2);
+  font-family:'Playfair Display',serif; letter-spacing:1px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo-hex" href="https://ja.cat/appgobo" target="_self">
+    <svg viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 1L38 11.5V34.5L20 45L2 34.5V11.5L20 1Z" fill="#2563eb"/>
+      <text x="20" y="22" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">GOBO</text>
+      <text x="20" y="33" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">26</text>
+    </svg>
+    <div class="logo-text" style="font-family:'Montserrat',sans-serif">Gobo26<span>Jocs en català</span></div>
+  </a>
+  <h1>Aventura</h1>
+  <div class="header-spacer"></div>
+</header>
+
+<div class="screen active" id="screen-cover">
+  <div class="cover-ornament">🎭</div>
+  <div class="cover-title">La Nit de<br>la Coral</div>
+  <div class="cover-subtitle">Una aventura de tria pròpia</div>
+  <div class="cover-sep"></div>
+  <p class="cover-intro">
+    Ets la <strong>Maragda</strong>, soprano solista de la Coral Ressonàncies.
+    El teatre és ple. Quaranta-sis cantaires fan els precalentaments vocals.
+    Però el director, en <em>Ferran Salvi</em>, no ha sortit del camerí.
+    Quan hi aneu, el trobeu mort. <em>Assassinat.</em>
+    Tens menys d'una hora per descobrir qui — i decidir si el concert ha de continuar.
+  </p>
+  <button class="btn-begin" onclick="startAdventure()">♪ Comença l'aventura</button>
+</div>
+
+<div class="screen" id="screen-game">
+  <div class="scene-wrap" id="scene-wrap"></div>
+</div>
+
+<footer>Una aplicació de Gobo26 &nbsp;·&nbsp; aventura interactiva</footer>
+
+<script>
+// ════════════════════════════════════════════════════════
+// ART SVG
+// ════════════════════════════════════════════════════════
+function getArt(id) {
+  const arts = {
+
+    camerí: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0d0f1a"/>
+      <!-- mirall amb bombetes -->
+      <rect x="140" y="8" width="120" height="90" fill="#131520" rx="3" stroke="#d4af37" stroke-width="1" stroke-opacity=".5"/>
+      <rect x="145" y="13" width="110" height="80" fill="#1a1d30" rx="2"/>
+      <!-- reflexió difusa al mirall -->
+      <ellipse cx="200" cy="53" rx="30" ry="40" fill="#d4af37" fill-opacity=".04"/>
+      <!-- bombetes al voltant del mirall -->
+      <circle cx="144" cy="20" r="5" fill="#f0cc55" fill-opacity=".7"/>
+      <circle cx="144" cy="40" r="5" fill="#f0cc55" fill-opacity=".6"/>
+      <circle cx="144" cy="60" r="5" fill="#f0cc55" fill-opacity=".7"/>
+      <circle cx="144" cy="80" r="5" fill="#f0cc55" fill-opacity=".6"/>
+      <circle cx="256" cy="20" r="5" fill="#f0cc55" fill-opacity=".7"/>
+      <circle cx="256" cy="40" r="5" fill="#f0cc55" fill-opacity=".6"/>
+      <circle cx="256" cy="60" r="5" fill="#f0cc55" fill-opacity=".7"/>
+      <circle cx="256" cy="80" r="5" fill="#f0cc55" fill-opacity=".6"/>
+      <!-- taula de maquillatge -->
+      <rect x="110" y="98" width="180" height="8" fill="#2a1d3a" rx="2"/>
+      <rect x="130" y="98" width="20" height="30" fill="#1f1530" rx="1"/>
+      <rect x="250" y="98" width="20" height="30" fill="#1f1530" rx="1"/>
+      <!-- objectes a la taula -->
+      <rect x="155" y="90" width="6" height="8" fill="#c4566a" rx="1"/>
+      <rect x="165" y="88" width="5" height="10" fill="#8a8" rx="1"/>
+      <rect x="175" y="91" width="8" height="7" fill="#d4af37" fill-opacity=".6" rx="1"/>
+      <!-- figura en terra (subtil) -->
+      <ellipse cx="200" cy="128" rx="50" ry="8" fill="#c4566a" fill-opacity=".12"/>
+      <!-- llum halo del mirall -->
+      <radialGradient id="mirrorGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#f0cc55" stop-opacity=".1"/>
+        <stop offset="100%" stop-color="#0d0f1a" stop-opacity="0"/>
+      </radialGradient>
+      <rect x="140" y="8" width="120" height="90" fill="url(#mirrorGlow)" rx="3"/>
+    </svg>`,
+
+    corredor: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0a0b15"/>
+      <!-- efecte perspectiva corredor -->
+      <polygon points="0,0 400,0 340,140 60,140" fill="#0f1020"/>
+      <polygon points="60,0 340,0 310,140 90,140" fill="#131530"/>
+      <polygon points="100,0 300,0 280,140 120,140" fill="#181840"/>
+      <!-- llums de sostre -->
+      <ellipse cx="200" cy="5" rx="40" ry="8" fill="#d4af37" fill-opacity=".15"/>
+      <ellipse cx="100" cy="5" rx="25" ry="6" fill="#d4af37" fill-opacity=".08"/>
+      <ellipse cx="300" cy="5" rx="25" ry="6" fill="#d4af37" fill-opacity=".08"/>
+      <!-- portes laterals -->
+      <rect x="10" y="30" width="40" height="70" fill="#0d0e20" rx="2" stroke="#d4af37" stroke-width=".5" stroke-opacity=".3"/>
+      <rect x="350" y="30" width="40" height="70" fill="#0d0e20" rx="2" stroke="#d4af37" stroke-width=".5" stroke-opacity=".3"/>
+      <rect x="12" y="32" width="36" height="66" fill="#131525"/>
+      <rect x="352" y="32" width="36" height="66" fill="#131525"/>
+      <!-- rètols de porta -->
+      <text x="30" y="68" font-family="serif" font-size="7" fill="#d4af37" fill-opacity=".5" text-anchor="middle">CAMERÍ 1</text>
+      <text x="370" y="68" font-family="serif" font-size="7" fill="#d4af37" fill-opacity=".5" text-anchor="middle">CAMERÍ 2</text>
+      <!-- figura al fons del corredor -->
+      <ellipse cx="200" cy="135" rx="8" ry="3" fill="#c4566a" fill-opacity=".3"/>
+      <rect x="196" y="110" width="8" height="25" fill="#1a1535" rx="1"/>
+    </svg>`,
+
+    escenari: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#080910"/>
+      <!-- cortines de teatre -->
+      <path d="M0,0 Q50,70 10,140" fill="#1a0a20" fill-opacity=".9"/>
+      <path d="M400,0 Q350,70 390,140" fill="#1a0a20" fill-opacity=".9"/>
+      <path d="M0,0 Q60,80 20,140" fill="#c4566a" fill-opacity=".25"/>
+      <path d="M400,0 Q340,80 380,140" fill="#c4566a" fill-opacity=".25"/>
+      <!-- focus escènic -->
+      <radialGradient id="spotlight" cx="50%" cy="0%" r="60%">
+        <stop offset="0%" stop-color="#f0cc55" stop-opacity=".2"/>
+        <stop offset="60%" stop-color="#d4af37" stop-opacity=".05"/>
+        <stop offset="100%" stop-color="#080910" stop-opacity="0"/>
+      </radialGradient>
+      <rect width="400" height="140" fill="url(#spotlight)"/>
+      <!-- terra de l'escenari amb reflexos -->
+      <rect x="0" y="100" width="400" height="40" fill="#0d0e18"/>
+      <line x1="0" y1="100" x2="400" y2="100" stroke="#d4af37" stroke-width=".8" stroke-opacity=".3"/>
+      <!-- faristol -->
+      <line x1="200" y1="60" x2="200" y2="105" stroke="#3a3060" stroke-width="3"/>
+      <rect x="180" y="55" width="40" height="25" fill="#2a2050" rx="2"/>
+      <rect x="182" y="57" width="36" height="21" fill="#f5f0e8" fill-opacity=".08" rx="1"/>
+      <!-- siluetes de cantaires al fons -->
+      <rect x="60"  y="75" width="10" height="28" fill="#1a1535" rx="1"/>
+      <rect x="85"  y="72" width="10" height="31" fill="#1a1535" rx="1"/>
+      <rect x="110" y="76" width="10" height="27" fill="#1a1535" rx="1"/>
+      <rect x="270" y="73" width="10" height="30" fill="#1a1535" rx="1"/>
+      <rect x="295" y="75" width="10" height="28" fill="#1a1535" rx="1"/>
+      <rect x="320" y="72" width="10" height="31" fill="#1a1535" rx="1"/>
+    </svg>`,
+
+    sala_assaig: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0d0f1a"/>
+      <!-- paret del fons amb finestres altes -->
+      <rect x="0" y="0" width="400" height="90" fill="#0f1122"/>
+      <rect x="40"  y="10" width="50" height="60" fill="#131830" rx="2"/>
+      <rect x="120" y="10" width="50" height="60" fill="#131830" rx="2"/>
+      <rect x="230" y="10" width="50" height="60" fill="#131830" rx="2"/>
+      <rect x="310" y="10" width="50" height="60" fill="#131830" rx="2"/>
+      <!-- llum de finestra -->
+      <rect x="42" y="12" width="46" height="56" fill="#d4af37" fill-opacity=".04" rx="1"/>
+      <rect x="122" y="12" width="46" height="56" fill="#d4af37" fill-opacity=".05" rx="1"/>
+      <!-- cadires en filera -->
+      <rect x="30"  y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <rect x="60"  y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <rect x="90"  y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <rect x="120" y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <rect x="150" y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <rect x="180" y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <rect x="210" y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <rect x="240" y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <rect x="270" y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <rect x="300" y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <rect x="330" y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <rect x="360" y="98" width="14" height="18" fill="#1a1535" rx="1"/>
+      <!-- partitures -->
+      <rect x="50" y="88" width="18" height="10" fill="#f5f0e8" fill-opacity=".1" rx="1"/>
+      <rect x="100" y="88" width="18" height="10" fill="#f5f0e8" fill-opacity=".1" rx="1"/>
+    </svg>`,
+
+    sala_maquines: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#080b0d"/>
+      <!-- canonades i estructura metàl·lica -->
+      <line x1="0"  y1="30" x2="400" y2="30" stroke="#2a3540" stroke-width="8"/>
+      <line x1="0"  y1="60" x2="400" y2="60" stroke="#1f2a30" stroke-width="5"/>
+      <line x1="0"  y1="90" x2="400" y2="90" stroke="#2a3540" stroke-width="6"/>
+      <line x1="60"  y1="0" x2="60"  y2="140" stroke="#253035" stroke-width="6"/>
+      <line x1="150" y1="0" x2="150" y2="140" stroke="#253035" stroke-width="4"/>
+      <line x1="250" y1="0" x2="250" y2="140" stroke="#253035" stroke-width="4"/>
+      <line x1="340" y1="0" x2="340" y2="140" stroke="#253035" stroke-width="6"/>
+      <!-- panell de control -->
+      <rect x="160" y="35" width="80" height="50" fill="#0f1a20" rx="3" stroke="#3a5fa0" stroke-width="1" stroke-opacity=".6"/>
+      <circle cx="180" cy="52" r="5" fill="#c4566a" fill-opacity=".8"/>
+      <circle cx="200" cy="52" r="5" fill="#6dc878" fill-opacity=".7"/>
+      <circle cx="220" cy="52" r="5" fill="#f0cc55" fill-opacity=".6"/>
+      <rect x="170" y="65" width="60" height="6" fill="#3a5fa0" fill-opacity=".5" rx="1"/>
+      <rect x="170" y="75" width="40" height="4" fill="#3a5fa0" fill-opacity=".3" rx="1"/>
+      <!-- bombetes indicadores -->
+      <circle cx="60"  cy="30" r="6" fill="#f0cc55" fill-opacity=".5"/>
+      <circle cx="150" cy="60" r="5" fill="#c4566a" fill-opacity=".4"/>
+      <circle cx="340" cy="30" r="6" fill="#6dc878" fill-opacity=".4"/>
+    </svg>`,
+
+    teatre_foyer: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0d0f1a"/>
+      <!-- columnes clàssiques -->
+      <rect x="20"  y="0" width="20" height="140" fill="#13152a"/>
+      <rect x="80"  y="0" width="18" height="140" fill="#13152a"/>
+      <rect x="302" y="0" width="18" height="140" fill="#13152a"/>
+      <rect x="360" y="0" width="20" height="140" fill="#13152a"/>
+      <!-- capitells daurats -->
+      <rect x="18"  y="0" width="24" height="8" fill="#d4af37" fill-opacity=".4" rx="1"/>
+      <rect x="78"  y="0" width="22" height="8" fill="#d4af37" fill-opacity=".4" rx="1"/>
+      <rect x="300" y="0" width="22" height="8" fill="#d4af37" fill-opacity=".4" rx="1"/>
+      <rect x="358" y="0" width="24" height="8" fill="#d4af37" fill-opacity=".4" rx="1"/>
+      <!-- aranya de llum central -->
+      <circle cx="200" cy="25" r="20" fill="#d4af37" fill-opacity=".07"/>
+      <circle cx="200" cy="25" r="10" fill="#d4af37" fill-opacity=".1"/>
+      <circle cx="200" cy="25" r="4"  fill="#f0cc55" fill-opacity=".6"/>
+      <line x1="200" y1="0" x2="200" y2="15" stroke="#d4af37" stroke-width="2" stroke-opacity=".4"/>
+      <!-- raigs de l'aranya -->
+      <line x1="180" y1="20" x2="165" y2="12" stroke="#d4af37" stroke-width=".8" stroke-opacity=".3"/>
+      <line x1="220" y1="20" x2="235" y2="12" stroke="#d4af37" stroke-width=".8" stroke-opacity=".3"/>
+      <line x1="185" y1="35" x2="170" y2="45" stroke="#d4af37" stroke-width=".8" stroke-opacity=".3"/>
+      <line x1="215" y1="35" x2="230" y2="45" stroke="#d4af37" stroke-width=".8" stroke-opacity=".3"/>
+      <!-- gent al foyer (siluetes) -->
+      <rect x="110" y="95" width="8" height="30" fill="#1a1535" rx="1"/>
+      <rect x="130" y="92" width="8" height="33" fill="#1a1535" rx="1"/>
+      <rect x="155" y="96" width="8" height="29" fill="#1a1535" rx="1"/>
+      <rect x="230" y="93" width="8" height="32" fill="#1a1535" rx="1"/>
+      <rect x="255" y="95" width="8" height="30" fill="#1a1535" rx="1"/>
+      <rect x="275" y="91" width="8" height="34" fill="#1a1535" rx="1"/>
+      <!-- terra marbrat -->
+      <line x1="0" y1="130" x2="400" y2="130" stroke="#d4af37" stroke-width=".5" stroke-opacity=".15"/>
+    </svg>`,
+
+    final_concert: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#080910"/>
+      <!-- cortines obertes -->
+      <path d="M0,0 Q30,70 0,140" fill="#1a0a20" fill-opacity=".8"/>
+      <path d="M400,0 Q370,70 400,140" fill="#1a0a20" fill-opacity=".8"/>
+      <!-- focus munt central -->
+      <radialGradient id="bigSpot" cx="50%" cy="0%" r="70%">
+        <stop offset="0%" stop-color="#f0cc55" stop-opacity=".35"/>
+        <stop offset="50%" stop-color="#d4af37" stop-opacity=".1"/>
+        <stop offset="100%" stop-color="#080910" stop-opacity="0"/>
+      </radialGradient>
+      <rect width="400" height="140" fill="url(#bigSpot)"/>
+      <!-- moltes siluetes de cantaires -->
+      <rect x="40"  y="65" width="9" height="35" fill="#2a2050" rx="1"/>
+      <rect x="58"  y="62" width="9" height="38" fill="#2a2050" rx="1"/>
+      <rect x="76"  y="66" width="9" height="34" fill="#2a2050" rx="1"/>
+      <rect x="94"  y="63" width="9" height="37" fill="#2a2050" rx="1"/>
+      <rect x="112" y="65" width="9" height="35" fill="#2a2050" rx="1"/>
+      <rect x="130" y="61" width="9" height="39" fill="#2a2050" rx="1"/>
+      <rect x="148" y="64" width="9" height="36" fill="#2a2050" rx="1"/>
+      <rect x="234" y="64" width="9" height="36" fill="#2a2050" rx="1"/>
+      <rect x="252" y="61" width="9" height="39" fill="#2a2050" rx="1"/>
+      <rect x="270" y="65" width="9" height="35" fill="#2a2050" rx="1"/>
+      <rect x="288" y="63" width="9" height="37" fill="#2a2050" rx="1"/>
+      <rect x="306" y="65" width="9" height="35" fill="#2a2050" rx="1"/>
+      <rect x="324" y="62" width="9" height="38" fill="#2a2050" rx="1"/>
+      <rect x="342" y="65" width="9" height="35" fill="#2a2050" rx="1"/>
+      <!-- soprano solista al centre, il·luminada -->
+      <ellipse cx="200" cy="100" rx="12" ry="4" fill="#f0cc55" fill-opacity=".2"/>
+      <rect x="194" y="60" width="12" height="40" fill="#3a2060" rx="2"/>
+      <ellipse cx="200" cy="58" rx="8" ry="10" fill="#3a2060"/>
+      <!-- notes musicals flotant -->
+      <text x="170" y="40" font-size="16" fill="#d4af37" fill-opacity=".4">♪</text>
+      <text x="215" y="30" font-size="20" fill="#d4af37" fill-opacity=".3">♫</text>
+      <text x="240" y="45" font-size="14" fill="#d4af37" fill-opacity=".35">♩</text>
+      <!-- terra -->
+      <rect x="0" y="100" width="400" height="40" fill="#0d0e18"/>
+      <line x1="0" y1="100" x2="400" y2="100" stroke="#d4af37" stroke-width=".8" stroke-opacity=".25"/>
+    </svg>`,
+
+    final_silenci: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#060608"/>
+      <!-- escenari buit amb un sol focus apagat -->
+      <rect x="0" y="90" width="400" height="50" fill="#0a0b10"/>
+      <line x1="0" y1="90" x2="400" y2="90" stroke="#d4af37" stroke-width=".5" stroke-opacity=".15"/>
+      <!-- cortines tancades que cobreixen tot -->
+      <path d="M0,0 L120,0 Q80,70 100,140 L0,140 Z" fill="#1a0a20" fill-opacity=".95"/>
+      <path d="M400,0 L280,0 Q320,70 300,140 L400,140 Z" fill="#1a0a20" fill-opacity=".95"/>
+      <!-- faristol solitari sota un focus tènue -->
+      <radialGradient id="dimSpot" cx="50%" cy="30%" r="35%">
+        <stop offset="0%" stop-color="#d4af37" stop-opacity=".12"/>
+        <stop offset="100%" stop-color="#060608" stop-opacity="0"/>
+      </radialGradient>
+      <rect width="400" height="140" fill="url(#dimSpot)"/>
+      <line x1="200" y1="55" x2="200" y2="92" stroke="#2a2040" stroke-width="3"/>
+      <rect x="182" y="48" width="36" height="22" fill="#1a1530" rx="2"/>
+      <!-- partitura oberta al faristol -->
+      <rect x="184" y="50" width="32" height="18" fill="#f5f0e8" fill-opacity=".06" rx="1"/>
+      <!-- una cadira sola al centre -->
+      <rect x="190" y="105" width="20" height="4" fill="#1a1535" rx="1"/>
+      <rect x="191" y="109" width="4" height="15" fill="#1a1535"/>
+      <rect x="205" y="109" width="4" height="15" fill="#1a1535"/>
+    </svg>`,
+
+    final_veritat: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0d0f1a"/>
+      <!-- sala d'interrogatori / reunió petita -->
+      <rect x="0" y="0" width="400" height="140" fill="#0a0c18"/>
+      <!-- taula central amb llum -->
+      <rect x="100" y="60" width="200" height="55" fill="#13152a" rx="3"/>
+      <rect x="105" y="63" width="190" height="49" fill="#0f1122" rx="2"/>
+      <radialGradient id="tableLight" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#d4af37" stop-opacity=".12"/>
+        <stop offset="100%" stop-color="#0a0c18" stop-opacity="0"/>
+      </radialGradient>
+      <rect x="100" y="60" width="200" height="55" fill="url(#tableLight)" rx="3"/>
+      <!-- làmpada sobre la taula -->
+      <line x1="200" y1="0" x2="200" y2="35" stroke="#2a2040" stroke-width="2"/>
+      <path d="M175,35 L225,35 L215,55 L185,55 Z" fill="#1a1535"/>
+      <ellipse cx="200" cy="58" rx="25" ry="5" fill="#f0cc55" fill-opacity=".15"/>
+      <!-- figures assegudes -->
+      <rect x="115" y="48" width="10" height="18" fill="#1a1535" rx="1"/>
+      <rect x="280" y="48" width="10" height="18" fill="#1a1535" rx="1"/>
+      <!-- documents sobre la taula -->
+      <rect x="155" y="67" width="40" height="28" fill="#f5f0e8" fill-opacity=".08" rx="1"/>
+      <rect x="210" y="70" width="35" height="22" fill="#f5f0e8" fill-opacity=".06" rx="1"/>
+      <line x1="160" y1="75" x2="190" y2="75" stroke="#d4af37" stroke-width=".5" stroke-opacity=".4"/>
+      <line x1="160" y1="82" x2="190" y2="82" stroke="#d4af37" stroke-width=".5" stroke-opacity=".3"/>
+    </svg>`,
+  };
+  return arts[id] || arts['corredor'];
+}
+
+// ════════════════════════════════════════════════════════
+// NODES
+// ════════════════════════════════════════════════════════
+const NODES = {
+
+  inici: {
+    chapter: "Capítol I · 22:45 h",
+    title: "El camerí tancat",
+    art: "camerí",
+    text: `<p>Les bombetes del mirall projecten una llum groga sobre el cos d'en <strong>Ferran Salvi</strong>. El director jeu d'esquena al terra del camerí, amb les partitures del concert escampades al voltant i una expressió de sorpresa petrificada al rostre. Al pit, clavada fins al mànec, una <em>navalla</em> de fulla llarga. El metge que ha entrat darrere teu no diu res. No cal.</p>
+    <p>Al corredor, els cantaires comencen a murmurar. El públic és al pati de butaques. <strong>Falten quaranta minuts per a l'hora del concert.</strong> Ningú no ha avisat la policia encara — el telèfon del teatre no funciona i els mòbils no tenen cobertura al soterrani.</p>
+    <p>La cap de producció, la Dolors, s'acosta: <em>"Maragda, has de decidir alguna cosa. Tots et miren a tu."</em></p>`,
+    choices: [
+      { label: "Examines el camerí tu mateixa abans que ningú el toqui: les proves podrien desaparèixer.", next: "examinar_cameri" },
+      { label: "Convoca els cantaires a la sala d'assaig: algú sap alguna cosa i la por el farà parlar.", next: "convocar_cantaires" },
+      { label: "Busques en Pau, el responsable tècnic del teatre: coneix tots els racons i tota la gent.", next: "buscar_pau" },
+    ]
+  },
+
+  // ── BRANCA A: examinar el camerí ────────────────────────────
+  examinar_cameri: {
+    chapter: "Capítol I · 22:48 h",
+    title: "Pistes al mirall",
+    art: "camerí",
+    text: `<p>Demanes a tothom que surti i tances la porta. Les bombetes del mirall t'il·luminen mentre observes l'escena amb cura, intentant no mirar massa el cos.</p>
+    <p>Dues coses criden la teva atenció: una nota manuscrita esparracada prop de la paperera — s'hi llegeix clarament <em>"si ensenyes les partitures, ja ho saps tot"</em> — i, sota la cadira del maquillatge, una beina de cuir buida, de les que s'usen per portar una navalla a la cintura. Sense la navalla.</p>
+    <p>Algú havia amenaçat en Ferran. I algú altre portava aquella navalla al teatre aquesta nit. Necessites saber qui.</p>`,
+    choices: [
+      { label: "Busques en Pau, el tècnic: les càmeres de seguretat ho hauran gravat tot.", next: "pau_cameres" },
+      { label: "La nota esmenta partitures. Vas a la sala d'assaig a examinar els faristols.", next: "faristols" },
+    ]
+  },
+
+  faristols: {
+    chapter: "Capítol II · 22:58 h",
+    title: "Les partitures mudes",
+    art: "sala_assaig",
+    text: `<p>La sala d'assaig és buida. Els faristols estan plens de partitures amb anotacions a llapis, correccions i números de compàs. Però al faristol del director — el de la primera filera, el més gran — hi falta el programa del concert d'aquella nit. En el seu lloc, una còpia fotocopiada d'una altra obra, amb un segell al peu: <em>"Propietat intel·lectual de Cristina Mas. No reproduir."</em></p>
+    <p>Algú l'ha deixat allà intencionadament. Al revers, escrit a llapis amb lletra precipitada: <em>"El director sabia que avui tot sortiria a la llum."</em></p>
+    <p>Ara saps el mòbil del crim. El que no saps és qui ha passat de l'amenaça a l'acte — i qui portava aquella navalla.</p>`,
+    choices: [
+      { label: "Busques la <strong>Cristina Mas</strong>, la compositora: deu ser al teatre si esperava que 'tot sortís a la llum'.", next: "confrontar_cristina" },
+      { label: "Parles amb la <strong>Dolors</strong>, la cap de producció: porta anys al teatre i deu saber dels problemes amb el director.", next: "dolors_testimoni" },
+    ]
+  },
+
+  // ── BRANCA B: convocar cantaires ────────────────────────────
+  convocar_cantaires: {
+    chapter: "Capítol I · 22:50 h",
+    title: "Quaranta-sis testimonis",
+    art: "sala_assaig",
+    text: `<p>Els cantaires s'asseuen als seus llocs amb l'expressió de qui acaba de veure trencar-se un món. Alguns ploren en silenci. Altres et miren amb ulls de pregunta.</p>
+    <p>Prens la paraula amb la veu que uses per atacar les notes difícils — ferma, sense tremolar: <em>"En Ferran ha mort. La policia no pot arribar fins que recuperem la cobertura. Necessito que qui sàpiga alguna cosa em parli ara."</em></p>
+    <p>Silenci. I llavors, al fons, la <strong>Núria</strong> — la mezzosoprano, companya de corda des de fa deu anys — aixeca la mà: <em>"Ahir a la nit vaig sentir en Ferran discutir amb algú al seu despatx. Una veu de dona. Parlaven de partitures."</em></p>`,
+    choices: [
+      { label: "Demanes a la Núria que et descrigui exactament el que va sentir.", next: "nuria_testimoni" },
+      { label: "Preguntes als cantaires si algú més havia notat alguna cosa estranya les darreres setmanes.", next: "cantaires_plagi" },
+    ]
+  },
+
+  nuria_testimoni: {
+    chapter: "Capítol II · 22:56 h",
+    title: "La veu de la discòrdia",
+    art: "corredor",
+    text: `<p>La Núria et porta al corredor dels camerins i parla en veu baixa. Ahir a les deu de la nit, en passar per davant del despatx del director, havia sentit crits. La veu femenina deia: <em>"Has tingut tres anys per reconèixer-ho. Avui és l'últim dia."</em> En Ferran responia: <em>"Publiques res i t'arruïno. Tens la meva paraula."</em></p>
+    <p>La Núria no havia vist la dona. Però recorda que poc després havia vist la <strong>Cristina Mas</strong> — la compositora que havia cedit algunes obres a la coral — sortir del passadís amb el rostre encès i els ulls brillants.</p>
+    <p>Afegeix, en veu molt baixa: <em>"I avui al vespre, quan he passat per davant del camerí del director, he vist la Dolors entrar-hi sola. En Ferran no hi era encara."</em></p>`,
+    choices: [
+      { label: "Vas a buscar la Cristina Mas: tenia motius i era al teatre.", next: "confrontar_cristina" },
+      { label: "La Dolors va entrar sola al camerí. Parles amb en Pau per saber quan i per quant de temps.", next: "acces_cameri" },
+    ]
+  },
+
+  cantaires_plagi: {
+    chapter: "Capítol II · 23:00 h",
+    title: "El secret a veus",
+    art: "sala_assaig",
+    text: `<p>De mica en mica, amb la prudència de qui porta molt de temps callant, els cantaires parlen. La història es va construint a retalls: en Ferran Salvi portava anys signant obres d'altri com a pròpies. La darrera víctima, la <strong>Cristina Mas</strong>, havia presentat una denúncia formal tres mesos enrere. El judici havia de celebrar-se la setmana vinent.</p>
+    <p>Un baix de la tercera fila afegeix: <em>"Avui al vespre vaig veure la Cristina entrar al teatre per la porta dels artistes. Tenia una carpeta gran sota el braç. I una cosa més: portava a la cintura una beina de cuir — de les de navalla. Quan ha sortit de parlar amb el director, ja no la portava."</em></p>
+    <p>Un silenci incòmode cau sobre la sala.</p>`,
+    choices: [
+      { label: "Busques la Cristina pel teatre: si és aquí, no s'haurà allunyat gaire.", next: "confrontar_cristina" },
+      { label: "Parles primer amb en Pau, el tècnic: les càmeres de seguretat del teatre ho han de tenir tot gravat.", next: "pau_cameres" },
+    ]
+  },
+
+  // ── BRANCA C: buscar en Pau ─────────────────────────────────
+  buscar_pau: {
+    chapter: "Capítol I · 22:52 h",
+    title: "El guardià del teatre",
+    art: "sala_maquines",
+    text: `<p>En <strong>Pau Genovés</strong> és a la sala de màquines, ajustant els focus per al concert que potser no es farà. Quan li expliques el que ha passat, s'atura en sec. La seva sorpresa dura menys d'un segon — com si en el fons no l'escandalitzés del tot.</p>
+    <p><em>"Avui al vespre han entrat dues persones per la porta dels artistes que no estaven a la llista. Una era la <strong>Cristina Mas</strong>, la compositora. L'altra era un advocat — en <strong>Ricard Valls</strong>, el que porta el cas de plagi."</em></p>
+    <p>Afegeix: <em>"Les càmeres de seguretat del corredor de camerins funcionen. Si vols saber qui ha entrat al camerí del director entre les deu i les onze, el vídeo ho diu tot."</em></p>`,
+    choices: [
+      { label: "Demanes a en Pau que et mostri les imatges de les càmeres immediatament.", next: "pau_cameres" },
+      { label: "Prefereixes parlar primer amb la Cristina Mas: si és culpable, una confrontació directa la pot fer parlar.", next: "confrontar_cristina" },
+    ]
+  },
+
+  pau_cameres: {
+    chapter: "Capítol II · 23:02 h",
+    title: "Tot queda gravat",
+    art: "sala_maquines",
+    text: `<p>En Pau fa retrocedir les imatges en blanc i negre. A les 22:10, la <strong>Cristina Mas</strong> entra al corredor i truca a la porta del camerí. Hi entra. A les 22:22, en surt. Camina normal, sense córrer. Porta la mateixa carpeta que duia en entrar.</p>
+    <p>A les 22:31, entra l'<strong>advocat Ricard Valls</strong>. A les 22:35 en surt corrent, visiblement alterat. És ell qui ha donat l'avís.</p>
+    <p>En Pau para el vídeo i assenyala la pantalla: <em>"La Cristina hi ha estat dotze minuts. Temps suficient. Però mira-ho bé — quan ella entra, en Ferran és dret davant del mirall. Quan en surt, ell continua dret. No l'havia tocat."</em></p>
+    <p>Algú altre ha entrat al camerí. En Pau avança el vídeo: a les 21:48, una figura entra al corredor amb clau pròpia. <strong>És la Dolors.</strong></p>`,
+    choices: [
+      { label: "Busques la Cristina per saber exactament el que va veure quan era al camerí.", next: "confrontar_cristina" },
+      { label: "Preguntes a en Pau quant de temps va estar la Dolors al camerí i si tenia motius.", next: "acces_cameri" },
+    ]
+  },
+
+  acces_cameri: {
+    chapter: "Capítol II · 23:06 h",
+    title: "Claus i accessos",
+    art: "sala_maquines",
+    text: `<p>En Pau consulta el registre d'accessos. El camerí del director té una clau mestra que només tenen quatre persones: ell mateix, la Dolors, en Ferran, i el director artístic anterior — que va dimitir fa dos anys. La Dolors figura al registre electrònic a les 21:48, una hora i mitja abans de la mort.</p>
+    <p><em>"Va estar-hi nou minuts. En Ferran no hi era — havia sopat fora i no havia tornat encara."</em></p>
+    <p>Nou minuts al camerí sol. Temps suficient per deixar una navalla amagada on en Ferran la trobés... o per utilitzar-la ella mateixa quan hi tornés més tard. En Pau afegeix, amb veu plana: <em>"La Dolors i en Ferran tenien una disputa econòmica grossa des de feia mesos. Ell li devia quaranta mil euros d'una producció anterior."</em></p>`,
+    choices: [
+      { label: "Confrontes la Dolors directament amb les proves del registre d'accessos.", next: "confrontar_dolors" },
+      { label: "Parles primer amb la Cristina: va ser l'última persona amb en Ferran viu i pot tancar el quadre.", next: "confrontar_cristina" },
+    ]
+  },
+
+  // ── NODES INTERMEDIS ────────────────────────────────────────
+  dolors_testimoni: {
+    chapter: "Capítol II · 23:01 h",
+    title: "La cap de producció",
+    art: "corredor",
+    text: `<p>La <strong>Dolors Ferré</strong> és una dona de cinquanta anys, eficient i freda, que porta quinze anys gestionant el teatre. La trobes al corredor, parlant per walkie-talkie amb els tramoyistes per mantenir la situació controlada.</p>
+    <p>Quan li preguntes per la Cristina Mas, s'atura. <em>"La Cristina va venir avui. Tenia cita amb en Ferran a les vuit. No sé de què van parlar."</em> Pausa curta. <em>"Però sé que en Ferran estava molt nerviós des d'ahir. Em va demanar que no deixés entrar ningú al camerí fins que ell ho digués."</em></p>
+    <p>I llavors afegeix alguna cosa que no esperaves: <em>"En Ferran em devia quaranta mil euros d'una producció de fa dos anys. Li havia dit que o me'ls tornava avui o trencava el contracte de la coral amb el teatre."</em> Fa una pausa. <em>"Suposo que ja no me'ls tornarà."</em></p>`,
+    choices: [
+      { label: "La Dolors tenia un motiu fort. Preguntes a en Pau si va tenir accés al camerí durant la tarda.", next: "acces_cameri" },
+      { label: "El motiu de la Cristina sembla més immediat. Vas a buscar-la per confrontar-la.", next: "confrontar_cristina" },
+    ]
+  },
+
+  confrontar_cristina: {
+    chapter: "Capítol III · 23:10 h",
+    title: "La compositora",
+    art: "teatre_foyer",
+    text: `<p>La trobes al foyer, asseguda en un racó amb la carpeta de partitures sobre els genolls, mirant el terra. Quan l'anomenes, aixeca el cap sense sorpresa — com si t'estigués esperant.</p>
+    <p><em>"Ja sé el que penseu. Tenia motius, hi era, i l'havia amenaçat."</em> La seva veu és ferma. <em>"Però no l'he matat. Quan hi vaig entrar, ell estava bé. Vam parlar. Li vaig lliurar els documents del judici. Va dir que cedria. Vaig marxar."</em></p>
+    <p>T'ensenya la carpeta: partitures originals amb dates, esborranys, correccions a mà — proves irrefutables del plagi. <em>"Havia vingut a recuperar el que és meu. Amb documents, no amb una navalla."</em></p>
+    <p>I afegeix, mirant-te als ulls: <em>"Però quan he sortit del camerí, he vist la Dolors al final del corredor. Esperava. Em mirava."</em></p>`,
+    choices: [
+      { label: "Confrontes la Dolors ara, amb tot el que saps.", next: "confrontar_dolors" },
+      { label: "Li demanes a la Cristina que t'expliqui amb detall els dotze minuts que va estar al camerí.", next: "cristina_detalls" },
+    ]
+  },
+
+  cristina_detalls: {
+    chapter: "Capítol III · 23:14 h",
+    title: "Dotze minuts",
+    art: "teatre_foyer",
+    text: `<p>La Cristina repassa aquells dotze minuts amb una precisió que confirma que els ha reviscut mil vegades des de llavors. Quan va entrar, en Ferran estava assegut davant del mirall. Va rebre els documents sense dir res. Els va llegir en silenci. Al final, va dir: <em>"Tindràs el que vols dijous."</em> Era una rendició inesperada. La Cristina ni havia sabut com reaccionar.</p>
+    <p>Quan va sortir al corredor, havia vist la Dolors al fons, dreta, amb les mans a la butxaca de la jaqueta. <em>"Em va mirar d'una manera estranya. Com si calculés alguna cosa."</em></p>
+    <p><em>"La Dolors havia entrat al camerí abans que jo. Ho sé perquè en Ferran em va dir: 'La Dolors acaba de venir a saludar-me.' Però tenia una expressió rara quan ho deia."</em></p>`,
+    choices: [
+      { label: "Tens prou. Vas a confrontar la Dolors.", next: "confrontar_dolors" },
+    ]
+  },
+
+  confrontar_dolors: {
+    chapter: "Capítol III · 23:18 h",
+    title: "La veritat de la Dolors",
+    art: "corredor",
+    text: `<p>La Dolors et mira quan t'acostes i sap que ja ho saps tot. No intenta fugir. S'asseu en una cadira del corredor amb una calma que fa fred.</p>
+    <p><em>"M'havia robat quaranta mil euros. I ara, amb el judici del plagi, anava a marxar del país sense pagar. Ho havia decidit la setmana passada — un amic seu advocat li havia preparat la fugida per a demà al matí."</em></p>
+    <p>Fa una pausa. Quan continua, la veu li tremola per primera vegada. <em>"Aquesta tarda m'ha trucat. M'ha dit que tenia una 'solució generosa' per al nostre problema. Cinc-cents euros. Quaranta mil euros de deute, i m'oferia cinc-cents com a 'liquidació definitiva i definitiva'. Rient."</em></p>
+    <p>Confessa que havia entrat al camerí quan en Ferran no hi era i havia deixat la navalla amagada dins del calaix del maquillatge. Tenia la intenció d'amenaçar-lo, de forçar-lo a signar un document. Però quan hi havia tornat per segona vegada, després que la Cristina hagués marxat, en Ferran l'havia rebuda amb el mateix somriure de sempre. <em>"Em va dir: 'Dolors, els cinc-cents eren una broma. Ets massa seriosa.' I es va girar d'esquena."</em></p>
+    <p><em>"Ara decideixes tu, Maragda. Pots esperar la policia i dir-los tot. O pots deixar que el concert comenci i que jo marxi. Tinc un cotxe a fora."</em></p>`,
+    choices: [
+      { label: "Espereu la policia. La Dolors queda retinguda al teatre fins que arribin.", next: "final_justicia" },
+      { label: "El concert primer: tanqueu la Dolors al camerí buit i feu el concert. La policia arribarà a temps.", next: "final_concert_just" },
+      { label: "La deixeu marxar. No és la vostra feina. El concert ha de seguir.", next: "final_silenci_moral" },
+    ]
+  },
+
+  // ── FINALS ──────────────────────────────────────────────────
+  final_justicia: {
+    chapter: "Epíleg",
+    title: "La nit que no va tenir concert",
+    art: "final_veritat",
+    ending: "neutral",
+    endingLabel: "⚖ Final de la Justícia ⚖",
+    text: `<p>La policia arriba quaranta minuts més tard, quan algú finalment aconsegueix cobertura al carrer. La Dolors és detinguda al corredor, on l'heu retinguda entre dues cantaires que no s'han mogut d'allà.</p>
+    <p>El concert no es fa. El teatre es buida amb calma. El públic marxa en silenci, confós però respectuós quan els expliqueu, sense detalls, que hi ha hagut un incident greu.</p>
+    <p>Les partitures de la Cristina Mas li són retornades per ordre judicial aquella mateixa setmana. La denúncia de plagi queda arxivada com a guanyada.</p>
+    <p>Setmanes després, la coral tria un director nou. Et demanen que en siguis tu, la directora interina. Ho acceptes, però poses una condició: el primer concert serà íntegrament amb obres de la Cristina Mas.</p>
+    <p><em>Aquella nit no hi va haver música. Però hi va haver justícia.</em></p>`,
+    choices: []
+  },
+
+  final_concert_just: {
+    chapter: "Epíleg",
+    title: "La nit en què la coral va cantar",
+    art: "final_concert",
+    ending: "good",
+    endingLabel: "♪ Final de la Música ♪",
+    text: `<p>Tanqueu la Dolors al camerí del segon pis, amb dues persones de confiança fent guàrdia. Algú aconsegueix fer arribar un missatge a la policia a través d'un espectador que surt al carrer.</p>
+    <p>Et plantes davant dels quaranta-sis cantaires. Alguns ploren. Tots t'esperen.</p>
+    <p><em>"En Ferran hauria volgut que cantéssim. I les famílies que omplen el teatre han vingut a escoltar-nos. Sortim."</em></p>
+    <p>El concert comença amb vint minuts de retard. Ningú no ho sap, al pati de butaques. Canteu com mai havíeu cantat — amb la tensió, el dol i l'alleujament barrejats en cada frase musical. Al final del segon bloc, la policia entra discretament per la porta lateral.</p>
+    <p>El públic s'aixeca. Els aplaudiments duren set minuts. Tu no plores fins que arribes al camerí, sola, amb la porta tancada.</p>
+    <p><em>La música no ho arregla tot. Però de vegades és l'única resposta que existeix.</em></p>`,
+    choices: []
+  },
+
+  final_silenci_moral: {
+    chapter: "Epíleg",
+    title: "La nit del silenci",
+    art: "final_silenci",
+    ending: "bad",
+    endingLabel: "✗ Final del Silenci ✗",
+    text: `<p>La Dolors marxa. El concert comença. Canteu bé — potser massa bé, amb aquella intensitat que de vegades ve de la culpa.</p>
+    <p>Quan la policia finalment arriba, tres hores més tard, no hi ha sospitós. La Dolors és a França. Les proves del registre d'accessos continuen allà, però sense ella el cas s'alentirà durant mesos.</p>
+    <p>La Cristina Mas, que es queda al teatre tota la nit esperant justícia, t'agafa del braç quan surts de l'escenari: <em>"Sabia on era, oi?"</em> No li respons.</p>
+    <p>Segueixes dirigint la coral els mesos següents. Sou bons. El públic us estima. Però en cada assaig, quan entres a la sala i veus el faristol buit del director, recuerdes aquells dotze minuts de vídeo i la cadira on la Dolors s'asseia mentre esperaves que marxés.</p>
+    <p><em>De vegades callar és també una decisió. I les decisions no s'obliden.</em></p>`,
+    choices: []
+  },
+};
+
+// ════════════════════════════════════════════════════════
+// ENGINE
+// ════════════════════════════════════════════════════════
+function startAdventure() {
+  showScreen('screen-game');
+  goTo('inici');
+}
+
+function goTo(nodeId) {
+  const node = NODES[nodeId];
+  if (!node) return;
+
+  const wrap = document.getElementById('scene-wrap');
+  wrap.style.animation = 'none';
+  wrap.offsetHeight;
+  wrap.style.animation = '';
+
+  let endingHTML = '';
+  if (node.ending) {
+    endingHTML = `
+      <div class="scene-ending">
+        <div class="ending-badge ${node.ending}">${node.endingLabel}</div>
+        <br>
+        <button class="btn-restart" onclick="startAdventure()">↺ Torna a començar</button>
+        <br><br>
+        <button class="btn-restart" onclick="showScreen('screen-cover')" style="opacity:.5">← Portada</button>
+      </div>`;
+  }
+
+  const choicesHTML = node.choices && node.choices.length > 0 ? `
+    <div class="scene-divider">♩</div>
+    <div class="choices">
+      ${node.choices.map(c => `
+        <button class="choice-btn" onclick="goTo('${c.next}')">
+          <span class="choice-arrow">▶</span>
+          <span>${c.label}</span>
+        </button>
+      `).join('')}
+    </div>
+  ` : endingHTML;
+
+  wrap.innerHTML = `
+    <div class="scene-art">${getArt(node.art)}</div>
+    <div class="scene-chapter">${node.chapter}</div>
+    <div class="scene-title">${node.title}</div>
+    <div class="scene-text">${node.text}</div>
+    ${choicesHTML}
+  `;
+
+  document.getElementById('screen-game').scrollTo(0, 0);
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>El Retrat de la Reina – Gobo26</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a1208;
+  --bg2: #221a0a;
+  --parch: #f5e6c8;
+  --parch2: #ede0b8;
+  --ink: #2c1a06;
+  --gold: #c9922a;
+  --gold2: #e8b84b;
+  --red: #8b1a1a;
+  --red2: #b02020;
+  --accent: #2563eb;
+  --shadow: rgba(0,0,0,0.7);
+  --radius: 4px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  background: var(--bg);
+  color: var(--parch);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(201,146,42,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(139,26,26,0.08) 0%, transparent 50%);
+}
+
+/* HEADER */
+header {
+  background: #110d05;
+  border-bottom: 1px solid rgba(201,146,42,0.3);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.logo-hex {
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none; color: var(--parch);
+}
+.logo-hex svg { width: 34px; height: 34px; }
+.logo-text { font-family: 'Montserrat', sans-serif; font-size: 11px; line-height: 1.2; font-weight: 700; }
+.logo-text span { display: block; font-size: 9px; font-weight: 400; opacity: 0.5; }
+
+header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gold);
+  text-align: center;
+}
+
+.header-spacer { width: 52px; }
+
+/* PANTALLES */
+.screen { display: none; flex-direction: column; flex: 1; }
+.screen.active { display: flex; }
+
+/* ── PANTALLA PORTADA ── */
+#screen-cover {
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  text-align: center;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-ornament {
+  font-size: 64px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 20px rgba(201,146,42,0.5));
+  animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.cover-title {
+  font-family: 'Cinzel', serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--gold2);
+  letter-spacing: 2px;
+  line-height: 1.3;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 12px rgba(201,146,42,0.4);
+}
+
+.cover-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  color: rgba(245,230,200,0.5);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.cover-sep {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto 24px;
+}
+
+.cover-intro {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--parch2);
+  max-width: 340px;
+  font-style: italic;
+  margin-bottom: 32px;
+}
+
+.btn-begin {
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: var(--radius);
+  padding: 16px 40px;
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(201,146,42,0.4);
+  transition: all .2s;
+}
+.btn-begin:hover { background: var(--gold2); transform: translateY(-1px); }
+.btn-begin:active { transform: translateY(1px); }
+
+/* ── PANTALLA AVENTURA ── */
+#screen-game {
+  padding: 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.scene-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Il·lustració de la escena */
+.scene-art {
+  width: 100%;
+  height: 140px;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(201,146,42,0.25);
+  flex-shrink: 0;
+}
+
+/* Número de capítol */
+.scene-chapter {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* Títol de l'escena */
+.scene-title {
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold2);
+  line-height: 1.3;
+}
+
+/* Text narratiu */
+.scene-text {
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--parch2);
+}
+
+.scene-text p { margin-bottom: 12px; }
+.scene-text p:last-child { margin-bottom: 0; }
+.scene-text em { color: var(--gold2); font-style: italic; }
+.scene-text strong { color: #fff; font-weight: 600; }
+
+/* Separador */
+.scene-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(201,146,42,0.4);
+  font-size: 14px;
+}
+.scene-divider::before,
+.scene-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(201,146,42,0.25);
+}
+
+/* Botons de decisió */
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.choice-btn {
+  background: rgba(201,146,42,0.08);
+  border: 1px solid rgba(201,146,42,0.3);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  color: var(--parch);
+  font-family: 'Crimson Text', serif;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.choice-btn:hover {
+  background: rgba(201,146,42,0.18);
+  border-color: var(--gold);
+  color: var(--gold2);
+  transform: translateX(4px);
+}
+
+.choice-btn:active { transform: translateX(2px); }
+
+.choice-arrow {
+  color: var(--gold);
+  font-size: 14px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Finals especials */
+.scene-ending {
+  text-align: center;
+  padding: 16px 0 0;
+}
+
+.ending-badge {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.ending-badge.good { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+.ending-badge.bad  { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+.ending-badge.neutral { background: rgba(201,146,42,0.15); color: var(--gold2); border: 1px solid rgba(201,146,42,0.3); }
+
+.btn-restart {
+  background: none;
+  border: 1px solid rgba(201,146,42,0.4);
+  border-radius: var(--radius);
+  padding: 12px 28px;
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all .2s;
+  margin-top: 8px;
+}
+.btn-restart:hover { background: rgba(201,146,42,0.12); }
+
+/* Animació entrada escena */
+@keyframes sceneIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.scene-wrap { animation: sceneIn .35s ease forwards; }
+
+footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 11px;
+  color: rgba(245,230,200,0.25);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+}
+
+/* ── SVG ART per escenes ── */
+.art-taller svg, .art-palau svg, .art-jardí svg,
+.art-celler svg, .art-laboratori svg, .art-biblioteca svg,
+.art-reina svg, .art-nit svg, .art-final-bo svg,
+.art-final-mal svg, .art-final-neutral svg,
+.scene-art svg { width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo-hex" href="https://ja.cat/appgobo" target="_self">
+    <svg viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 1L38 11.5V34.5L20 45L2 34.5V11.5L20 1Z" fill="#2563eb"/>
+      <text x="20" y="22" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">GOBO</text>
+      <text x="20" y="33" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">26</text>
+    </svg>
+    <div class="logo-text" style="font-family:'Montserrat',sans-serif">Gobo26<span>Jocs en català</span></div>
+  </a>
+  <h1>Aventura</h1>
+  <div class="header-spacer"></div>
+</header>
+
+<!-- PORTADA -->
+<div class="screen active" id="screen-cover">
+  <div class="cover-ornament">🎨</div>
+  <div class="cover-title">El Retrat<br>de la Reina</div>
+  <div class="cover-subtitle">Una aventura de tria pròpia</div>
+  <div class="cover-sep"></div>
+  <p class="cover-intro">
+    Ets en <strong>Bernat de Montclar</strong>, pintor reial del Regne d'Altaveu.
+    T'han encarregat el retrat oficial de la Reina Elisenda — el més important de la teva carrera.
+    Però aquest matí, el teu ajudant <em>en Guillem</em> apareix mort al taller… i les mirades
+    comencen a apuntar cap a tu.
+  </p>
+  <button class="btn-begin" onclick="startAdventure()">⚔ Comença l'aventura</button>
+</div>
+
+<!-- PANTALLA JOC -->
+<div class="screen" id="screen-game">
+  <div class="scene-wrap" id="scene-wrap"></div>
+</div>
+
+<footer>Una aplicació de Gobo26 &nbsp;·&nbsp; aventura interactiva</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// NODES DE L'AVENTURA
+// Cada node: { id, chapter, title, art, text, choices, ending }
+// choices: [ { label, next } ]
+// ending: null | 'good' | 'bad' | 'neutral'
+// ══════════════════════════════════════════════════════════════
+
+const NODES = {
+
+  // ── INICI ───────────────────────────────────────────────────
+  inici: {
+    chapter: "Capítol I",
+    title: "El taller silenciós",
+    art: "taller",
+    text: `<p>L'alba just comença a daurar les torres del palau d'Altaveu quan entres al taller. L'olor de trementina i pigments t'acompanya cada matí... però avui hi ha alguna cosa diferent. <em>Massa silenci.</em></p>
+    <p>En Guillem hauria d'estar preparant la paleta. El trobes estirat al terra, entre els pots de pintura tombats. Té els llavis violacis i respira amb dificultat. Al seu costat, una tassa de vi volcada.</p>
+    <p>Criden el metge del palau. "Verí", dictamina, sense dubtar. El capità de la guàrdia t'observa amb ulls estrets: <em>"Ningú surt d'aquest ala fins que sapiguem qui ha fet això."</em></p>
+    <p>Tens pocs minuts abans que arribin més guàrdies. Tens prou sang freda per investigar tu mateix?</p>`,
+    choices: [
+      { label: "Examines la tassa de vi i els estris del taller abans que ningú els toqui.", next: "examinar_taller" },
+      { label: "Vas a parlar amb la Dona Marta, la cuinera, que sempre sap tot el que passa al palau.", next: "cuinera" },
+      { label: "Demanes audiència urgent al Senescal per demostrar la teva innocència.", next: "senescal_inici" },
+    ]
+  },
+
+  // ── BRANCA A: examinar taller ────────────────────────────────
+  examinar_taller: {
+    chapter: "Capítol I",
+    title: "Pistes entre pinzells",
+    art: "taller",
+    text: `<p>T'agenolles ràpidament al costat del cos. La tassa fa olor de vi amb alguna cosa amarga al fons — <em>arrel de mort</em>, potser, o belladona. Però el que et crida l'atenció és una cosa més petita: sota la taula de mescles, un anell amb el gravat d'una serp enroscada.</p>
+    <p>No és de cap dels servents. L'has vist abans, però no recordes on exactament.</p>
+    <p>El guàrdia torna a entrar. En un segon has de decidir: amagues l'anell o el lliures?</p>`,
+    choices: [
+      { label: "Amagues l'anell discretament per investigar-lo més tard pel teu compte.", next: "anell_amagat" },
+      { label: "El mostres al guàrdia immediatament: cooperar és la millor manera de demostrar innocència.", next: "anell_mostrat" },
+    ]
+  },
+
+  anell_amagat: {
+    chapter: "Capítol II",
+    title: "L'anell de la serp",
+    art: "palau",
+    text: `<p>A la tarda, mentre el palau bull de rumors, consultes discretament el bibliotecari ancià. Descriu l'anell amb un fil de veu: pertany a l'<em>Orde del Fil Silenciós</em>, una confraria secreta de nobles que, des de les ombres, controla nomenaments i herències de la cort.</p>
+    <p>I aleshores ho recordes: has vist aquell anell al dit d'en <strong>Lord Hug de Miralpeix</strong>, el nou Tresorer Reial. El mateix home que, des que va arribar a la cort, ha pressionat el rei perquè retallés els encàrrecs als artistes.</p>
+    <p>Ara tens una pista. Però una pista sola no és suficient per acusar un noble poderós.</p>`,
+    choices: [
+      { label: "Busques Lord Hug directament i l'enfrontes amb l'anell com a prova.", next: "enfrontar_hug" },
+      { label: "Primer vols entendre per quin motiu voldrien matar en Guillem, un simple ajudant.", next: "motiu_guillem" },
+    ]
+  },
+
+  anell_mostrat: {
+    chapter: "Capítol II",
+    title: "Cooperació perillosa",
+    art: "palau",
+    text: `<p>El capità agafa l'anell i l'examina. Els seus ulls s'obren un instant massa — el reconeix. El guarda ràpidament a la bossa i t'informa fred que <em>"la investigació segueix el seu curs"</em>.</p>
+    <p>Al vespre, un missatge anònim llisca per sota la porta de la teva cambra: <strong>"Pintor, has vist massa. Retira't ara o seràs el proper."</strong></p>
+    <p>Has comès un error: has ensenyat les cartes a algú que juga al bàndol contrari. Però l'amenaça mateixa és una prova que vas pel bon camí. Ara has d'actuar ràpid.</p>`,
+    choices: [
+      { label: "Demanes protecció urgent a la Reina Elisenda — és l'única autoritat en qui pots confiar.", next: "reina_proteccio" },
+      { label: "Decideixes girar la situació al teu favor: prepares una trampa per al capità.", next: "trampa" },
+    ]
+  },
+
+  // ── BRANCA B: cuinera ────────────────────────────────────────
+  cuinera: {
+    chapter: "Capítol I",
+    title: "La llengua de la cuina",
+    art: "palau",
+    text: `<p>La Dona Marta neteja peixos amb una destresa quasi marcial. Quan li parles d'en Guillem, les mans se li aturen un instant.</p>
+    <p><em>"El noi ahir al vespre va sopar sol al taller. Jo li vaig portar el vi, sí. Però algú l'havia demanat expressament per a ell — un paper sense signatura que va arribar a la cuina pel matí."</em></p>
+    <p>Afegeix en veu molt baixa que aquella nit va veure llum al laboratori de l'<strong>Alquimista Rael</strong>, quan hauria d'estar tancat. Rael és un home reservat que prepara tintes i pigments especials per als artistes de la cort — i, segons es murmura, molt més que això.</p>`,
+    choices: [
+      { label: "Vas directament al laboratori de l'Alquimista Rael a investigar.", next: "laboratori" },
+      { label: "Prefereixes esbrinar qui va escriure el paper anònim: consultes el secretari del rei.", next: "secretari" },
+    ]
+  },
+
+  laboratori: {
+    chapter: "Capítol II",
+    title: "El laboratori del mag",
+    art: "laboratori",
+    text: `<p>El laboratori fa olor de sofre i herbes seques. L'Alquimista Rael és un home de setanta anys amb ulls de rapinyaire. Quan entres, tanca ràpidament un llibre de cobertes negres — però no prou de pressa.</p>
+    <p><em>"Pintor. Precisament et venia a buscar."</em></p>
+    <p>T'explica que en Guillem havia anat a ell fa tres dies, espantat: havia descobert que algú falsificava el segell del rei en documents de compravenda de terres. Les víctimes eren famílies camperoles que perdien les finques. El responsable, algú molt proper al tron. Rael t'ofereix el llibre on en Guillem havia copiat les proves.</p>
+    <p><em>"Però compte: si porteu això al rei, la Reina Elisenda n'és coneixedora i no ha actuat. Ella mateixa és qui us ha encarregat el retrat."</em></p>`,
+    choices: [
+      { label: "Agafes el llibre i el portes directament al Rei, sense passar per la Reina.", next: "final_rei" },
+      { label: "Parles primer amb la Reina Elisenda en privat per escoltar la seva versió.", next: "reina_secret" },
+      { label: "Demanes a Rael que sigui ell qui porti el llibre al rei — no vols córrer més riscos.", next: "final_covard" },
+    ]
+  },
+
+  secretari: {
+    chapter: "Capítol II",
+    title: "El secretari nerviós",
+    art: "biblioteca",
+    text: `<p>En <strong>Donat de Clapers</strong>, secretari reial, és un home prim que sempre té les mans brutes de tinta. Quan li preguntes pel paper anònim que va arribar a la cuina, s'inquieta visiblement.</p>
+    <p>Al final confessa: ell mateix el va copiar, per ordre d'un noble que li va assegurar que era un regal sorpresa per al jove ajudant. No va sospitar res de dolent. Descriu el noble: <em>alt, capa blava, i un anell al dit amb el gravat d'una serp.</em></p>
+    <p>Ara saps qui és i com va arribar el verí fins a en Guillem. Però el secretari t'afegeix, pàl·lid: <em>"Aquell home té protecció al més alt nivell. Si l'acuseu sense proves sòlides, us enfonsereu vós."</em></p>`,
+    choices: [
+      { label: "Busques proves físiques al jardí del palau, on aquell noble sol passejar al vespre.", next: "jardí" },
+      { label: "Informes el Capità de la Guàrdia, confiant que complirà amb el seu deure.", next: "anell_mostrat" },
+    ]
+  },
+
+  // ── BRANCA C: senescal ──────────────────────────────────────
+  senescal_inici: {
+    chapter: "Capítol I",
+    title: "Davant el Senescal",
+    art: "palau",
+    text: `<p>El Senescal Bertran és un home just, conegut per la seva rectitud. T'escolta en silenci mentre li expliques tot el que has vist. Quan acabes, s'aixeca lentament i tanca la finestra.</p>
+    <p><em>"Bernat, confio en la teva lleialtat. Però has de saber que el teu ajudant portava dies fent preguntes incòmodes entre el personal del palau. Preguntes sobre terres, documents, noms poderosos. Algú va decidir que sabia massa."</em></p>
+    <p>T'ofereix dues opcions: <em>"Puc posar-te sota custòdia protegida mentre investiguen — segur, però lent, i els culpables tindran temps de desaparèixer les proves. O pots investigar tu sol, extraoficialment, i jo faré els ulls grossos."</em></p>`,
+    choices: [
+      { label: "Acceptes la custòdia protegida i confies en la investigació oficial.", next: "custodia" },
+      { label: "Tries investigar pel teu compte, amb la cobertura del Senescal.", next: "cuinera" },
+    ]
+  },
+
+  custodia: {
+    chapter: "Capítol II",
+    title: "La presó daurada",
+    art: "palau",
+    text: `<p>Et tanquen en una cambra còmoda però vigilada. Passen tres dies sense novetats. La investigació oficial avança amb una lentitud sospitosa, com si algú la freni des de dins.</p>
+    <p>El quart dia, un patge et porta en secret una nota de la Reina Elisenda: <em>"Pintor, el vostre confinament és un error que jo he permès massa temps. Sé qui ha matat el vostre ajudant i per quin motiu. Veniu a la sessió de retrat demà al matí — és l'única manera que puguem parlar sense testimonis."</em></p>
+    <p>La nota és una oportunitat, però també pot ser una trampa. Si la Reina sabia la veritat i no ha actuat, potser vol controlar el que sabeu.</p>`,
+    choices: [
+      { label: "Acceptes la invitació: nécessites escoltar la seva versió per entendre el que passa.", next: "reina_secret" },
+      { label: "Desconfies i passes la nota al Senescal per no arriscar-te.", next: "final_mig" },
+    ]
+  },
+
+  // ── NODES INTERMEDIS ────────────────────────────────────────
+  motiu_guillem: {
+    chapter: "Capítol II",
+    title: "Per què en Guillem?",
+    art: "biblioteca",
+    text: `<p>Recordes els darrers dies. En Guillem estava estrany — callat, distret, amb ulls de qui dorm malament. Una tarda el vas sorprendre copiant documents que no tenien res a veure amb el taller. Quan li vas preguntar, va dir que eren <em>"esbossos per a una composició"</em>. Era una mentida evident.</p>
+    <p>Ara tot encaixa: havia descobert documents falsificats amb el segell del rei i en feia còpies per denunciar-ho. Va posar-se en perill sol, sense dir-te res, per protegir-te. I algú ho va saber abans que pogués actuar.</p>
+    <p>Sents una barreja de culpa i ràbia. Ara que saps el motiu, saps també on han d'estar les proves.</p>`,
+    choices: [
+      { label: "Vas al jardí del palau, on Lord Hug de Miralpeix es reuneix en secret al vespre.", next: "jardí" },
+      { label: "Baixes al celler d'arxius del palau, on es guarden tots els documents oficials.", next: "celler" },
+    ]
+  },
+
+  jardí: {
+    chapter: "Capítol III",
+    title: "El jardí dels murmuris",
+    art: "jardí",
+    text: `<p>Al vespre, el jardí és un lloc de converses que no han d'existir. T'amagues entre els rosers quan veus Lord Hug parlant amb el Capità de la Guàrdia en veu molt baixa. N'escoltes prou:</p>
+    <p><em>"El pintor sap massa. Fes que l'acusin formalment d'haver preparat el verí. Amb ell entre reixes, ningú no l'escoltarà."</em></p>
+    <p>Fas un moviment involuntari i trepitges una branca seca. <strong>S'aturen.</strong> Giren el cap lentament cap a les ombres on t'has amagat.</p>`,
+    choices: [
+      { label: "Surts de l'amagatall i els confrontes obertament: has escoltat tot i no tens res a perdre.", next: "enfrontar_hug" },
+      { label: "Fuges en silenci cap als aposentos de la Reina Elisenda — és l'únic lloc segur ara.", next: "reina_proteccio" },
+    ]
+  },
+
+  celler: {
+    chapter: "Capítol III",
+    title: "Arxius en la penombra",
+    art: "celler",
+    text: `<p>El celler fa olor de pergamí vell i humitat. Entre centenars de documents apilats, trobes el que buscaves: escriptures de transmissió de terres amb el segell del rei, però la tinta del segell és diferent de la resta. <em>Massa nova. Massa brillant.</em> Falsificats, tots.</p>
+    <p>Algú s'ha apropiat de dotzenes de finques durant anys, arruïnant famílies senceres. I les proves originals que ho demostren — les que en Guillem havia trobat — estan totes aquí, amuntegades com si algú les hagués de fer desaparèixer aviat.</p>
+    <p>Mentre les recollies, sents passes que baixen les escales del celler.</p>`,
+    choices: [
+      { label: "T'amagues ràpidament entre les estanteries i esperes per veure qui baixa.", next: "trampa" },
+      { label: "Surts amb els documents a la mà i t'enfrontes a qui sigui: les proves et protegeixen.", next: "final_rei" },
+    ]
+  },
+
+  trampa: {
+    chapter: "Capítol III",
+    title: "El caçador caçat",
+    art: "nit",
+    text: `<p>Passes la tarda preparant la trampa amb el Senescal, l'únic en qui confies. Feu córrer la veu — a través del patge més xerraire del palau — que el pintor ha trobat una carta definitiva i que la portarà al rei a l'alba.</p>
+    <p>A mitjanit, la porta de la teva cambra s'obre sense trucar. Lord Hug entra amb dos homes armats. No sap que el Senescal i tres testimonis de confiança esperen amagats a la cambra del costat, tal com heu acordat.</p>
+    <p><em>"Dona'm la carta, pintor,"</em> diu Lord Hug amb una calma glaçada, <em>"i et prometo que sortiràs viu d'aquest palau."</em></p>
+    <p>La porta del costat s'obre. El Senescal entra amb els testimonis.</p>`,
+    choices: [
+      { label: "Lord Hug és detingut davant de testimonis irrefutables. Seguir fins a l'epíleg.", next: "final_bo" },
+    ]
+  },
+
+  enfrontar_hug: {
+    chapter: "Capítol III",
+    title: "Cara a cara",
+    art: "palau",
+    text: `<p>Lord Hug et mira amb un somriure fred quan surts de les ombres. Quan li mostres l'anell o li repeteixes el que has sentit, aixeca una cella: <em>"Proves circumstancials, pintor. A qui creuran a la cort — a un noble de sang o a un artesà amb les mans tacades de pintura?"</em></p>
+    <p>Té raó: sense documents, és la seva paraula contra la teva. Però aleshores veus, sobre l'escriptori a la seva esquena, un document amb el segell del rei... i la tinta encara brilla. <em>Acabat de segellar.</em> Una nova falsificació, en curs.</p>
+    <p>És l'única oportunitat que tindràs.</p>`,
+    choices: [
+      { label: "T'apoderes del document i surts corrent cap al Senescal: és la prova que necessitaves.", next: "final_bo" },
+      { label: "Prefereixes un testimoni d'autoritat: demanes a la Reina que acudeixi ara mateix.", next: "reina_secret" },
+    ]
+  },
+
+  reina_proteccio: {
+    chapter: "Capítol III",
+    title: "Refugi reial",
+    art: "reina",
+    text: `<p>La Reina Elisenda t'escolta dreta, immòbil com una estàtua, mentre li expliques tot el que has vist i sentit. Quan acabes, tanca els ulls un moment i deixa anar un sospir llarg.</p>
+    <p><em>"Bernat, el que em dieu no m'és desconegut. Fa mesos que ho sé."</em></p>
+    <p>T'explica que no ha actuat per por d'una crisi successòria: el príncep, el fill del rei, ha estat còmplice de Lord Hug a canvi d'un deute esborrat. Destapar la trama significa perdre l'hereu al tron.</p>
+    <p><em>"Si ho exposeu tot, el Regne trontollarà. Si calleu, les injustícies continuen i en Guillem mor en va. La decisió és vostra, Bernat. Jo faré el que vós decidiu."</em></p>`,
+    choices: [
+      { label: "Decidiu exposar-ho tot amb la Reina com a testimoni, malgrat les conseqüències per a la corona.", next: "final_bo" },
+      { label: "Accepteu un acord discret: els culpables deixen la cort, les terres es retornen en silenci.", next: "final_mig" },
+      { label: "Calleu. El príncep, la corona, el palau... tot és massa gran per a un pintor.", next: "final_covard" },
+    ]
+  },
+
+  reina_secret: {
+    chapter: "Capítol III",
+    title: "El secret de la Reina",
+    art: "reina",
+    text: `<p>La sessió de retrat comença en silenci. La Reina posa immòbil mentre parleu en veu molt baixa, com si les paraules fossin pinzellades que ningú més pot veure. Cada confessió arriba amb la naturalitat d'algú que porta massa temps carregant un pes sol.</p>
+    <p>En Guillem havia anat a ella primer, fa tres setmanes. Li havia portat les proves. Ella li havia promès que actuaria quan fos el moment adequat. Però el moment mai no va arribar, i en Guillem va perdre la paciència i va continuar investigant pel seu compte fins que algú el va trobar.</p>
+    <p><em>"La seva mort és responsabilitat meva, Bernat. I he viscut cada dia d'ençà sabent-ho. Vull reparar-ho. Però necessito que vós em doneu les proves que ell tenia."</em></p>`,
+    choices: [
+      { label: "Li lliureu les proves i confieu que la Reina actuarà, ara sí, fins al final.", next: "final_bo" },
+      { label: "No podeu perdonar la seva inacció. Porteu les proves directament al Rei, sense ella.", next: "final_rei" },
+    ]
+  },
+
+  // ── FINALS ──────────────────────────────────────────────────
+  final_bo: {
+    chapter: "Epíleg",
+    title: "El pintor i la veritat",
+    art: "final_bo",
+    text: `<p>Lord Hug de Miralpeix és detingut aquella mateixa nit. El Capità de la Guàrdia, còmplice seu des del primer dia, fuig del Regne però és capturat a la frontera tres dies després. Les terres falsament adquirides tornen als seus propietaris per decret reial.</p>
+    <p>El príncep és apartat de la línia de successió i enviat a un monestir llunyà, no per càstig sinó per salvar-li la vida i la reputació. El Rei, quan llegeix les proves, no plora. Tan sols diu, en veu molt baixa: <em>"Gràcies, Bernat. Hauríeu pogut callar. I heu triat no fer-ho."</em></p>
+    <p>En Guillem és enterrat amb honors a la capella del palau. Per ordre reial, el seu nom figura al peu del retrat oficial de la Reina Elisenda — acabat per tu, naturalment, amb mà ferma i cor tranquil.</p>
+    <p><em>És el millor quadre que has pintat mai.</em></p>`,
+    ending: "good",
+    endingLabel: "✦ Final de la Veritat ✦",
+    choices: []
+  },
+
+  final_rei: {
+    chapter: "Epíleg",
+    title: "La justícia del Rei",
+    art: "final_bo",
+    text: `<p>El Rei escolta les proves amb el rostre de pedra. Lord Hug és empresonat. El príncep, apartat de la successió. Però la Reina — que sabia la veritat i havia callat durant setmanes — és humiliada públicament davant la cort. El matrimoni reial mai no se'n recupera del tot.</p>
+    <p>El retrat oficial no s'acaba. El Rei no té cap interès a commemorar aquell període amb un quadre a la sala del tron.</p>
+    <p>Surts del palau amb la reputació intacta, la consciència neta i la bossa buida. A les setmanes trobes feina a la cort d'un ducat veí. Les famílies camperoles recuperen les terres. En Guillem té justícia.</p>
+    <p><em>A vegades la veritat i la gratitud no arriben juntes. Però la veritat arriba.</em></p>`,
+    ending: "neutral",
+    endingLabel: "⚖ Final de la Justícia ⚖",
+    choices: []
+  },
+
+  final_mig: {
+    chapter: "Epíleg",
+    title: "El pacte de les ombres",
+    art: "palau",
+    text: `<p>Un acord discret, mediat per la Reina. Lord Hug abandona la cort "per raons de salut" i es retira a les seves terres. El Capità de la Guàrdia és traslladat a una guarnició fronterera. Les finques falsament adquirides tornen als seus propietaris, sense decrets públics ni explicacions.</p>
+    <p>La mort d'en Guillem queda registrada com un accident. Ningú no ho creu, però ningú no ho discuteix obertament.</p>
+    <p>Acabes el retrat de la Reina. És un bon retrat — tècnicament impecable, lluminós, digne. El Rei l'aprecia. La Reina et mira, quan el descobreixes, amb una expressió que barreja gratitud i culpa.</p>
+    <p>Cada vegada que passes per davant d'aquell quadre al corredor del palau, veus, en la penombra que has pintat darrere la seva figura, una ombra que s'assembla massa a un noi jove. <em>Potser l'has pintada sense voler. O potser sí que ho volies.</em></p>`,
+    ending: "neutral",
+    endingLabel: "◈ Final del Pacte ◈",
+    choices: []
+  },
+
+  final_covard: {
+    chapter: "Epíleg",
+    title: "El silenci del pintor",
+    art: "final_mal",
+    text: `<p>No t'impliques més. El cas es tanca aviat: un servent de la cuina és acusat d'haver preparat el verí per gelosia professional. Tothom al palau sap que és mentida. Ningú no diu res.</p>
+    <p>Acabes el retrat de la Reina Elisenda. És magnífic — potser el millor tècnicament de tota la teva carrera. La llum cau sobre el seu rostre d'una manera que amaga el cansament i revela la dignitat. El Rei l'elogia davant de tota la cort. Et fan nous encàrrecs, i després d'altres. Tens èxit.</p>
+    <p>Però cada matí, quan entres al taller i mires la cadira buida on en Guillem seia a preparar la paleta, et costa una mica més agafar el pinzell. No és dolor, exactament. És quelcom més petit i persistent: la certesa que una part del teu talent ha quedat tancada en aquella cadira buida, per sempre.</p>
+    <p><em>El silenci no absol. Només s'acumula.</em></p>`,
+    ending: "bad",
+    endingLabel: "✗ Final del Silenci ✗",
+    choices: []
+  },
+};
+
+// ══════════════════════════════════════════════════════════════
+// ARTS SVG per a cada escena
+// ══════════════════════════════════════════════════════════════
+function getArtSVG(art) {
+  const defs = {
+    taller: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#1a1208"/>
+      <rect x="0" y="80" width="400" height="60" fill="#110d05"/>
+      <!-- finestra amb llum alba -->
+      <rect x="280" y="10" width="90" height="80" fill="#2a1f0a" rx="2"/>
+      <rect x="285" y="14" width="80" height="70" fill="#3d3010" rx="1"/>
+      <rect x="285" y="14" width="80" height="70" fill="url(#dawn)" rx="1"/>
+      <defs><radialGradient id="dawn" cx="50%" cy="50%"><stop offset="0%" stop-color="#c9922a" stop-opacity=".5"/><stop offset="100%" stop-color="#1a1208" stop-opacity="0"/></radialGradient></defs>
+      <!-- cavallet -->
+      <line x1="60" y1="20" x2="40" y2="100" stroke="#5a4020" stroke-width="3"/>
+      <line x1="100" y1="20" x2="120" y2="100" stroke="#5a4020" stroke-width="3"/>
+      <line x1="80" y1="22" x2="80" y2="95" stroke="#5a4020" stroke-width="2"/>
+      <rect x="55" y="22" width="52" height="65" fill="#2c1f0a" rx="1" stroke="#c9922a" stroke-width="1" stroke-opacity=".4"/>
+      <!-- tela al cavallet amb esbós -->
+      <rect x="57" y="24" width="48" height="61" fill="#f5e6c8" fill-opacity=".15"/>
+      <line x1="65" y1="55" x2="97" y2="55" stroke="#c9922a" stroke-width=".5" stroke-opacity=".3"/>
+      <!-- pots de pintura -->
+      <rect x="160" y="75" width="12" height="16" fill="#8b1a1a" rx="2"/>
+      <rect x="175" y="72" width="12" height="19" fill="#1a4a8b" rx="2"/>
+      <rect x="190" y="76" width="10" height="15" fill="#2a7a2a" rx="2"/>
+      <!-- figura en terra subtil -->
+      <ellipse cx="200" cy="100" rx="55" ry="12" fill="#8b1a1a" fill-opacity=".2"/>
+      <line x1="155" y1="95" x2="245" y2="95" stroke="#8b1a1a" stroke-width="1.5" stroke-opacity=".4"/>
+      <!-- espelma -->
+      <rect x="30" y="70" width="6" height="18" fill="#e8e0d0"/>
+      <ellipse cx="33" cy="70" rx="3" ry="6" fill="#e8b84b" fill-opacity=".7"/>
+    </svg>`,
+
+    palau: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#1a1208"/>
+      <!-- sostre gòtic -->
+      <path d="M0,60 Q100,20 200,50 Q300,20 400,60 L400,0 L0,0 Z" fill="#110d05"/>
+      <!-- columnes -->
+      <rect x="40" y="40" width="14" height="100" fill="#221a0a"/>
+      <rect x="120" y="40" width="14" height="100" fill="#221a0a"/>
+      <rect x="200" y="40" width="14" height="100" fill="#221a0a"/>
+      <rect x="280" y="40" width="14" height="100" fill="#221a0a"/>
+      <rect x="360" y="40" width="14" height="100" fill="#221a0a"/>
+      <!-- ornaments daurats a les columnes -->
+      <rect x="38" y="40" width="18" height="6" fill="#c9922a" fill-opacity=".6" rx="1"/>
+      <rect x="118" y="40" width="18" height="6" fill="#c9922a" fill-opacity=".6" rx="1"/>
+      <rect x="198" y="40" width="18" height="6" fill="#c9922a" fill-opacity=".6" rx="1"/>
+      <rect x="278" y="40" width="18" height="6" fill="#c9922a" fill-opacity=".6" rx="1"/>
+      <!-- vitrall central -->
+      <rect x="160" y="10" width="80" height="50" fill="#1a2a4a" rx="2"/>
+      <path d="M200,12 L220,35 L200,58 L180,35 Z" fill="#8b1a1a" fill-opacity=".5"/>
+      <path d="M160,35 L200,12 L240,35" fill="none" stroke="#c9922a" stroke-width="1" stroke-opacity=".6"/>
+      <!-- terra -->
+      <line x1="0" y1="130" x2="400" y2="130" stroke="#c9922a" stroke-width="1" stroke-opacity=".2"/>
+    </svg>`,
+
+    laboratori: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0d1a1a"/>
+      <!-- prestatges -->
+      <rect x="0" y="30" width="140" height="8" fill="#2a3a2a" rx="1"/>
+      <rect x="0" y="60" width="140" height="8" fill="#2a3a2a" rx="1"/>
+      <rect x="0" y="90" width="140" height="8" fill="#2a3a2a" rx="1"/>
+      <!-- flascons -->
+      <rect x="10" y="15" width="10" height="15" fill="#1a4a8b" fill-opacity=".7" rx="2"/>
+      <rect x="25" y="18" width="8" height="12" fill="#8b1a1a" fill-opacity=".7" rx="2"/>
+      <rect x="38" y="12" width="12" height="18" fill="#1a6a1a" fill-opacity=".7" rx="2"/>
+      <rect x="55" y="16" width="9" height="14" fill="#6a1a6a" fill-opacity=".7" rx="2"/>
+      <ellipse cx="15" cy="14" rx="5" ry="3" fill="#c9922a" fill-opacity=".5"/>
+      <ellipse cx="29" cy="17" rx="4" ry="2.5" fill="#c9922a" fill-opacity=".5"/>
+      <!-- llibre obert -->
+      <rect x="200" y="60" width="160" height="70" fill="#1a1208" rx="2"/>
+      <rect x="202" y="62" width="76" height="66" fill="#f5e6c8" fill-opacity=".1"/>
+      <rect x="282" y="62" width="76" height="66" fill="#f5e6c8" fill-opacity=".1"/>
+      <line x1="200" y1="65" x2="360" y2="65" stroke="#c9922a" stroke-width=".5" stroke-opacity=".4"/>
+      <!-- fum i espurnes -->
+      <circle cx="80" cy="50" r="3" fill="#e8b84b" fill-opacity=".6"/>
+      <circle cx="90" cy="42" r="2" fill="#e8b84b" fill-opacity=".4"/>
+      <circle cx="75" cy="36" r="1.5" fill="#e8b84b" fill-opacity=".3"/>
+    </svg>`,
+
+    jardí: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0a1a0a"/>
+      <!-- cel nocturn -->
+      <rect width="400" height="80" fill="#0a0d1a"/>
+      <circle cx="50" cy="20" r="2" fill="white" fill-opacity=".6"/>
+      <circle cx="120" cy="15" r="1.5" fill="white" fill-opacity=".5"/>
+      <circle cx="200" cy="25" r="1" fill="white" fill-opacity=".7"/>
+      <circle cx="300" cy="10" r="2" fill="white" fill-opacity=".4"/>
+      <circle cx="370" cy="30" r="1.5" fill="white" fill-opacity=".6"/>
+      <!-- lluna -->
+      <circle cx="340" cy="25" r="18" fill="#d4c89a" fill-opacity=".3"/>
+      <circle cx="348" cy="20" r="14" fill="#0a0d1a"/>
+      <!-- rosers -->
+      <rect x="0" y="80" width="400" height="60" fill="#0a1a0a"/>
+      <path d="M0,90 Q30,70 60,85 Q90,70 120,90 Q150,75 180,90 Q210,70 240,90 Q270,75 300,90 Q330,70 360,90 Q390,75 420,90" fill="none" stroke="#1a3a1a" stroke-width="8"/>
+      <!-- roses -->
+      <circle cx="60" cy="82" r="6" fill="#8b1a1a" fill-opacity=".8"/>
+      <circle cx="120" cy="78" r="5" fill="#8b1a1a" fill-opacity=".7"/>
+      <circle cx="200" cy="82" r="7" fill="#8b1a1a" fill-opacity=".6"/>
+      <circle cx="270" cy="79" r="5" fill="#8b1a1a" fill-opacity=".8"/>
+      <!-- dues figures en conversa -->
+      <ellipse cx="180" cy="115" rx="12" ry="5" fill="#1e293b" fill-opacity=".7"/>
+      <ellipse cx="220" cy="112" rx="12" ry="5" fill="#1e293b" fill-opacity=".7"/>
+      <rect x="172" y="92" width="16" height="25" fill="#1e293b" rx="2"/>
+      <rect x="212" y="89" width="16" height="25" fill="#2c1a0a" rx="2"/>
+    </svg>`,
+
+    celler: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0d0a06"/>
+      <!-- arcs de volta -->
+      <path d="M0,80 Q80,20 160,80" fill="none" stroke="#2a1a08" stroke-width="12"/>
+      <path d="M160,80 Q240,20 320,80" fill="none" stroke="#2a1a08" stroke-width="12"/>
+      <path d="M320,80 Q400,20 480,80" fill="none" stroke="#2a1a08" stroke-width="12"/>
+      <!-- barrils -->
+      <ellipse cx="50" cy="110" rx="30" ry="20" fill="#3a2010"/>
+      <rect x="20" y="90" width="60" height="22" fill="#3a2010" rx="3"/>
+      <ellipse cx="50" cy="90" rx="30" ry="8" fill="#4a2a14"/>
+      <line x1="20" y1="101" x2="80" y2="101" stroke="#5a3a1a" stroke-width="1.5"/>
+      <ellipse cx="160" cy="115" rx="25" ry="16" fill="#3a2010"/>
+      <rect x="135" y="99" width="50" height="18" fill="#3a2010" rx="3"/>
+      <!-- estanteries de pergamins -->
+      <rect x="250" y="30" width="140" height="100" fill="#1a1208" rx="2"/>
+      <rect x="252" y="32" width="136" height="96" fill="#221a0a"/>
+      <!-- rolles de pergamí -->
+      <rect x="258" y="40" width="18" height="8" fill="#c9922a" fill-opacity=".4" rx="3"/>
+      <rect x="280" y="40" width="18" height="8" fill="#c9922a" fill-opacity=".3" rx="3"/>
+      <rect x="302" y="40" width="18" height="8" fill="#c9922a" fill-opacity=".4" rx="3"/>
+      <rect x="258" y="55" width="18" height="8" fill="#c9922a" fill-opacity=".3" rx="3"/>
+      <rect x="280" y="55" width="18" height="8" fill="#c9922a" fill-opacity=".5" rx="3"/>
+      <!-- llum d'espelma -->
+      <circle cx="200" cy="90" r="25" fill="#e8b84b" fill-opacity=".08"/>
+      <rect x="196" y="95" width="8" height="20" fill="#e8e0d0"/>
+      <ellipse cx="200" cy="93" rx="4" ry="7" fill="#e8b84b" fill-opacity=".8"/>
+    </svg>`,
+
+    biblioteca: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#1a1208"/>
+      <!-- prestatges de llibres -->
+      <rect x="0" y="0" width="60" height="140" fill="#110d05"/>
+      <rect x="340" y="0" width="60" height="140" fill="#110d05"/>
+      <!-- llibres colors -->
+      <rect x="5" y="10" width="8" height="40" fill="#8b1a1a" rx="1"/>
+      <rect x="14" y="15" width="10" height="35" fill="#1a4a8b" rx="1"/>
+      <rect x="25" y="8" width="8" height="42" fill="#2a5a2a" rx="1"/>
+      <rect x="34" y="12" width="10" height="38" fill="#c9922a" fill-opacity=".7" rx="1"/>
+      <rect x="45" y="16" width="8" height="34" fill="#6a1a6a" rx="1"/>
+      <rect x="5" y="60" width="8" height="35" fill="#c9922a" fill-opacity=".6" rx="1"/>
+      <rect x="14" y="58" width="10" height="37" fill="#8b1a1a" rx="1"/>
+      <rect x="25" y="62" width="8" height="33" fill="#1a4a8b" rx="1"/>
+      <rect x="34" y="56" width="10" height="39" fill="#2a5a2a" rx="1"/>
+      <!-- taula central -->
+      <rect x="100" y="70" width="200" height="50" fill="#2c1a0a" rx="3"/>
+      <rect x="110" y="75" width="180" height="40" fill="#221308" rx="2"/>
+      <!-- document sobre la taula -->
+      <rect x="140" y="65" width="120" height="80" fill="#f5e6c8" fill-opacity=".12" rx="2"/>
+      <line x1="150" y1="80" x2="250" y2="80" stroke="#c9922a" stroke-width=".5" stroke-opacity=".5"/>
+      <line x1="150" y1="90" x2="250" y2="90" stroke="#c9922a" stroke-width=".5" stroke-opacity=".3"/>
+      <line x1="150" y1="100" x2="220" y2="100" stroke="#c9922a" stroke-width=".5" stroke-opacity=".3"/>
+      <!-- espelma sobre taula -->
+      <rect x="300" y="58" width="8" height="22" fill="#e8e0d0"/>
+      <ellipse cx="304" cy="57" rx="4" ry="7" fill="#e8b84b" fill-opacity=".8"/>
+      <circle cx="304" cy="65" r="18" fill="#e8b84b" fill-opacity=".06"/>
+    </svg>`,
+
+    reina: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#1a1208"/>
+      <!-- cortines luxoses -->
+      <path d="M0,0 Q40,70 0,140" fill="#3a0a0a" fill-opacity=".8"/>
+      <path d="M400,0 Q360,70 400,140" fill="#3a0a0a" fill-opacity=".8"/>
+      <path d="M0,0 Q50,80 10,140" fill="#8b1a1a" fill-opacity=".4"/>
+      <path d="M400,0 Q350,80 390,140" fill="#8b1a1a" fill-opacity=".4"/>
+      <!-- tron suggerit -->
+      <rect x="150" y="30" width="100" height="90" fill="#2c1a0a" rx="4"/>
+      <rect x="155" y="35" width="90" height="80" fill="#1a1208" rx="3"/>
+      <!-- figura de la reina (silueta elegant) -->
+      <ellipse cx="200" cy="55" rx="18" ry="22" fill="#221a0a"/>
+      <rect x="182" y="75" width="36" height="45" fill="#221a0a" rx="2"/>
+      <!-- corona -->
+      <path d="M188,38 L192,28 L200,35 L208,28 L212,38 Z" fill="#c9922a" fill-opacity=".9"/>
+      <rect x="187" y="37" width="26" height="6" fill="#c9922a" fill-opacity=".7" rx="1"/>
+      <!-- joies -->
+      <circle cx="196" cy="72" r="3" fill="#e8b84b" fill-opacity=".7"/>
+      <circle cx="204" cy="72" r="3" fill="#e8b84b" fill-opacity=".7"/>
+      <!-- llum dramàtica des de dalt -->
+      <radialGradient id="queenLight" cx="50%" cy="0%" r="60%">
+        <stop offset="0%" stop-color="#c9922a" stop-opacity=".25"/>
+        <stop offset="100%" stop-color="#1a1208" stop-opacity="0"/>
+      </radialGradient>
+      <rect width="400" height="140" fill="url(#queenLight)"/>
+    </svg>`,
+
+    nit: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#050810"/>
+      <!-- estels -->
+      <circle cx="30" cy="20" r="1.5" fill="white" fill-opacity=".7"/>
+      <circle cx="80" cy="40" r="1" fill="white" fill-opacity=".5"/>
+      <circle cx="150" cy="15" r="2" fill="white" fill-opacity=".6"/>
+      <circle cx="220" cy="35" r="1.5" fill="white" fill-opacity=".4"/>
+      <circle cx="300" cy="20" r="1" fill="white" fill-opacity=".7"/>
+      <circle cx="360" cy="45" r="2" fill="white" fill-opacity=".5"/>
+      <!-- torres del palau -->
+      <rect x="50" y="40" width="40" height="100" fill="#0d0d1a"/>
+      <path d="M45,40 L70,20 L95,40 Z" fill="#0d0d1a"/>
+      <rect x="200" y="30" width="50" height="110" fill="#0d0d1a"/>
+      <path d="M195,30 L225,8 L255,30 Z" fill="#0d0d1a"/>
+      <rect x="320" y="45" width="35" height="95" fill="#0d0d1a"/>
+      <path d="M316,45 L337,25 L358,45 Z" fill="#0d0d1a"/>
+      <!-- finestres il·luminades -->
+      <rect x="60" y="60" width="10" height="14" fill="#e8b84b" fill-opacity=".4" rx="1"/>
+      <rect x="210" y="50" width="12" height="16" fill="#e8b84b" fill-opacity=".5" rx="1"/>
+      <rect x="330" y="65" width="8" height="12" fill="#e8b84b" fill-opacity=".3" rx="1"/>
+      <!-- terra fosc -->
+      <rect x="0" y="110" width="400" height="30" fill="#080508"/>
+    </svg>`,
+
+    final_bo: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#1a1208"/>
+      <!-- quadre enmarcat (el retrat) -->
+      <rect x="120" y="10" width="160" height="120" fill="#2c1a0a" rx="3"/>
+      <rect x="125" y="15" width="150" height="110" fill="#8b1a1a" fill-opacity=".3" rx="2"/>
+      <rect x="128" y="18" width="144" height="104" fill="#f5e6c8" fill-opacity=".08" rx="1"/>
+      <!-- marc daurat -->
+      <rect x="118" y="8" width="164" height="4" fill="#c9922a" rx="1"/>
+      <rect x="118" y="128" width="164" height="4" fill="#c9922a" rx="1"/>
+      <rect x="118" y="8" width="4" height="124" fill="#c9922a" rx="1"/>
+      <rect x="278" y="8" width="4" height="124" fill="#c9922a" rx="1"/>
+      <!-- silueta de la reina al quadre -->
+      <ellipse cx="200" cy="55" rx="16" ry="20" fill="#c9922a" fill-opacity=".2"/>
+      <rect x="184" y="73" width="32" height="42" fill="#c9922a" fill-opacity=".15" rx="2"/>
+      <!-- corona petita -->
+      <path d="M192,38 L196,30 L200,36 L204,30 L208,38 Z" fill="#c9922a" fill-opacity=".6"/>
+      <!-- llum daurada -->
+      <radialGradient id="goldLight" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#c9922a" stop-opacity=".15"/>
+        <stop offset="100%" stop-color="#1a1208" stop-opacity="0"/>
+      </radialGradient>
+      <rect width="400" height="140" fill="url(#goldLight)"/>
+      <!-- firma al peu -->
+      <line x1="150" y1="118" x2="250" y2="118" stroke="#c9922a" stroke-width=".8" stroke-opacity=".5"/>
+      <text x="200" y="126" font-family="Georgia,serif" font-size="8" fill="#c9922a" fill-opacity=".6" text-anchor="middle" font-style="italic">Bernat de Montclar, pintor reial</text>
+    </svg>`,
+
+    final_mal: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0d0808"/>
+      <!-- cavallet buit -->
+      <line x1="120" y1="20" x2="100" y2="120" stroke="#3a2010" stroke-width="3"/>
+      <line x1="160" y1="20" x2="180" y2="120" stroke="#3a2010" stroke-width="2.5"/>
+      <line x1="140" y1="22" x2="140" y2="115" stroke="#3a2010" stroke-width="2"/>
+      <rect x="110" y="22" width="62" height="78" fill="#1a1208" rx="1" stroke="#3a2010" stroke-width="1"/>
+      <!-- tela buida/en blanc -->
+      <rect x="113" y="25" width="56" height="72" fill="#f5e6c8" fill-opacity=".04"/>
+      <!-- ombra al terra -->
+      <ellipse cx="140" cy="120" rx="45" ry="8" fill="#000" fill-opacity=".4"/>
+      <!-- finestra amb llum esmorteïda -->
+      <rect x="280" y="20" width="80" height="60" fill="#110a05" rx="2"/>
+      <rect x="284" y="24" width="72" height="52" fill="#1a1208"/>
+      <rect x="284" y="24" width="72" height="52" fill="url(#dimLight)"/>
+      <defs><radialGradient id="dimLight" cx="50%" cy="50%"><stop offset="0%" stop-color="#c9922a" stop-opacity=".08"/><stop offset="100%" stop-color="#0d0808" stop-opacity="0"/></radialGradient></defs>
+      <!-- pinzell abandonat al terra -->
+      <line x1="50" y1="115" x2="90" y2="108" stroke="#5a3a1a" stroke-width="2.5"/>
+      <rect x="86" y="105" width="12" height="5" fill="#8b1a1a" rx="1"/>
+    </svg>`,
+  };
+  return defs[art] || defs['palau'];
+}
+
+// ══════════════════════════════════════════════════════════════
+// ENGINE
+// ══════════════════════════════════════════════════════════════
+function startAdventure() {
+  showScreen('screen-game');
+  goTo('inici');
+}
+
+function goTo(nodeId) {
+  const node = NODES[nodeId];
+  if (!node) return;
+
+  const wrap = document.getElementById('scene-wrap');
+
+  // Rebuild with animation
+  wrap.style.animation = 'none';
+  wrap.offsetHeight;
+  wrap.style.animation = '';
+
+  let endingHTML = '';
+  if (node.ending) {
+    endingHTML = `
+      <div class="scene-ending">
+        <div class="ending-badge ${node.ending}">${node.endingLabel}</div>
+        <br>
+        <button class="btn-restart" onclick="startAdventure()">↺ Torna a començar</button>
+        <br><br>
+        <button class="btn-restart" onclick="showScreen('screen-cover')" style="opacity:.6">← Portada</button>
+      </div>`;
+  }
+
+  const choicesHTML = node.choices.length > 0 ? `
+    <div class="scene-divider">✦</div>
+    <div class="choices">
+      ${node.choices.map(c => `
+        <button class="choice-btn" onclick="goTo('${c.next}')">
+          <span class="choice-arrow">▶</span>
+          <span>${c.label}</span>
+        </button>
+      `).join('')}
+    </div>
+  ` : endingHTML;
+
+  wrap.innerHTML = `
+    <div class="scene-art">${getArtSVG(node.art)}</div>
+    <div class="scene-chapter">${node.chapter}</div>
+    <div class="scene-title">${node.title}</div>
+    <div class="scene-text">${node.text}</div>
+    ${choicesHTML}
+  `;
+
+  // Scroll al capdamunt
+  document.getElementById('screen-game').scrollTo(0, 0);
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>

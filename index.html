@@ -53,6 +53,12 @@ main{max-width:1040px;margin:0 auto;padding:28px 16px 80px;}
 .sec-icona.blau{background:linear-gradient(135deg,#2563eb,#3b82f6);box-shadow:0 4px 12px rgba(37,99,235,.35);}
 .sec-icona.verd{background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 4px 12px rgba(22,163,74,.35);}
 .sec-icona.lila{background:linear-gradient(135deg,#7c3aed,#a78bfa);box-shadow:0 4px 12px rgba(124,58,237,.35);}
+.sec-icona.ambre{background:linear-gradient(135deg,#b45309,#f59e0b);box-shadow:0 4px 12px rgba(180,83,9,.35);}
+.sec-badge.ambre{background:#fef3c7;color:#92400e;}
+.app-card.c-ambre{background:linear-gradient(145deg,#fffbeb 0%,#f8fafc 50%,#fff 100%);border-color:#fde68a;}
+.app-card.c-ambre:hover{border-color:#fbbf24;box-shadow:0 10px 30px rgba(180,83,9,.13);}
+.app-card.c-ambre::before{background:linear-gradient(90deg,#b45309,#fbbf24);}
+.c-ambre .app-icon-wrap{background:linear-gradient(135deg,#fef3c7,#fde68a);box-shadow:0 4px 12px rgba(180,83,9,.18);}
 
 .sec-titols{flex:1;min-width:0;}
 .sec-title{font-size:.95rem;font-weight:900;color:#0f172a;letter-spacing:-.02em;}
@@ -134,6 +140,7 @@ footer a{color:#475569;text-decoration:none;}
 .seccio:nth-child(2){animation-delay:.14s;}
 .seccio:nth-child(3){animation-delay:.20s;}
 .seccio:nth-child(4){animation-delay:.26s;}
+.seccio:nth-child(5){animation-delay:.32s;}
 </style>
 </head>
 <body>
@@ -331,6 +338,37 @@ footer a{color:#475569;text-decoration:none;}
             <div class="app-icon-wrap">✦</div>
             <div class="app-name">Santuari de Tarot</div>
             <div class="app-desc">Tirades dels Arcans Majors i diari de lectures</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AVENTURES ── -->
+  <div class="seccio" id="s-aventures">
+    <div class="sec-cap" onclick="toggle('s-aventures')">
+      <div class="sec-icona ambre">📖</div>
+      <div class="sec-titols">
+        <div class="sec-title">Aventures Interactives</div>
+        <div class="sec-sub">Històries de tria pròpia: cada decisió canvia el final</div>
+      </div>
+      <div class="sec-dreta">
+        <span class="sec-badge ambre">2 aventures</span>
+        <span class="sec-chevron">▾</span>
+      </div>
+    </div>
+    <div class="sec-cos">
+      <div class="sec-cos-inner">
+        <div class="app-grid">
+          <a class="app-card c-ambre" href="aventura_retrat.html" target="_self">
+            <div class="app-icon-wrap">🎨</div>
+            <div class="app-name">El Retrat de la Reina</div>
+            <div class="app-desc">Misteri medieval: un pintor, un crim i una trama de poder</div>
+          </a>
+          <a class="app-card c-ambre" href="aventura_coral.html" target="_self">
+            <div class="app-icon-wrap">🎭</div>
+            <div class="app-name">La Nit de la Coral</div>
+            <div class="app-desc">Un director assassinat, una soprano i menys d'una hora per descobrir la veritat</div>
           </a>
         </div>
       </div>
