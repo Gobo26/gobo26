@@ -31,6 +31,9 @@ header{
 .hd-right{display:flex;align-items:center;gap:6px;z-index:1;}
 .hd-badge{background:rgba(255,255,255,.12);padding:3px 9px;border-radius:20px;font-size:.75rem;font-weight:700;cursor:pointer;transition:background .2s;}
 .hd-badge:hover{background:rgba(255,255,255,.22);}
+.hd-mute{background:rgba(255,255,255,.12);width:30px;height:30px;border-radius:50%;font-size:.85rem;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;border:none;color:white;}
+.hd-mute:hover{background:rgba(255,255,255,.22);}
+.hd-mute.mut{background:rgba(239,68,68,.35);}
 .hd-temps{background:rgba(239,68,68,.25);padding:3px 9px;border-radius:20px;font-size:.8rem;font-weight:900;color:#fca5a5;display:none;}
 .hd-temps.urg{background:rgba(239,68,68,.6);color:white;animation:blink .6s infinite;}
 .hd-rang{font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:20px;display:none;}
@@ -150,6 +153,9 @@ footer a{color:#94a3b8;text-decoration:none;}
 .narr-box{background:#1e293b;color:#e2e8f0;border-radius:12px;padding:14px 16px;font-size:.8rem;font-weight:600;line-height:1.7;font-style:italic;position:relative;animation:fadeSlide .5s ease;}
 .narr-box::before{content:'📖 Descoberta';display:block;font-style:normal;font-size:.55rem;font-weight:900;text-transform:uppercase;letter-spacing:.7px;color:#60a5fa;margin-bottom:6px;}
 .narr-sala::before{content:'🚪 Entres a la sala';}
+
+/* ── RATXA ── */
+.ratxa-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(251,146,60,.2);border:1.5px solid rgba(251,146,60,.5);border-radius:20px;padding:2px 10px;font-size:.7rem;font-weight:800;color:#fb923c;margin-left:6px;}
 
 /* ── ENIGMA ── */
 .e-nav{display:flex;align-items:center;justify-content:space-between;}
@@ -342,6 +348,7 @@ footer a{color:#94a3b8;text-decoration:none;}
         <div class="hd-rang" id="hdr-rang"></div>
         <div class="hd-temps" id="hdr-t">⏱ <span id="hdr-ts">–</span></div>
         <div class="hd-badge" id="hdr-inv" style="display:none;" onclick="obrirInventariModal()">🎒 <span id="hdr-in">0</span></div>
+        <button class="hd-mute" id="hdr-mute" onclick="toggleMute()" title="So on/off">🔊</button>
     </div>
 </header>
 
@@ -380,7 +387,7 @@ footer a{color:#94a3b8;text-decoration:none;}
     <div style="margin-bottom:8px;">📌 Tens una partida guardada</div>
     <div style="display:flex;gap:8px;flex-direction:column;">
       <button class="btn-ppal" onclick="reprendre()" style="background:#22c55e;box-shadow:0 4px 0 #16a34a;">↩ Reprendre la partida</button>
-      <button class="btn-sec" onclick="novaPartida()" style="font-size:.85rem;padding:11px;">✨ Comenzar una nova partida</button>
+      <button class="btn-sec" onclick="novaPartida()" style="font-size:.85rem;padding:11px;">✨ Començar una nova partida</button>
     </div>
   </div>
   <button class="btn-ppal" id="btn-comecar" onclick="mostrarDificultat()">Comença l'aventura →</button>
@@ -605,7 +612,8 @@ footer a{color:#94a3b8;text-decoration:none;}
 // ÀUDIO
 // ════════════════════════════════════════
 const AC=(()=>{try{return new(window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}})();
-document.addEventListener('pointerdown',()=>{if(AC&&AC.state==='suspended')AC.resume();},{once:true});
+document.addEventListener('pointerdown',()=>{if(AC&&AC.state==='suspended')AC.resume();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&AC&&AC.state==='suspended')AC.resume();});
 
 function bip(f,d,t='triangle',v=0.2,dl=0){
   if(!AC)return;
@@ -614,16 +622,26 @@ function bip(f,d,t='triangle',v=0.2,dl=0){
   g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(0.001,s+d);
   o.start(s);o.stop(s+d+.01);
 }
-const soOk  =()=>[[523,.12],[659,.14],[784,.18],[1046,.28]].forEach(([f,d],i)=>bip(f,d,'triangle',.28,i*.1));
-const soErr =()=>bip(180,.3,'sawtooth',.35);
-const soUrg =()=>{bip(440,.09,'square',.2,0);bip(440,.09,'square',.2,.15);};
-const soItem=()=>{bip(880,.08,'triangle',.2,0);bip(1174,.12,'triangle',.2,.1);};
-const soFinal=()=>[[523,.18],[587,.18],[659,.18],[784,.22],[880,.22],[1046,.35]].forEach(([f,d],i)=>bip(f,d,'triangle',.28,i*.18));
-const soGO  =()=>[[392,.2],[349,.2],[311,.2],[262,.4]].forEach(([f,d],i)=>bip(f,d,'triangle',.28,i*.22));
-const soSecret=()=>{bip(220,.4,'sine',.06,0);bip(277,.4,'sine',.06,.25);bip(370,.6,'sine',.08,.5);};
+let _muted=false;
+function toggleMute(){
+  _muted=!_muted;
+  const btn=document.getElementById('hdr-mute');
+  btn.textContent=_muted?'🔇':'🔊';
+  btn.classList.toggle('mut',_muted);
+}
+function bip2(f,d,t,v,dl){if(_muted)return;bip(f,d,t,v,dl);}
+
+const soOk  =()=>{if(_muted)return;[[523,.12],[659,.14],[784,.18],[1046,.28]].forEach(([f,d],i)=>bip(f,d,'triangle',.28,i*.1));}
+const soErr =()=>{if(_muted)return;bip(180,.3,'sawtooth',.35);};
+const soUrg =()=>{if(_muted)return;bip(440,.09,'square',.2,0);bip(440,.09,'square',.2,.15);};
+const soItem=()=>{if(_muted)return;bip(880,.08,'triangle',.2,0);bip(1174,.12,'triangle',.2,.1);};
+const soFinal=()=>{if(_muted)return;[[523,.18],[587,.18],[659,.18],[784,.22],[880,.22],[1046,.35]].forEach(([f,d],i)=>bip(f,d,'triangle',.28,i*.18));};
+const soGO  =()=>{if(_muted)return;[[392,.2],[349,.2],[311,.2],[262,.4]].forEach(([f,d],i)=>bip(f,d,'triangle',.28,i*.22));};
+const soSecret=()=>{if(_muted)return;bip(220,.4,'sine',.06,0);bip(277,.4,'sine',.06,.25);bip(370,.6,'sine',.08,.5);};
 
 // Sons ambientals per sala (breu motiu musical)
 function soAmbient(sala){
+  if(_muted)return;
   const motius={
     sala:  [[220,.15,'sine',.04],[330,.15,'sine',.04,.2]],
     bibli: [[440,.2,'triangle',.03],[554,.2,'triangle',.03,.25]],
@@ -655,18 +673,6 @@ const DIFS={
   detectiu:{vides:3,mult:.75, pistaCost:2,label:'Detectiu Expert',color:'#dc2626'},
 };
 let difSelec='normal';
-
-function mostrarDificultat(){mostrarPg('pg-dificultat');}
-
-function triarDificultat(d){
-  difSelec=d;
-  document.querySelectorAll('.dif-card').forEach(el=>{
-    const sel=el.dataset.d===d;
-    el.classList.toggle('sel',sel);
-    const colors={aprenent:'#16a34a',normal:'#2563eb',detectiu:'#dc2626'};
-    el.style.borderColor=sel?(colors[d]||'#e2e8f0'):'#e2e8f0';
-  });
-}
 
 // ════════════════════════════════════════
 // GENERACIÓ ALEATÒRIA
@@ -865,7 +871,7 @@ function construirEnigmes(params){
   const telefonRefHTML=`<div class="telef-ref">
     <div style="font-size:.58rem;font-weight:800;color:#4ade80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;text-align:center;">📱 Teclat telèfon — número-posició = lletra</div>
     <div class="telef-grid">
-      ${[['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PRS'],['8','TUV'],['',''],['','']]
+      ${[['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PQRS'],['8','TUV'],['9','WXYZ'],['','']]
         .map(([n,ll])=>n?`<div class="telef-key"><div class="telef-num">${n}</div><div class="telef-llet">${ll}</div></div>`:'<div></div>').join('')}
     </div>
     <div style="font-size:.68rem;color:#4ade80;text-align:center;margin-top:6px;font-family:monospace;letter-spacing:2px;">${telefon.encoded}</div>
@@ -1053,6 +1059,7 @@ let E={
   iniciat:false,actual:null,timerId:null,seguentFn:null,
   params:null,tempsInici:null,dificultat:'normal',zenMode:false,
   secretDesblocat:false,secretMostrat:false,
+  ratxa:0,salesVisitades:[],timerSegRestants:0,
 };
 
 function saveE(){localStorage.setItem('albert5',JSON.stringify({...E,timerId:null,seguentFn:null}));}
@@ -1070,16 +1077,17 @@ function reconstruirEnigmes(){ENIGMES=construirEnigmes(E.params);}
 (function init(){
   if(loadE()&&E.iniciat){
     reconstruirEnigmes();
+    _zenMode=E.zenMode;
     document.getElementById('estat-ant').style.display='block';
     document.getElementById('btn-comecar').style.display='none';
-    if(E.zenMode)document.getElementById('zen-sw').classList.add('on');
+    document.getElementById('zen-sw').classList.toggle('on',_zenMode);
   }
 })();
 
 function reprendre(){mostrarPg('pg-mapa');renderMapa();}
 
 function novaPartida(){
-  if(!confirm('Segur que vols abandonar la partida guardada i comenzar de nou?'))return;
+  if(!confirm('Segur que vols abandonar la partida guardada i començar de nou?'))return;
   reiniciar();
 }
 
@@ -1124,6 +1132,7 @@ function comecar(){
     zenMode:_zenMode,
     secretDesblocat:false,
     secretMostrat:false,
+    ratxa:0,salesVisitades:[],timerSegRestants:0,
   };
   reconstruirEnigmes();
   const perSala={};
@@ -1215,7 +1224,8 @@ function renderMapa(){
 
   renderInv();
   const dif=DIFS[E.dificultat]||DIFS.normal;
-  document.getElementById('mapa-peu').textContent=`❤️ ${E.vides} vides · 🔦 ${E.pistes} pistes · 🎒 ${E.inventari.length} objectes · ${dif.label}`;
+  const ratxaTxt=E.ratxa>=3?` · 🔥 ${E.ratxa} en ratxa`:'';
+  document.getElementById('mapa-peu').textContent=`❤️ ${E.vides} vides · 🔦 ${E.pistes} pistes · 🎒 ${E.inventari.length} objectes · ${dif.label}${ratxaTxt}`;
 
   // Rang al header
   const rang=calcularRang();
@@ -1267,7 +1277,31 @@ function calcularRangFinal(temps,pistes,vides){
 // ════════════════════════════════════════
 function entrarSalaAmb(sid){
   soAmbient(sid);
-  entrarSala(sid);
+  // Mostrar narrativa de sala si és la primera visita
+  if(NARR_SALA[sid]&&!(E.salesVisitades||[]).includes(sid)){
+    if(!E.salesVisitades)E.salesVisitades=[];
+    E.salesVisitades.push(sid);saveE();
+    mostrarNarrSala(sid,()=>entrarSala(sid));
+  } else {
+    entrarSala(sid);
+  }
+}
+
+function mostrarNarrSala(sid,cb){
+  // Mostra un overlay breu amb la narrativa de la sala
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.88);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeSlide .3s ease;';
+  const box=document.createElement('div');
+  box.style.cssText='background:#1e293b;border-radius:16px;padding:24px 20px;max-width:380px;width:100%;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;gap:14px;';
+  const sala=SALES.find(s=>s.id===sid);
+  box.innerHTML=`<div style="font-size:2.5rem;">${sala?.emoji||'🚪'}</div>
+    <div style="font-size:1rem;font-weight:900;color:white;">${sala?.nom||'Nova sala'}</div>
+    <div style="font-size:.82rem;font-weight:600;line-height:1.7;font-style:italic;color:#94a3b8;">${NARR_SALA[sid]}</div>
+    <button style="font-family:Montserrat,sans-serif;font-weight:800;font-size:.9rem;background:#2563eb;color:white;border:none;border-radius:10px;padding:12px;cursor:pointer;margin-top:4px;">Endavant →</button>`;
+  box.querySelector('button').onclick=()=>{overlay.remove();cb();};
+  overlay.appendChild(box);
+  overlay.onclick=(e)=>{if(e.target===overlay){overlay.remove();cb();}};
+  document.body.appendChild(overlay);
 }
 
 function entrarSala(sid){
@@ -1348,15 +1382,16 @@ function carregarEnigma(eng){
 // ════════════════════════════════════════
 // TIMER
 // ════════════════════════════════════════
+let _timerTotal=0,_timerRestants=0;
 function iniciarTimer(seg){
-  if(seg===0){const ht=document.getElementById('hdr-t');if(ht)ht.style.display='none';return;}
-  aturarTimer();let r=seg;
+  if(seg===0){_timerTotal=0;_timerRestants=0;const ht=document.getElementById('hdr-t');if(ht)ht.style.display='none';return;}
+  aturarTimer();let r=seg;_timerTotal=seg;_timerRestants=seg;
   const ht=document.getElementById('hdr-t'),ts=document.getElementById('hdr-ts');
   ht.style.display='flex';ht.className='hd-temps';
-  function act(){ts.textContent=r+'s';if(r<=10){ht.className='hd-temps urg';soUrg();}if(r<=0){aturarTimer();perdVida('⌛ Temps esgotat! −1 vida.',true);}}
+  function act(){_timerRestants=r;ts.textContent=r+'s';if(r<=10){ht.className='hd-temps urg';soUrg();}if(r<=0){aturarTimer();perdVida('⌛ Temps esgotat! −1 vida.',true);}}
   act();E.timerId=setInterval(()=>{r--;act();},1000);
 }
-function aturarTimer(){if(E.timerId){clearInterval(E.timerId);E.timerId=null;}const ht=document.getElementById('hdr-t');if(ht){ht.style.display='none';ht.className='hd-temps';}}
+function aturarTimer(){if(E.timerId){clearInterval(E.timerId);E.timerId=null;}_timerRestants=0;const ht=document.getElementById('hdr-t');if(ht){ht.style.display='none';ht.className='hd-temps';}}
 
 // ════════════════════════════════════════
 // CESAR INTERACTIU
@@ -1367,13 +1402,26 @@ function cesarCanvia(idx,dir){
   const nou=String.fromCharCode(((actual.charCodeAt(0)-65+dir+26)%26)+65);
   window._cesarState[idx]=nou;
   const el=document.getElementById('cesar-l-'+idx);
-  if(el){el.textContent=nou;document.getElementById('inp').value=window._cesarState.join('');}
+  const inp=document.getElementById('inp');
+  if(el){el.textContent=nou;inp.value=window._cesarState.join('');}
+  // Sincronitzar display mòbil
+  tgValorActual=window._cesarState.join('');
+  tgActualitzarDisplay();
+  // Comprovar lletra correcta
+  const eng=ENIGMES.find(e=>e.id===E.actual);
+  if(eng&&eng.respostes){
+    const res=typeof eng.respostes==='function'?eng.respostes()[0]:eng.respostes[0];
+    if(res&&el){
+      const correcta=(nou===res[idx]);
+      el.classList.toggle('ok',correcta);
+    }
+  }
 }
 
 // ════════════════════════════════════════
 // COMPROVAR
 // ════════════════════════════════════════
-function norm(s){return(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim();}
+function norm(s){return String(s==null?'':s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim();}
 
 function comprova(){
   const eng=ENIGMES.find(e=>e.id===E.actual);if(!eng)return;
@@ -1385,19 +1433,33 @@ function comprova(){
   const fb=document.getElementById('fb');fb.style.display='block';
 
   if(ok){
+    const segRestants=_timerRestants;
     aturarTimer();
     inp.className='inp-r ok';inp.disabled=true;
     document.getElementById('btn-ok').disabled=true;
     document.getElementById('btn-pista').disabled=true;
     soOk();if(navigator.vibrate)navigator.vibrate([30,50,100]);
     if(!E.resolts.includes(eng.id))E.resolts.push(eng.id);
+    E.ratxa=(E.ratxa||0)+1;
     let msgObj='';
     if(eng.objecte&&!E.inventari.some(o=>o.idE===eng.id)){
       E.inventari.push({...eng.objecte});soItem();
       msgObj=`<br>🎒 <strong>Obtingut:</strong> ${eng.objecte.emoji} ${eng.objecte.nom}`;
     }
     saveE();
-    fb.className='fb ok';fb.innerHTML=`✅ Correcte!${msgObj}`;
+    // Bonus de velocitat: si queda >60% del temps
+    let msgBonus='';
+    if(_timerTotal>0&&segRestants>0&&segRestants/_timerTotal>0.6){
+      msgBonus=`<br>⚡ <strong>Resposta ràpida!</strong> ${segRestants}s restants.`;
+    }
+    // Ratxa + bonus de vida
+    let msgRatxa='';
+    if(E.ratxa>=3){msgRatxa=`<br>🔥 <strong>${E.ratxa} en ratxa!</strong>`;}
+    if(E.ratxa===5){
+      const dif2=DIFS[E.dificultat]||DIFS.normal;
+      if(E.vides<dif2.vides){E.vides++;actualVides();saveE();msgRatxa+=` <span style="color:#22c55e;">+❤️ Vida recuperada!</span>`;}
+    }
+    fb.className='fb ok';fb.innerHTML=`✅ Correcte!${msgObj}${msgBonus}${msgRatxa}`;
 
     // Mostrar missatge narratiu
     const narr=NARR_ENIGMA[eng.id];
@@ -1411,10 +1473,11 @@ function comprova(){
     if(eng.sala==='final'){bs.textContent='🏆 Obrir el tresor →';E.seguentFn=mostrarFinal;}
     else{
       const proper=(E.ordre[eng.sala]||[]).find(i=>!E.resolts.includes(i));
-      if(proper){bs.textContent='Seguent enigma →';E.seguentFn=()=>entrarSala(eng.sala);}
+      if(proper){bs.textContent='Següent enigma →';E.seguentFn=()=>entrarSala(eng.sala);}
       else{bs.textContent='← Tornar al mapa';E.seguentFn=tornarMapa;}
     }
   }else{
+    E.ratxa=0;
     perdVida(null,false,fb);
   }
 }
@@ -1518,7 +1581,19 @@ function mostrarGameOver(){
   document.getElementById('go1').textContent=`Enigmes resolts: ${E.resolts.length} de ${ENIGMES.length}`;
   document.getElementById('go2').textContent=`Pistes usades: ${E.pistes}`;
   document.getElementById('go3').textContent=`Objectes recollits: ${E.inventari.length}`;
+  // Resum de sales
+  const salesInfo=SALES.filter(s=>s.id!=='final').map(s=>{
+    const engs=ENIGMES.filter(e=>e.sala===s.id);
+    const nr=engs.filter(e=>E.resolts.includes(e.id)).length;
+    return `${s.emoji} ${s.nom}: ${nr}/${engs.length}`;
+  }).join(' · ');
+  const go3El=document.getElementById('go3');
+  go3El.textContent=`Objectes: ${E.inventari.length} · ${salesInfo}`;
+  const tempsMs=E.tempsInici?Date.now()-E.tempsInici:0;
+  const go1=document.getElementById('go1');
+  go1.textContent=`Enigmes resolts: ${E.resolts.length} de ${ENIGMES.length} · Temps: ${tempsFormat(tempsMs)}`;
   mostrarPg('pg-go');
+  localStorage.removeItem('albert5');
 }
 
 function tempsFormat(ms){
@@ -1574,7 +1649,7 @@ function compartirResultat(){
   if(navigator.clipboard){
     navigator.clipboard.writeText(txt).then(()=>{
       const b=document.querySelector('.btn-compartir');
-      b.textContent='✅ Copiat al porta-retalls!';
+      b.innerHTML='✅ Copiat al porta-retalls!';
       setTimeout(()=>{b.innerHTML='📤 Compartir resultat';},2500);
     }).catch(()=>fallbackCompartir(txt));
   } else fallbackCompartir(txt);
@@ -1588,7 +1663,7 @@ function fallbackCompartir(txt){
 function reiniciar(){
   aturarTimer();
   localStorage.removeItem('albert5');
-  E={vides:5,resolts:[],inventari:[],pistes:0,ordre:{},iniciat:false,actual:null,timerId:null,seguentFn:null,params:null,tempsInici:null,dificultat:'normal',zenMode:false,secretDesblocat:false,secretMostrat:false};
+  E={vides:5,resolts:[],inventari:[],pistes:0,ordre:{},iniciat:false,actual:null,timerId:null,seguentFn:null,params:null,tempsInici:null,dificultat:'normal',zenMode:false,secretDesblocat:false,secretMostrat:false,ratxa:0,salesVisitades:[],timerSegRestants:0};
   ENIGMES=[];_zenMode=false;
   document.getElementById('zen-sw').classList.remove('on');
   document.getElementById('estat-ant').style.display='none';

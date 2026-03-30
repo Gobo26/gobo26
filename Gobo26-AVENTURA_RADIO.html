@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>La Darrera Emissió – Gobo26</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0909;
+  --bg2: #140e0e;
+  --cream: #f0e6d0;
+  --cream2: #d4c8b0;
+  --crimson: #8b0010;
+  --crimson2: #c01828;
+  --amber: #c47a1a;
+  --amber2: #dfa030;
+  --ink: #1a0a0a;
+  --radius: 3px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Lora', Georgia, serif;
+  background: var(--bg);
+  color: var(--cream);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image:
+    radial-gradient(ellipse at 30% 60%, rgba(139,0,16,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 10%, rgba(196,122,26,0.05) 0%, transparent 45%);
+}
+
+/* ── HEADER ── */
+header {
+  background: #080606;
+  border-bottom: 1px solid rgba(139,0,16,0.4);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  gap: 8px;
+}
+
+.logo-hex { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--cream); flex-shrink: 0; }
+.logo-hex svg { width: 32px; height: 32px; }
+.logo-text { font-family: 'Montserrat', sans-serif; font-size: 11px; line-height: 1.2; font-weight: 700; }
+.logo-text span { display: block; font-size: 9px; font-weight: 400; opacity: 0.4; }
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--amber);
+  text-align: center;
+  flex: 1;
+  line-height: 1.35;
+}
+
+.header-badges { display: flex; gap: 6px; flex-shrink: 0; }
+
+.hd-badge {
+  background: rgba(139,0,16,0.15);
+  border: 1px solid rgba(139,0,16,0.4);
+  border-radius: 10px;
+  padding: 3px 9px;
+  font-family: 'Playfair Display', serif;
+  font-size: 10px;
+  color: var(--cream2);
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.hd-badge:hover { background: rgba(139,0,16,0.28); }
+.hd-badge.pop { animation: badgePop .35s ease; }
+
+@keyframes badgePop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.3); color: var(--cream); }
+  100% { transform: scale(1); }
+}
+
+/* ── PANTALLES ── */
+.screen { display: none; flex-direction: column; flex: 1; }
+.screen.active { display: flex; }
+
+/* ── PORTADA ── */
+#screen-cover {
+  align-items: center;
+  justify-content: flex-start;
+  padding: 28px 20px 40px;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.cover-ornament {
+  font-size: 52px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 16px rgba(139,0,16,0.6));
+  animation: floatIcon 4s ease-in-out infinite;
+}
+@keyframes floatIcon { 0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);} }
+
+.cover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--cream);
+  letter-spacing: 1px;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 16px rgba(139,0,16,0.5);
+}
+.cover-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  font-style: italic;
+  color: rgba(240,230,208,0.45);
+  letter-spacing: 2px;
+  margin-bottom: 22px;
+}
+.cover-sep {
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--crimson), transparent);
+  margin: 0 auto 20px;
+}
+.cover-intro {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--cream2);
+  max-width: 340px;
+  font-style: italic;
+  margin-bottom: 28px;
+}
+.btn-begin {
+  background: var(--crimson);
+  color: var(--cream);
+  border: none;
+  border-radius: var(--radius);
+  padding: 14px 38px;
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(139,0,16,0.45);
+  transition: all .2s;
+  margin-bottom: 6px;
+}
+.btn-begin:hover { background: var(--crimson2); transform: translateY(-1px); }
+.btn-begin:active { transform: translateY(1px); }
+
+.runs-count {
+  font-family: 'Playfair Display', serif;
+  font-size: 10px;
+  color: rgba(240,230,208,0.25);
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+  min-height: 16px;
+}
+
+/* Galeria de finals */
+.endings-gallery-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(139,0,16,0.6);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 360px;
+  text-align: left;
+}
+.endings-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+  max-width: 360px;
+}
+.ending-card {
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  text-align: left;
+}
+.ending-card.locked { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); }
+.ending-card.found.good    { background: rgba(196,122,26,0.1); border: 1px solid rgba(196,122,26,0.25); }
+.ending-card.found.neutral { background: rgba(139,0,16,0.08); border: 1px solid rgba(139,0,16,0.2); }
+.ending-card.found.bad     { background: rgba(40,10,10,0.4);  border: 1px solid rgba(139,0,16,0.3); }
+.ending-card-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  margin-bottom: 4px;
+}
+.ending-card.locked .ending-card-label { color: rgba(240,230,208,0.18); }
+.ending-card.found.good .ending-card-label    { color: var(--amber2); }
+.ending-card.found.neutral .ending-card-label { color: var(--cream2); }
+.ending-card.found.bad .ending-card-label     { color: #e06060; }
+.ending-card-hint { font-size: 11px; line-height: 1.4; font-style: italic; color: rgba(240,230,208,0.35); }
+.ending-card.found .ending-card-hint { color: rgba(240,230,208,0.55); }
+
+/* ── PANELL PISTES ── */
+.clues-overlay { position: fixed; inset: 0; z-index: 100; pointer-events: none; }
+.clues-overlay.open { pointer-events: all; }
+.clues-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0); transition: background .3s; }
+.clues-overlay.open .clues-backdrop { background: rgba(0,0,0,0.6); }
+.clues-panel {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: min(320px, 90vw);
+  background: #100a0a;
+  border-left: 1px solid rgba(139,0,16,0.35);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .3s ease;
+}
+.clues-overlay.open .clues-panel { transform: translateX(0); }
+.clues-panel-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(139,0,16,0.2);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.clues-panel-title { font-family: 'Playfair Display', serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--amber); }
+.clues-panel-close { background: none; border: none; color: rgba(240,230,208,0.4); font-size: 20px; cursor: pointer; line-height: 1; }
+.clues-panel-close:hover { color: var(--cream); }
+.clues-panel-body { flex: 1; overflow-y: auto; padding: 12px 14px; }
+.clue-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(139,0,16,0.1); }
+.clue-item:last-child { border-bottom: none; }
+.clue-item-icon { font-size: 19px; flex-shrink: 0; line-height: 1.5; }
+.clue-item-title { font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 700; color: var(--amber2); margin-bottom: 4px; }
+.clue-item-body { font-size: 13px; line-height: 1.6; color: var(--cream2); font-style: italic; }
+
+/* ── PANTALLA JOC ── */
+#screen-game { padding: 0; flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+
+.breadcrumb {
+  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(139,0,16,0.12);
+  padding: 5px 16px;
+  display: flex; align-items: center; gap: 4px;
+  overflow-x: auto; flex-shrink: 0;
+}
+.bc-step { font-family: 'Playfair Display', serif; font-size: 9px; color: rgba(139,0,16,0.5); letter-spacing: .5px; white-space: nowrap; font-style: italic; }
+.bc-sep { color: rgba(139,0,16,0.3); font-size: 9px; }
+
+.scene-wrap {
+  max-width: 640px; width: 100%; margin: 0 auto;
+  padding: 20px 18px 40px;
+  flex: 1; display: flex; flex-direction: column; gap: 18px;
+  animation: sceneIn .35s ease forwards;
+}
+@keyframes sceneIn { from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);} }
+
+.scene-art {
+  width: 100%; height: 140px;
+  border-radius: 4px; overflow: hidden;
+  border: 1px solid rgba(139,0,16,0.2);
+  flex-shrink: 0;
+}
+.scene-art svg { width: 100%; height: 100%; }
+
+.scene-chapter {
+  font-family: 'Playfair Display', serif;
+  font-size: 10px; letter-spacing: 3px;
+  color: var(--crimson2); text-transform: uppercase; opacity: .8;
+}
+.scene-timestamp {
+  font-family: 'Playfair Display', serif;
+  font-size: 10px; letter-spacing: 1.5px;
+  color: rgba(196,122,26,0.55); font-style: italic;
+}
+.scene-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 900;
+  color: var(--cream); line-height: 1.25;
+}
+.scene-text { font-size: 17px; line-height: 1.9; color: var(--cream2); }
+.scene-text p { margin-bottom: 14px; }
+.scene-text p:last-child { margin-bottom: 0; }
+.scene-text em { color: var(--amber2); font-style: italic; }
+.scene-text strong { color: #fff; font-weight: 600; }
+.scene-text .guio {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(240,230,208,0.55);
+  border-left: 2px solid rgba(139,0,16,0.4);
+  padding: 8px 14px;
+  margin: 6px 0;
+  font-style: italic;
+}
+
+/* Pista descoberta */
+.clue-reveal {
+  display: flex; gap: 10px;
+  background: rgba(139,0,16,0.08);
+  border: 1px solid rgba(139,0,16,0.3);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  animation: clueReveal .5s ease;
+}
+@keyframes clueReveal { from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:translateX(0);} }
+.clue-reveal-icon { font-size: 20px; flex-shrink: 0; line-height: 1.4; }
+.clue-reveal-title { font-family: 'Playfair Display', serif; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--amber2); margin-bottom: 4px; }
+.clue-reveal-body { font-size: 13px; line-height: 1.55; color: var(--cream2); font-style: italic; }
+
+/* Separador */
+.scene-divider { display: flex; align-items: center; gap: 10px; color: rgba(139,0,16,0.4); font-size: 13px; }
+.scene-divider::before,.scene-divider::after { content:''; flex:1; height:1px; background:rgba(139,0,16,0.2); }
+
+/* Opcions */
+.choices { display: flex; flex-direction: column; gap: 10px; }
+.choice-btn {
+  background: rgba(139,0,16,0.06);
+  border: 1px solid rgba(139,0,16,0.25);
+  border-radius: var(--radius);
+  padding: 13px 16px;
+  color: var(--cream);
+  font-family: 'Lora', serif;
+  font-size: 16px; line-height: 1.55;
+  text-align: left; cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: flex-start; gap: 10px;
+  opacity: 0;
+  animation: choiceIn .3s ease forwards;
+}
+@keyframes choiceIn { from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);} }
+.choice-btn:hover { background: rgba(139,0,16,0.18); border-color: var(--crimson2); color: var(--cream); transform: translateX(4px); }
+.choice-btn:active { transform: translateX(2px); }
+.choice-btn.visited { border-color: rgba(139,0,16,0.12); animation: choiceIn .3s ease forwards; }
+.choice-arrow { color: var(--crimson2); font-size: 12px; margin-top: 4px; flex-shrink: 0; }
+.visited-mark { font-size: 11px; color: rgba(196,122,26,0.5); margin-left: 4px; font-style: italic; }
+
+/* Finals */
+.scene-ending { text-align: center; padding: 12px 0 0; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.ending-badge {
+  display: inline-block; padding: 6px 20px; border-radius: 2px;
+  font-family: 'Playfair Display', serif;
+  font-size: 11px; letter-spacing: 2px; font-weight: 700;
+}
+.ending-badge.good    { background: rgba(196,122,26,0.15); color: var(--amber2); border: 1px solid rgba(196,122,26,0.35); }
+.ending-badge.bad     { background: rgba(139,0,16,0.2);    color: #e06060;       border: 1px solid rgba(139,0,16,0.4); }
+.ending-badge.neutral { background: rgba(240,230,208,0.07);color: var(--cream2); border: 1px solid rgba(240,230,208,0.18); }
+.ending-stats { display: flex; gap: 10px; font-family: 'Playfair Display', serif; font-size: 10px; color: rgba(240,230,208,0.35); letter-spacing: 1px; flex-wrap: wrap; justify-content: center; }
+.btn-restart {
+  background: none; border: 1px solid rgba(139,0,16,0.4); border-radius: var(--radius);
+  padding: 10px 24px; color: var(--crimson2);
+  font-family: 'Playfair Display', serif; font-size: 12px; letter-spacing: 1px;
+  cursor: pointer; transition: all .2s;
+}
+.btn-restart:hover { background: rgba(139,0,16,0.12); }
+
+footer { text-align: center; padding: 12px; font-size: 11px; color: rgba(240,230,208,0.15); font-family: 'Playfair Display', serif; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<div class="clues-overlay" id="clues-overlay">
+  <div class="clues-backdrop" onclick="toggleCluesPanel()"></div>
+  <div class="clues-panel">
+    <div class="clues-panel-header">
+      <span class="clues-panel-title">DEDUCCIONS</span>
+      <button class="clues-panel-close" onclick="toggleCluesPanel()">×</button>
+    </div>
+    <div class="clues-panel-body" id="clues-list"></div>
+  </div>
+</div>
+
+<header>
+  <a class="logo-hex" href="https://ja.cat/appgobo" target="_self">
+    <svg viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 1L38 11.5V34.5L20 45L2 34.5V11.5L20 1Z" fill="#2563eb"/>
+      <text x="20" y="22" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">GOBO</text>
+      <text x="20" y="33" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">26</text>
+    </svg>
+    <div class="logo-text" style="font-family:'Montserrat',sans-serif">Gobo26<span>Jocs en català</span></div>
+  </a>
+  <h1>La Darrera<br>Emissió</h1>
+  <div class="header-badges">
+    <div class="hd-badge" id="timer-badge">0:00</div>
+    <div class="hd-badge" id="clues-badge" onclick="toggleCluesPanel()" title="Pistes descobertes">🎙 0</div>
+  </div>
+</header>
+
+<div class="screen active" id="screen-cover">
+  <div class="cover-ornament">🎙</div>
+  <div class="cover-title">La Darrera<br>Emissió</div>
+  <div class="cover-subtitle">Una aventura de tria pròpia</div>
+  <div class="cover-sep"></div>
+  <p class="cover-intro">
+    Ets la <strong>Marta Verdú</strong>, actriu de ràdio. El guió d'avui hauria de ser un drama criminal de rutina.
+    Però mentre el llegeixes, t'adones que no és ficció.<br>
+    <em>Fa quinze anys que algú espera aquesta nit.</em>
+  </p>
+  <button class="btn-begin" onclick="startAdventure()">● Comença l'emissió</button>
+  <div class="runs-count" id="runs-count"></div>
+  <div class="endings-gallery-title" id="gallery-title" style="display:none">FINALS DESCOBERTS</div>
+  <div class="endings-gallery" id="endings-gallery"></div>
+</div>
+
+<div class="screen" id="screen-game">
+  <div class="breadcrumb" id="breadcrumb"></div>
+  <div class="scene-wrap" id="scene-wrap"></div>
+</div>
+
+<footer>Una aplicació de Gobo26 &nbsp;·&nbsp; aventura interactiva</footer>
+
+<script>
+'use strict';
+
+// ══════════════════════════════════════════════════════════════
+// ÀUDIO
+// ══════════════════════════════════════════════════════════════
+let _AC = null;
+function _ac() {
+  if (!_AC) _AC = new AudioContext();
+  if (_AC.state === 'suspended') _AC.resume();
+  return _AC;
+}
+function soClick() {
+  try {
+    const ac=_ac(),o=ac.createOscillator(),g=ac.createGain();
+    o.connect(g);g.connect(ac.destination);
+    o.type='sine';o.frequency.value=520;
+    g.gain.setValueAtTime(0.04,ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.1);
+    o.start();o.stop(ac.currentTime+0.1);
+  } catch(e){}
+}
+function soTransition() {
+  try {
+    const ac=_ac(),o=ac.createOscillator(),g=ac.createGain();
+    o.connect(g);g.connect(ac.destination);
+    o.type='sine';
+    o.frequency.setValueAtTime(240,ac.currentTime);
+    o.frequency.exponentialRampToValueAtTime(420,ac.currentTime+0.4);
+    g.gain.setValueAtTime(0.06,ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.4);
+    o.start();o.stop(ac.currentTime+0.4);
+  } catch(e){}
+}
+function soClue() {
+  try {
+    const ac=_ac();
+    [[380,0],[480,0.13],[600,0.26]].forEach(([f,t])=>{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.connect(g);g.connect(ac.destination);
+      o.type='triangle';o.frequency.value=f;
+      g.gain.setValueAtTime(0.06,ac.currentTime+t);
+      g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+t+0.2);
+      o.start(ac.currentTime+t);o.stop(ac.currentTime+t+0.2);
+    });
+  } catch(e){}
+}
+function soEndGood() {
+  try {
+    const ac=_ac();
+    [[349,0],[440,0.18],[523,0.36],[698,0.58]].forEach(([f,t])=>{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.connect(g);g.connect(ac.destination);
+      o.type='sine';o.frequency.value=f;
+      g.gain.setValueAtTime(0.09,ac.currentTime+t);
+      g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+t+0.5);
+      o.start(ac.currentTime+t);o.stop(ac.currentTime+t+0.6);
+    });
+  } catch(e){}
+}
+function soEndNeutral() {
+  try {
+    const ac=_ac();
+    [[311,0],[370,0.25],[311,0.5]].forEach(([f,t])=>{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.connect(g);g.connect(ac.destination);
+      o.type='sine';o.frequency.value=f;
+      g.gain.setValueAtTime(0.07,ac.currentTime+t);
+      g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+t+0.45);
+      o.start(ac.currentTime+t);o.stop(ac.currentTime+t+0.55);
+    });
+  } catch(e){}
+}
+function soEndBad() {
+  try {
+    const ac=_ac();
+    [[196,0],[147,0.3]].forEach(([f,t])=>{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.connect(g);g.connect(ac.destination);
+      o.type='sawtooth';o.frequency.value=f;
+      g.gain.setValueAtTime(0.06,ac.currentTime+t);
+      g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+t+0.6);
+      o.start(ac.currentTime+t);o.stop(ac.currentTime+t+0.7);
+    });
+  } catch(e){}
+}
+
+// ══════════════════════════════════════════════════════════════
+// ESTAT I PERSISTÈNCIA
+// ══════════════════════════════════════════════════════════════
+let G = null;
+const META_KEY = 'radio_meta';
+
+function newGame() {
+  G = { current: null, history: [], decisions: 0, clues: new Map(), startTime: Date.now(), timerInterval: null };
+}
+function loadMeta() {
+  try { return JSON.parse(localStorage.getItem(META_KEY)) || {endings:[],runs:0,visited:[]}; }
+  catch(e) { return {endings:[],runs:0,visited:[]}; }
+}
+function saveMeta(m) { try{localStorage.setItem(META_KEY,JSON.stringify(m));}catch(e){} }
+
+function startTimer() {
+  stopTimer();
+  G.timerInterval = setInterval(updateTimerBadge, 1000);
+  updateTimerBadge();
+}
+function stopTimer() { if(G&&G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;} }
+function updateTimerBadge() {
+  const el=document.getElementById('timer-badge');
+  if(!el||!G)return;
+  const s=Math.floor((Date.now()-G.startTime)/1000);
+  el.textContent=`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+}
+function fmtTime() {
+  if(!G)return'0:00';
+  const s=Math.floor((Date.now()-G.startTime)/1000);
+  return`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// PISTES
+// ══════════════════════════════════════════════════════════════
+const CLUES = {
+  inici: {
+    icon: '📄',
+    title: 'El guió tardà',
+    body: 'El guió ha arribat avui a la tarda, molt tard. I descriu una "caiguda accidental" amb uns detalls que fan semblar que l\'autor ho havia vist amb els seus propis ulls.',
+  },
+  llegir_guio: {
+    icon: '🔎',
+    title: 'Els noms disfressats',
+    body: '"Núria" és la Neus Roca. "Diana" és la Dolors. "El vell tècnic Sever" és en Joan. L\'escena 7: una terrassa, una discussió, un crit breu. Silenci.',
+  },
+  ricard_conversa: {
+    icon: '🕯️',
+    title: 'L\'home en pau',
+    body: 'En Ricard sap que li queden setmanes. La seva calma no és resignació: és la d\'algú que ha esperat quinze anys per fer una cosa i finalment la farà.',
+  },
+  ricard_confessio: {
+    icon: '👁️',
+    title: 'El testimoni',
+    body: 'En Ricard ho va veure tot: la Dolors i la Neus pujant a la terrassa, el crit, la Dolors baixant sola. Va callar quinze anys per por. Ara no li queda por.',
+  },
+  joan_primer: {
+    icon: '🎚️',
+    title: 'El tècnic que sap',
+    body: 'En Joan Casals porta 22 anys a l\'estudi. Era aquí aquella nit. Quan pronuncies el nom de la Neus Roca, les seves mans s\'aturen.',
+  },
+  joan_testimoni: {
+    icon: '👥',
+    title: 'El que va veure en Joan',
+    body: 'Joan va veure la Dolors i la Neus pujar juntes a la terrassa. La Dolors va baixar sola. La Dolors li va dir: "Tens una filla petita. Pensa-hi bé." I ell va pensar.',
+  },
+  prova_gravacio: {
+    icon: '🎞️',
+    title: 'La cinta oberta',
+    body: 'El micròfon del control estava obert aquella nit. Hi ha una cinta de carrete: veus, una discussió, un crit, silenci. Quinze anys en una capsa de metall.',
+  },
+  dolors_primer: {
+    icon: '📋',
+    title: 'La versió alternativa',
+    body: 'La Dolors ja té preparada una versió revisada de l\'Acte 2. Ha anticipat que el guió d\'avui seria un problema. Porta setmanes preparant-ho.',
+  },
+  dolors_reaccio: {
+    icon: '🪞',
+    title: 'La fissura',
+    body: 'Per un segon, la Dolors ha deixat caure la màscara. Diu "accident", però els seus ulls no acompanyen la paraula. I menciona la Senyora Puig com a amenaça.',
+  },
+  enfrontar_dolors: {
+    icon: '🔴',
+    title: 'L\'admissió',
+    body: '"Va ser un segon. Un sol segon que no vaig poder aturar." La Dolors no nega completament. És la primera admissió en quinze anys.',
+  },
+};
+
+// ══════════════════════════════════════════════════════════════
+// NODES
+// ══════════════════════════════════════════════════════════════
+const NODES = {
+
+  inici: {
+    chapter: 'Acte I',
+    timestamp: '21:00 h · l\'emissió comença en 15 minuts',
+    title: 'La llum vermella',
+    art: 'estudi',
+    text: `<p>L'estudi de ràdio té l'olor de sempre: cigarrets freds, pols de micròfon i el lleuger coure de l'electricitat a l'aire. La llum vermella d'<em>EN DIRECTE</em> és apagada. Per quinze minuts més.</p>
+    <p>El guió de la nit — <strong>"El Cas de la Finestra Oberta"</strong> — ha arribat aquest migdia, molt tard per als estàndards d'en Ricard Falguera. Li fulleges les pàgines de peu davant el tauler de so. Coses habituals: un detectiu, una víctima, una nit tempestuosa.</p>
+    <p>Fins que arribes a l'Acte 2, escena 7. T'atures.</p>
+    <p>Hi ha alguna cosa en la manera com descriu la caiguda. Massa detallada. Massa precisa. Com si l'autor <em>ho hagués vist</em>.</p>`,
+    choices: [
+      { label: 'Llegeixes el guió sencer abans d\'entrar en directe.', next: 'llegir_guio' },
+      { label: 'Busques en Joan al control per preguntar-li si sap res del guió d\'avui.', next: 'joan_primer' },
+      { label: 'Vas directament al despatx de la Dolors. Alguna cosa no quadra i ella sempre ho sap tot.', next: 'dolors_primer' },
+    ],
+  },
+
+  llegir_guio: {
+    chapter: 'Acte I',
+    timestamp: '21:05 h · 10 minuts per al directe',
+    title: 'El guió que no és ficció',
+    art: 'guio',
+    text: `<p>Pàgina a pàgina, els peces encaixen. El personatge <em>"Núria"</em> — actriu jove, prometedora, acabada d'incorporar a l'equip. <em>"Diana"</em> — la directora del programa. <em>"El vell tècnic Sever"</em> — és en Joan, amb vint i dos anys al control.</p>
+    <p>I a l'Acte 2, escena 7: Núria i Diana pugen a la terrassa. Discuteixen. La indicació d'escena diu: <span class="guio">So de passos sobre el terrat. La veu de la Núria, aguda. Un crit breu. Silenci prolongat. La porta de la terrassa que torna a obrir-se, una sola vegada.</span></p>
+    <p>En Ricard ha escrit una confessió. Disfressada de drama radiofònic, però inconfusible per a qualsevol que conegui aquest estudi i la nit del catorze de febrer de fa quinze anys.</p>
+    <p>La pregunta és: fins on vol arribar?</p>`,
+    choices: [
+      { label: 'Busques en Ricard. Ha d\'explicar-te exactament fins on arriba tot això.', next: 'ricard_conversa' },
+      { label: 'Confrontes la Dolors ara, amb el guió a la mà. Que sàpiga que has llegit.', next: 'dolors_primer' },
+    ],
+  },
+
+  ricard_conversa: {
+    chapter: 'Acte I',
+    timestamp: '21:08 h · 7 minuts per al directe',
+    title: 'L\'home que espera morir en pau',
+    art: 'corredor',
+    text: `<p>El trobes al passadís del darrere, recolzat a la paret, amb els ulls tancats. Quan sents els teus passos, els obre. No sembla sorprès.</p>
+    <p>"La Marta." Mig somriure. "Sabia que ho veuries. Ets la millor actriu que he tingut mai."</p>
+    <p>Està prim. La malaltia l'ha buidat per dins, però les mans que agafen el guió quan li l'allargues no tremolen. El llegeix un segon, com si comprovés que és el que ell havia escrit. Ho torna a plegar.</p>
+    <p>"Fa quinze anys que espero una oportunitat com aquesta," diu. "Avui o mai."</p>`,
+    choices: [
+      { label: 'Li demanes que t\'ho expliqui tot ara, ràpidament, abans del directe.', next: 'ricard_confessio' },
+      { label: 'Li dius que tu t\'encarregaràs. Que no ha de carregar sol amb res.', next: 'joan_primer' },
+    ],
+  },
+
+  ricard_confessio: {
+    chapter: 'Acte I',
+    timestamp: '21:12 h · 3 minuts per al directe',
+    title: 'Quinze anys de pes',
+    art: 'corredor',
+    text: `<p>Parla en veu baixa i igual, sense dramatisme. La nit del catorze de febrer d'ara fa quinze anys, durant la pausa d'una gravació, la Dolors i la Neus Roca van pujar a la terrassa. Ell era al passadís de baix, fumant per la finestra. Sentia les veus — una discussió sobre diners, sobre irregularitats en el pressupost de producció, sobre la Neus dient que l'endemà al matí aniria a la direcció general.</p>
+    <p>Va sentir un crit.</p>
+    <p>Va veure la Dolors baixar sola, estirant-se la jaqueta.</p>
+    <p>"No vaig dir res," diu en Ricard. "Tenia por. Em van dir que havia estat un accident i vaig deixar que m'ho cregués." Mira el guió. "Però ja no em queda temps per a la covardia. Ni ganes."</p>`,
+    choices: [
+      { label: 'Deixeu que el guió parli. Interpretareu l\'escena 7 tal com ell l\'ha escrita, sense canviar una coma.', next: 'directe_total' },
+      { label: 'Confrontareu la Dolors ara, amb en Ricard com a testimoni, abans que comenci el directe.', next: 'enfrontar_dolors' },
+    ],
+  },
+
+  joan_primer: {
+    chapter: 'Acte I',
+    timestamp: '21:05 h · 10 minuts per al directe',
+    title: 'El tècnic de so',
+    art: 'control',
+    text: `<p>En Joan Casals és al control, enrotllant un cable amb la precisió automàtica de qui ho ha fet milers de vegades. Quan li preguntes pel guió d'avui, les mans s'aturen.</p>
+    <p>"En Ricard me'n va donar una còpia aquest matí." Posa el cable a terra. "Li vaig dir que era una bogeria. Que no podia emetre això." Pausa. "M'ha dit: 'Joan, tu i jo sabem que no és ficció.'"</p>
+    <p>Vint-i-dos anys al mateix lloc. Les espatlles d'en Joan porten el pes d'aquests vint-i-dos anys de manera visible.</p>
+    <p>"Jo era aquí aquella nit," diu finalment. Amb la veu d'algú que porta molt de temps sense dir-ho en veu alta.</p>`,
+    choices: [
+      { label: 'Li demanes que t\'expliqui tot el que va veure aquella nit.', next: 'joan_testimoni' },
+      { label: 'Li preguntes si hi ha alguna prova física. Enregistraments, documents, qualsevol cosa.', next: 'prova_gravacio' },
+    ],
+  },
+
+  joan_testimoni: {
+    chapter: 'Acte II',
+    timestamp: '21:18 h · 3 minuts d\'emissió',
+    title: 'El que va veure en Joan',
+    art: 'control',
+    text: `<p>"Van pujar juntes. La Dolors i la Neus." Ho diu mirant el tauler, no a tu. "Jo estava aquí. Sentia les veus però no les paraules. Després vaig sentir el crit. Breu. Com quan algú s'espanta."</p>
+    <p>"La Dolors va baixar sola. Em va mirar. Em va dir: 'Ha estat un accident, Joan. La nena ha perdut l'equilibri.' I després: 'Tens una filla petita. Pensa-hi bé.'"</p>
+    <p>Silenci al control. El tic de l'agulla del VU-metre.</p>
+    <p>"Fa quinze anys que me'n penedeixo cada dia. Cada dia." La veu és plana. "Però tenia por. I la filla. I..." S'atura. No cal acabar la frase.</p>`,
+    choices: [
+      { label: 'Aneu junts a confrontar la Dolors. El seu testimoni és la prova que falta.', next: 'enfrontar_dolors' },
+      { label: 'Deixeu que el guió parli. Sortiu en directe i interpreteu l\'escena 7 sense canviar res.', next: 'directe_total' },
+    ],
+  },
+
+  prova_gravacio: {
+    chapter: 'Acte II',
+    timestamp: '21:22 h · 7 minuts d\'emissió',
+    title: 'La cinta oberta',
+    art: 'arxiu',
+    text: `<p>"El micròfon del control sempre queda obert durant les pauses," diu en Joan. "Sempre. És un costum vell." Una pausa molt llarga. "Aquella nit també estava obert."</p>
+    <p>A l'arxiu, entre centenars de caixes etiquetades, en Joan en localitza una de grisa, escrita amb llapis vermell. La data coincideix. La bobina gira al reproductor vell amb un soroll de cinta tensa.</p>
+    <p>Dues veus. Una discussió. Les paraules s'entenen nítidament: <em>documents, diners, la direcció general, demà al matí.</em> Después la veu de la Dolors, tallant: <em>"Això no passarà."</em> Un soroll de passos ràpids. Un crit curt. El silenci.</p>
+    <p>Quinze anys en una capsa de metall.</p>`,
+    choices: [
+      { label: 'Porteu la cinta a l\'estudi. La fareu sonar en directe, dins l\'escena 7 del programa.', next: 'final_bo' },
+      { label: 'Confronteu la Dolors amb la cinta. Voleu sentir-la parlar amb les proves a la mà.', next: 'enfrontar_dolors' },
+    ],
+  },
+
+  dolors_primer: {
+    chapter: 'Acte I',
+    timestamp: '21:06 h · 9 minuts per al directe',
+    title: 'El despatx de la directora',
+    art: 'despatx',
+    text: `<p>La Dolors Miró deixa el bolígraf amb una precisió calculada quan entres. No sembla sorpresa. Potser tampoc no ho és.</p>
+    <p>"Bona nit, Marta." Creua les mans sobre la taula. "Imagino que has llegit el guió."</p>
+    <p>Sense esperar resposta, obre un calaix i en treu un feix de fulls. Una versió diferent de l'Acte 2. "Hem fet una revisió d'última hora. Certs passatges no eren adequats." Li fulleges: l'escena 7 ha estat completament reescrita. La terrassa no hi apareix. La "Núria" sobreviu.</p>
+    <p>"En Ricard és un home molt malalt," diu la Dolors. "De vegades la malaltia confon els records amb la imaginació. Comprens."</p>`,
+    choices: [
+      { label: 'Acceptes la versió revisada. Li dius que ho entens, que s\'encarregarà ella de parlar amb en Ricard.', next: 'acceptar_trampa' },
+      { label: 'Refuseixes. Li dius que has llegit l\'original i que en Ricard té tot el dret de dir el que vol dir.', next: 'dolors_reaccio' },
+    ],
+  },
+
+  dolors_reaccio: {
+    chapter: 'Acte I',
+    timestamp: '21:10 h · 5 minuts per al directe',
+    title: 'La fissura',
+    art: 'despatx',
+    text: `<p>Per un moment, molt breu, la compostura de la Dolors deixa entrar una fissura. S'aixeca. Fa dos passos cap a la finestra.</p>
+    <p>"El que va passar fa quinze anys va ser un accident. La Neus va perdre l'equilibri." Ho diu al vidre, no a tu. "La Senyora Puig ve aquesta nit. Si surt qualsevol cosa d'aquest guió, l'emissora s'acaba. El programa s'acaba. Tothom perd la feina."</p>
+    <p>Parla de feines. Tu penses en la Neus Roca. Vint-i-tres anys i una veu que hauria pogut omplir teatres.</p>
+    <p>"Marta." Es gira. "Ets una professional. Saps perfectament que hi ha coses que no es poden dir en directe."</p>`,
+    choices: [
+      { label: 'Surts del despatx sense dir res més. Has de trobar en Joan abans del directe.', next: 'joan_testimoni' },
+      { label: 'Li dius que parlis amb en Ricard tu mateixa. Necessites sentir-lo a ell.', next: 'ricard_confessio' },
+    ],
+  },
+
+  acceptar_trampa: {
+    chapter: 'Acte II',
+    timestamp: '21:45 h · 30 minuts d\'emissió',
+    title: 'La versió revisada',
+    art: 'estudi',
+    text: `<p>L'emissió transcorre sense incidents. Interpretes la versió revisada de l'escena 7. La "Núria" sobreviu. El drama es resol amb el detectiu descobrint que tot havia estat un malentès. El públic aplaudeix mentalment, invisible i satisfet darrere dels aparells de ràdio de tot el país.</p>
+    <p>Quan la llum vermella s'apaga, en Ricard seu sol al fons de l'estudi. No diu res. Agafa el seu original, el plega amb cura i el guarda a la bossa. Et mira un segon. Només un segon.</p>
+    <p>Tres dies després, la Senyora Puig anuncia una donació important a l'emissora. La Dolors és ascendida. L'original del guió d'en Ricard no apareix en cap arxiu.</p>
+    <p>En Ricard mor sis setmanes més tard. La seva necrològica el descriu com <em>"un artesà discret del drama radiofònic"</em>.</p>`,
+    ending: 'bad',
+    endingLabel: '✗ Final de l\'Engany ✗',
+    choices: [],
+  },
+
+  directe_total: {
+    chapter: 'Acte II',
+    timestamp: '21:38 h · 23 minuts d\'emissió',
+    title: 'L\'escena 7',
+    art: 'estudi',
+    text: `<p>La llum vermella porta mitja hora encesa. Has interpretat cada escena amb la teva veu habitual, la professional, la que no revela res. Però ara és l'escena 7.</p>
+    <p>El micròfon espera. En Joan, al control, t'ha mirat a través del vidre sense parlar. Sap el que ve.</p>
+    <p>Llegeixes la indicació escènica: <span class="guio">NÚRIA: (segura, sense por) — Fa quinze anys que algú espera que jo cridi. Avui crido jo primera.</span></p>
+    <p>Respires. Acostes els llavis al metall fred del micròfon. I comences.</p>`,
+    choices: [
+      { label: 'Interpreteu l\'escena 7 tal com en Ricard l\'ha escrita, fins a l\'última paraula. La veritat sona a tot el país.', next: 'final_bo' },
+    ],
+  },
+
+  enfrontar_dolors: {
+    chapter: 'Acte II',
+    timestamp: '21:30 h · 15 minuts d\'emissió',
+    title: 'Cara a cara',
+    art: 'despatx',
+    text: `<p>La Dolors no es mou de la cadira quan entres. Però quan veu qui t'acompanya — en Joan, o en Ricard, o sents la cinta girant al reproductor portàtil — el color de la seva cara canvia.</p>
+    <p>Li expliques el que saps. Sense entonació. Com si fossin fets meteorològics.</p>
+    <p>Un silenci molt llarg. Després: "Va ser un segon. Un sol segon que no vaig poder aturar." La veu és petita. "Jo no volia..." S'atura. "No hi ha cap 'jo no volia' que valgui, oi?"</p>
+    <p>Per primera vegada en quinze anys, algú ha dit en veu alta el que tothom sabia. La Dolors ho sap. Tu ho saps. Ara cal decidir on va d'aquí.</p>`,
+    choices: [
+      { label: 'El micròfon del control segueix obert. Portes la Dolors a l\'estudi i li demanes que ho repeteixi en directe.', next: 'final_bo' },
+      { label: 'Li ofereixes una sortida privada: carta de dimissió i declaració escrita davant notari. Justícia sense espectacle.', next: 'final_memoria' },
+      { label: 'No dieu res més. Torneu a l\'estudi. Interpreteu l\'escena 7 tal com en Ricard l\'ha escrita.', next: 'final_ficcio' },
+    ],
+  },
+
+  // ── FINALS ───────────────────────────────────────────────────
+
+  final_bo: {
+    chapter: 'Epíleg',
+    timestamp: 'La nit de l\'emissió',
+    title: 'La veritat en directe',
+    art: 'final_bo',
+    text: `<p>La veritat surt a l'aire. No importa exactament per quin camí hi ha arribat — si és la cinta, la confessió de la Dolors, o les paraules d'en Ricard interpretades fins a l'última síl·laba. El resultat és irreversible.</p>
+    <p>El telèfon de l'emissora comença a sonar als trenta segons. Als dos minuts, hi ha periodistes trucant. La Dolors no intenta fugir: seu a la seva cadira del control i espera, amb una expressió que no és exactament derrota. Potser és alleujament.</p>
+    <p>En Ricard escolta el final del programa des del passadís, amb el seu guió original al regazo. Quan la llum vermella s'apaga, es posa dempeus molt a poc a poc i et dóna la mà.</p>
+    <p>"Gràcies," diu. Res més. Però la paraula pesa el suficient.</p>
+    <p><em>La Neus Roca tenia vint-i-tres anys. Ara tothom ho sap.</em></p>`,
+    ending: 'good',
+    endingLabel: '✦ Final de la Veritat en Directe ✦',
+    choices: [],
+  },
+
+  final_memoria: {
+    chapter: 'Epíleg',
+    timestamp: 'La setmana següent',
+    title: 'La memòria privada',
+    art: 'final_memoria',
+    text: `<p>La Dolors signa la declaració davant notari a les nou del matí. No plora. Tampoc no nega. Escriu els fets amb una cal·ligrafia ordenada i els signa amb el seu nom complet.</p>
+    <p>Presenta la dimissió aquella mateixa tarda, "per motius personals". Ningú a l'emissora fa preguntes en veu alta. En Joan tanca el control i s'asseu sol a la foscor uns minuts.</p>
+    <p>La declaració queda en mans d'un advocat, amb instruccions de fer-la pública si mai hi ha un procés. Potser n'hi haurà un. Potser no.</p>
+    <p>En Ricard llegeix una còpia de la declaració al llit de l'hospital. La plega. La deixa a la tauleta de nit. "La justícia privada és el millor que pot esperar una mort," diu. Ho diu sense amargor.</p>
+    <p><em>La Neus Roca tenia vint-i-tres anys. Ara almenys algú ho ha escrit, i signat, i no ho pot desfer.</em></p>`,
+    ending: 'neutral',
+    endingLabel: '◈ Final de la Memòria ◈',
+    choices: [],
+  },
+
+  final_ficcio: {
+    chapter: 'Epíleg',
+    timestamp: 'La nit de l\'emissió',
+    title: 'La veritat com a drama',
+    art: 'final_ficcio',
+    text: `<p>Interpretes l'escena 7. La teva veu fa la Núria. Una altra actriu fa la Diana. El text d'en Ricard és precís, sensorial, irrefutable per a qualsevol que conegui la história real — però públicament és ficció, i la ficció no condemna ningú.</p>
+    <p>Al control, la Dolors s'ha quedat blanca. Sap que saps. Sap que en Joan sap. Sap que en Ricard sap. I sap que potser algunes persones entre els oients d'avui recorden la Neus Roca i fan connexions que no haurien de poder fer.</p>
+    <p>L'endemà, presenta la dimissió. "Per motius de salut." L'emissora li desitja una bona recuperació.</p>
+    <p>En Ricard escolta l'emissió des de casa. Quan acaba l'escena 7, apaga la ràdio i mira per la finestra un bon estona.</p>
+    <p><em>La Neus Roca tenia vint-i-tres anys. La veritat ha sonat a tot el país disfressada de drama. Potser és el màxim que permet el món.</em></p>`,
+    ending: 'neutral',
+    endingLabel: '◈ Final de la Ficció ◈',
+    choices: [],
+  },
+
+};
+
+// ══════════════════════════════════════════════════════════════
+// ART SVG
+// ══════════════════════════════════════════════════════════════
+function getArtSVG(art) {
+  const d = {
+
+    estudi: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0c0909"/>
+      <!-- panells acústics esquerra -->
+      <rect x="0" y="0" width="70" height="140" fill="#0f0c0c"/>
+      <line x1="8" y1="14" x2="62" y2="14" stroke="#1a1414" stroke-width="5"/>
+      <line x1="8" y1="28" x2="62" y2="28" stroke="#1a1414" stroke-width="5"/>
+      <line x1="8" y1="42" x2="62" y2="42" stroke="#1a1414" stroke-width="5"/>
+      <line x1="8" y1="56" x2="62" y2="56" stroke="#1a1414" stroke-width="5"/>
+      <line x1="8" y1="70" x2="62" y2="70" stroke="#1a1414" stroke-width="5"/>
+      <line x1="8" y1="84" x2="62" y2="84" stroke="#1a1414" stroke-width="5"/>
+      <line x1="8" y1="98" x2="62" y2="98" stroke="#1a1414" stroke-width="5"/>
+      <line x1="8" y1="112" x2="62" y2="112" stroke="#1a1414" stroke-width="5"/>
+      <line x1="8" y1="126" x2="62" y2="126" stroke="#1a1414" stroke-width="5"/>
+      <!-- peu del micròfon -->
+      <line x1="180" y1="140" x2="180" y2="58" stroke="#2a1e1e" stroke-width="5"/>
+      <line x1="155" y1="138" x2="205" y2="138" stroke="#2a1e1e" stroke-width="4"/>
+      <!-- cap del micròfon (vintage bullet) -->
+      <ellipse cx="180" cy="45" rx="22" ry="26" fill="#1c1414"/>
+      <ellipse cx="180" cy="44" rx="19" ry="23" fill="#241818"/>
+      <line x1="162" y1="36" x2="198" y2="36" stroke="#352828" stroke-width="1.2"/>
+      <line x1="161" y1="41" x2="199" y2="41" stroke="#352828" stroke-width="1.2"/>
+      <line x1="161" y1="46" x2="199" y2="46" stroke="#352828" stroke-width="1.2"/>
+      <line x1="161" y1="51" x2="199" y2="51" stroke="#352828" stroke-width="1.2"/>
+      <line x1="162" y1="56" x2="198" y2="56" stroke="#352828" stroke-width="1.2"/>
+      <!-- llum ambient càlida des de dalt -->
+      <defs><radialGradient id="e_warm" cx="50%" cy="0%" r="60%"><stop offset="0%" stop-color="#c47a1a" stop-opacity=".12"/><stop offset="100%" stop-color="#0c0909" stop-opacity="0"/></radialGradient></defs>
+      <rect width="400" height="140" fill="url(#e_warm)"/>
+      <!-- signe EN DIRECTE -->
+      <rect x="270" y="18" width="112" height="28" fill="#8b0010" rx="2"/>
+      <rect x="272" y="20" width="108" height="24" fill="#a00012" rx="1"/>
+      <text x="326" y="36" font-family="Montserrat,sans-serif" font-size="10" font-weight="900" fill="white" text-anchor="middle" letter-spacing="2">EN DIRECTE</text>
+      <circle cx="276" cy="32" r="4" fill="#ff2030" fill-opacity=".9"/>
+      <!-- reflexe llum en directe -->
+      <rect x="270" y="18" width="112" height="28" fill="#ff0020" fill-opacity=".06" rx="2"/>
+      <!-- cables al terra -->
+      <path d="M100,140 Q130,120 160,138 Q200,158 240,135 Q270,118 300,140" fill="none" stroke="#1c1414" stroke-width="3"/>
+      <!-- taula -->
+      <rect x="80" y="120" width="240" height="10" fill="#1a1212" rx="1"/>
+    </svg>`,
+
+    guio: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0e0b0b"/>
+      <!-- full de paper inclinat darrere -->
+      <rect x="90" y="15" width="200" height="115" fill="#1c1616" rx="2" transform="rotate(-3 190 72)"/>
+      <!-- full de paper principal -->
+      <rect x="100" y="10" width="210" height="120" fill="#f0e6d0" rx="2"/>
+      <!-- línies de text -->
+      <line x1="115" y1="28" x2="295" y2="28" stroke="#d4c8b0" stroke-width="1.2"/>
+      <line x1="115" y1="38" x2="295" y2="38" stroke="#d4c8b0" stroke-width="1.2"/>
+      <line x1="115" y1="48" x2="270" y2="48" stroke="#d4c8b0" stroke-width="1.2"/>
+      <line x1="115" y1="58" x2="295" y2="58" stroke="#d4c8b0" stroke-width="1.2"/>
+      <line x1="115" y1="68" x2="260" y2="68" stroke="#d4c8b0" stroke-width="1.2"/>
+      <!-- nota al marge en vermell -->
+      <line x1="115" y1="82" x2="295" y2="82" stroke="#c8b88a" stroke-width="1"/>
+      <line x1="115" y1="92" x2="280" y2="92" stroke="#c8b88a" stroke-width="1"/>
+      <text x="308" y="52" font-family="Georgia,serif" font-size="9" fill="#8b0010" font-style="italic" transform="rotate(90 308 52)">escena 7</text>
+      <!-- ressaltat vermell a l'escena 7 -->
+      <rect x="115" y="76" width="180" height="22" fill="#8b0010" fill-opacity=".15" rx="1"/>
+      <line x1="113" y1="77" x2="113" y2="97" stroke="#8b0010" stroke-width="2.5"/>
+      <!-- llapis -->
+      <line x1="320" y1="30" x2="350" y2="120" stroke="#c47a1a" stroke-width="4" stroke-linecap="round"/>
+      <polygon points="348,118 354,128 342,122" fill="#f0e6d0"/>
+      <rect x="318" y="26" width="8" height="10" fill="#d4a060" rx="1"/>
+    </svg>`,
+
+    control: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0a0808"/>
+      <!-- vidre de separació -->
+      <rect x="0" y="0" width="160" height="140" fill="#0d0b0b"/>
+      <rect x="155" y="0" width="6" height="140" fill="#1a1414"/>
+      <!-- l'estudi vist a través del vidre -->
+      <rect x="0" y="0" width="155" height="140" fill="#0c0909" fill-opacity=".7"/>
+      <ellipse cx="75" cy="65" rx="15" ry="18" fill="#1c1414"/>
+      <line x1="75" y1="83" x2="75" y2="110" stroke="#241818" stroke-width="3"/>
+      <defs><radialGradient id="c_warm" cx="50%" cy="30%" r="50%"><stop offset="0%" stop-color="#c47a1a" stop-opacity=".08"/><stop offset="100%" stop-color="#0c0909" stop-opacity="0"/></radialGradient></defs>
+      <rect x="0" y="0" width="155" height="140" fill="url(#c_warm)"/>
+      <!-- tauler de mescles -->
+      <rect x="170" y="60" width="220" height="70" fill="#131010" rx="3"/>
+      <rect x="172" y="62" width="216" height="66" fill="#171212" rx="2"/>
+      <!-- faders -->
+      <rect x="185" y="68" width="4" height="40" fill="#0e0c0c" rx="1"/>
+      <rect x="183" y="84" width="8" height="8" fill="#3a2828" rx="1"/>
+      <rect x="210" y="68" width="4" height="40" fill="#0e0c0c" rx="1"/>
+      <rect x="208" y="76" width="8" height="8" fill="#3a2828" rx="1"/>
+      <rect x="235" y="68" width="4" height="40" fill="#0e0c0c" rx="1"/>
+      <rect x="233" y="90" width="8" height="8" fill="#3a2828" rx="1"/>
+      <rect x="260" y="68" width="4" height="40" fill="#0e0c0c" rx="1"/>
+      <rect x="258" y="80" width="8" height="8" fill="#3a2828" rx="1"/>
+      <rect x="285" y="68" width="4" height="40" fill="#0e0c0c" rx="1"/>
+      <rect x="283" y="72" width="8" height="8" fill="#8b0010" rx="1"/>
+      <!-- botons -->
+      <circle cx="325" cy="78" r="6" fill="#2a1a1a" stroke="#3a2a2a" stroke-width="1"/>
+      <circle cx="345" cy="78" r="6" fill="#8b0010" stroke="#c01828" stroke-width="1"/>
+      <circle cx="365" cy="78" r="6" fill="#2a1a1a" stroke="#3a2a2a" stroke-width="1"/>
+      <!-- VU-metres -->
+      <rect x="320" y="92" width="60" height="14" fill="#0a0808" rx="1"/>
+      <rect x="322" y="94" width="28" height="10" fill="#c47a1a" fill-opacity=".7" rx="1"/>
+      <!-- bobina de cinta -->
+      <circle cx="358" cy="30" r="22" fill="#1c1616" stroke="#2a2020" stroke-width="2"/>
+      <circle cx="358" cy="30" r="14" fill="#141010"/>
+      <circle cx="358" cy="30" r="4" fill="#2a2020"/>
+      <line x1="358" y1="16" x2="358" y2="44" stroke="#1c1616" stroke-width="1"/>
+      <line x1="344" y1="30" x2="372" y2="30" stroke="#1c1616" stroke-width="1"/>
+    </svg>`,
+
+    corredor: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#080606"/>
+      <!-- perspectiva del passadís -->
+      <polygon points="0,0 400,0 400,140 0,140" fill="#0c0909"/>
+      <polygon points="0,0 160,40 160,100 0,140" fill="#0a0808"/>
+      <polygon points="400,0 240,40 240,100 400,140" fill="#0a0808"/>
+      <!-- sostre i terra del corredor central -->
+      <rect x="160" y="40" width="80" height="60" fill="#0e0b0b"/>
+      <!-- porta al fons amb llum -->
+      <rect x="185" y="50" width="30" height="50" fill="#1a1212"/>
+      <rect x="186" y="51" width="28" height="48" fill="#c47a1a" fill-opacity=".15"/>
+      <defs><radialGradient id="door_light" cx="50%" cy="80%" r="60%"><stop offset="0%" stop-color="#c47a1a" stop-opacity=".25"/><stop offset="100%" stop-color="#0e0b0b" stop-opacity="0"/></radialGradient></defs>
+      <rect x="160" y="40" width="80" height="60" fill="url(#door_light)"/>
+      <!-- canonades a la dreta -->
+      <rect x="360" y="0" width="12" height="140" fill="#0f0c0c"/>
+      <rect x="372" y="20" width="8" height="10" fill="#1a1414" rx="1"/>
+      <rect x="372" y="60" width="8" height="10" fill="#1a1414" rx="1"/>
+      <rect x="372" y="100" width="8" height="10" fill="#1a1414" rx="1"/>
+      <!-- ombra d'una figura al corredor -->
+      <ellipse cx="200" cy="135" rx="18" ry="5" fill="#000" fill-opacity=".6"/>
+      <rect x="192" y="90" width="16" height="48" fill="#0c0909" fill-opacity=".8" rx="1"/>
+      <ellipse cx="200" cy="87" rx="12" ry="14" fill="#0c0909" fill-opacity=".8"/>
+      <!-- bombeta penjada -->
+      <line x1="200" y1="0" x2="200" y2="20" stroke="#1a1414" stroke-width="2"/>
+      <ellipse cx="200" cy="24" rx="6" ry="8" fill="#c47a1a" fill-opacity=".3"/>
+      <circle cx="200" cy="24" r="12" fill="#c47a1a" fill-opacity=".06"/>
+    </svg>`,
+
+    arxiu: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#080606"/>
+      <!-- prestatges esquerra -->
+      <rect x="0" y="0" width="180" height="140" fill="#0a0808"/>
+      <rect x="0" y="25" width="175" height="5" fill="#141010"/>
+      <rect x="0" y="55" width="175" height="5" fill="#141010"/>
+      <rect x="0" y="85" width="175" height="5" fill="#141010"/>
+      <rect x="0" y="115" width="175" height="5" fill="#141010"/>
+      <!-- caixes de cinta als prestatges -->
+      <rect x="5" y="8" width="18" height="17" fill="#1c1616" rx="1"/>
+      <rect x="25" y="8" width="18" height="17" fill="#201a1a" rx="1"/>
+      <rect x="45" y="8" width="18" height="17" fill="#1a1414" rx="1"/>
+      <rect x="65" y="8" width="18" height="17" fill="#201a1a" rx="1"/>
+      <rect x="85" y="8" width="18" height="17" fill="#1c1616" rx="1"/>
+      <rect x="5" y="36" width="18" height="17" fill="#201a1a" rx="1"/>
+      <rect x="25" y="36" width="18" height="17" fill="#1c1616" rx="1"/>
+      <rect x="45" y="36" width="18" height="17" fill="#201a1a" rx="1"/>
+      <!-- caixa destacada (la de la cinta) -->
+      <rect x="65" y="36" width="20" height="17" fill="#2a1010" rx="1" stroke="#8b0010" stroke-width="1"/>
+      <line x1="67" y1="44" x2="83" y2="44" stroke="#8b0010" stroke-width=".8" stroke-opacity=".7"/>
+      <rect x="5" y="66" width="18" height="17" fill="#1a1414" rx="1"/>
+      <rect x="25" y="66" width="18" height="17" fill="#201a1a" rx="1"/>
+      <rect x="45" y="66" width="18" height="17" fill="#1c1616" rx="1"/>
+      <!-- bombeta penjant al centre -->
+      <line x1="280" y1="0" x2="280" y2="18" stroke="#1a1414" stroke-width="2"/>
+      <ellipse cx="280" cy="22" rx="7" ry="9" fill="#dfa030" fill-opacity=".5"/>
+      <circle cx="280" cy="22" r="18" fill="#c47a1a" fill-opacity=".1"/>
+      <defs><radialGradient id="a_bulb" cx="50%" cy="15%" r="55%"><stop offset="0%" stop-color="#c47a1a" stop-opacity=".2"/><stop offset="100%" stop-color="#080606" stop-opacity="0"/></radialGradient></defs>
+      <rect width="400" height="140" fill="url(#a_bulb)"/>
+      <!-- reproductor de cinta -->
+      <rect x="200" y="60" width="170" height="70" fill="#0f0c0c" rx="3"/>
+      <circle cx="245" cy="90" r="22" fill="#141010" stroke="#201818" stroke-width="2"/>
+      <circle cx="245" cy="90" r="14" fill="#0e0c0c"/>
+      <circle cx="245" cy="90" r="4" fill="#201818"/>
+      <line x1="245" y1="68" x2="245" y2="112" stroke="#141010" stroke-width="1"/>
+      <line x1="223" y1="90" x2="267" y2="90" stroke="#141010" stroke-width="1"/>
+      <circle cx="330" cy="90" r="20" fill="#141010" stroke="#201818" stroke-width="2"/>
+      <circle cx="330" cy="90" r="12" fill="#0e0c0c"/>
+    </svg>`,
+
+    despatx: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0d0a0a"/>
+      <!-- persianes venecianes (ombres) -->
+      <rect x="240" y="0" width="160" height="140" fill="#100d0d"/>
+      <line x1="240" y1="14" x2="400" y2="14" stroke="#0c0909" stroke-width="6"/>
+      <line x1="240" y1="26" x2="400" y2="26" stroke="#0c0909" stroke-width="6"/>
+      <line x1="240" y1="38" x2="400" y2="38" stroke="#0c0909" stroke-width="6"/>
+      <line x1="240" y1="50" x2="400" y2="50" stroke="#0c0909" stroke-width="6"/>
+      <line x1="240" y1="62" x2="400" y2="62" stroke="#0c0909" stroke-width="6"/>
+      <line x1="240" y1="74" x2="400" y2="74" stroke="#0c0909" stroke-width="6"/>
+      <line x1="240" y1="86" x2="400" y2="86" stroke="#0c0909" stroke-width="6"/>
+      <line x1="240" y1="98" x2="400" y2="98" stroke="#0c0909" stroke-width="6"/>
+      <line x1="240" y1="110" x2="400" y2="110" stroke="#0c0909" stroke-width="6"/>
+      <line x1="240" y1="122" x2="400" y2="122" stroke="#0c0909" stroke-width="6"/>
+      <line x1="240" y1="134" x2="400" y2="134" stroke="#0c0909" stroke-width="6"/>
+      <!-- ombres de persiana sobre la paret -->
+      <line x1="0" y1="20" x2="240" y2="20" stroke="#0a0808" stroke-width="3" stroke-opacity=".5"/>
+      <line x1="0" y1="38" x2="240" y2="38" stroke="#0a0808" stroke-width="3" stroke-opacity=".5"/>
+      <line x1="0" y1="56" x2="240" y2="56" stroke="#0a0808" stroke-width="3" stroke-opacity=".5"/>
+      <line x1="0" y1="74" x2="240" y2="74" stroke="#0a0808" stroke-width="3" stroke-opacity=".5"/>
+      <line x1="0" y1="92" x2="240" y2="92" stroke="#0a0808" stroke-width="3" stroke-opacity=".5"/>
+      <line x1="0" y1="110" x2="240" y2="110" stroke="#0a0808" stroke-width="3" stroke-opacity=".5"/>
+      <!-- taula -->
+      <rect x="10" y="95" width="220" height="8" fill="#1a1414" rx="1"/>
+      <rect x="30" y="103" width="10" height="30" fill="#141010" rx="1"/>
+      <rect x="190" y="103" width="10" height="30" fill="#141010" rx="1"/>
+      <!-- làmpada de taula -->
+      <line x1="60" y1="95" x2="60" y2="55" stroke="#201818" stroke-width="3"/>
+      <polygon points="40,55 80,55 72,75 48,75" fill="#1c1616"/>
+      <defs><radialGradient id="d_lamp" cx="50%" cy="100%" r="60%"><stop offset="0%" stop-color="#c47a1a" stop-opacity=".3"/><stop offset="100%" stop-color="#0d0a0a" stop-opacity="0"/></radialGradient></defs>
+      <polygon points="40,55 80,55 72,75 48,75" fill="url(#d_lamp)"/>
+      <!-- papers sobre la taula -->
+      <rect x="90" y="88" width="100" height="7" fill="#f0e6d0" fill-opacity=".15" rx="1" transform="rotate(-2 140 91)"/>
+      <rect x="100" y="86" width="90" height="7" fill="#f0e6d0" fill-opacity=".12" rx="1"/>
+      <!-- figura asseguda (silueta) -->
+      <ellipse cx="140" cy="85" rx="22" ry="16" fill="#0e0b0b"/>
+      <rect x="118" y="85" width="44" height="50" fill="#0c0909" rx="2"/>
+    </svg>`,
+
+    final_bo: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0c0909"/>
+      <!-- llum que inunda l'estudi -->
+      <defs>
+        <radialGradient id="fbo_light" cx="50%" cy="40%" r="55%">
+          <stop offset="0%" stop-color="#c47a1a" stop-opacity=".35"/>
+          <stop offset="60%" stop-color="#8b0010" stop-opacity=".1"/>
+          <stop offset="100%" stop-color="#0c0909" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="400" height="140" fill="url(#fbo_light)"/>
+      <!-- micròfon central, ben il·luminat -->
+      <line x1="200" y1="140" x2="200" y2="62" stroke="#3a2828" stroke-width="5"/>
+      <ellipse cx="200" cy="48" rx="24" ry="28" fill="#241818"/>
+      <ellipse cx="200" cy="47" rx="20" ry="24" fill="#2e2020"/>
+      <line x1="181" y1="38" x2="219" y2="38" stroke="#4a3030" stroke-width="1.3"/>
+      <line x1="180" y1="44" x2="220" y2="44" stroke="#4a3030" stroke-width="1.3"/>
+      <line x1="180" y1="50" x2="220" y2="50" stroke="#4a3030" stroke-width="1.3"/>
+      <line x1="180" y1="56" x2="220" y2="56" stroke="#4a3030" stroke-width="1.3"/>
+      <line x1="181" y1="62" x2="219" y2="62" stroke="#4a3030" stroke-width="1.3"/>
+      <!-- llum vermella EN DIRECTE encesa fort -->
+      <rect x="270" y="20" width="112" height="28" fill="#c01828" rx="2"/>
+      <rect x="272" y="22" width="108" height="24" fill="#e02030" rx="1"/>
+      <text x="326" y="38" font-family="Montserrat,sans-serif" font-size="10" font-weight="900" fill="white" text-anchor="middle" letter-spacing="2">EN DIRECTE</text>
+      <circle cx="276" cy="34" r="5" fill="#ff3040"/>
+      <!-- halo de la llum EN DIRECTE -->
+      <rect x="255" y="10" width="145" height="50" fill="#ff0020" fill-opacity=".05" rx="3"/>
+      <!-- ones de ràdio (cercles) -->
+      <circle cx="200" cy="48" r="35" fill="none" stroke="#c47a1a" stroke-width=".8" stroke-opacity=".25"/>
+      <circle cx="200" cy="48" r="55" fill="none" stroke="#c47a1a" stroke-width=".6" stroke-opacity=".15"/>
+      <circle cx="200" cy="48" r="75" fill="none" stroke="#c47a1a" stroke-width=".4" stroke-opacity=".08"/>
+    </svg>`,
+
+    final_memoria: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0a0808"/>
+      <!-- marc de fotografia -->
+      <rect x="120" y="15" width="100" height="80" fill="#1c1414" rx="2"/>
+      <rect x="123" y="18" width="94" height="74" fill="#141010" rx="1"/>
+      <!-- marc exterior (marc clàssic) -->
+      <rect x="118" y="13" width="104" height="84" fill="none" stroke="#3a2828" stroke-width="3" rx="2"/>
+      <!-- foto interior (silueta jove) -->
+      <rect x="125" y="20" width="90" height="70" fill="#181212"/>
+      <ellipse cx="170" cy="45" rx="16" ry="18" fill="#201818"/>
+      <rect x="154" y="61" width="32" height="28" fill="#201818" rx="2"/>
+      <defs><radialGradient id="fm_light" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#c47a1a" stop-opacity=".18"/><stop offset="100%" stop-color="#181212" stop-opacity="0"/></radialGradient></defs>
+      <rect x="125" y="20" width="90" height="70" fill="url(#fm_light)"/>
+      <!-- espelma esquerra -->
+      <rect x="80" y="60" width="10" height="35" fill="#e8e0d0" fill-opacity=".8"/>
+      <ellipse cx="85" cy="58" rx="5" ry="8" fill="#dfa030" fill-opacity=".7"/>
+      <circle cx="85" cy="65" r="15" fill="#c47a1a" fill-opacity=".1"/>
+      <!-- espelma dreta -->
+      <rect x="260" y="65" width="10" height="30" fill="#e8e0d0" fill-opacity=".8"/>
+      <ellipse cx="265" cy="63" rx="5" ry="8" fill="#dfa030" fill-opacity=".7"/>
+      <circle cx="265" cy="70" r="13" fill="#c47a1a" fill-opacity=".1"/>
+      <!-- flors subtils -->
+      <circle cx="95" cy="100" r="4" fill="#8b0010" fill-opacity=".5"/>
+      <circle cx="108" cy="95" r="3" fill="#8b0010" fill-opacity=".4"/>
+      <circle cx="240" cy="98" r="4" fill="#8b0010" fill-opacity=".5"/>
+      <circle cx="255" cy="103" r="3" fill="#8b0010" fill-opacity=".4"/>
+      <!-- peu del marc -->
+      <rect x="155" y="97" width="30" height="6" fill="#c47a1a" fill-opacity=".4" rx="1"/>
+      <text x="170" y="118" font-family="Georgia,serif" font-size="8" fill="#c47a1a" fill-opacity=".4" text-anchor="middle" font-style="italic">Neus Roca</text>
+    </svg>`,
+
+    final_ficcio: `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="140" fill="#0c0909"/>
+      <!-- focus teatral sobre les pàgines del guió -->
+      <defs>
+        <radialGradient id="ff_spot" cx="40%" cy="40%" r="45%">
+          <stop offset="0%" stop-color="#c47a1a" stop-opacity=".3"/>
+          <stop offset="100%" stop-color="#0c0909" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="400" height="140" fill="url(#ff_spot)"/>
+      <!-- pàgines del guió, mig en ombra -->
+      <rect x="80" y="20" width="160" height="110" fill="#f0e6d0" fill-opacity=".08" rx="2" transform="rotate(4 160 75)"/>
+      <rect x="90" y="15" width="160" height="110" fill="#f0e6d0" fill-opacity=".12" rx="2" transform="rotate(-2 170 70)"/>
+      <rect x="100" y="18" width="160" height="108" fill="#f0e6d0" fill-opacity=".18" rx="2"/>
+      <!-- text parcialment visible -->
+      <line x1="115" y1="35" x2="245" y2="35" stroke="#d4c8b0" stroke-width="1" stroke-opacity=".4"/>
+      <line x1="115" y1="45" x2="245" y2="45" stroke="#d4c8b0" stroke-width="1" stroke-opacity=".4"/>
+      <line x1="115" y1="55" x2="220" y2="55" stroke="#d4c8b0" stroke-width="1" stroke-opacity=".4"/>
+      <!-- paraules visibles -->
+      <text x="118" y="72" font-family="Georgia,serif" font-size="9" fill="#8b0010" fill-opacity=".7" font-style="italic">NÚRIA: Fa quinze anys...</text>
+      <line x1="115" y1="82" x2="245" y2="82" stroke="#d4c8b0" stroke-width="1" stroke-opacity=".3"/>
+      <line x1="115" y1="92" x2="230" y2="92" stroke="#d4c8b0" stroke-width="1" stroke-opacity=".3"/>
+      <!-- ombra que ho cobreix mig -->
+      <defs>
+        <linearGradient id="ff_shadow" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="50%" stop-color="#0c0909" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#0c0909" stop-opacity=".85"/>
+        </linearGradient>
+      </defs>
+      <rect x="100" y="18" width="160" height="108" fill="url(#ff_shadow)" rx="2"/>
+      <!-- micròfon en ombra a la dreta -->
+      <line x1="340" y1="140" x2="340" y2="60" stroke="#1a1414" stroke-width="4"/>
+      <ellipse cx="340" cy="48" rx="18" ry="22" fill="#141010" fill-opacity=".8"/>
+    </svg>`,
+
+  };
+  return d[art] || d.estudi;
+}
+
+// ══════════════════════════════════════════════════════════════
+// ENGINE
+// ══════════════════════════════════════════════════════════════
+function startAdventure() {
+  const meta = loadMeta();
+  meta.runs++;
+  saveMeta(meta);
+  newGame();
+  showScreen('screen-game');
+  startTimer();
+  goTo('inici');
+}
+
+function goTo(nodeId) {
+  if (!G) return;
+  const node = NODES[nodeId];
+  if (!node) return;
+
+  soTransition();
+
+  if (G.current && G.current !== nodeId) G.history.push(G.current);
+  G.current = nodeId;
+  G.decisions++;
+
+  const meta = loadMeta();
+  if (!meta.visited.includes(nodeId)) { meta.visited.push(nodeId); saveMeta(meta); }
+
+  let newClue = null;
+  if (CLUES[nodeId] && !G.clues.has(nodeId)) {
+    G.clues.set(nodeId, CLUES[nodeId]);
+    newClue = CLUES[nodeId];
+    setTimeout(() => { soClue(); updateCluesBadge(); }, 450);
+  }
+
+  if (node.ending) {
+    stopTimer();
+    setTimeout(() => {
+      if (node.ending === 'good') soEndGood();
+      else if (node.ending === 'bad') soEndBad();
+      else soEndNeutral();
+    }, 600);
+    const m2 = loadMeta();
+    if (!m2.endings.includes(nodeId)) { m2.endings.push(nodeId); saveMeta(m2); }
+  }
+
+  renderScene(node, newClue, meta);
+  renderBreadcrumb();
+  document.getElementById('screen-game').scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderScene(node, newClue, meta) {
+  const wrap = document.getElementById('scene-wrap');
+  wrap.style.animation = 'none';
+  wrap.offsetHeight;
+  wrap.style.animation = '';
+
+  const tsHTML = node.timestamp
+    ? `<div class="scene-timestamp">⏱ ${node.timestamp}</div>` : '';
+
+  const clueHTML = newClue ? `
+    <div class="clue-reveal">
+      <span class="clue-reveal-icon">${newClue.icon}</span>
+      <div>
+        <div class="clue-reveal-title">🎙 Pista descoberta: ${newClue.title}</div>
+        <div class="clue-reveal-body">${newClue.body}</div>
+      </div>
+    </div>` : '';
+
+  let bottomHTML = '';
+  if (node.choices && node.choices.length > 0) {
+    const items = node.choices.map((c, i) => {
+      const vis = meta.visited.includes(c.next);
+      return `<button class="choice-btn${vis ? ' visited' : ''}"
+                      onclick="soClick();goTo('${c.next}')"
+                      style="animation-delay:${i * 85}ms">
+        <span class="choice-arrow">▶</span>
+        <span>${c.label}${vis ? ' <span class="visited-mark">◆ explorat</span>' : ''}</span>
+      </button>`;
+    }).join('');
+    bottomHTML = `<div class="scene-divider">✦</div><div class="choices">${items}</div>`;
+  } else if (node.ending) {
+    const t = fmtTime();
+    bottomHTML = `
+      <div class="scene-ending">
+        <div class="ending-badge ${node.ending}">${node.endingLabel}</div>
+        <div class="ending-stats">
+          <span>⏱ ${t}</span><span>·</span>
+          <span>↪ ${G.decisions} decisions</span><span>·</span>
+          <span>🎙 ${G.clues.size} pistes</span>
+        </div>
+        <button class="btn-restart" onclick="startAdventure()">↺ Torna a començar</button>
+        <button class="btn-restart" style="opacity:.55;margin-top:4px" onclick="toCover()">← Portada</button>
+      </div>`;
+  }
+
+  wrap.innerHTML = `
+    <div class="scene-art">${getArtSVG(node.art)}</div>
+    <div class="scene-chapter">${node.chapter}</div>
+    ${tsHTML}
+    <div class="scene-title">${node.title}</div>
+    <div class="scene-text">${node.text}</div>
+    ${clueHTML}
+    ${bottomHTML}
+  `;
+}
+
+function renderBreadcrumb() {
+  const el = document.getElementById('breadcrumb');
+  if (!el || !G) return;
+  const sep = '<span class="bc-sep"> › </span>';
+  let html = G.history.slice(-3).map(id => {
+    const n = NODES[id];
+    return `<span class="bc-step">${n ? n.title : id}</span>`;
+  }).join(sep);
+  const cur = NODES[G.current];
+  if (cur) {
+    if (html) html += sep;
+    html += `<span class="bc-step" style="color:var(--amber)">${cur.title}</span>`;
+  }
+  el.innerHTML = html;
+}
+
+function updateCluesBadge() {
+  const el = document.getElementById('clues-badge');
+  if (!el || !G) return;
+  el.textContent = `🎙 ${G.clues.size}`;
+  el.classList.remove('pop');
+  void el.offsetWidth;
+  el.classList.add('pop');
+}
+
+function toggleCluesPanel() {
+  renderCluesList();
+  document.getElementById('clues-overlay').classList.toggle('open');
+}
+
+function renderCluesList() {
+  const list = document.getElementById('clues-list');
+  if (!list) return;
+  if (!G || G.clues.size === 0) {
+    list.innerHTML = '<p style="opacity:.4;font-style:italic;padding:8px 0;font-size:14px">Encara no has descobert cap pista.</p>';
+    return;
+  }
+  list.innerHTML = [...G.clues.values()].map(c => `
+    <div class="clue-item">
+      <div class="clue-item-icon">${c.icon}</div>
+      <div>
+        <div class="clue-item-title">${c.title}</div>
+        <div class="clue-item-body">${c.body}</div>
+      </div>
+    </div>`).join('');
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function toCover() {
+  stopTimer();
+  showScreen('screen-cover');
+  renderCover();
+}
+
+function renderCover() {
+  const meta = loadMeta();
+  const INFO = [
+    { id: 'final_bo',        label: '✦ La Veritat en Directe', type: 'good',    hint: 'La veritat surt a l\'aire. No hi ha marxa enrere.' },
+    { id: 'final_memoria',   label: '◈ La Memòria',            type: 'neutral', hint: 'Justícia privada. Signada i guardada.' },
+    { id: 'final_ficcio',    label: '◈ La Ficció',             type: 'neutral', hint: 'La veritat com a drama. Públicament negable.' },
+    { id: 'acceptar_trampa', label: '✗ L\'Engany',             type: 'bad',     hint: 'Vas ajudar a destruir les proves sense saber-ho.' },
+  ];
+
+  const gallery = document.getElementById('endings-gallery');
+  const galleryTitle = document.getElementById('gallery-title');
+  const runsEl = document.getElementById('runs-count');
+
+  if (meta.runs > 0 && runsEl) {
+    runsEl.textContent = `${meta.runs} partida${meta.runs !== 1 ? 's' : ''} jugada${meta.runs !== 1 ? 's' : ''}`;
+  }
+  const hasAny = INFO.some(e => meta.endings.includes(e.id));
+  if (hasAny && galleryTitle) galleryTitle.style.display = 'block';
+
+  if (gallery) {
+    gallery.innerHTML = INFO.map(e => {
+      const found = meta.endings.includes(e.id);
+      return `<div class="ending-card ${e.type} ${found ? 'found' : 'locked'}">
+        <div class="ending-card-label">${found ? e.label : '? ? ?'}</div>
+        <div class="ending-card-hint">${found ? e.hint : '—'}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderCover();
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && _AC && _AC.state === 'suspended') _AC.resume();
+  });
+});
+</script>
+</body>
+</html>
