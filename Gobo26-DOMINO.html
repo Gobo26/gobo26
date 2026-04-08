@@ -212,7 +212,7 @@
             display: block;
             padding: 12px 14px;
             box-shadow: inset 0 3px 10px rgba(0,0,0,.35);
-            overflow-x: auto;
+            overflow: hidden;
         }
         #tauler-contenidor.amagat { display: none; }
 
@@ -221,6 +221,7 @@
             flex-wrap: wrap;
             gap: 4px;
             align-items: center;
+            justify-content: flex-start;
         }
         .tauler-buit {
             color: rgba(255,255,255,.55);
@@ -235,17 +236,27 @@
         .fitxa-t {
             background: white;
             border: 1.5px solid #334155;
-            border-radius: 6px;
-            width: 76px;
-            height: 38px;
+            border-radius: 5px;
+            width: 58px;
+            height: 29px;
             display: block;
             flex-shrink: 0;
-            box-shadow: 1px 2px 5px rgba(0,0,0,.35);
+            box-shadow: 1px 2px 4px rgba(0,0,0,.35);
             overflow: hidden;
         }
         .fitxa-t.nova {
             border-color: var(--verd);
-            box-shadow: 0 0 10px rgba(22,163,74,.7);
+            box-shadow: 0 0 8px rgba(22,163,74,.7);
+        }
+        .fitxa-t.extrem-esq {
+            border-color: #dc2626;
+            border-width: 2px;
+            box-shadow: 0 0 10px rgba(220,38,38,.6);
+        }
+        .fitxa-t.extrem-dret {
+            border-color: #2563eb;
+            border-width: 2px;
+            box-shadow: 0 0 10px rgba(37,99,235,.6);
         }
 
         /* ===== MA DEL JUGADOR ===== */
@@ -837,26 +848,35 @@
     }
 
     function afegirFitxaVisual(valors, posicio) {
-        taulerFitxes.push(valors.slice());
+        if (posicio === 'inici') taulerFitxes.unshift(valors.slice());
+        else taulerFitxes.push(valors.slice());
+        renderCadena(posicio);
+    }
 
+    function renderCadena(novaPosicio) {
         var t = document.getElementById('tauler');
-        var buit = t.querySelector('.tauler-buit');
-        if (buit) buit.remove();
+        t.innerHTML = '';
 
-        // Eliminar destacat anterior
-        t.querySelectorAll('.fitxa-t.nova').forEach(function(el) { el.classList.remove('nova'); });
+        if (taulerFitxes.length === 0) {
+            t.innerHTML = '<div class="tauler-buit">Tauler buit</div>';
+            return;
+        }
 
-        var el = document.createElement('div');
-        el.className = 'fitxa-t nova';
-        el.innerHTML = svgFitxaH(valors[0], valors[1]);
-
-        if (posicio === 'inici') t.insertBefore(el, t.firstChild);
-        else t.appendChild(el);
-
-        // Scroll al nou element
-        var cont = document.getElementById('tauler-contenidor');
-        if (posicio === 'inici') cont.scrollLeft = 0;
-        else cont.scrollLeft = cont.scrollWidth;
+        var last = taulerFitxes.length - 1;
+        taulerFitxes.forEach(function(valors, i) {
+            var el = document.createElement('div');
+            var cls = 'fitxa-t';
+            // La fitxa nova és la primera o l'última segons on s'ha afegit
+            var isNova = (novaPosicio === 'inici' && i === 0) ||
+                         (novaPosicio !== 'inici' && i === last) ||
+                         novaPosicio === undefined;
+            if (isNova) cls += ' nova';
+            if (i === 0) cls += ' extrem-esq';
+            if (i === last && last > 0) cls += ' extrem-dret';
+            el.className = cls;
+            el.innerHTML = svgFitxaH(valors[0], valors[1]);
+            t.appendChild(el);
+        });
     }
 
     // ===== TORN MÀQUINA =====
@@ -939,8 +959,7 @@
         extrems = [null, null];
         taulerFitxes = [];
 
-        var t = document.getElementById('tauler');
-        t.innerHTML = '<div class="tauler-buit">Tauler buit</div>';
+        renderCadena();
 
         setMissatge('El teu torn. Tria una fitxa per començar.', '');
         jocActiu = true;
