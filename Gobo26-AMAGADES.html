@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Amagades! · Gobo26</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
     --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
@@ -16,7 +15,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
-body{font-family:'Montserrat',sans-serif;background:var(--bg);display:flex;flex-direction:column;align-items:center;overflow-x:hidden;}
+body{font-family:system-ui, -apple-system, sans-serif;background:var(--bg);display:flex;flex-direction:column;align-items:center;overflow-x:hidden;}
 
 /* HEADER */
 header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
@@ -24,7 +23,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
 .logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
 .logo-txt span{color:var(--blue2);}
 .hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
-#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
+#btn-ajuda{font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
 #btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
 
 main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:14px;flex:1;overflow-y:auto;overflow-x:hidden;}
@@ -35,7 +34,7 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 /* SELECTOR NIVELL */
 .card h3{font-size:.75rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;text-align:center;}
 .niv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.niv-btn{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:900;padding:14px 8px;border-radius:12px;border:2px solid var(--s200);background:white;color:var(--s800);cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.niv-btn{font-family:system-ui, -apple-system, sans-serif;font-size:1.3rem;font-weight:900;padding:14px 8px;border-radius:12px;border:2px solid var(--s200);background:white;color:var(--s800);cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:4px;}
 .niv-btn small{font-size:.6rem;font-weight:700;color:var(--s400);text-transform:uppercase;}
 .niv-btn:hover{border-color:var(--blue2);color:var(--blue);transform:translateY(-2px);box-shadow:0 4px 12px rgba(37,99,235,.15);}
 .niv-btn.actiu{background:var(--s800);color:white;border-color:var(--s800);box-shadow:0 4px 12px rgba(30,41,59,.3);}
@@ -60,7 +59,7 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 .badge.oportunitat-1{background:#dbeafe;color:var(--blue);}
 .badge.oportunitat-2{background:#fef3c7;color:#92400e;}
 .nuvol{display:grid;gap:8px;margin-bottom:12px;}
-.btn-paraula{font-family:'Montserrat',sans-serif;padding:12px 8px;font-size:1rem;font-weight:700;background:white;border:2px solid var(--s300);border-radius:12px;cursor:pointer;transition:all .15s;color:var(--s800);word-break:break-word;min-width:0;}
+.btn-paraula{font-family:system-ui, -apple-system, sans-serif;padding:12px 8px;font-size:1rem;font-weight:700;background:white;border:2px solid var(--s300);border-radius:12px;cursor:pointer;transition:all .15s;color:var(--s800);word-break:break-word;min-width:0;}
 .btn-paraula:hover:not(.bloquejat){border-color:var(--blue2);transform:translateY(-1px);}
 .btn-paraula.actiu{border-color:var(--blue);background:#dbeafe;color:var(--blue);}
 .btn-paraula.encert{border-color:var(--ok)!important;background:var(--okl)!important;color:var(--ok)!important;}
@@ -84,7 +83,7 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 .final-titol{font-size:2rem;font-weight:900;margin-bottom:6px;}
 .final-sub{font-size:.95rem;color:var(--s600);font-weight:600;margin-bottom:16px;}
 .paraules-correctes{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:16px;}
-.boto-gran{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;padding:14px 28px;border-radius:99px;border:none;cursor:pointer;background:var(--blue);color:white;box-shadow:0 4px 0 #1d4ed8;transition:opacity .2s;}
+.boto-gran{font-family:system-ui, -apple-system, sans-serif;font-size:1rem;font-weight:900;padding:14px 28px;border-radius:99px;border:none;cursor:pointer;background:var(--blue);color:white;box-shadow:0 4px 0 #1d4ed8;transition:opacity .2s;}
 .boto-gran:hover{opacity:.9;}
 .boto-gran:active{transform:translateY(2px);box-shadow:0 2px 0 #1d4ed8;}
 .boto-gran.sec{background:white;color:var(--s700);border:2px solid var(--s300);box-shadow:none;}
@@ -118,7 +117,7 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 .modal-box h2{font-size:1.2rem;margin-bottom:14px;color:var(--s800);}
 .ajuda-pas{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;font-size:.88rem;line-height:1.5;color:var(--s700);}
 .ajuda-ico{font-size:1.4rem;flex-shrink:0;}
-#btn-tancar-ajuda{width:100%;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;padding:12px;background:var(--blue);color:white;border:none;border-radius:99px;cursor:pointer;margin-top:10px;}
+#btn-tancar-ajuda{width:100%;font-family:system-ui, -apple-system, sans-serif;font-size:.9rem;font-weight:700;padding:12px;background:var(--blue);color:white;border:none;border-radius:99px;cursor:pointer;margin-top:10px;}
 
 /* TAULA TEMPS per nivell */
 .temps-bar{width:100%;background:var(--s200);border-radius:99px;height:5px;margin-top:4px;overflow:hidden;}
@@ -137,8 +136,8 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
     <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
         <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
             <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
-            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
-            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>

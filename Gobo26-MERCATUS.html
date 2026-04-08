@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mercatus · Gobo26</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
     --bg:#f1f5f9;--s200:#e2e8f0;--s300:#cbd5e1;--s400:#94a3b8;
@@ -16,7 +15,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
-body{font-family:'Montserrat',sans-serif;background:var(--bg);height:100%;display:flex;flex-direction:column;align-items:center;}
+body{font-family:system-ui, -apple-system, sans-serif;background:var(--bg);height:100%;display:flex;flex-direction:column;align-items:center;}
 
 /* HEADER */
 header{width:100%;background:var(--s800);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
@@ -24,7 +23,7 @@ header{width:100%;background:var(--s800);padding:10px 16px;display:flex;align-it
 .logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
 .logo-txt span{color:var(--blue2);}
 .hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
-#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
+#btn-ajuda{font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
 #btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
 
 main{width:100%;max-width:650px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:14px;flex:1;overflow-y:auto;}
@@ -34,7 +33,7 @@ main{width:100%;max-width:650px;padding:16px 12px;display:flex;flex-direction:co
 
 /* ── PANTALLA INICI ── */
 .niv-llista{display:flex;flex-direction:column;gap:10px;margin-top:4px;}
-.btn-niv{font-family:'Montserrat',sans-serif;background:white;border:2px solid var(--s200);border-radius:12px;padding:14px 16px;width:100%;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .15s;color:var(--s800);}
+.btn-niv{font-family:system-ui, -apple-system, sans-serif;background:white;border:2px solid var(--s200);border-radius:12px;padding:14px 16px;width:100%;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .15s;color:var(--s800);}
 .btn-niv:hover{border-color:var(--blue2);background:#eff6ff;transform:translateX(4px);}
 .btn-niv .niv-nom{font-size:1rem;font-weight:700;}
 .btn-niv .niv-desc{font-size:.78rem;color:var(--s400);margin-top:2px;}
@@ -45,7 +44,7 @@ main{width:100%;max-width:650px;padding:16px 12px;display:flex;flex-direction:co
 #p-joc{display:none;}
 
 /* Tiquet */
-.tiquet{background:#fffdf7;border:1px dashed var(--s300);border-radius:10px;padding:16px 14px;margin-bottom:14px;font-family:'Montserrat',sans-serif;}
+.tiquet{background:#fffdf7;border:1px dashed var(--s300);border-radius:10px;padding:16px 14px;margin-bottom:14px;font-family:system-ui, -apple-system, sans-serif;}
 .tiquet-cap{text-align:center;font-size:.7rem;font-weight:700;letter-spacing:2px;color:var(--s600);text-transform:uppercase;padding-bottom:10px;border-bottom:1px dashed var(--s300);margin-bottom:12px;}
 .tiquet-item{display:flex;align-items:flex-end;margin-bottom:8px;font-size:.95rem;}
 .item-info{flex:0 0 auto;display:flex;flex-direction:column;}
@@ -66,7 +65,7 @@ main{width:100%;max-width:650px;padding:16px 12px;display:flex;flex-direction:co
 
 /* Opcions */
 .zona-opcions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
-.btn-op{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;padding:14px 6px;border-radius:12px;border:2px solid var(--s300);background:white;color:var(--s800);cursor:pointer;box-shadow:0 4px 0 var(--s300);transition:transform .1s,box-shadow .1s,border-color .15s;width:100%;}
+.btn-op{font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;padding:14px 6px;border-radius:12px;border:2px solid var(--s300);background:white;color:var(--s800);cursor:pointer;box-shadow:0 4px 0 var(--s300);transition:transform .1s,box-shadow .1s,border-color .15s;width:100%;}
 .btn-op:hover:not(:disabled){border-color:var(--blue2);transform:translateY(-2px);box-shadow:0 6px 0 var(--blue2);}
 .btn-op:active:not(:disabled){transform:translateY(4px);box-shadow:none;}
 .btn-op.correcte{background:var(--ok)!important;border-color:var(--ok)!important;color:white!important;box-shadow:0 4px 0 #166534!important;}
@@ -74,7 +73,7 @@ main{width:100%;max-width:650px;padding:16px 12px;display:flex;flex-direction:co
 .btn-op.desactivat{cursor:default;}
 
 #missatge{text-align:center;font-weight:700;min-height:28px;font-size:1rem;margin-bottom:4px;}
-#btn-next{width:100%;padding:14px;background:var(--blue);color:white;border:none;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;cursor:pointer;box-shadow:0 4px 0 #1d4ed8;display:none;transition:opacity .2s;}
+#btn-next{width:100%;padding:14px;background:var(--blue);color:white;border:none;border-radius:12px;font-family:system-ui, -apple-system, sans-serif;font-size:1rem;font-weight:900;cursor:pointer;box-shadow:0 4px 0 #1d4ed8;display:none;transition:opacity .2s;}
 #btn-next:hover{opacity:.9;}
 
 /* ── RÈCORDS / ESTADÍSTIQUES ── */
@@ -102,7 +101,7 @@ main{width:100%;max-width:650px;padding:16px 12px;display:flex;flex-direction:co
 .ajuda-ico{font-size:1.4rem;flex-shrink:0;}
 .ajuda-niv{background:#f8fafc;border-radius:8px;padding:10px 12px;margin:10px 0;font-size:.82rem;line-height:1.7;color:var(--s700);}
 .ajuda-niv strong{color:var(--s800);}
-#btn-tancar-ajuda{width:100%;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;padding:12px;background:var(--s800);color:white;border:none;border-radius:99px;cursor:pointer;margin-top:10px;}
+#btn-tancar-ajuda{width:100%;font-family:system-ui, -apple-system, sans-serif;font-size:.9rem;font-weight:700;padding:12px;background:var(--s800);color:white;border:none;border-radius:99px;cursor:pointer;margin-top:10px;}
 
 .confeti{position:fixed;border-radius:2px;pointer-events:none;z-index:300;animation:confetti-fall 2.2s ease-in forwards;}
 @keyframes confetti-fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
@@ -121,8 +120,8 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
     <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
         <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
             <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
-            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
-            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
@@ -191,7 +190,7 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
         </div>
 
         <div style="text-align:center;margin-top:8px;">
-            <button onclick="tornar()" style="font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;color:var(--s400);background:none;border:none;cursor:pointer;text-decoration:underline;">↩ Menú principal</button>
+            <button onclick="tornar()" style="font-family:system-ui, -apple-system, sans-serif;font-size:.82rem;font-weight:700;color:var(--s400);background:none;border:none;cursor:pointer;text-decoration:underline;">↩ Menú principal</button>
         </div>
     </div>
 

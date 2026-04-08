@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>El Retrat de la Reina – Gobo26</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #1a1208;
@@ -55,7 +54,7 @@ header {
   flex-shrink: 0;
 }
 .logo-hex svg { width: 32px; height: 32px; }
-.logo-text { font-family: 'Montserrat', sans-serif; font-size: 11px; line-height: 1.2; font-weight: 700; }
+.logo-text { font-family: system-ui, -apple-system, sans-serif; font-size: 11px; line-height: 1.2; font-weight: 700; }
 .logo-text span { display: block; font-size: 9px; font-weight: 400; opacity: 0.5; }
 
 header h1 {
@@ -570,10 +569,10 @@ footer {
   <a class="logo-hex" href="https://ja.cat/appgobo" target="_self">
     <svg viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20 1L38 11.5V34.5L20 45L2 34.5V11.5L20 1Z" fill="#2563eb"/>
-      <text x="20" y="22" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">GOBO</text>
-      <text x="20" y="33" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">26</text>
+      <text x="20" y="22" font-family="system-ui,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">GOBO</text>
+      <text x="20" y="33" font-family="system-ui,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">26</text>
     </svg>
-    <div class="logo-text" style="font-family:'Montserrat',sans-serif">Gobo26<span>Jocs en català</span></div>
+    <div class="logo-text" style="font-family:system-ui, -apple-system, sans-serif">Gobo26<span>Jocs en català</span></div>
   </a>
   <h1>El Retrat<br>de la Reina</h1>
   <div class="header-badges">
@@ -1100,8 +1099,9 @@ const NODES = {
     timestamp: 'El dia del judici',
     title: 'El pintor i la veritat',
     art: 'final_bo',
-    text: `<p>Lord Hug de Miralpeix és detingut aquella mateixa nit. El Capità de la Guàrdia, còmplice seu des del primer dia, fuig del Regne però és capturat a la frontera tres dies després. Les terres falsament adquirides tornen als seus propietaris per decret reial.</p>
-    <p>El príncep és apartat de la línia de successió i enviat a un monestir llunyà, no per càstig sinó per salvar-li la vida i la reputació. El Rei, quan llegeix les proves, no plora. Tan sols diu, en veu molt baixa: <em>"Gràcies, Bernat. Hauríeu pogut callar. I heu triat no fer-ho."</em></p>
+    text: `<p>La trampa a mitjanit a la cambra del pintor és senzilla i irrefutable. En Bernat ha construït el cas amb el Senescal Bertran durant tres dies: el llibre de les falsificacions — robat de l'arxiu i copiat pàgina a pàgina —, el testimoni d'en Rael l'alquimista sobre el verí, i les declaracions de les famílies camperoles que han perdut les terres. No és una acusació: és un monument documental.</p>
+    <p>Quan Lord Hug de Miralpeix entra a la cambra esperant trobar un pintor sol amb les proves compromeses, s'hi troba el Senescal Bertran, dos escribans reials i el retrat de la Reina penjat a la paret, mirant-ho tot. El poder dels diners ha quedat desemmascarat pel poder de l'art — i del testimoni.</p>
+    <p>El Capità de la Guàrdia fuig però és capturat a la frontera tres dies després. Les terres falsament adquirides tornen als seus propietaris per decret reial. El príncep és apartat de la successió i enviat a un monestir llunyà. El Rei, quan llegeix les proves, no plora. Tan sols diu, en veu molt baixa: <em>"Gràcies, Bernat. Hauríeu pogut callar. I heu triat no fer-ho."</em></p>
     <p>En Guillem és enterrat amb honors a la capella del palau. Per ordre reial, el seu nom figura al peu del retrat oficial de la Reina Elisenda — acabat per tu, naturalment, amb mà ferma i cor tranquil.</p>
     <p><em>És el millor quadre que has pintat mai.</em></p>`,
     ending: 'good',
@@ -1114,9 +1114,10 @@ const NODES = {
     timestamp: 'El dia de la justícia',
     title: 'La justícia del Rei',
     art: 'final_rei',
-    text: `<p>El Rei escolta les proves amb el rostre de pedra. Lord Hug és empresonat. El príncep, apartat de la successió. Però la Reina — que sabia la veritat i havia callat durant setmanes — és humiliada públicament davant la cort. El matrimoni reial mai no se'n recupera del tot.</p>
-    <p>El retrat oficial no s'acaba. El Rei no té cap interès a commemorar aquell període amb un quadre a la sala del tron.</p>
-    <p>Surts del palau amb la reputació intacta, la consciència neta i la bossa buida. A les setmanes trobes feina a la cort d'un ducat veí. Les famílies camperoles recuperen les terres. En Guillem té justícia.</p>
+    text: `<p>Presents les proves al Rei davant de tota la cort. No és una audiència privada: és un acte públic, deliberadament triat perquè ningú no pugui fer desaparèixer res. El Rei escolta dret, sense canviar l'expressió. Cada full que llegeixes és una elecció que ell ha de fer entre la seva esposa i la llei.</p>
+    <p>Perquè el veritable secret no és Lord Hug — és el Príncep, que ha malbaratat la fortuna reial i s'ha deixat subornar per tapar els seus deutes. I la Reina Elisenda ho sabia. Ho sabia i havia callat durant setmanes, construint un mur de silenci per protegir el seu fill. En Bernat ha decidit que la mort d'en Guillem val més que la pau d'una família reial corrupta.</p>
+    <p>Lord Hug és empresonat. El Príncep, apartat de la successió. La Reina — que sabia la veritat — queda humiliada davant la cort. No per malícia d'en Bernat: per la lògica inexorable de les proves. El matrimoni reial mai no se'n recupera del tot.</p>
+    <p>El retrat oficial no s'acaba. Surts del palau amb la reputació intacta, la consciència neta i la bossa buida. A les setmanes trobes feina a la cort d'un ducat veí. Les famílies camperoles recuperen les terres. En Guillem té justícia.</p>
     <p><em>A vegades la veritat i la gratitud no arriben juntes. Però la veritat arriba.</em></p>`,
     ending: 'neutral',
     endingLabel: '⚖ Final de la Justícia ⚖',
@@ -1128,10 +1129,11 @@ const NODES = {
     timestamp: 'El dia del pacte',
     title: 'El pacte de les ombres',
     art: 'final_mig',
-    text: `<p>Un acord discret, mediat per la Reina. Lord Hug abandona la cort "per raons de salut" i es retira a les seves terres. El Capità de la Guàrdia és traslladat a una guarnició fronterera. Les finques falsament adquirides tornen als seus propietaris, sense decrets públics ni explicacions.</p>
-    <p>La mort d'en Guillem queda registrada com un accident. Ningú no ho creu, però ningú no ho discuteix obertament.</p>
-    <p>Acabes el retrat de la Reina. És un bon retrat — tècnicament impecable, lluminós, digne. El Rei l'aprecia. La Reina et mira, quan el descobreixes, amb una expressió que barreja gratitud i culpa.</p>
-    <p>Cada vegada que passes per davant d'aquell quadre al corredor del palau, veus, en la penombra que has pintat darrere la seva figura, una ombra que s'assembla massa a un noi jove. <em>Potser l'has pintada sense voler. O potser sí que ho volies.</em></p>`,
+    text: `<p>La Reina Elisenda et rep al jardí, sola, sense dames de companyia. La seva argumentació és freda i precisa: si el Príncep és detingut públicament, tres nobles ja esperen el moment de disputar-se el tron. La justícia d'en Guillem val la mort de centenars?</p>
+    <p>En Bernat accepta el mal menor. Lord Hug abandona la cort "per raons de salut" i es retira a les seves terres. El Capità és traslladat a una guarnició fronterera. Les finques falsament adquirides tornen als seus propietaris, sense decrets públics ni explicacions. La mort d'en Guillem queda registrada com un accident. Ningú no ho creu. Ningú no ho discuteix.</p>
+    <p>Acabes el retrat de la Reina. És un bon retrat — tècnicament impecable, lluminós, digne. Però hi has pintat un detall que no estava a cap encàrrec: en la penombra darrere la seva figura, una mirada desviada cap a la dreta, com si esperés algú que no arribarà mai. Tan sols la Reina sap el que representa. Quan el descobreixes davant del Rei, et busca els ulls durant un segon massa llarg.</p>
+    <p>No diu res. Tu tampoc.</p>
+    <p><em>El pacte sosté la pau del regne. I la culpa compartida sosté el pacte.</em></p>`,
     ending: 'neutral',
     endingLabel: '◈ Final del Pacte ◈',
     choices: [],
@@ -1142,9 +1144,10 @@ const NODES = {
     timestamp: 'El dia del silenci',
     title: 'El silenci del pintor',
     art: 'final_mal',
-    text: `<p>No t'impliques més. El cas es tanca aviat: un servent de la cuina és acusat d'haver preparat el verí per gelosia professional. Tothom al palau sap que és mentida. Ningú no diu res.</p>
-    <p>Acabes el retrat de la Reina Elisenda. És magnífic — potser el millor tècnicament de tota la teva carrera. La llum cau sobre el seu rostre d'una manera que amaga el cansament i revela la dignitat. El Rei l'elogia davant de tota la cort. Et fan nous encàrrecs, i després d'altres. Tens èxit.</p>
-    <p>Però cada matí, quan entres al taller i mires la cadira buida on en Guillem seia a preparar la paleta, et costa una mica més agafar el pinzell. No és dolor, exactament. És quelcom més petit i persistent: la certesa que una part del teu talent ha quedat tancada en aquella cadira buida, per sempre.</p>
+    text: `<p>El Capità de la Guàrdia t'ha estat observant des de fa dies. Un matí, un dels seus homes passa davant del taller sense entrar i deixa caure una frase al vol: <em>"El tresorer aprecia la discreció en un artista."</em> El missatge és clar.</p>
+    <p>Cremes les proves aquella nit, una a una, davant la flama del llum de cera. El fum que puja fa olor de pergamí i culpa. El cas es tanca poc després: un servent de la cuina és acusat d'haver preparat el verí per gelosia professional. Tothom al palau sap que és mentida. Ningú no diu res.</p>
+    <p>Et dediques a pintar el retrat més bell i fals de la història del Regne. La llum cau sobre el rostre de la Reina Elisenda d'una manera que amaga el cansament i revela una dignitat que potser no mereix del tot. El Rei l'elogia davant de tota la cort. La Reina t'entrega personalment una bossa d'or. La prens. Pesa com el plom.</p>
+    <p>El taller ara és ric i gran. Tens nous encàrrecs i prestigi. Però cada matí, quan entres i mires la cadira buida on en Guillem seia a preparar la paleta, el fàstic de tu mateix t'arriba abans de poder agafar el pinzell. No és dolor, exactament. És quelcom més petit i permanent: la certesa que has pintat el millor quadre de la teva vida per les raons més baixes.</p>
     <p><em>El silenci no absol. Només s'acumula.</em></p>`,
     ending: 'bad',
     endingLabel: '✗ Final del Silenci ✗',

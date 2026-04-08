@@ -5,7 +5,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ENDEVINA! · Gobo26</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
     --bg:#f1f5f9; --s100:#f8fafc; --s200:#e2e8f0; --s300:#cbd5e1;
@@ -18,7 +17,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
-body{font-family:'Montserrat',sans-serif;background:var(--bg);height:100%;display:flex;flex-direction:column;align-items:center;}
+body{font-family:system-ui, -apple-system, sans-serif;background:var(--bg);height:100%;display:flex;flex-direction:column;align-items:center;}
 
 /* ── HEADER ── */
 header{width:100%;background:var(--s800);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
@@ -26,7 +25,7 @@ header{width:100%;background:var(--s800);padding:10px 16px;display:flex;align-it
 .logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-.5px;}
 .logo-txt span{color:var(--blue2);}
 .hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
-#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
+#btn-ajuda{font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);}
 #btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
 
 main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:12px;flex:1;overflow-y:auto;}
@@ -52,7 +51,7 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 
 /* ── OPCIONS ── */
 .opcions-grid{width:100%;display:grid;grid-template-columns:1fr;gap:10px;}
-.btn-op{font-family:'Montserrat',sans-serif;background:white;border:2px solid var(--s300);border-radius:12px;padding:14px 16px;font-size:.92rem;font-weight:600;color:var(--s800);cursor:pointer;transition:all .15s;text-align:left;line-height:1.45;width:100%;box-shadow:0 3px 0 var(--s300);}
+.btn-op{font-family:system-ui, -apple-system, sans-serif;background:white;border:2px solid var(--s300);border-radius:12px;padding:14px 16px;font-size:.92rem;font-weight:600;color:var(--s800);cursor:pointer;transition:all .15s;text-align:left;line-height:1.45;width:100%;box-shadow:0 3px 0 var(--s300);}
 .btn-op:hover:not(:disabled){border-color:var(--blue2);transform:translateY(-2px);box-shadow:0 5px 0 var(--blue2);color:var(--blue);}
 .btn-op:active:not(:disabled){transform:translateY(3px);box-shadow:none;}
 .btn-op:disabled{cursor:default;}
@@ -66,7 +65,7 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 .feedback-titol{font-size:1rem;font-weight:900;text-align:center;margin-bottom:6px;}
 .feedback-desc{font-size:.85rem;font-weight:600;color:var(--s600);text-align:center;line-height:1.5;margin-bottom:14px;}
 .feedback-desc strong{color:var(--s800);font-size:1rem;}
-#btn-seg{font-family:'Montserrat',sans-serif;width:100%;padding:14px;background:var(--blue);color:white;border:none;border-radius:99px;font-size:1rem;font-weight:900;cursor:pointer;box-shadow:0 4px 0 #1d4ed8;transition:opacity .2s;}
+#btn-seg{font-family:system-ui, -apple-system, sans-serif;width:100%;padding:14px;background:var(--blue);color:white;border:none;border-radius:99px;font-size:1rem;font-weight:900;cursor:pointer;box-shadow:0 4px 0 #1d4ed8;transition:opacity .2s;}
 #btn-seg:hover{opacity:.9;}
 #btn-seg:active{transform:translateY(2px);box-shadow:0 2px 0 #1d4ed8;}
 
@@ -94,7 +93,7 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 .ajuda-ico{font-size:1.3rem;flex-shrink:0;margin-top:1px;}
 .ajuda-niv{background:var(--s100);border-radius:8px;padding:10px 12px;margin:8px 0 14px;font-size:.8rem;line-height:1.8;color:var(--s700);}
 .ajuda-niv strong{color:var(--s800);}
-#btn-tancar-ajuda{width:100%;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;padding:12px;background:var(--s800);color:white;border:none;border-radius:99px;cursor:pointer;margin-top:8px;}
+#btn-tancar-ajuda{width:100%;font-family:system-ui, -apple-system, sans-serif;font-size:.9rem;font-weight:700;padding:12px;background:var(--s800);color:white;border:none;border-radius:99px;cursor:pointer;margin-top:8px;}
 
 /* ── ANIMACIONS ── */
 @keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
@@ -104,7 +103,7 @@ main{width:100%;max-width:680px;padding:16px 12px;display:flex;flex-direction:co
 @keyframes floatUp{to{transform:translateY(-50px);opacity:0}}
 .confeti{position:fixed;border-radius:2px;pointer-events:none;z-index:300;animation:confetti-fall 2.2s ease-in forwards;}
 @keyframes confetti-fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
-.bonus-popup{position:fixed;font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;pointer-events:none;z-index:100;animation:slideUp .2s ease,floatUp 1s .2s ease forwards;}
+.bonus-popup{position:fixed;font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;pointer-events:none;z-index:100;animation:slideUp .2s ease,floatUp 1s .2s ease forwards;}
 
 footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padding:16px;flex-shrink:0;}
 @media(min-width:520px){.opcions-grid{grid-template-columns:1fr 1fr;}.marcadors{grid-template-columns:repeat(4,1fr);}}
@@ -119,8 +118,8 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
     <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
         <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
             <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
-            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
-            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>

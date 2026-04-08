@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Anagrames · Gobo26</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
@@ -17,7 +16,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
-body{font-family:'Montserrat',sans-serif;background:var(--bg);display:flex;flex-direction:column;align-items:center;color:var(--s700);}
+body{font-family:system-ui, -apple-system, sans-serif;background:var(--bg);display:flex;flex-direction:column;align-items:center;color:var(--s700);}
 
 /* ── HEADER ── */
 header{width:100%;background:var(--s800);border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
@@ -25,7 +24,7 @@ header{width:100%;background:var(--s800);border-bottom:1px solid #334155;padding
 .logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-.5px;}
 .logo-txt span{color:var(--blue2);}
 .hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
-#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);flex-shrink:0;}
+#btn-ajuda{font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);flex-shrink:0;}
 #btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
 
 /* ── MAIN ── */
@@ -58,7 +57,7 @@ main{width:100%;max-width:560px;padding:10px 12px 6px;display:flex;flex-directio
 .zona-const.err-flash{border-color:var(--err)!important;background:var(--errl)!important;animation:shake .3s ease;}
 
 /* ── BOTONS LLETRA ── */
-.btn-ll{font-family:'Montserrat',sans-serif;width:42px;height:42px;font-size:1.05rem;font-weight:900;text-transform:uppercase;cursor:pointer;background:white;border:2px solid var(--s300);border-radius:9px;box-shadow:0 3px 0 var(--s300);transition:transform .08s,box-shadow .08s;display:flex;align-items:center;justify-content:center;color:var(--s800);-webkit-tap-highlight-color:transparent;user-select:none;}
+.btn-ll{font-family:system-ui, -apple-system, sans-serif;width:42px;height:42px;font-size:1.05rem;font-weight:900;text-transform:uppercase;cursor:pointer;background:white;border:2px solid var(--s300);border-radius:9px;box-shadow:0 3px 0 var(--s300);transition:transform .08s,box-shadow .08s;display:flex;align-items:center;justify-content:center;color:var(--s800);-webkit-tap-highlight-color:transparent;user-select:none;}
 .btn-ll:not(:disabled):active{transform:translateY(3px);box-shadow:0 0 0 var(--s300);}
 .btn-ll:disabled{opacity:.22;cursor:default;box-shadow:none;}
 .btn-ll.triada{background:#dbeafe;border-color:var(--blue);color:var(--blue);box-shadow:0 3px 0 #1d4ed8;}
@@ -67,7 +66,7 @@ main{width:100%;max-width:560px;padding:10px 12px 6px;display:flex;flex-directio
 
 /* ── ACCIONS ── */
 .accions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:5px;}
-.btn-acc{font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;padding:9px 4px;border:none;border-radius:9px;cursor:pointer;min-height:42px;transition:all .12s;}
+.btn-acc{font-family:system-ui, -apple-system, sans-serif;font-size:.78rem;font-weight:700;padding:9px 4px;border:none;border-radius:9px;cursor:pointer;min-height:42px;transition:all .12s;}
 .btn-acc:active{transform:scale(.94);}
 .btn-esb{background:var(--errl);color:var(--err);}
 .btn-comp{background:var(--blue);color:white;}
@@ -92,7 +91,7 @@ main{width:100%;max-width:560px;padding:10px 12px 6px;display:flex;flex-directio
 .tag-pend{font-size:.75rem;font-weight:600;padding:3px 9px;border-radius:99px;background:var(--s200);color:var(--s400);border:1px solid var(--s300);letter-spacing:2px;}
 
 /* ── BOTÓ CONTINUA ── */
-.btn-continua{font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;margin-top:10px;width:100%;padding:11px;border:none;border-radius:10px;background:var(--blue);color:white;cursor:pointer;transition:background .12s,transform .08s;animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);}
+.btn-continua{font-family:system-ui, -apple-system, sans-serif;font-size:.85rem;font-weight:700;margin-top:10px;width:100%;padding:11px;border:none;border-radius:10px;background:var(--blue);color:white;cursor:pointer;transition:background .12s,transform .08s;animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);}
 .btn-continua:hover{background:var(--blue2);}
 .btn-continua:active{transform:scale(.97);}
 
@@ -123,7 +122,7 @@ main{width:100%;max-width:560px;padding:10px 12px 6px;display:flex;flex-directio
 .pts-taula{width:100%;border-collapse:collapse;font-size:.75rem;margin:6px 0 10px;}
 .pts-taula td{padding:4px 6px;border-bottom:1px solid var(--s200);}
 .pts-taula td:last-child{font-weight:700;color:var(--blue);text-align:right;}
-.btn-tancar{font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;width:100%;padding:10px;border:none;border-radius:10px;background:var(--blue);color:white;cursor:pointer;}
+.btn-tancar{font-family:system-ui, -apple-system, sans-serif;font-size:.82rem;font-weight:700;width:100%;padding:10px;border:none;border-radius:10px;background:var(--blue);color:white;cursor:pointer;}
 .btn-tancar:hover{background:var(--blue2);}
 
 /* ── CONFETI ── */
@@ -142,8 +141,8 @@ footer a{color:var(--s400);text-decoration:none;}
     <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
         <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
             <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
-            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
-            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>

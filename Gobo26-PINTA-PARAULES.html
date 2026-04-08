@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Pinta Paraules · Gobo26</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Black+Han+Sans&display=swap" rel="stylesheet">
 <style>
 :root {
     --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
@@ -16,7 +15,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
-body{font-family:'Montserrat',sans-serif;background:var(--bg);height:100%;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;}
+body{font-family:system-ui, -apple-system, sans-serif;background:var(--bg);height:100%;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;}
 
 /* HEADER */
 .top-header{width:100%;background:var(--s800);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
@@ -24,10 +23,10 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);height:100%;displa
 .logo:hover{opacity:1;}
 @media(max-width:420px){.logo{display:none;}}
 .hdr-title{font-size:1rem;font-weight:900;color:white;letter-spacing:.5px;flex:1;text-align:center;}
-.btn-hdr{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;width:36px;height:36px;border-radius:50%;border:2px solid var(--s600);background:var(--s700);color:white;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.btn-hdr{font-family:system-ui, -apple-system, sans-serif;font-size:1rem;font-weight:900;width:36px;height:36px;border-radius:50%;border:2px solid var(--s600);background:var(--s700);color:white;cursor:pointer;transition:background .2s;flex-shrink:0;}
 .btn-hdr:hover{background:var(--blue);}
 .btn-hdr.btn-abandon:hover{background:var(--err);}
-.btn-abandon-vis{font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:800;
+.btn-abandon-vis{font-family:system-ui, -apple-system, sans-serif;font-size:.72rem;font-weight:800;
     background:#dc2626;color:white;border:none;border-radius:8px;
     padding:6px 10px;cursor:pointer;letter-spacing:.04em;
     transition:background .2s,transform .1s;flex-shrink:0;}
@@ -100,14 +99,14 @@ main{width:100%;max-width:700px;padding:16px 12px 32px;display:flex;flex-directi
 .rec-bloc .rl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--s400);}
 .rec-sep{width:1px;height:36px;background:var(--s200);}
 .rec-buida{padding:16px;text-align:center;color:var(--s400);font-size:.82rem;}
-.btn-esborrar{font-family:'Montserrat',sans-serif;font-size:.68rem;color:var(--err);background:none;border:none;cursor:pointer;padding:4px 16px 10px;text-decoration:underline;display:block;margin:0 auto;}
+.btn-esborrar{font-family:system-ui, -apple-system, sans-serif;font-size:.68rem;color:var(--err);background:none;border:none;cursor:pointer;padding:4px 16px 10px;text-decoration:underline;display:block;margin:0 auto;}
 
 /* OVERLAY FINAL */
 #pantalla-inici{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;z-index:150;}
 #pantalla-inici.ocult{display:none;}
 #inici-titol{font-family:'Black Han Sans',sans-serif;font-size:2.8rem;color:var(--s800);text-align:center;letter-spacing:.05em;}
 #inici-sub{font-size:.95rem;color:var(--s600);text-align:center;line-height:1.6;max-width:300px;}
-#btn-preparats{font-family:'Montserrat',sans-serif;font-size:1.2rem;font-weight:900;background:var(--blue);color:white;border:none;border-radius:16px;padding:18px 40px;cursor:pointer;box-shadow:0 6px 0 #1d4ed8;transition:transform .1s,box-shadow .1s;letter-spacing:.04em;}
+#btn-preparats{font-family:system-ui, -apple-system, sans-serif;font-size:1.2rem;font-weight:900;background:var(--blue);color:white;border:none;border-radius:16px;padding:18px 40px;cursor:pointer;box-shadow:0 6px 0 #1d4ed8;transition:transform .1s,box-shadow .1s;letter-spacing:.04em;}
 #btn-preparats:active{transform:translateY(3px);box-shadow:0 3px 0 #1d4ed8;}
 #compte-enrere{font-family:'Black Han Sans',sans-serif;font-size:6rem;color:var(--blue);display:none;animation:puls .9s ease-in-out infinite;}
 @keyframes puls{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
@@ -119,7 +118,7 @@ main{width:100%;max-width:700px;padding:16px 12px 32px;display:flex;flex-directi
 .modal-titol{font-size:1.4rem;font-weight:900;color:var(--s800);margin-bottom:6px;}
 .modal-text{color:var(--s600);font-size:.9rem;line-height:1.6;margin-bottom:20px;}
 .modal-rec{font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:16px;}
-.btn-modal{font-family:'Montserrat',sans-serif;background:var(--blue);color:white;border:none;border-radius:12px;padding:14px 28px;font-size:1rem;font-weight:800;cursor:pointer;width:100%;box-shadow:0 4px 0 #1d4ed8;transition:opacity .2s;}
+.btn-modal{font-family:system-ui, -apple-system, sans-serif;background:var(--blue);color:white;border:none;border-radius:12px;padding:14px 28px;font-size:1rem;font-weight:800;cursor:pointer;width:100%;box-shadow:0 4px 0 #1d4ed8;transition:opacity .2s;}
 .btn-modal:hover{opacity:.9;}
 
 /* OVERLAY AJUDA */
@@ -132,7 +131,7 @@ main{width:100%;max-width:700px;padding:16px 12px 32px;display:flex;flex-directi
 .ajuda-ico{font-size:1.3rem;flex-shrink:0;width:26px;text-align:center;}
 .ajuda-txt{font-size:.83rem;color:var(--s600);line-height:1.45;}
 .ajuda-txt strong{color:var(--s800);}
-.btn-tancar{font-family:'Montserrat',sans-serif;background:var(--s800);color:white;border:none;border-radius:10px;padding:12px;width:100%;font-weight:800;cursor:pointer;margin-top:10px;font-size:.9rem;}
+.btn-tancar{font-family:system-ui, -apple-system, sans-serif;background:var(--s800);color:white;border:none;border-radius:10px;padding:12px;width:100%;font-weight:800;cursor:pointer;margin-top:10px;font-size:.9rem;}
 
 /* CONFETI */
 .confeti-p{position:fixed;top:-10px;width:9px;height:9px;border-radius:2px;pointer-events:none;z-index:400;animation:caure var(--dur) ease-in forwards;}
@@ -161,8 +160,8 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
     <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
         <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
             <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
-            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
-            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
@@ -175,11 +174,11 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
     <div id="inici-sub">Clica el color de la <strong>tinta</strong> amb la qual està escrita cada paraula.<br>Ignora el que diu!</div>
     <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
         <button id="btn-normal" onclick="triarModeIInici('normal')"
-            style="font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;background:#1e293b;color:white;border:3px solid #2563eb;border-radius:14px;padding:14px 28px;cursor:pointer;min-width:140px;">
+            style="font-family:system-ui, -apple-system, sans-serif;font-size:1rem;font-weight:900;background:#1e293b;color:white;border:3px solid #2563eb;border-radius:14px;padding:14px 28px;cursor:pointer;min-width:140px;">
             🎯 Normal
         </button>
         <button id="btn-facil" onclick="triarModeIInici('facil')"
-            style="font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;background:#1e293b;color:white;border:3px solid #16a34a;border-radius:14px;padding:14px 28px;cursor:pointer;min-width:140px;">
+            style="font-family:system-ui, -apple-system, sans-serif;font-size:1rem;font-weight:900;background:#1e293b;color:white;border:3px solid #16a34a;border-radius:14px;padding:14px 28px;cursor:pointer;min-width:140px;">
             🌿 Fàcil
         </button>
     </div>

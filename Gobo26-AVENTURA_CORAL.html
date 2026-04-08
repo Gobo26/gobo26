@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>La Nit de la Coral – Gobo26</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:     #0d0f1a;
@@ -41,7 +40,7 @@ header{
 }
 .logo-hex{display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--text);flex-shrink:0;}
 .logo-hex svg{width:30px;height:30px;}
-.logo-text{font-family:'Montserrat',sans-serif;font-size:10px;line-height:1.2;font-weight:700;}
+.logo-text{font-family:system-ui, -apple-system, sans-serif;font-size:10px;line-height:1.2;font-weight:700;}
 .logo-text span{display:block;font-size:8px;font-weight:400;opacity:.45;}
 header h1{
   font-family:'Playfair Display',serif;
@@ -72,7 +71,7 @@ header h1{
 .clue-badge{
   background:var(--rose); color:white;
   border-radius:50%; width:16px; height:16px;
-  font-size:9px; font-weight:900; font-family:'Montserrat',sans-serif;
+  font-size:9px; font-weight:900; font-family:system-ui, -apple-system, sans-serif;
   display:inline-flex; align-items:center; justify-content:center;
   transition:transform .2s;
 }
@@ -382,10 +381,10 @@ footer{
   <a class="logo-hex" href="https://ja.cat/appgobo" target="_self">
     <svg viewBox="0 0 40 46" fill="none">
       <path d="M20 1L38 11.5V34.5L20 45L2 34.5V11.5L20 1Z" fill="#2563eb"/>
-      <text x="20" y="22" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">GOBO</text>
-      <text x="20" y="33" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">26</text>
+      <text x="20" y="22" font-family="system-ui,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">GOBO</text>
+      <text x="20" y="33" font-family="system-ui,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">26</text>
     </svg>
-    <div class="logo-text" style="font-family:'Montserrat',sans-serif">Gobo26<span>Jocs en català</span></div>
+    <div class="logo-text" style="font-family:system-ui, -apple-system, sans-serif">Gobo26<span>Jocs en català</span></div>
   </a>
   <h1>La Nit de la Coral</h1>
   <div class="hdr-right">
@@ -513,9 +512,9 @@ const NODES = {
     chapter: "Capítol I · 22:45 h",
     title: "El camerí tancat",
     art: "camerí",
-    text: `<p>Les bombetes del mirall projecten una llum groga sobre el cos d'en <strong>Ferran Salvi</strong>. El director jeu d'esquena al terra del camerí, amb les partitures del concert escampades al voltant i una expressió de sorpresa petrificada al rostre. Al pit, clavada fins al mànec, una <em>navalla</em> de fulla llarga. El metge que ha entrat darrere teu no diu res. No cal.</p>
-    <p>Al corredor, els cantaires comencen a murmurar. El públic és al pati de butaques. <strong>Falten quaranta minuts per a l'hora del concert.</strong> Ningú no ha avisat la policia encara — el telèfon del teatre no funciona i els mòbils no tenen cobertura al soterrani.</p>
-    <p>La cap de producció, la Dolors, s'acosta: <em>"Maragda, has de decidir alguna cosa. Tots et miren a tu."</em></p>`,
+    text: `<p>Les bombetes del mirall — vuit esferes de vidre mat que en Ferran encenia cada nit per anar-se preparant mentalment — projecten ara una llum groga i quieta sobre el seu cos. El director jeu d'esquena al terra del camerí, envoltat per les partitures del concert escampades com si la música hagués fugit d'ell al moment de caure. Al pit, clavada fins al mànec, una <em>navalla</em> de fulla llarga. El metge que ha entrat darrere teu comprova el pols i es posa dret sense dir res. El silenci d'un professional que ja sap.</p>
+    <p>A l'altra banda de la porta tancada, al corredor, sents les veus dels cantaires fent els precalentaments vocals — escales, intervals, un mica de vibrato. El contrast és obscè. <strong>Falten quaranta minuts per a l'hora del concert.</strong> Ningú no ha avisat la policia encara — el telèfon del teatre no funciona i els mòbils no tenen cobertura al soterrani.</p>
+    <p>La cap de producció, la Dolors, s'acosta per la dreta. Té la mateixa expressió eficient de sempre. <em>"Maragda, has de decidir alguna cosa. Tots et miren a tu."</em></p>`,
     choices: [
       {label:"Examines el camerí tu mateixa abans que ningú el toqui: les proves podrien desaparèixer.", next:"examinar_cameri"},
       {label:"Convoca els cantaires a la sala d'assaig: algú sap alguna cosa i la por el farà parlar.", next:"convocar_cantaires"},
@@ -529,9 +528,9 @@ const NODES = {
     title: "Pistes al mirall",
     art: "camerí",
     clue: CLUES.examinar_cameri,
-    text: `<p>Demanes a tothom que surti i tances la porta. Les bombetes del mirall t'il·luminen mentre observes l'escena amb cura, intentant no mirar massa el cos.</p>
-    <p>Dues coses criden la teva atenció: una nota manuscrita esparracada prop de la paperera — s'hi llegeix clarament <em>"si ensenyes les partitures, ja ho saps tot"</em> — i, sota la cadira del maquillatge, una <strong>beina de cuir buida</strong>. Algú l'ha deixat caure precipitadament, com si s'apressés a amagar la navalla en un altre lloc del camerí. En trobaràs la navalla al calaix del maquillatge, però el metge ja te l'ha pres com a evidència.</p>
-    <p>Algú havia amenaçat en Ferran. I algú havia portat aquella navalla al teatre aquesta nit — i l'havia collocada estratègicament. Necessites saber qui.</p>`,
+    text: `<p>Demanes a tothom que surti i tances la porta. Les bombetes del mirall segueixen enceses. T'il·luminen mentre observes l'escena amb cura, intentant no mirar massa el cos.</p>
+    <p>Dues coses criden la teva atenció: una nota manuscrita esparracada prop de la paperera — s'hi llegeix clarament <em>"si ensenyes les partitures, ja ho saps tot"</em> — i, sota la cadira del maquillatge, una <strong>beina de cuir buida</strong>. No és un descuit de principiant: és exactament el tipus d'error que comet algú que ha planificat fins al darrer detall però que, en el moment decisiu, ha perdut el control per una fracció de segon. La navalla ha sortit de la beina de pressa, i no hi ha hagut temps de recuperar-la. En trobaràs la navalla al calaix del maquillatge, però el metge ja te l'ha pres com a evidència.</p>
+    <p>Algú havia amenaçat en Ferran. I algú havia portat aquella navalla al teatre aquesta nit — i l'havia collocada estratègicament, amb antelació. Necessites saber qui.</p>`,
     choices: [
       {label:"Busques en Pau, el tècnic: les càmeres de seguretat ho hauran gravat tot.", next:"pau_cameres"},
       {label:"La nota esmenta partitures. Vas a la sala d'assaig a examinar els faristols.", next:"faristols"},
@@ -648,7 +647,7 @@ const NODES = {
     clue: CLUES.dolors_testimoni,
     text: `<p>La <strong>Dolors Ferré</strong> és una dona de cinquanta anys, eficient i freda, que porta quinze anys gestionant el teatre. La trobes al corredor, parlant per walkie-talkie amb els tramoyistes per mantenir la situació controlada.</p>
     <p>Quan li preguntes per la Cristina Mas, s'atura. <em>"La Cristina va venir avui. Tenia cita amb en Ferran a les vuit. No sé de què van parlar."</em> Pausa curta. <em>"Però sé que en Ferran estava molt nerviós des d'ahir. Em va demanar que no deixés entrar ningú al camerí fins que ell ho digués."</em></p>
-    <p>I llavors afegeix alguna cosa que no esperaves: <em>"En Ferran em devia quaranta mil euros d'una producció de fa dos anys. Li havia dit que o me'ls tornava avui o trencava el contracte de la coral amb el teatre."</em> Fa una pausa. <em>"Suposo que ja no me'ls tornarà."</em></p>`,
+    <p>I llavors afegeix alguna cosa que no esperaves: <em>"En Ferran em devia quaranta mil euros d'una producció de fa dos anys. Avui m'ha trucat per dir-me que tenia 'una solució generosa' per al nostre problema."</em> Fa una pausa llarga. <em>"Cinc-cents euros. M'oferia cinc-cents euros com a 'liquidació definitiva'. Rient."</em> La seva veu no puja. No es torna a moure. <em>"Li havia dit que avui era l'últim dia."</em></p>`,
     choices: [
       {label:"La Dolors tenia un motiu fort. Preguntes a en Pau si va tenir accés al camerí durant la tarda.", next:"acces_cameri"},
       {label:"El motiu de la Cristina sembla més immediat. Vas a buscar-la per confrontar-la.", next:"confrontar_cristina"},
@@ -722,11 +721,11 @@ const NODES = {
     art: "final_veritat",
     ending: "neutral",
     endingLabel: "⚖ Final de la Justícia",
-    text: `<p>La policia arriba quaranta minuts més tard, quan algú finalment aconsegueix cobertura al carrer. La Dolors és detinguda al corredor, on l'heu retinguda entre dues cantaires que no s'han mogut d'allà.</p>
-    <p>El concert no es fa. El teatre es buida amb calma. El públic marxa en silenci, confós però respectuós quan els expliqueu, sense detalls, que hi ha hagut un incident greu.</p>
-    <p>Les partitures de la Cristina Mas li són retornades per ordre judicial aquella mateixa setmana. La denúncia de plagi queda arxivada com a guanyada.</p>
+    text: `<p>La policia arriba quaranta minuts més tard, quan algú finalment aconsegueix cobertura al carrer. La Dolors és detinguda al corredor, on l'heu retinguda entre dues cantaires que no s'han mogut d'allà. No ha dit res. Ni quan han arribat els agents, ni quan li han llegit els drets. Només ha mirat la paret.</p>
+    <p>El concert no es fa. Et toca sortir al prosceni — tu, amb les mans tremolant dins de les butxaques — i dir-li al públic que hi ha hagut un incident greu i que l'actuació queda suspesa. Sents com l'aire canvia a la sala: la desconcertació, i finalment el silenci respectuós d'una gent que intueix que ha passat alguna cosa molt pitjor que un accident tècnic. El teatre es buida en vint minuts. Les cadires buides, sota els focus apagats, semblen el negatiu d'un concert que mai no ha existit.</p>
+    <p>Les partitures de la Cristina Mas li són retornades per ordre judicial aquella mateixa setmana. La denúncia de plagi queda arxivada com a guanyada. Ningú no li demana disculpes públicament — mai no funciona així.</p>
     <p>Setmanes després, la coral tria un director nou. Et demanen que en siguis tu, la directora interina. Ho acceptes, però poses una condició: el primer concert serà íntegrament amb obres de la Cristina Mas.</p>
-    <p><em>Aquella nit no hi va haver música. Però hi va haver justícia.</em></p>`,
+    <p><em>Aquella nit no hi va haver música. Però hi va haver justícia. I de vegades el cost de la justícia és exactament això: el silenci on hauria d'haver hagut una cançó.</em></p>`,
     choices: []
   },
 
@@ -736,11 +735,11 @@ const NODES = {
     art: "final_concert",
     ending: "good",
     endingLabel: "♪ Final de la Música",
-    text: `<p>Tanqueu la Dolors al camerí del segon pis, amb dues persones de confiança fent guàrdia. Algú aconsegueix fer arribar un missatge a la policia a través d'un espectador que surt al carrer.</p>
-    <p>Et plantes davant dels quaranta-sis cantaires. Alguns ploren. Tots t'esperen.</p>
+    text: `<p>Tanqueu la Dolors al camerí del segon pis, amb dues persones de confiança fent guàrdia. La porta es tanca amb un clic sec. Al pis de sota, les veus dels cantaires s'escolten a través del terra — escales, respiració, el so d'un violoncel afinant-se. Algú aconsegueix fer arribar un missatge a la policia a través d'un espectador que surt al carrer.</p>
+    <p>Et plantes davant dels quaranta-sis cantaires. Alguns ploren. Alguns no poden deixar de pensar que mentre cantaran, la dona que ha matat el director estarà escoltant des del pis de dalt, sola, en silenci. La contradicció és física — la sents a la respiració dels sopranos, que no acaba de sortir plena.</p>
     <p><em>"En Ferran hauria volgut que cantéssim. I les famílies que omplen el teatre han vingut a escoltar-nos. Sortim."</em></p>
-    <p>El concert comença amb vint minuts de retard. Ningú no ho sap, al pati de butaques. Canteu com mai havíeu cantat — amb la tensió, el dol i l'alleujament barrejats en cada frase musical. Al final del segon bloc, la policia entra discretament per la porta lateral.</p>
-    <p>El públic s'aixeca. Els aplaudiments duren set minuts. Tu no plores fins que arribes al camerí, sola, amb la porta tancada.</p>
+    <p>El concert comença amb vint minuts de retard. Ningú no ho sap, al pati de butaques. Canteu amb una intensitat estranya, una mica ferida — la veu de qui ha passat per alguna cosa que no pot explicar. Al tercer moviment, una mezzosoprano plora mentre canta, i el plor li tremola a la veu d'una manera que el públic interpretarà com a emoció artística. Al final del segon bloc, la policia entra discretament per la porta lateral i puja les escales sense fer soroll.</p>
+    <p>El públic s'aixeca. Els aplaudiments duren set minuts. Tu no plores fins que arribes al camerí, sola, amb la porta tancada. I llavors penses que la Dolors ha escoltat tot el concert des del pis de dalt — cada nota, cada acord — i que potser és el càstig més estrany que mai s'ha donat a ningú.</p>
     <p><em>La música no ho arregla tot. Però de vegades és l'única resposta que existeix.</em></p>`,
     choices: []
   },
@@ -751,11 +750,12 @@ const NODES = {
     art: "final_silenci",
     ending: "bad",
     endingLabel: "✗ Final del Silenci",
-    text: `<p>La Dolors marxa. El concert comença. Canteu bé — potser massa bé, amb aquella intensitat que de vegades ve de la culpa.</p>
-    <p>Quan la policia finalment arriba, tres hores més tard, no hi ha sospitós. La Dolors és a França. Les proves del registre d'accessos continuen allà, però sense ella el cas s'alentirà durant mesos.</p>
-    <p>La Cristina Mas, que es queda al teatre tota la nit esperant justícia, t'agafa del braç quan surts de l'escenari: <em>"Sabies on era, oi?"</em> No li respons.</p>
-    <p>Segueixes dirigint la coral els mesos següents. Sou bons. El públic us estima. Però en cada assaig, quan entres a la sala i veus el faristol buit del director, recordes aquells sis minuts de càmera desconnectada i la cadira on la Dolors s'asseia mentre esperaves que marxés.</p>
-    <p><em>De vegades callar és també una decisió. I les decisions no s'obliden.</em></p>`,
+    text: `<p>La Dolors marxa. Escoltes els seus passos allunyant-se pel corredor i la porta exterior tancar-se amb un so sec i definitiu. Llavors entres a la sala d'assaig i prens el faristol del director. Fas el gest de sempre — una respiració fonda, els braços pujant — i els quaranta-sis cantaires t'obeeixen.</p>
+    <p>El concert és bo. Potser el millor que heu fet mai, amb aquella intensitat que de vegades ve de la culpa, d'haver creuat una línia que no saps ben bé on era. El públic no sap res. Aplaudeix de peu.</p>
+    <p>Quan la policia arriba, tres hores més tard, no hi ha sospitós. La Dolors és a França. Les proves del registre d'accessos continuen allà, però sense ella el cas s'alentirà durant mesos. La família d'en Ferran no sabrà mai qui va ser.</p>
+    <p>La Cristina Mas, que s'ha quedat al teatre tota la nit esperant justícia, t'agafa del braç quan surts de l'escenari: <em>"Sabies on era, oi?"</em> Ni la mires. Ella et deixa anar lentament, com qui allibera alguna cosa que ja no val la pena retenir.</p>
+    <p>Segueixes dirigint la coral els mesos següents. Sou bons. El públic us estima. Però en cada assaig, quan entres a la sala i veus el faristol buit del director, recordes els passos de la Dolors allunyant-se i els cinc segons de silenci en què vas triar. La Maragda que vas ser aquella nit sempre serà allà, dreta al corredor, deixant passar algú que no hauria de marxar.</p>
+    <p><em>De vegades callar és també una decisió. I les decisions no s'obliden mai del tot — les sents cada vegada que la música comença.</em></p>`,
     choices: []
   },
 };

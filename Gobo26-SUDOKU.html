@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Gobo26 - Sudoku</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg:         #f1f5f9;
@@ -27,7 +26,7 @@
 
         html, body {
             height: 100%;
-            font-family: 'Montserrat', sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             display: flex;
@@ -84,7 +83,7 @@
             background: white;
             color: var(--text);
             cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             font-size: 0.72rem;
             font-weight: 700;
             transition: all 0.2s;
@@ -118,7 +117,7 @@
             background: white;
             color: var(--text);
             cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             font-size: 0.68rem;
             font-weight: 700;
             transition: all 0.2s;
@@ -185,15 +184,15 @@
         .cell.has-notes { font-size: 0; }
         .notes-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
             width: 100%;
             height: 100%;
             position: absolute;
             inset: 0;
         }
         .note-num {
-            font-size: clamp(6px, 1.8vw, 10px);
+            font-size: clamp(7px, 2.5vw, 13px);
             font-weight: 700;
             color: #64748b;
             display: flex;
@@ -228,7 +227,7 @@
             background: white;
             border: 1.5px solid #cbd5e1;
             border-radius: 6px;
-            font-family: 'Montserrat', sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             font-size: clamp(14px, 4vw, 20px);
             font-weight: 700;
             color: var(--text);
@@ -286,7 +285,7 @@
         .modal-titol { font-size: 1.3rem; font-weight: 900; color: #1e293b; margin-bottom: 6px; }
         .modal-temps { font-size: 1.1rem; font-weight: 700; color: #2563eb; margin-bottom: 16px; }
         .modal-text  { font-size: .85rem; color: #475569; margin-bottom: 18px; }
-        .btn-modal { font-family: 'Montserrat',sans-serif; background: #2563eb; color: white; border: none; border-radius: 12px; padding: 13px 28px; font-size: .9rem; font-weight: 700; cursor: pointer; width: 100%; }
+        .btn-modal { font-family: system-ui, -apple-system, sans-serif; background: #2563eb; color: white; border: none; border-radius: 12px; padding: 13px 28px; font-size: .9rem; font-weight: 700; cursor: pointer; width: 100%; }
         .btn-modal:hover { background: #1d4ed8; }
 
         /* CONFETI */
@@ -315,8 +314,8 @@
     <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
         <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
             <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
-            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
-            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
@@ -554,10 +553,11 @@
                 div.classList.add('has-notes');
                 const grid = document.createElement('div');
                 grid.className = 'notes-grid';
-                for (let n = 1; n <= 9; n++) {
+                const sorted = Array.from(notes).sort((a, b) => a - b).slice(0, 4);
+                for (let i = 0; i < 4; i++) {
                     const span = document.createElement('span');
                     span.className = 'note-num';
-                    span.textContent = notes.has(n) ? n : '';
+                    span.textContent = sorted[i] !== undefined ? sorted[i] : '';
                     grid.appendChild(span);
                 }
                 div.innerHTML = '';
@@ -608,10 +608,10 @@
             const prevNotes = new Set(notesBoard[r][c]);
 
             if (notesMode && num !== 'delete') {
-                // Mode notes: toggle el número
+                // Mode notes: toggle el número (màxim 4)
                 historial.push({ row: r, col: c, prev: prevVal, prevNotes: new Set(prevNotes), isNotes: true });
                 if (notesBoard[r][c].has(num)) notesBoard[r][c].delete(num);
-                else notesBoard[r][c].add(num);
+                else if (notesBoard[r][c].size < 4) notesBoard[r][c].add(num);
                 renderCellContent(selectedCell, r, c);
             } else if (num === 'delete') {
                 historial.push({ row: r, col: c, prev: prevVal, prevNotes: new Set(prevNotes), isNotes: false });

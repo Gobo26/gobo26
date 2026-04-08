@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>La Darrera Emissió – Gobo26</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #0c0909;
@@ -49,7 +48,7 @@ header {
 
 .logo-hex { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--cream); flex-shrink: 0; }
 .logo-hex svg { width: 32px; height: 32px; }
-.logo-text { font-family: 'Montserrat', sans-serif; font-size: 11px; line-height: 1.2; font-weight: 700; }
+.logo-text { font-family: system-ui, -apple-system, sans-serif; font-size: 11px; line-height: 1.2; font-weight: 700; }
 .logo-text span { display: block; font-size: 9px; font-weight: 400; opacity: 0.4; }
 
 header h1 {
@@ -378,10 +377,10 @@ footer { text-align: center; padding: 12px; font-size: 11px; color: rgba(240,230
   <a class="logo-hex" href="https://ja.cat/appgobo" target="_self">
     <svg viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20 1L38 11.5V34.5L20 45L2 34.5V11.5L20 1Z" fill="#2563eb"/>
-      <text x="20" y="22" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">GOBO</text>
-      <text x="20" y="33" font-family="Montserrat,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">26</text>
+      <text x="20" y="22" font-family="system-ui,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">GOBO</text>
+      <text x="20" y="33" font-family="system-ui,sans-serif" font-size="9" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">26</text>
     </svg>
-    <div class="logo-text" style="font-family:'Montserrat',sans-serif">Gobo26<span>Jocs en català</span></div>
+    <div class="logo-text" style="font-family:system-ui, -apple-system, sans-serif">Gobo26<span>Jocs en català</span></div>
   </a>
   <h1>La Darrera<br>Emissió</h1>
   <div class="header-badges">
@@ -735,10 +734,11 @@ const NODES = {
     timestamp: '21:45 h · 30 minuts d\'emissió',
     title: 'La versió revisada',
     art: 'estudi',
-    text: `<p>L'emissió transcorre sense incidents. Interpretes la versió revisada de l'escena 7. La "Núria" sobreviu. El drama es resol amb el detectiu descobrint que tot havia estat un malentès. El públic aplaudeix mentalment, invisible i satisfet darrere dels aparells de ràdio de tot el país.</p>
-    <p>Quan la llum vermella s'apaga, en Ricard seu sol al fons de l'estudi. No diu res. Agafa el seu original, el plega amb cura i el guarda a la bossa. Et mira un segon. Només un segon.</p>
-    <p>Tres dies després, la Senyora Puig anuncia una donació important a l'emissora. La Dolors és ascendida. L'original del guió d'en Ricard no apareix en cap arxiu.</p>
-    <p>En Ricard mor sis setmanes més tard. La seva necrològica el descriu com <em>"un artesà discret del drama radiofònic"</em>.</p>`,
+    text: `<p>L'emissió acaba amb un silenci sepulcral al control. Has llegit les frases ensucrades de la versió revisada, protegint l'emissora i la teva nòmina a canvi de la veritat. La "Núria" sobreviu. El drama es resol amb un malentès. El públic és invisible i satisfet darrere dels aparells de ràdio de tot el país.</p>
+    <p>Quan la llum vermella s'apaga, en Ricard no et diu res. Agafa el seu original, el plega amb cura i el guarda a la bossa. S'aixeca. Marxa cap a la porta amb l'esquena més encorbada que mai. No es gira.</p>
+    <p>La Dolors et somriu i et promet un futur brillant. Tres dies després, la Senyora Puig anuncia una donació important a l'emissora. La Dolors és ascendida. L'original del guió d'en Ricard no apareix en cap arxiu. Però mentre camines cap a la sortida, sents que l'olor de cigarret fred de l'estudi se t'ha quedat enganxada a la pell com un tatuatge de culpa.</p>
+    <p>La Neus ha tornat a morir. I aquesta vegada, tu has aguantat la porta.</p>
+    <p><em>En Ricard mor sis setmanes més tard. La seva necrològica el descriu com "un artesà discret del drama radiofònic".</em></p>`,
     ending: 'bad',
     endingLabel: '✗ Final de l\'Engany ✗',
     choices: [],
@@ -781,10 +781,10 @@ const NODES = {
     timestamp: 'La nit de l\'emissió',
     title: 'La veritat en directe',
     art: 'final_bo',
-    text: `<p>La veritat surt a l'aire. No importa exactament per quin camí hi ha arribat — si és la cinta, la confessió de la Dolors, o les paraules d'en Ricard interpretades fins a l'última síl·laba. El resultat és irreversible.</p>
-    <p>El telèfon de l'emissora comença a sonar als trenta segons. Als dos minuts, hi ha periodistes trucant. La Dolors no intenta fugir: seu a la seva cadira del control i espera, amb una expressió que no és exactament derrota. Potser és alleujament.</p>
-    <p>En Ricard escolta el final del programa des del passadís, amb el seu guió original al regazo. Quan la llum vermella s'apaga, es posa dempeus molt a poc a poc i et dóna la mà.</p>
-    <p>"Gràcies," diu. Res més. Però la paraula pesa el suficient.</p>
+    text: `<p>La llum vermella no és només un avís de directe: és una ferida oberta a la foscor de l'estudi. Quan la cinta d'en Joan comença a girar — o quan tu obres la boca i la veu de la Núria surt amb una cruesa que no estava a cap indicació — el silenci de l'emissora es trenca amb la veu de la Neus, recuperada de l'oblit després de quinze anys.</p>
+    <p>La Dolors colpeja el vidre del control, cridant sense so. Però el país sencer ja escolta el crit que ella va intentar silenciar a la terrassa. El telèfon de l'emissora comença a sonar als trenta segons. Als dos minuts, hi ha periodistes trucant des del carrer.</p>
+    <p>En Ricard, des del fons del passadís, tanca els ulls. No és dolor: és la cara d'algú que esperava exactament aquest moment des de fa quinze anys i finalment ha vist arribar. Quan la llum vermella s'apaga, es posa dempeus molt a poc a poc, s'acosta, i et dóna la mà sense dir res.</p>
+    <p>La Dolors no intenta fugir. Seu a la seva cadira i espera, amb una expressió que no és derrota. Potser és alleujament. La ficció ha deixat de ser una màscara per convertir-se en un mirall.</p>
     <p><em>La Neus Roca tenia vint-i-tres anys. Ara tothom ho sap.</em></p>`,
     ending: 'good',
     endingLabel: '✦ Final de la Veritat en Directe ✦',
@@ -796,10 +796,10 @@ const NODES = {
     timestamp: 'La setmana següent',
     title: 'La memòria privada',
     art: 'final_memoria',
-    text: `<p>La Dolors signa la declaració davant notari a les nou del matí. No plora. Tampoc no nega. Escriu els fets amb una cal·ligrafia ordenada i els signa amb el seu nom complet.</p>
-    <p>Presenta la dimissió aquella mateixa tarda, "per motius personals". Ningú a l'emissora fa preguntes en veu alta. En Joan tanca el control i s'asseu sol a la foscor uns minuts.</p>
-    <p>La declaració queda en mans d'un advocat, amb instruccions de fer-la pública si mai hi ha un procés. Potser n'hi haurà un. Potser no.</p>
-    <p>En Ricard llegeix una còpia de la declaració al llit de l'hospital. La plega. La deixa a la tauleta de nit. "La justícia privada és el millor que pot esperar una mort," diu. Ho diu sense amargor.</p>
+    text: `<p>No hi ha música de fons ni aplaudiments. Només el so d'una ploma estilogràfica rascant el paper en un despatx ple de fum. La Dolors signa la seva pròpia sentència de mort civil amb una mà que no tremola del tot, mentre la Marta la vigila com un jutge mut. No plora. Tampoc no nega. Escriu els fets amb una cal·ligrafia ordenada i els signa amb el seu nom complet.</p>
+    <p>És una victòria sense confeti. La Neus no tornarà a la vida, però la seva assassina passarà cada nit de la seva vida esperant que algú obri el sobre tancat davant del notari. Ningú a l'emissora fa preguntes en veu alta. En Joan tanca el control i s'asseu sol a la foscor uns minuts. Potser plora. Potser no.</p>
+    <p>En Ricard llegeix una còpia de la declaració al llit de l'hospital. La plega. La deixa a la tauleta de nit. <em>"La justícia privada és el millor que pot esperar una mort,"</em> diu. Ho diu sense amargor. Com qui ha après a distingir entre el que mereixeria passar i el que passa.</p>
+    <p>La veritat ha quedat guardada en un calaix. Però la clau la tens tu.</p>
     <p><em>La Neus Roca tenia vint-i-tres anys. Ara almenys algú ho ha escrit, i signat, i no ho pot desfer.</em></p>`,
     ending: 'neutral',
     endingLabel: '◈ Final de la Memòria ◈',
@@ -811,10 +811,10 @@ const NODES = {
     timestamp: 'La nit de l\'emissió',
     title: 'La veritat com a drama',
     art: 'final_ficcio',
-    text: `<p>Interpretes l'escena 7. La teva veu fa la Núria. Una altra actriu fa la Diana. El text d'en Ricard és precís, sensorial, irrefutable per a qualsevol que conegui la história real — però públicament és ficció, i la ficció no condemna ningú.</p>
-    <p>Al control, la Dolors s'ha quedat blanca. Sap que saps. Sap que en Joan sap. Sap que en Ricard sap. I sap que potser algunes persones entre els oients d'avui recorden la Neus Roca i fan connexions que no haurien de poder fer.</p>
-    <p>L'endemà, presenta la dimissió. "Per motius de salut." L'emissora li desitja una bona recuperació.</p>
-    <p>En Ricard escolta l'emissió des de casa. Quan acaba l'escena 7, apaga la ràdio i mira per la finestra un bon estona.</p>
+    text: `<p>Interpretes l'escena 7 amb una cruesa que no estava a les indicacions. Cada paraula del text d'en Ricard és un dard que travessa el vidre del control i s'encasta en el pit de la Dolors. El públic creu que és un drama criminal d'excel·lent factura — i ho és. Però per a la directora, cada frase és una acusació sense defensa possible.</p>
+    <p>Has convertit la ràdio en una sala d'interrogatori on la culpable no pot parlar per defensar-se sense admetre el seu crim. Al control, la Dolors s'ha quedat blanca. Sap que saps. Sap que en Joan sap. Sap que en Ricard sap. I sap que algunes persones entre els oients d'avui recorden la Neus Roca i fan connexions que no haurien de poder fer.</p>
+    <p>L'endemà la Dolors presenta la dimissió. <em>"Per motius de salut."</em> L'emissora li desitja una bona recuperació. Però tots dos sabeu que ha estat la veu d'una morta qui l'ha fet fora.</p>
+    <p>En Ricard escolta l'emissió des de casa. Quan acaba l'escena 7, apaga la ràdio i mira per la finestra una bona estona, amb el guió original obert sobre les cames.</p>
     <p><em>La Neus Roca tenia vint-i-tres anys. La veritat ha sonat a tot el país disfressada de drama. Potser és el màxim que permet el món.</em></p>`,
     ending: 'neutral',
     endingLabel: '◈ Final de la Ficció ◈',
@@ -859,7 +859,7 @@ function getArtSVG(art) {
       <!-- signe EN DIRECTE -->
       <rect x="270" y="18" width="112" height="28" fill="#8b0010" rx="2"/>
       <rect x="272" y="20" width="108" height="24" fill="#a00012" rx="1"/>
-      <text x="326" y="36" font-family="Montserrat,sans-serif" font-size="10" font-weight="900" fill="white" text-anchor="middle" letter-spacing="2">EN DIRECTE</text>
+      <text x="326" y="36" font-family="system-ui,sans-serif" font-size="10" font-weight="900" fill="white" text-anchor="middle" letter-spacing="2">EN DIRECTE</text>
       <circle cx="276" cy="32" r="4" fill="#ff2030" fill-opacity=".9"/>
       <!-- reflexe llum en directe -->
       <rect x="270" y="18" width="112" height="28" fill="#ff0020" fill-opacity=".06" rx="2"/>
@@ -1064,7 +1064,7 @@ function getArtSVG(art) {
       <!-- llum vermella EN DIRECTE encesa fort -->
       <rect x="270" y="20" width="112" height="28" fill="#c01828" rx="2"/>
       <rect x="272" y="22" width="108" height="24" fill="#e02030" rx="1"/>
-      <text x="326" y="38" font-family="Montserrat,sans-serif" font-size="10" font-weight="900" fill="white" text-anchor="middle" letter-spacing="2">EN DIRECTE</text>
+      <text x="326" y="38" font-family="system-ui,sans-serif" font-size="10" font-weight="900" fill="white" text-anchor="middle" letter-spacing="2">EN DIRECTE</text>
       <circle cx="276" cy="34" r="5" fill="#ff3040"/>
       <!-- halo de la llum EN DIRECTE -->
       <rect x="255" y="10" width="145" height="50" fill="#ff0020" fill-opacity=".05" rx="3"/>

@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Tensió Arterial · Gobo26</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
@@ -15,7 +14,7 @@
   --err:#dc2626; --errl:#fee2e2;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;overflow:hidden;font-family:'Montserrat',sans-serif;background:var(--bg);}
+html,body{height:100%;overflow:hidden;font-family:system-ui, -apple-system, sans-serif;background:var(--bg);}
 body{display:flex;flex-direction:column;align-items:center;}
 
 /* HEADER */
@@ -24,7 +23,7 @@ header{width:100%;background:#1e293b;padding:10px 16px;display:flex;align-items:
 .logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-0.5px;}
 .logo-txt span{color:var(--blue2);}
 .hdr-title{font-size:.9rem;font-weight:700;color:white;}
-#btn-ajuda{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;width:36px;height:36px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;flex-shrink:0;}
+#btn-ajuda{font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;width:36px;height:36px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;flex-shrink:0;}
 
 /* MAIN */
 main{width:100%;max-width:600px;padding:12px 12px 6px;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;overflow-y:auto;}
@@ -40,14 +39,14 @@ main{width:100%;max-width:600px;padding:12px 12px 6px;display:flex;flex-directio
 .camp-form{display:flex;flex-direction:column;gap:6px;}
 .camp-form label{font-size:.72rem;font-weight:700;color:var(--s600);text-transform:uppercase;letter-spacing:1px;}
 .camp-form select,.camp-form input{
-  font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;
+  font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:700;
   padding:12px 14px;border:2px solid var(--s300);border-radius:12px;
   background:var(--bg);color:var(--s800);appearance:none;-webkit-appearance:none;width:100%;
 }
 .camp-form select:focus,.camp-form input:focus{outline:none;border-color:var(--blue);background:#dbeafe;}
 
 /* BTN PRINCIPAL */
-.btn-principal{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:900;width:100%;padding:14px;border:none;border-radius:12px;cursor:pointer;background:var(--blue);color:white;box-shadow:0 4px 12px rgba(37,99,235,.3);min-height:48px;}
+.btn-principal{font-family:system-ui, -apple-system, sans-serif;font-size:1rem;font-weight:900;width:100%;padding:14px;border:none;border-radius:12px;cursor:pointer;background:var(--blue);color:white;box-shadow:0 4px 12px rgba(37,99,235,.3);min-height:48px;}
 .btn-principal:active{transform:scale(.97);}
 
 /* PANTALLA PRINCIPAL */
@@ -55,14 +54,14 @@ main{width:100%;max-width:600px;padding:12px 12px 6px;display:flex;flex-directio
 
 /* PERFIL */
 .perfil-info{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--s600);font-weight:600;}
-.btn-perfil{font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;padding:7px 14px;border:2px solid var(--s300);border-radius:99px;cursor:pointer;background:white;color:var(--s600);}
+.btn-perfil{font-family:system-ui, -apple-system, sans-serif;font-size:.72rem;font-weight:700;padding:7px 14px;border:2px solid var(--s300);border-radius:99px;cursor:pointer;background:white;color:var(--s600);}
 
 /* NOVA MESURA */
 .inputs-mesura{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
 .input-tensio{display:flex;flex-direction:column;align-items:center;gap:5px;}
 .input-tensio label{font-size:.65rem;font-weight:700;color:var(--s600);text-transform:uppercase;letter-spacing:1px;}
 .input-tensio input{
-  width:100%;font-family:'Montserrat',sans-serif;font-size:1.9rem;font-weight:900;
+  width:100%;font-family:system-ui, -apple-system, sans-serif;font-size:1.9rem;font-weight:900;
   padding:12px 8px;border:2px solid var(--s300);border-radius:12px;
   text-align:center;background:var(--bg);color:var(--s800);appearance:none;-webkit-appearance:none;
 }
@@ -72,7 +71,7 @@ main{width:100%;max-width:600px;padding:12px 12px 6px;display:flex;flex-directio
 
 /* DISPLAY TÀCTIL */
 .tensio-display{
-  width:100%;font-family:'Montserrat',sans-serif;font-size:1.9rem;font-weight:900;
+  width:100%;font-family:system-ui, -apple-system, sans-serif;font-size:1.9rem;font-weight:900;
   padding:12px 8px;border:2px solid var(--s300);border-radius:12px;
   text-align:center;background:var(--bg);color:var(--s800);
   min-height:62px;display:none;align-items:center;justify-content:center;
@@ -137,7 +136,7 @@ main{width:100%;max-width:600px;padding:12px 12px 6px;display:flex;flex-directio
 .btn-del-hist{background:none;border:none;cursor:pointer;color:var(--s400);font-size:.9rem;padding:4px;border-radius:6px;min-width:28px;min-height:28px;}
 .btn-del-hist:hover{color:var(--err);background:var(--errl);}
 .buit-msg{font-size:.82rem;color:var(--s400);font-style:italic;text-align:center;padding:10px 0;}
-.btn-reset{font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;width:100%;padding:9px;border:2px solid var(--errl);border-radius:12px;cursor:pointer;background:white;color:var(--err);margin-top:6px;min-height:38px;}
+.btn-reset{font-family:system-ui, -apple-system, sans-serif;font-size:.78rem;font-weight:700;width:100%;padding:9px;border:2px solid var(--errl);border-radius:12px;cursor:pointer;background:white;color:var(--err);margin-top:6px;min-height:38px;}
 .btn-reset:hover{background:var(--errl);}
 
 /* MODAL AJUDA */
@@ -147,13 +146,13 @@ main{width:100%;max-width:600px;padding:12px 12px 6px;display:flex;flex-directio
 .modal h2{font-size:1rem;font-weight:900;color:var(--s800);margin-bottom:12px;}
 .modal p{font-size:.82rem;color:var(--s600);margin-bottom:8px;line-height:1.5;}
 .modal strong{color:var(--blue);}
-.btn-tancar{font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;width:100%;padding:12px;border:none;border-radius:12px;background:var(--blue);color:white;cursor:pointer;margin-top:8px;}
+.btn-tancar{font-family:system-ui, -apple-system, sans-serif;font-size:.9rem;font-weight:700;width:100%;padding:12px;border:none;border-radius:12px;background:var(--blue);color:white;cursor:pointer;margin-top:8px;}
 
 /* TECLAT NUMÈRIC */
 .teclat-numeric{display:none;flex-direction:column;background:#dde3ea;border-top:2px solid #c5cdd6;padding:6px 8px 10px;gap:5px;flex-shrink:0;width:100%;max-width:600px;}
 .teclat-numeric.visible{display:flex;}
 .teclat-num-fila{display:flex;gap:6px;justify-content:center;}
-.tecla-num{flex:1;max-width:90px;min-height:54px;background:white;border:none;border-radius:10px;box-shadow:0 3px 0 #b0bac4;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:700;color:var(--s800);display:flex;align-items:center;justify-content:center;user-select:none;-webkit-tap-highlight-color:transparent;}
+.tecla-num{flex:1;max-width:90px;min-height:54px;background:white;border:none;border-radius:10px;box-shadow:0 3px 0 #b0bac4;cursor:pointer;font-family:system-ui, -apple-system, sans-serif;font-size:1.5rem;font-weight:700;color:var(--s800);display:flex;align-items:center;justify-content:center;user-select:none;-webkit-tap-highlight-color:transparent;}
 .tecla-num:active{transform:translateY(3px);box-shadow:0 0 0 #b0bac4;}
 .tecla-num.esborrar{background:#adb5bd;color:white;box-shadow:0 3px 0 #8d9399;font-size:1.3rem;}
 .tecla-num.esborrar:active{box-shadow:0 0 0 #8d9399;}
@@ -172,8 +171,8 @@ footer a{color:var(--s400);text-decoration:none;}
     <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
         <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
             <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
-            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
-            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>

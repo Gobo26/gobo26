@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dites Inacabades · Gobo26</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Lora:ital,wght@0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f1f5f9;--paper:#fffcf5;--paper2:#fff8e8;
@@ -19,7 +18,7 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
 body{
-  font-family:'Montserrat',sans-serif;
+  font-family:system-ui, -apple-system, sans-serif;
   background:var(--bg);
   background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(180,140,80,.07) 28px);
   display:flex;flex-direction:column;align-items:center;
@@ -37,7 +36,7 @@ header{
 .logo-txt span{color:var(--blue2);}
 .hdr-title{font-family:'Lora',serif;font-size:1rem;font-weight:600;color:#f5e6c8;letter-spacing:.5px;}
 #btn-ajuda{
-  font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;
+  font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;
   width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);
   background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;
   flex-shrink:0;
@@ -66,7 +65,7 @@ main{
 .inici-sub{font-family:'Lora',serif;font-size:.88rem;font-style:italic;color:var(--ink3);text-align:center;margin-bottom:20px;}
 .niv-llista{display:flex;flex-direction:column;gap:10px;}
 .btn-niv{
-  font-family:'Montserrat',sans-serif;background:var(--paper2);
+  font-family:system-ui, -apple-system, sans-serif;background:var(--paper2);
   border:1.5px solid var(--s300);border-radius:4px;padding:14px 18px;
   width:100%;text-align:left;cursor:pointer;
   display:flex;justify-content:space-between;align-items:center;
@@ -151,7 +150,7 @@ main{
 }
 .fb-desc{font-size:.8rem;color:var(--ink2);text-align:center;line-height:1.5;margin-bottom:12px;}
 #btn-seg{
-  font-family:'Montserrat',sans-serif;width:100%;padding:13px;
+  font-family:system-ui, -apple-system, sans-serif;width:100%;padding:13px;
   background:var(--s800);color:#f5e6c8;border:none;border-radius:4px;
   font-size:.92rem;font-weight:900;cursor:pointer;
   box-shadow:3px 3px 0 var(--ink);letter-spacing:.5px;
@@ -184,7 +183,7 @@ main{
 }
 .ajuda-niv strong{color:var(--ink);}
 #btn-tancar-ajuda{
-  width:100%;font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;
+  width:100%;font-family:system-ui, -apple-system, sans-serif;font-size:.88rem;font-weight:700;
   padding:12px;background:var(--s800);color:#f5e6c8;border:none;border-radius:4px;
   cursor:pointer;margin-top:8px;box-shadow:2px 2px 0 var(--ink);min-height:44px;
 }
@@ -196,7 +195,7 @@ main{
 @keyframes floatUp{to{transform:translateY(-50px);opacity:0}}
 .confeti{position:fixed;pointer-events:none;z-index:300;animation:confetti-fall 2.2s ease-in forwards;}
 @keyframes confetti-fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
-.bonus-pop{position:fixed;font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;pointer-events:none;z-index:100;animation:slideUp .2s ease,floatUp 1s .2s ease forwards;}
+.bonus-pop{position:fixed;font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;pointer-events:none;z-index:100;animation:slideUp .2s ease,floatUp 1s .2s ease forwards;}
 
 /* FOOTER */
 footer{
@@ -214,8 +213,8 @@ footer{
     <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
         <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
             <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
-            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
-            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
@@ -274,7 +273,7 @@ footer{
     <button id="btn-seg" onclick="novaRonda()">Següent dita ➔</button>
   </div>
   <div style="text-align:center;margin-top:8px;">
-    <button onclick="tornar()" style="font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;color:var(--ink3);background:none;border:none;cursor:pointer;text-decoration:underline;padding:8px;">↩ Menú principal</button>
+    <button onclick="tornar()" style="font-family:system-ui, -apple-system, sans-serif;font-size:.78rem;font-weight:700;color:var(--ink3);background:none;border:none;cursor:pointer;text-decoration:underline;padding:8px;">↩ Menú principal</button>
   </div>
 </div>
 

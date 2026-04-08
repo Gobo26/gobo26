@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>MAONS – Gobo26</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             background: #f1f5f9;
             color: #334155;
             display: flex;
@@ -152,7 +151,7 @@
         #btn-joc {
             background: #2563eb;
             color: white;
-            font-family: 'Montserrat', sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             font-size: 1.1rem;
             font-weight: 800;
             padding: 14px 32px;
@@ -229,8 +228,8 @@
     <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
         <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
             <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
-            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
-            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
@@ -524,7 +523,7 @@ function dibuixaBlocs() {
             }
             // Número si resistència > 1
             if(b.max > 1) {
-                ctx.font = `bold ${Math.floor(12*escala)}px Montserrat`;
+                ctx.font = `bold ${Math.floor(12*escala)}px system-ui`;
                 ctx.fillStyle = "rgba(255,255,255,0.9)";
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
@@ -828,7 +827,7 @@ function loop() {
         dibuixaPilota(pilX, pilY, esFoc);
         // Indicador parpellejant
         if(Math.floor(Date.now()/400)%2===0) {
-            ctx.font = `bold ${Math.floor(14*escala)}px Montserrat`;
+            ctx.font = `bold ${Math.floor(14*escala)}px system-ui`;
             ctx.fillStyle = "#fbbf24";
             ctx.textAlign = "center";
             ctx.fillText("Clica o toca per llançar!", canvas.width/2, canvas.height/2+30*escala);

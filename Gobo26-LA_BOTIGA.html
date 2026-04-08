@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>La Botiga - Gobo26</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; overflow: hidden; }
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             background: #f1f5f9;
             color: #334155;
             display: flex;
@@ -85,7 +84,7 @@
         .inici-record span { display:flex; flex-direction:column; align-items:center; gap:2px; }
         .inici-record strong { font-size:1.3rem; font-weight:900; color:#2563eb; }
         .btn-comecar {
-            font-family:'Montserrat',sans-serif; font-weight:900;
+            font-family:system-ui, -apple-system, sans-serif; font-weight:900;
             font-size:1.1rem; background:#2563eb; color:white;
             border:none; border-radius:14px;
             padding:16px 40px; cursor:pointer;
@@ -156,7 +155,7 @@
         /* GRID MONEDES */
         .zona-caixa { display:grid; grid-template-columns:repeat(6,1fr); gap:5px; flex-shrink:0; }
         .moneda-boto {
-            font-family:'Montserrat',sans-serif;
+            font-family:system-ui, -apple-system, sans-serif;
             border:none; border-radius:8px;
             padding:4px 2px; cursor:pointer;
             min-height:60px; display:flex; flex-direction:column;
@@ -177,7 +176,7 @@
         /* ACCIONS */
         .zona-accions { display:grid; grid-template-columns:1fr 1fr; gap:7px; flex-shrink:0; }
         .boto-accio {
-            font-family:'Montserrat',sans-serif;
+            font-family:system-ui, -apple-system, sans-serif;
             font-weight:800; font-size:0.9rem;
             border:none; border-radius:10px;
             padding:10px; cursor:pointer; min-height:44px;
@@ -202,7 +201,7 @@
 
         /* BOTO SEGUENT */
         .boto-seguent {
-            font-family:'Montserrat',sans-serif;
+            font-family:system-ui, -apple-system, sans-serif;
             font-weight:800; font-size:0.95rem;
             background:#2563eb; color:white;
             border:none; border-radius:10px;
@@ -346,8 +345,8 @@
     <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
         <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
             <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
-            <text x="20" y="23" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="9">GOBO</text>
-            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="Montserrat,sans-serif" font-weight="900" font-size="7">26</text>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
         </svg>
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
@@ -414,42 +413,42 @@
                 <svg viewBox="0 0 40 40"><defs><radialGradient id="g1c" cx="35%" cy="30%"><stop offset="0%" stop-color="#e8a850"/><stop offset="50%" stop-color="#c47820"/><stop offset="100%" stop-color="#8b4c00"/></radialGradient></defs>
                 <circle cx="20" cy="20" r="19" fill="url(#g1c)" stroke="#7a3800" stroke-width="0.8"/>
                 <circle cx="20" cy="20" r="15" fill="none" stroke="rgba(255,200,80,0.35)" stroke-width="0.6"/>
-                <text x="20" y="25" text-anchor="middle" fill="#fff8e0" font-family="Montserrat,sans-serif" font-weight="900" font-size="13">1</text></svg>
+                <text x="20" y="25" text-anchor="middle" fill="#fff8e0" font-family="system-ui,sans-serif" font-weight="900" font-size="13">1</text></svg>
                 <span class="etiq">cèntim</span>
             </button>
             <button class="moneda-boto" id="btn-002" onclick="afegir(0.02)">
                 <svg viewBox="0 0 40 40"><defs><radialGradient id="g2c" cx="35%" cy="30%"><stop offset="0%" stop-color="#e8a850"/><stop offset="50%" stop-color="#c47820"/><stop offset="100%" stop-color="#8b4c00"/></radialGradient></defs>
                 <circle cx="20" cy="20" r="19" fill="url(#g2c)" stroke="#7a3800" stroke-width="0.8"/>
                 <circle cx="20" cy="20" r="15" fill="none" stroke="rgba(255,200,80,0.35)" stroke-width="0.6"/>
-                <text x="20" y="25" text-anchor="middle" fill="#fff8e0" font-family="Montserrat,sans-serif" font-weight="900" font-size="13">2</text></svg>
+                <text x="20" y="25" text-anchor="middle" fill="#fff8e0" font-family="system-ui,sans-serif" font-weight="900" font-size="13">2</text></svg>
                 <span class="etiq">cèntims</span>
             </button>
             <button class="moneda-boto" id="btn-005" onclick="afegir(0.05)">
                 <svg viewBox="0 0 40 40"><defs><radialGradient id="g5c" cx="35%" cy="30%"><stop offset="0%" stop-color="#f0b060"/><stop offset="50%" stop-color="#d4601a"/><stop offset="100%" stop-color="#8b3000"/></radialGradient></defs>
                 <circle cx="20" cy="20" r="19" fill="url(#g5c)" stroke="#7a2800" stroke-width="0.8"/>
                 <circle cx="20" cy="20" r="15" fill="none" stroke="rgba(255,180,80,0.35)" stroke-width="0.6"/>
-                <text x="20" y="25" text-anchor="middle" fill="#fff0d0" font-family="Montserrat,sans-serif" font-weight="900" font-size="13">5</text></svg>
+                <text x="20" y="25" text-anchor="middle" fill="#fff0d0" font-family="system-ui,sans-serif" font-weight="900" font-size="13">5</text></svg>
                 <span class="etiq">cèntims</span>
             </button>
             <button class="moneda-boto" id="btn-010" onclick="afegir(0.10)">
                 <svg viewBox="0 0 40 40"><defs><radialGradient id="g10c" cx="35%" cy="30%"><stop offset="0%" stop-color="#f5c842"/><stop offset="50%" stop-color="#d4940e"/><stop offset="100%" stop-color="#8b5c00"/></radialGradient></defs>
                 <circle cx="20" cy="20" r="19" fill="url(#g10c)" stroke="#7a4800" stroke-width="0.8"/>
                 <circle cx="20" cy="20" r="14.5" fill="none" stroke="rgba(255,220,80,0.4)" stroke-width="0.7"/>
-                <text x="20" y="25" text-anchor="middle" fill="#fff8e0" font-family="Montserrat,sans-serif" font-weight="900" font-size="11">10</text></svg>
+                <text x="20" y="25" text-anchor="middle" fill="#fff8e0" font-family="system-ui,sans-serif" font-weight="900" font-size="11">10</text></svg>
                 <span class="etiq">cèntims</span>
             </button>
             <button class="moneda-boto" id="btn-020" onclick="afegir(0.20)">
                 <svg viewBox="0 0 40 40"><defs><radialGradient id="g20c" cx="35%" cy="30%"><stop offset="0%" stop-color="#f7d060"/><stop offset="50%" stop-color="#d4a010"/><stop offset="100%" stop-color="#8b6000"/></radialGradient></defs>
                 <circle cx="20" cy="20" r="19" fill="url(#g20c)" stroke="#7a5000" stroke-width="0.8"/>
                 <circle cx="20" cy="20" r="13" fill="none" stroke="rgba(255,230,80,0.45)" stroke-width="0.7"/>
-                <text x="20" y="25" text-anchor="middle" fill="#fff8e0" font-family="Montserrat,sans-serif" font-weight="900" font-size="11">20</text></svg>
+                <text x="20" y="25" text-anchor="middle" fill="#fff8e0" font-family="system-ui,sans-serif" font-weight="900" font-size="11">20</text></svg>
                 <span class="etiq">cèntims</span>
             </button>
             <button class="moneda-boto" id="btn-050" onclick="afegir(0.50)">
                 <svg viewBox="0 0 40 40"><defs><radialGradient id="g50c" cx="35%" cy="30%"><stop offset="0%" stop-color="#ffe070"/><stop offset="50%" stop-color="#d4aa00"/><stop offset="100%" stop-color="#907000"/></radialGradient></defs>
                 <circle cx="20" cy="20" r="19" fill="url(#g50c)" stroke="#806000" stroke-width="0.8"/>
                 <circle cx="20" cy="20" r="14" fill="none" stroke="rgba(255,240,100,0.5)" stroke-width="0.7"/>
-                <text x="20" y="25" text-anchor="middle" fill="#3a2800" font-family="Montserrat,sans-serif" font-weight="900" font-size="11">50</text></svg>
+                <text x="20" y="25" text-anchor="middle" fill="#3a2800" font-family="system-ui,sans-serif" font-weight="900" font-size="11">50</text></svg>
                 <span class="etiq">cèntims</span>
             </button>
             <button class="moneda-boto" id="btn-100" onclick="afegir(1)">
@@ -459,7 +458,7 @@
                 </defs>
                 <circle cx="20" cy="20" r="19" fill="url(#g1e_ext)" stroke="#806000" stroke-width="0.8"/>
                 <circle cx="20" cy="20" r="12" fill="url(#g1e_int)" stroke="#707070" stroke-width="0.6"/>
-                <text x="20" y="25" text-anchor="middle" fill="#2a2a2a" font-family="Montserrat,sans-serif" font-weight="900" font-size="13">1€</text></svg>
+                <text x="20" y="25" text-anchor="middle" fill="#2a2a2a" font-family="system-ui,sans-serif" font-weight="900" font-size="13">1€</text></svg>
                 <span class="etiq">moneda</span>
             </button>
             <button class="moneda-boto" id="btn-200" onclick="afegir(2)">
@@ -469,35 +468,35 @@
                 </defs>
                 <circle cx="20" cy="20" r="19" fill="url(#g2e_ext)" stroke="#707070" stroke-width="0.8"/>
                 <circle cx="20" cy="20" r="12" fill="url(#g2e_int)" stroke="#907000" stroke-width="0.6"/>
-                <text x="20" y="25" text-anchor="middle" fill="#1a1a1a" font-family="Montserrat,sans-serif" font-weight="900" font-size="12">2€</text></svg>
+                <text x="20" y="25" text-anchor="middle" fill="#1a1a1a" font-family="system-ui,sans-serif" font-weight="900" font-size="12">2€</text></svg>
                 <span class="etiq">moneda</span>
             </button>
             <button class="moneda-boto bitllet" id="btn-500" onclick="afegir(5)">
                 <svg viewBox="0 0 60 30"><defs><linearGradient id="b5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b8c8d8"/><stop offset="50%" stop-color="#8aacca"/><stop offset="100%" stop-color="#6090b8"/></linearGradient></defs>
                 <rect x="1" y="1" width="58" height="28" rx="3" fill="url(#b5)" stroke="#4a7a9e" stroke-width="0.8"/>
                 <rect x="3" y="3" width="54" height="24" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
-                <text x="30" y="20" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="13" opacity="0.95">5 €</text></svg>
+                <text x="30" y="20" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="13" opacity="0.95">5 €</text></svg>
                 <span class="etiq">bitllet</span>
             </button>
             <button class="moneda-boto bitllet" id="btn-1000" onclick="afegir(10)">
                 <svg viewBox="0 0 60 30"><defs><linearGradient id="b10" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e8b090"/><stop offset="50%" stop-color="#d08060"/><stop offset="100%" stop-color="#b06030"/></linearGradient></defs>
                 <rect x="1" y="1" width="58" height="28" rx="3" fill="url(#b10)" stroke="#904020" stroke-width="0.8"/>
                 <rect x="3" y="3" width="54" height="24" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
-                <text x="30" y="20" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="13" opacity="0.95">10 €</text></svg>
+                <text x="30" y="20" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="13" opacity="0.95">10 €</text></svg>
                 <span class="etiq">bitllet</span>
             </button>
             <button class="moneda-boto bitllet" id="btn-2000" onclick="afegir(20)">
                 <svg viewBox="0 0 60 30"><defs><linearGradient id="b20" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#90b8e0"/><stop offset="50%" stop-color="#5090d0"/><stop offset="100%" stop-color="#2060a8"/></linearGradient></defs>
                 <rect x="1" y="1" width="58" height="28" rx="3" fill="url(#b20)" stroke="#104080" stroke-width="0.8"/>
                 <rect x="3" y="3" width="54" height="24" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
-                <text x="30" y="20" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="13" opacity="0.95">20 €</text></svg>
+                <text x="30" y="20" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="13" opacity="0.95">20 €</text></svg>
                 <span class="etiq">bitllet</span>
             </button>
             <button class="moneda-boto bitllet" id="btn-5000" onclick="afegir(50)">
                 <svg viewBox="0 0 60 30"><defs><linearGradient id="b50" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffd080"/><stop offset="50%" stop-color="#f0a030"/><stop offset="100%" stop-color="#c06800"/></linearGradient></defs>
                 <rect x="1" y="1" width="58" height="28" rx="3" fill="url(#b50)" stroke="#a05000" stroke-width="0.8"/>
                 <rect x="3" y="3" width="54" height="24" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
-                <text x="30" y="20" text-anchor="middle" fill="white" font-family="Montserrat,sans-serif" font-weight="900" font-size="13" opacity="0.95">50 €</text></svg>
+                <text x="30" y="20" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="13" opacity="0.95">50 €</text></svg>
                 <span class="etiq">bitllet</span>
             </button>
         </div>
