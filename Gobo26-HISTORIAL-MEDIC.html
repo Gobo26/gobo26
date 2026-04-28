@@ -614,9 +614,9 @@
       <div class="card allergy-card" id="card-allergies">
         <div class="card-header" onclick="toggleCard('allergies')">
           <div class="card-header-title">⚠️ Al·lèrgies <span class="card-count red" id="cnt-allergies">0</span></div>
-          <span class="card-toggle" id="tog-allergies">▲</span>
+          <span class="card-toggle" id="tog-allergies">▼</span>
         </div>
-        <div class="card-body" id="body-allergies">
+        <div class="card-body hidden" id="body-allergies">
           <p style="font-size:0.78rem;color:var(--red);margin-bottom:0.8rem;">Important: es destaquen en tots els informes</p>
           <div id="list-allergies"><p class="empty-msg">Encara sense registres.</p></div>
           <button class="btn btn-danger btn-sm mt2" onclick="openAddModal('allergy')">+ Agrega</button>
@@ -627,9 +627,9 @@
       <div class="card">
         <div class="card-header" onclick="toggleCard('conditions')">
           <div class="card-header-title">❤️ Condicions cròniques actuals <span class="card-count" id="cnt-conditions">0</span></div>
-          <span class="card-toggle" id="tog-conditions">▲</span>
+          <span class="card-toggle" id="tog-conditions">▼</span>
         </div>
-        <div class="card-body" id="body-conditions">
+        <div class="card-body hidden" id="body-conditions">
           <div id="list-conditions"><p class="empty-msg">Encara sense registres.</p></div>
           <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('condition')">+ Agrega</button>
         </div>
@@ -639,9 +639,9 @@
       <div class="card">
         <div class="card-header" onclick="toggleCard('meds')">
           <div class="card-header-title">💊 Medicaments actuals <span class="card-count" id="cnt-meds">0</span></div>
-          <span class="card-toggle" id="tog-meds">▲</span>
+          <span class="card-toggle" id="tog-meds">▼</span>
         </div>
-        <div class="card-body" id="body-meds">
+        <div class="card-body hidden" id="body-meds">
           <div id="list-meds"><p class="empty-msg">Encara sense registres.</p></div>
           <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('med')">+ Agrega</button>
         </div>
@@ -833,8 +833,16 @@
       </div>
     </div>
 
-    <div class="flex-end" style="margin-top:1.2rem;">
-      <button class="btn btn-primary" onclick="closeModal('modal-info')">Entès</button>
+    <div class="info-section">
+      <h3>💾 Vols tenir-la al teu ordinador?</h3>
+      <p>Pots descarregar una còpia completa d'aquesta aplicació i usar-la directament des del teu ordinador, sense internet. Cada persona que la descarrega té les seves pròpies dades, completament independents de les dels altres.</p>
+      <button class="btn btn-primary" onclick="downloadApp()" style="margin-top:0.7rem;display:flex;align-items:center;gap:0.5rem;width:100%;justify-content:center;">
+        ⬇ Descarregar còpia de l'aplicació
+      </button>
+    </div>
+
+    <div class="flex-end" style="margin-top:0.8rem;">
+      <button class="btn btn-secondary" onclick="closeModal('modal-info')">Tancar</button>
     </div>
   </div>
 </div>
@@ -1000,40 +1008,39 @@ let selectedDate = new Date().toISOString().split('T')[0];
 const TODAY = new Date().toISOString().split('T')[0];
 
 // ===================== DADES =====================
-// Emmagatzematge únic: _db és la font de veritat en memòria
-// localStorage es usa com a persistència secundària
-let _db = null;
+const STORAGE_KEY = 'historial_medic_v4';
 
-function initDB() {
+function loadDB() {
   try {
-    const raw = localStorage.getItem('historial_medic_v3');
-    _db = raw ? JSON.parse(raw) : {persons:[]};
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  } catch(e) {}
+  return {persons:[]};
+}
+
+function saveDB(db) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
   } catch(e) {
-    _db = {persons:[]};
+    console.warn('No es pot guardar al localStorage:', e);
   }
 }
 
 function getDB() {
-  if(!_db) initDB();
-  return _db;
-}
-
-function saveDB() {
-  try {
-    localStorage.setItem('historial_medic_v3', JSON.stringify(_db));
-  } catch(e) {
-    console.warn('localStorage no disponible');
-  }
+  return loadDB();
 }
 
 function getPerson() {
-  return getDB().persons.find(p => p.id === currentPersonId) || null;
+  const db = loadDB();
+  return db.persons.find(p => p.id === currentPersonId) || null;
 }
 
 function updatePerson(fn) {
-  const db = getDB();
-  const p = db.persons.find(p => p.id === currentPersonId);
-  if(p) { fn(p); saveDB(); }
+  const db = loadDB();
+  const idx = db.persons.findIndex(p => p.id === currentPersonId);
+  if(idx < 0) { console.error('Persona no trobada:', currentPersonId); return; }
+  fn(db.persons[idx]);
+  saveDB(db);
 }
 
 // ===================== SPLASH =====================
@@ -1096,21 +1103,21 @@ function createPerson() {
   const name = document.getElementById('np-name').value.trim();
   if(!name) { alert('El nom és obligatori.'); return; }
   const isEdit = document.getElementById('np-save-btn').dataset.mode === 'edit';
-  const db = getDB();
+  const db = loadDB();
 
   if(isEdit) {
-    const p = db.persons.find(x => x.id === currentPersonId);
-    if(p) {
-      p.name = name;
-      p.age = document.getElementById('np-age').value;
-      p.relation = document.getElementById('np-relation').value;
-      p.blood = document.getElementById('np-blood').value.trim();
-      p.weight = document.getElementById('np-weight').value;
-      p.height = document.getElementById('np-height').value;
-      p.emergency = document.getElementById('np-emergency').value.trim();
-      saveDB();
-      document.getElementById('topbar-av').textContent = initials(p.name);
-      document.getElementById('topbar-name').textContent = p.name;
+    const idx = db.persons.findIndex(x => x.id === currentPersonId);
+    if(idx >= 0) {
+      db.persons[idx].name = name;
+      db.persons[idx].age = document.getElementById('np-age').value;
+      db.persons[idx].relation = document.getElementById('np-relation').value;
+      db.persons[idx].blood = document.getElementById('np-blood').value.trim();
+      db.persons[idx].weight = document.getElementById('np-weight').value;
+      db.persons[idx].height = document.getElementById('np-height').value;
+      db.persons[idx].emergency = document.getElementById('np-emergency').value.trim();
+      saveDB(db);
+      document.getElementById('topbar-av').textContent = initials(name);
+      document.getElementById('topbar-name').textContent = name;
       closeModal('modal-new-person');
       renderDashboard();
       renderSplash();
@@ -1132,7 +1139,7 @@ function createPerson() {
     logs: []
   };
   db.persons.push(p);
-  saveDB();
+  saveDB(db);
   closeModal('modal-new-person');
   loadPerson(p.id);
 }
@@ -1838,8 +1845,7 @@ function importData(input) {
       const db = JSON.parse(e.target.result);
       if(!db.persons) throw new Error('Format incorrecte');
       if(!confirm('Importar dades? Això sobreescriurà tot el contingut actual.')) return;
-      _db = db;
-      saveDB();
+      saveDB(db);
       input.value = '';
       goSplash();
       alert('Dades importades correctament!');
@@ -1848,6 +1854,21 @@ function importData(input) {
     }
   };
   reader.readAsText(file);
+}
+
+// ===================== DESCÀRREGA DE L'APP =====================
+function downloadApp() {
+  // Obtenim el codi font complet de la pàgina actual
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Gobo26-HISTORIAL-MEDIC.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 // ===================== MODAL UTILS =====================
@@ -1860,7 +1881,6 @@ document.querySelectorAll('.modal-bg').forEach(bg => {
 });
 
 // ===================== INIT =====================
-initDB();
 renderSplash();
 document.getElementById('pdf-to') && (document.getElementById('pdf-to').value=TODAY);
 </script>
