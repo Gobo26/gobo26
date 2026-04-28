@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salut Familiar</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #5a7d6a;
+    --green-light: #e8f0ec;
+    --green-mid: #8aab96;
+    --green-dark: #3d5949;
+    --cream: #f7f4ef;
+    --cream-dark: #ede9e2;
+    --text: #2a2a2a;
+    --text-muted: #7a7a7a;
+    --text-light: #a8a8a8;
+    --white: #ffffff;
+    --border: #ddd8d0;
+    --red: #c0392b;
+    --red-light: #fdf2f1;
+    --amber: #c07a1a;
+    --amber-light: #fef9f0;
+    --blue: #2c5f8a;
+    --blue-light: #eef4fa;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ========= SPLASH / SELECTOR DE PERSONA ========= */
+  #splash {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--cream);
+  }
+  .splash-title {
+    font-family: 'Lora', serif;
+    font-size: 2.4rem;
+    color: var(--green-dark);
+    margin-bottom: 0.4rem;
+    text-align: center;
+  }
+  .splash-sub {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+  .person-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    max-width: 680px;
+    margin-bottom: 1.5rem;
+  }
+  .person-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-width: 180px;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    box-shadow: var(--shadow);
+  }
+  .person-card:hover {
+    border-color: var(--green);
+    box-shadow: 0 4px 18px rgba(90,125,106,0.15);
+    transform: translateY(-2px);
+  }
+  .avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--green-light);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--green-dark);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .person-info .pname { font-weight: 500; font-size: 1rem; color: var(--text); }
+  .person-info .prel { font-size: 0.78rem; color: var(--text-muted); }
+  .btn-new-person {
+    background: transparent;
+    border: 1.5px dashed var(--green-mid);
+    border-radius: var(--radius);
+    padding: 0.85rem 1.8rem;
+    color: var(--green);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: all 0.2s;
+  }
+  .btn-new-person:hover { background: var(--green-light); border-style: solid; }
+
+  /* ========= MODAL ========= */
+  .modal-bg {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+    align-items: center; justify-content: center;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 2rem;
+    width: 90%; max-width: 480px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+  }
+  .modal h2 { font-family: 'Lora', serif; font-size: 1.4rem; margin-bottom: 1.2rem; color: var(--green-dark); }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-muted);
+  }
+
+  /* ========= LAYOUT APP ========= */
+  #app { display: none; min-height: 100vh; flex-direction: column; }
+  #app.open { display: flex; }
+
+  .topbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 0.8rem; }
+  .topbar-logo { font-family: 'Lora', serif; font-size: 1.15rem; color: var(--green-dark); font-weight: 600; }
+  .topbar-person {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--green-light);
+    border-radius: 30px;
+    padding: 0.3rem 0.9rem 0.3rem 0.4rem;
+    font-size: 0.85rem; font-weight: 500; color: var(--green-dark);
+    cursor: pointer;
+    border: none;
+  }
+  .topbar-person .av-sm {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--green-mid); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 600;
+  }
+  .topbar-nav { display: flex; gap: 0.3rem; }
+  .nav-btn {
+    background: none; border: none;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; cursor: pointer; color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .nav-btn:hover { background: var(--cream); color: var(--text); }
+  .nav-btn.active { background: var(--green-light); color: var(--green-dark); font-weight: 500; }
+
+  .main { flex: 1; max-width: 800px; width: 100%; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* ========= SECCIONS ========= */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: 1.6rem; color: var(--green-dark);
+    margin-bottom: 0.3rem;
+  }
+  .section-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.8rem; }
+
+  /* ========= CARDS ========= */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+  .card-header {
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; user-select: none;
+  }
+  .card-header-title { font-weight: 500; font-size: 1rem; color: var(--text); display: flex; align-items: center; gap: 0.6rem; }
+  .card-count {
+    background: var(--green-light);
+    color: var(--green-dark);
+    font-size: 0.78rem; font-weight: 500;
+    border-radius: 20px; padding: 2px 9px;
+  }
+  .card-count.red { background: var(--red-light); color: var(--red); }
+  .card-toggle { font-size: 0.8rem; color: var(--text-light); transition: transform 0.2s; }
+  .card-body { margin-top: 1rem; border-top: 1px solid var(--cream-dark); padding-top: 1rem; }
+  .card-body.hidden { display: none; }
+
+  .allergy-card {
+    border-color: #e0b4b0;
+    background: var(--red-light);
+  }
+  .allergy-card .card-header-title { color: var(--red); }
+
+  /* ========= FORM ELEMENTS ========= */
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 0.85rem; }
+  .form-row.single { grid-template-columns: 1fr; }
+  .form-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+  label { font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px; font-weight: 500; letter-spacing: 0.01em; }
+  input[type=text], input[type=date], input[type=number], input[type=email], input[type=tel], select, textarea {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--cream);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--green-mid); background: var(--white); }
+  textarea { resize: vertical; min-height: 80px; }
+
+  /* ========= BUTTONS ========= */
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    padding: 0.55rem 1.2rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+  .btn-primary { background: var(--green); color: var(--white); }
+  .btn-primary:hover { background: var(--green-dark); }
+  .btn-secondary { background: var(--cream); border: 1px solid var(--border); color: var(--text); }
+  .btn-secondary:hover { background: var(--cream-dark); }
+  .btn-danger { background: transparent; border: 1px solid #e0b4b0; color: var(--red); }
+  .btn-danger:hover { background: var(--red-light); }
+  .btn-pdf {
+    background: var(--green); color: var(--white);
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+  }
+  .btn-pdf:hover { background: var(--green-dark); }
+  .btn-sm { padding: 0.3rem 0.75rem; font-size: 0.78rem; }
+
+  /* ========= LIST ITEMS ========= */
+  .list-item {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--cream-dark);
+    gap: 1rem;
+  }
+  .list-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .list-item:first-child { padding-top: 0; }
+  .item-main { flex: 1; }
+  .item-title { font-weight: 500; font-size: 0.95rem; color: var(--text); }
+  .item-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+  .item-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+  .empty-msg { font-size: 0.85rem; color: var(--text-light); font-style: italic; padding: 0.5rem 0; }
+
+  /* ========= INICI ========= */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .dash-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .dash-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+  .dash-card.allergy { border-color: #e0b4b0; background: var(--red-light); }
+  .dash-num { font-family: 'Lora', serif; font-size: 2rem; font-weight: 600; color: var(--green-dark); }
+  .dash-card.allergy .dash-num { color: var(--red); }
+  .dash-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+  .dash-action {
+    background: var(--green);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.4rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.8rem;
+    transition: background 0.2s;
+    border: none; width: 100%;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .dash-action:hover { background: var(--green-dark); }
+  .dash-action-icon { font-size: 1.3rem; }
+  .dash-action-text .t1 { font-weight: 500; font-size: 1rem; color: var(--white); }
+  .dash-action-text .t2 { font-size: 0.8rem; color: rgba(255,255,255,0.75); }
+  .dash-shortcuts { display: flex; flex-direction: column; gap: 0.6rem; }
+  .shortcut {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1.2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+    cursor: pointer; transition: all 0.2s;
+    text-decoration: none; color: var(--text);
+    box-shadow: var(--shadow);
+  }
+  .shortcut:hover { border-color: var(--green-mid); background: var(--green-light); }
+  .shortcut-icon { font-size: 1.1rem; width: 28px; text-align: center; }
+  .shortcut-text .st1 { font-weight: 500; font-size: 0.95rem; }
+  .shortcut-text .st2 { font-size: 0.78rem; color: var(--text-muted); }
+
+  /* ========= BITÀCORA ========= */
+  .calendar-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .cal-month { font-family: 'Lora', serif; font-size: 1.1rem; color: var(--green-dark); }
+  .cal-btn { background: none; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.3rem 0.7rem; cursor: pointer; color: var(--text-muted); }
+  .calendar-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; text-align: center; }
+  .cal-day-header { font-size: 0.7rem; color: var(--text-light); padding: 4px 0; font-weight: 500; }
+  .cal-day {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    font-size: 0.82rem; border-radius: 50%; cursor: pointer; transition: all 0.15s;
+    color: var(--text-muted);
+  }
+  .cal-day:hover { background: var(--green-light); color: var(--green-dark); }
+  .cal-day.today { background: var(--green); color: var(--white); font-weight: 600; }
+  .cal-day.has-entry { border: 2px solid var(--green-mid); color: var(--green-dark); font-weight: 500; }
+  .cal-day.selected { background: var(--green-dark); color: var(--white); }
+  .cal-day.other-month { color: var(--cream-dark); cursor: default; }
+  .cal-day.other-month:hover { background: none; }
+
+  .entry-day-label { font-size: 0.9rem; color: var(--text-muted); margin: 1.2rem 0 0.8rem; font-style: italic; }
+
+  .log-entry-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+    box-shadow: var(--shadow);
+  }
+  .log-time { font-size: 0.75rem; color: var(--text-light); margin-bottom: 0.5rem; }
+  .log-field { margin-bottom: 0.5rem; }
+  .log-field-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; letter-spacing: 0.03em; text-transform: uppercase; }
+  .log-field-val { font-size: 0.9rem; color: var(--text); margin-top: 1px; line-height: 1.5; }
+  .mood-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.3rem; }
+  .mood-chip {
+    font-size: 0.78rem; padding: 3px 10px;
+    border-radius: 20px; background: var(--green-light);
+    color: var(--green-dark);
+  }
+  .energy-bar {
+    height: 6px; background: var(--cream-dark); border-radius: 3px; margin-top: 4px; overflow: hidden;
+  }
+  .energy-fill { height: 100%; background: var(--green-mid); border-radius: 3px; }
+  .intensity-fill { height: 100%; background: var(--amber); border-radius: 3px; }
+
+  /* Formulari bitàcora */
+  .moods-selector { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .mood-opt {
+    padding: 0.4rem 1rem; border-radius: 20px;
+    border: 1px solid var(--border); background: var(--cream);
+    font-size: 0.85rem; cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; gap: 0.3rem;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .mood-opt.sel { background: var(--green-light); border-color: var(--green-mid); color: var(--green-dark); font-weight: 500; }
+  .range-row { display: flex; align-items: center; gap: 0.8rem; }
+  .range-row input[type=range] { flex: 1; }
+  .range-val { font-weight: 500; color: var(--green-dark); min-width: 35px; text-align: right; font-size: 0.9rem; }
+
+  /* ========= PDF ========= */
+  .pdf-options { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .pdf-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    flex: 1; min-width: 220px;
+    box-shadow: var(--shadow);
+  }
+  .pdf-card h3 { font-family: 'Lora', serif; font-size: 1.1rem; color: var(--green-dark); margin-bottom: 0.4rem; }
+  .pdf-card p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5; }
+  .pdf-note { font-size: 0.78rem; color: var(--text-light); background: var(--cream); border-radius: var(--radius-sm); padding: 0.8rem; line-height: 1.5; }
+
+  /* ========= PERFIL ========= */
+  .profile-banner {
+    background: var(--green);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    display: flex; align-items: center; gap: 1.2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .profile-avatar {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lora', serif; font-size: 1.5rem; color: var(--white); font-weight: 600;
+    flex-shrink: 0;
+  }
+  .profile-name { font-family: 'Lora', serif; font-size: 1.3rem; color: var(--white); }
+  .profile-rel { font-size: 0.82rem; color: rgba(255,255,255,0.75); margin-top: 2px; }
+
+  /* ========= UTILS ========= */
+  .mt1 { margin-top: 0.5rem; }
+  .mt2 { margin-top: 1rem; }
+  .flex-end { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.8rem; }
+  .badge-status {
+    display: inline-block; font-size: 0.72rem; padding: 2px 8px; border-radius: 20px; font-weight: 500;
+  }
+  .badge-status.ongoing { background: var(--amber-light); color: var(--amber); }
+  .badge-status.resolved { background: var(--green-light); color: var(--green-dark); }
+  .badge-status.monitoring { background: var(--blue-light); color: var(--blue); }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .form-row.triple { grid-template-columns: 1fr 1fr; }
+    .dashboard-grid { grid-template-columns: 1fr 1fr; }
+    .topbar-nav { display: none; }
+    .main { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SPLASH / SELECTOR PERSONA -->
+<div id="splash">
+  <div style="font-size:2rem; margin-bottom:0.5rem;">🌿</div>
+  <h1 class="splash-title">Salut Familiar</h1>
+  <p class="splash-sub">El teu historial mèdic, sempre a mà.</p>
+  <div class="person-grid" id="person-grid"></div>
+  <button class="btn-new-person" onclick="openNewPerson()">
+    <span style="font-size:1.1rem;">＋</span> Nova persona
+  </button>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">🌿 Salut Familiar</span>
+      <button class="topbar-person" id="topbar-person-btn" onclick="goSplash()">
+        <div class="av-sm" id="topbar-av"></div>
+        <span id="topbar-name"></span>
+      </button>
+    </div>
+    <nav class="topbar-nav">
+      <button class="nav-btn active" onclick="showSection('inici')">Inici</button>
+      <button class="nav-btn" onclick="showSection('fitxa')">Fitxa mèdica</button>
+      <button class="nav-btn" onclick="showSection('bitacora')">Bitàcora</button>
+      <button class="nav-btn" onclick="showSection('pdf')">PDF</button>
+    </nav>
+  </div>
+
+  <div class="main">
+    <!-- INICI -->
+    <div class="section active" id="sec-inici">
+      <h1 class="section-title" id="dash-greeting">Hola!</h1>
+      <p class="section-sub" id="dash-date"></p>
+      <button class="dash-action" onclick="openNewLog()">
+        <span class="dash-action-icon">✏️</span>
+        <div class="dash-action-text">
+          <div class="t1">Afegir entrada d'avui</div>
+          <div class="t2">Com et sents avui?</div>
+        </div>
+      </button>
+      <div class="dashboard-grid">
+        <div class="dash-card" onclick="showSection('fitxa')">
+          <div class="dash-num" id="dash-cond">0</div>
+          <div class="dash-label">Condicions</div>
+        </div>
+        <div class="dash-card" onclick="showSection('fitxa')">
+          <div class="dash-num" id="dash-meds">0</div>
+          <div class="dash-label">Medicaments</div>
+        </div>
+        <div class="dash-card" onclick="showSection('bitacora')">
+          <div class="dash-num" id="dash-entries">0</div>
+          <div class="dash-label">Entrades</div>
+        </div>
+        <div class="dash-card allergy" onclick="showSection('fitxa')">
+          <div class="dash-num" id="dash-allergy">0</div>
+          <div class="dash-label">Al·lèrgies</div>
+        </div>
+      </div>
+      <div class="dash-shortcuts">
+        <div class="shortcut" onclick="showSection('fitxa')">
+          <span class="shortcut-icon">📋</span>
+          <div class="shortcut-text">
+            <div class="st1">La meva fitxa mèdica</div>
+            <div class="st2">Condicions, medicaments i més</div>
+          </div>
+        </div>
+        <div class="shortcut" onclick="showSection('bitacora')">
+          <span class="shortcut-icon">📅</span>
+          <div class="shortcut-text">
+            <div class="st1">Bitàcora diària</div>
+            <div class="st2">Calendari i entrades</div>
+          </div>
+        </div>
+        <div class="shortcut" onclick="showSection('pdf')">
+          <span class="shortcut-icon">📄</span>
+          <div class="shortcut-text">
+            <div class="st1">Informes</div>
+            <div class="st2">Genera PDF per al teu metge</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FITXA MÈDICA -->
+    <div class="section" id="sec-fitxa">
+      <h1 class="section-title">La meva fitxa mèdica</h1>
+      <p class="section-sub">El teu historial, sempre llest per a la propera consulta.</p>
+
+      <!-- AL·LÈRGIES -->
+      <div class="card allergy-card" id="card-allergies">
+        <div class="card-header" onclick="toggleCard('allergies')">
+          <div class="card-header-title">⚠️ Al·lèrgies <span class="card-count red" id="cnt-allergies">0</span></div>
+          <span class="card-toggle" id="tog-allergies">▲</span>
+        </div>
+        <div class="card-body" id="body-allergies">
+          <p style="font-size:0.78rem;color:var(--red);margin-bottom:0.8rem;">Important: es destaquen en tots els informes</p>
+          <div id="list-allergies"><p class="empty-msg">Encara sense registres.</p></div>
+          <button class="btn btn-danger btn-sm mt2" onclick="openAddModal('allergy')">+ Agrega</button>
+        </div>
+      </div>
+
+      <!-- CONDICIONS CRÒNIQUES -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard('conditions')">
+          <div class="card-header-title">❤️ Condicions cròniques actuals <span class="card-count" id="cnt-conditions">0</span></div>
+          <span class="card-toggle" id="tog-conditions">▲</span>
+        </div>
+        <div class="card-body" id="body-conditions">
+          <div id="list-conditions"><p class="empty-msg">Encara sense registres.</p></div>
+          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('condition')">+ Agrega</button>
+        </div>
+      </div>
+
+      <!-- MEDICAMENTS ACTUALS -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard('meds')">
+          <div class="card-header-title">💊 Medicaments actuals <span class="card-count" id="cnt-meds">0</span></div>
+          <span class="card-toggle" id="tog-meds">▲</span>
+        </div>
+        <div class="card-body" id="body-meds">
+          <div id="list-meds"><p class="empty-msg">Encara sense registres.</p></div>
+          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('med')">+ Agrega</button>
+        </div>
+      </div>
+
+      <!-- HISTORIAL MEDICAMENTS -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard('medshistory')">
+          <div class="card-header-title">📦 Història dels medicaments <span class="card-count" id="cnt-medshistory">0</span></div>
+          <span class="card-toggle" id="tog-medshistory">▼</span>
+        </div>
+        <div class="card-body hidden" id="body-medshistory">
+          <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.8rem;">Medicaments que ja no prens</p>
+          <div id="list-medshistory"><p class="empty-msg">Encara sense registres.</p></div>
+          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('medhist')">+ Agrega</button>
+        </div>
+      </div>
+
+      <!-- CIRURGIES -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard('surgeries')">
+          <div class="card-header-title">🏥 Cirurgies i procediments <span class="card-count" id="cnt-surgeries">0</span></div>
+          <span class="card-toggle" id="tog-surgeries">▼</span>
+        </div>
+        <div class="card-body hidden" id="body-surgeries">
+          <div id="list-surgeries"><p class="empty-msg">Encara sense registres.</p></div>
+          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('surgery')">+ Agrega</button>
+        </div>
+      </div>
+
+      <!-- HOSPITALITZACIONS -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard('hospitals')">
+          <div class="card-header-title">🛏️ Hospitalitzacions <span class="card-count" id="cnt-hospitals">0</span></div>
+          <span class="card-toggle" id="tog-hospitals">▼</span>
+        </div>
+        <div class="card-body hidden" id="body-hospitals">
+          <div id="list-hospitals"><p class="empty-msg">Encara sense registres.</p></div>
+          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('hospital')">+ Agrega</button>
+        </div>
+      </div>
+
+      <!-- EXÀMENS -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard('exams')">
+          <div class="card-header-title">🔬 Exàmens rellevants <span class="card-count" id="cnt-exams">0</span></div>
+          <span class="card-toggle" id="tog-exams">▼</span>
+        </div>
+        <div class="card-body hidden" id="body-exams">
+          <div id="list-exams"><p class="empty-msg">Encara sense registres.</p></div>
+          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('exam')">+ Agrega</button>
+        </div>
+      </div>
+
+      <!-- ANTECEDENTS FAMILIARS -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard('family')">
+          <div class="card-header-title">👨‍👩‍👦 Antecedents familiars <span class="card-count" id="cnt-family">0</span></div>
+          <span class="card-toggle" id="tog-family">▼</span>
+        </div>
+        <div class="card-body hidden" id="body-family">
+          <div id="list-family"><p class="empty-msg">Encara sense registres.</p></div>
+          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('family')">+ Agrega</button>
+        </div>
+      </div>
+
+      <!-- VACUNES -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard('vaccines')">
+          <div class="card-header-title">💉 Vacunes <span class="card-count" id="cnt-vaccines">0</span></div>
+          <span class="card-toggle" id="tog-vaccines">▼</span>
+        </div>
+        <div class="card-body hidden" id="body-vaccines">
+          <div id="list-vaccines"><p class="empty-msg">Encara sense registres.</p></div>
+          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('vaccine')">+ Agrega</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BITÀCORA -->
+    <div class="section" id="sec-bitacora">
+      <h1 class="section-title">Bitàcora diària</h1>
+      <p class="section-sub">Registra com et sents cada dia.</p>
+      <div class="card">
+        <div class="calendar-nav">
+          <button class="cal-btn" onclick="changeMonth(-1)">‹</button>
+          <div class="cal-month" id="cal-month-label"></div>
+          <button class="cal-btn" onclick="changeMonth(1)">›</button>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+      <div class="entry-day-label" id="entry-day-label"></div>
+      <div id="log-entries-container"></div>
+    </div>
+
+    <!-- PDF -->
+    <div class="section" id="sec-pdf">
+      <h1 class="section-title">Informes</h1>
+      <p class="section-sub">Genera un PDF per dur a la teva propera consulta.</p>
+      <div class="pdf-options">
+        <div class="pdf-card">
+          <h3>📋 Fitxa completa per al metge</h3>
+          <p>Inclou al·lèrgies destacades, condicions cròniques, medicaments actuals, cirurgies i antecedents.</p>
+          <button class="btn btn-pdf" onclick="generateMedicalPDF()">⬇ Descarregar PDF</button>
+        </div>
+        <div class="pdf-card">
+          <h3>📅 Informe de bitàcora</h3>
+          <p>Resum de la teva bitàcora amb símptomes, ànim, energia i preguntes per al metge.</p>
+          <div class="form-row mt1" style="margin-bottom:0.8rem;">
+            <div>
+              <label>Des de</label>
+              <input type="date" id="pdf-from" />
+            </div>
+            <div>
+              <label>Fins a</label>
+              <input type="date" id="pdf-to" />
+            </div>
+          </div>
+          <button class="btn btn-pdf" onclick="generateLogPDF()">⬇ Descarregar PDF</button>
+        </div>
+      </div>
+      <div class="pdf-note">
+        🔒 El PDF es descarrega directament a l'arxiu. Cada informe inclou al final un avís que indica que és material de suport i no reemplaça l'avaluació professional.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Nova persona -->
+<div class="modal-bg" id="modal-new-person">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-new-person')">✕</button>
+    <h2>Nova persona</h2>
+    <div class="form-row">
+      <div>
+        <label>Nom *</label>
+        <input type="text" id="np-name" placeholder="Ex. Joan" />
+      </div>
+      <div>
+        <label>Edat</label>
+        <input type="number" id="np-age" placeholder="Ex. 62" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label>Relació</label>
+        <select id="np-relation">
+          <option value="Jo mateix">Jo mateix</option>
+          <option value="Parella">Parella</option>
+          <option value="Fill/a">Fill/a</option>
+          <option value="Mare">Mare</option>
+          <option value="Pare">Pare</option>
+          <option value="Germà/na">Germà/na</option>
+          <option value="Avi/Àvia">Avi/Àvia</option>
+          <option value="Altre">Altre</option>
+        </select>
+      </div>
+      <div>
+        <label>Grup sanguini</label>
+        <input type="text" id="np-blood" placeholder="Ex. A+, O-" />
+      </div>
+    </div>
+    <div class="form-row triple">
+      <div>
+        <label>Pes (kg)</label>
+        <input type="number" id="np-weight" placeholder="70" />
+      </div>
+      <div>
+        <label>Alçada (cm)</label>
+        <input type="number" id="np-height" placeholder="175" />
+      </div>
+      <div>
+        <label>Contacte emergència</label>
+        <input type="text" id="np-emergency" placeholder="Nom i tel." />
+      </div>
+    </div>
+    <div class="flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('modal-new-person')">Cancel·lar</button>
+      <button class="btn btn-primary" onclick="createPerson()">Crear perfil</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Nova entrada bitàcora -->
+<div class="modal-bg" id="modal-new-log">
+  <div class="modal" style="max-width:540px;">
+    <button class="modal-close" onclick="closeModal('modal-new-log')">✕</button>
+    <h2>Nova entrada</h2>
+    <div class="form-row">
+      <div>
+        <label>Data i hora</label>
+        <input type="date" id="log-date" />
+      </div>
+    </div>
+    <div class="form-row single" style="margin-bottom:0.5rem;">
+      <div>
+        <label>Símptomes físics</label>
+        <textarea id="log-symptoms" placeholder="Ex. Dolor de cap, nàusees, cansament..."></textarea>
+      </div>
+    </div>
+    <div style="margin-bottom:0.85rem;">
+      <label style="margin-bottom:0.5rem;">Intensitat dels símptomes</label>
+      <div class="range-row">
+        <span style="font-size:0.75rem;color:var(--text-light);">1 suau</span>
+        <input type="range" id="log-intensity" min="1" max="10" value="5" oninput="document.getElementById('log-intensity-val').textContent=this.value+'/10'" />
+        <span style="font-size:0.75rem;color:var(--text-light);">10 intens</span>
+        <span class="range-val" id="log-intensity-val">5/10</span>
+      </div>
+    </div>
+    <div style="margin-bottom:0.85rem;">
+      <label style="margin-bottom:0.5rem;">Com et sents? (pots triar varis)</label>
+      <div class="moods-selector" id="moods-selector">
+        <button class="mood-opt" onclick="toggleMood(this)" data-val="Penat">😔 Penat</button>
+        <button class="mood-opt" onclick="toggleMood(this)" data-val="Angoixa">😰 Angoixa</button>
+        <button class="mood-opt" onclick="toggleMood(this)" data-val="Por">😨 Por</button>
+        <button class="mood-opt" onclick="toggleMood(this)" data-val="Calme">😌 Calme</button>
+        <button class="mood-opt" onclick="toggleMood(this)" data-val="Esperança">🌱 Esperança</button>
+        <button class="mood-opt" onclick="toggleMood(this)" data-val="Cansament">😴 Cansament</button>
+        <button class="mood-opt" onclick="toggleMood(this)" data-val="Irritabilitat">😤 Irritabilitat</button>
+        <button class="mood-opt" onclick="toggleMood(this)" data-val="Bé">😊 Bé</button>
+        <button class="mood-opt" onclick="toggleMood(this)" data-val="Altre">❓ Altre</button>
+      </div>
+    </div>
+    <div style="margin-bottom:0.85rem;">
+      <label>Nivell d'energia</label>
+      <div class="range-row">
+        <span style="font-size:0.75rem;color:var(--text-light);">1 molt baix</span>
+        <input type="range" id="log-energy" min="1" max="10" value="5" oninput="document.getElementById('log-energy-val').textContent=this.value+'/10'" />
+        <span style="font-size:0.75rem;color:var(--text-light);">10 ple</span>
+        <span class="range-val" id="log-energy-val">5/10</span>
+      </div>
+    </div>
+    <div class="form-row single">
+      <div>
+        <label>Notes lliures</label>
+        <textarea id="log-notes" placeholder="Explica't amb llibertat com ha anat el dia..."></textarea>
+      </div>
+    </div>
+    <div class="form-row single">
+      <div>
+        <label>❓ Preguntes per al metge</label>
+        <textarea id="log-questions" placeholder="Ex. És normal sentir X? Hauria de canviar la dosi de Y?"></textarea>
+      </div>
+    </div>
+    <div class="flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('modal-new-log')">Cancel·lar</button>
+      <button class="btn btn-primary" onclick="saveLogEntry()">✓ Guarda l'entrada</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Afegir ítem fitxa -->
+<div class="modal-bg" id="modal-add-item">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-add-item')">✕</button>
+    <h2 id="add-modal-title">Afegir</h2>
+    <div id="add-modal-form"></div>
+    <div class="flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('modal-add-item')">Cancel·lar</button>
+      <button class="btn btn-primary" onclick="saveItem()">Desar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================== DATA =====================
+let currentPersonId = null;
+let currentItemType = null;
+let calYear = new Date().getFullYear();
+let calMonth = new Date().getMonth();
+let selectedDate = new Date().toISOString().split('T')[0];
+
+const TODAY = new Date().toISOString().split('T')[0];
+
+function getDB() {
+  try { return JSON.parse(localStorage.getItem('salut_familiar_v2') || '{"persons":[]}'); }
+  catch(e) { return {persons:[]}; }
+}
+function saveDB(db) { localStorage.setItem('salut_familiar_v2', JSON.stringify(db)); }
+
+function getPerson() {
+  const db = getDB();
+  return db.persons.find(p => p.id === currentPersonId);
+}
+
+function updatePerson(fn) {
+  const db = getDB();
+  const idx = db.persons.findIndex(p => p.id === currentPersonId);
+  if(idx >= 0) { fn(db.persons[idx]); saveDB(db); }
+}
+
+// ===================== SPLASH =====================
+function renderSplash() {
+  const db = getDB();
+  const grid = document.getElementById('person-grid');
+  if(!db.persons.length) {
+    grid.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;font-style:italic;">Crea el primer perfil per començar.</p>';
+    return;
+  }
+  grid.innerHTML = db.persons.map(p => `
+    <div class="person-card" onclick="loadPerson('${p.id}')">
+      <div class="avatar">${initials(p.name)}</div>
+      <div class="person-info">
+        <div class="pname">${p.name}</div>
+        <div class="prel">${p.relation}${p.age ? ' · '+p.age+' anys' : ''}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function initials(name) {
+  return name.trim().split(' ').slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');
+}
+
+function openNewPerson() {
+  document.getElementById('np-name').value='';
+  document.getElementById('np-age').value='';
+  document.getElementById('np-blood').value='';
+  document.getElementById('np-weight').value='';
+  document.getElementById('np-height').value='';
+  document.getElementById('np-emergency').value='';
+  openModal('modal-new-person');
+}
+
+function createPerson() {
+  const name = document.getElementById('np-name').value.trim();
+  if(!name) { alert('El nom és obligatori.'); return; }
+  const db = getDB();
+  const p = {
+    id: 'p_'+Date.now(),
+    name,
+    age: document.getElementById('np-age').value,
+    relation: document.getElementById('np-relation').value,
+    blood: document.getElementById('np-blood').value.trim(),
+    weight: document.getElementById('np-weight').value,
+    height: document.getElementById('np-height').value,
+    emergency: document.getElementById('np-emergency').value.trim(),
+    allergies: [], conditions: [], meds: [], medshistory: [],
+    surgeries: [], hospitals: [], exams: [], family: [], vaccines: [],
+    logs: []
+  };
+  db.persons.push(p);
+  saveDB(db);
+  closeModal('modal-new-person');
+  loadPerson(p.id);
+}
+
+function loadPerson(id) {
+  currentPersonId = id;
+  const p = getPerson();
+  document.getElementById('topbar-av').textContent = initials(p.name);
+  document.getElementById('topbar-name').textContent = p.name;
+  document.getElementById('splash').style.display='none';
+  const app = document.getElementById('app');
+  app.classList.add('open');
+  showSection('inici');
+  renderDashboard();
+}
+
+function goSplash() {
+  document.getElementById('app').classList.remove('open');
+  document.getElementById('splash').style.display='flex';
+  renderSplash();
+}
+
+// ===================== NAV =====================
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(name==='inici'?'inici':name==='fitxa'?'fitxa':name==='bitacora'?'bitàcora':'pdf'));
+  });
+  if(name==='fitxa') renderFitxa();
+  if(name==='bitacora') { renderCalendar(); renderLogEntries(); }
+  if(name==='inici') renderDashboard();
+  if(name==='pdf') {
+    const now = new Date();
+    const from = new Date(); from.setMonth(from.getMonth()-1);
+    document.getElementById('pdf-to').value=TODAY;
+    document.getElementById('pdf-from').value=from.toISOString().split('T')[0];
+  }
+}
+
+// ===================== DASHBOARD =====================
+function renderDashboard() {
+  const p = getPerson();
+  if(!p) return;
+  document.getElementById('dash-greeting').textContent = 'Hola, '+p.name+'!';
+  const days = ['diumenge','dilluns','dimarts','dimecres','dijous','divendres','dissabte'];
+  const months = ['de gener','de febrer','de març','d\'abril','de maig','de juny','de juliol','d\'agost','de setembre','d\'octubre','de novembre','de desembre'];
+  const now = new Date();
+  document.getElementById('dash-date').textContent = days[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' de '+now.getFullYear();
+  document.getElementById('dash-cond').textContent = (p.conditions||[]).length;
+  document.getElementById('dash-meds').textContent = (p.meds||[]).length;
+  document.getElementById('dash-entries').textContent = (p.logs||[]).length;
+  document.getElementById('dash-allergy').textContent = (p.allergies||[]).length;
+}
+
+// ===================== FITXA =====================
+const cardTypes = ['allergies','conditions','meds','medshistory','surgeries','hospitals','exams','family','vaccines'];
+
+function renderFitxa() {
+  const p = getPerson();
+  if(!p) return;
+  cardTypes.forEach(type => {
+    const items = p[type] || [];
+    document.getElementById('cnt-'+type).textContent = items.length;
+    const listEl = document.getElementById('list-'+type);
+    if(!items.length) { listEl.innerHTML='<p class="empty-msg">Encara sense registres.</p>'; return; }
+    listEl.innerHTML = items.map((item,i) => renderItem(type,item,i)).join('');
+  });
+}
+
+function renderItem(type, item, i) {
+  let title = item.name || item.title || item.text || '—';
+  let sub = '';
+  if(item.dose) sub += item.dose+' · ';
+  if(item.frequency) sub += item.frequency+' · ';
+  if(item.since) sub += 'Des de '+item.since+' · ';
+  if(item.date) sub += item.date+' · ';
+  if(item.doctor) sub += 'Dr/a. '+item.doctor+' · ';
+  if(item.hospital) sub += item.hospital+' · ';
+  if(item.result) sub += item.result+' · ';
+  if(item.notes) sub += item.notes;
+  sub = sub.replace(/ · $/,'');
+  return `<div class="list-item">
+    <div class="item-main">
+      <div class="item-title">${title}</div>
+      ${sub?`<div class="item-sub">${sub}</div>`:''}
+    </div>
+    <div class="item-actions">
+      <button class="btn btn-danger btn-sm" onclick="deleteItem('${type}',${i})">Eliminar</button>
+    </div>
+  </div>`;
+}
+
+function toggleCard(id) {
+  const body = document.getElementById('body-'+id);
+  const tog = document.getElementById('tog-'+id);
+  body.classList.toggle('hidden');
+  tog.textContent = body.classList.contains('hidden') ? '▼' : '▲';
+}
+
+function deleteItem(type, i) {
+  if(!confirm('Segur que vols eliminar aquest element?')) return;
+  updatePerson(p => { p[type].splice(i,1); });
+  renderFitxa();
+  renderDashboard();
+}
+
+// ===================== ADD MODAL =====================
+const modalForms = {
+  allergy: { title:'Nova al·lèrgia', fields:[
+    {id:'name',label:'Al·lèrgia *',type:'text',ph:'Ex. Penicil·lina, Ibuprofèn...'},
+    {id:'reaction',label:'Reacció',type:'text',ph:'Ex. Erupció, dificultat per respirar...'},
+    {id:'notes',label:'Notes',type:'textarea',ph:''}
+  ]},
+  condition: { title:'Nova condició crònica', fields:[
+    {id:'name',label:'Condició *',type:'text',ph:'Ex. Diabetis tipus 2, Hipertensió...'},
+    {id:'since',label:'Des de quan',type:'date'},
+    {id:'doctor',label:'Metge responsable',type:'text',ph:''},
+    {id:'notes',label:'Notes',type:'textarea',ph:''}
+  ]},
+  med: { title:'Nou medicament', fields:[
+    {id:'name',label:'Medicament *',type:'text',ph:'Ex. Omeprazol'},
+    {id:'dose',label:'Dosi',type:'text',ph:'Ex. 20mg'},
+    {id:'frequency',label:'Freqüència',type:'text',ph:'Ex. 1 cop al dia'},
+    {id:'since',label:'Des de quan',type:'date'},
+    {id:'notes',label:'Notes',type:'textarea',ph:''}
+  ]},
+  medhist: { title:'Medicament anterior', fields:[
+    {id:'name',label:'Medicament *',type:'text',ph:''},
+    {id:'dose',label:'Dosi',type:'text',ph:''},
+    {id:'since',label:'Inici',type:'date'},
+    {id:'until',label:'Fi',type:'date'},
+    {id:'notes',label:'Motiu de parada / notes',type:'textarea',ph:''}
+  ]},
+  surgery: { title:'Nova cirurgia / procediment', fields:[
+    {id:'name',label:'Cirurgia / procediment *',type:'text',ph:'Ex. Apendicitis, Artroscòpia genoll...'},
+    {id:'date',label:'Data',type:'date'},
+    {id:'hospital',label:'Hospital / centre',type:'text',ph:''},
+    {id:'doctor',label:'Cirurgià / especialista',type:'text',ph:''},
+    {id:'notes',label:'Notes / complicacions',type:'textarea',ph:''}
+  ]},
+  hospital: { title:'Nova hospitalització', fields:[
+    {id:'reason',label:'Motiu *',type:'text',ph:'Ex. Pneumònia, fractura...'},
+    {id:'date',label:'Data ingrés',type:'date'},
+    {id:'until',label:'Data alta',type:'date'},
+    {id:'hospital',label:'Hospital',type:'text',ph:''},
+    {id:'notes',label:'Notes',type:'textarea',ph:''}
+  ]},
+  exam: { title:'Nou examen / anàlisi', fields:[
+    {id:'name',label:'Examen *',type:'text',ph:'Ex. Analítica de sang, ECG...'},
+    {id:'date',label:'Data',type:'date'},
+    {id:'doctor',label:'Metge sol·licitant',type:'text',ph:''},
+    {id:'result',label:'Resultat / observacions',type:'text',ph:''},
+    {id:'notes',label:'Notes',type:'textarea',ph:''}
+  ]},
+  family: { title:'Antecedent familiar', fields:[
+    {id:'name',label:'Condició / malaltia *',type:'text',ph:'Ex. Diabetis, càncer de còlon...'},
+    {id:'relation',label:'Familiar afectat',type:'text',ph:'Ex. Pare, àvia materna...'},
+    {id:'notes',label:'Notes',type:'textarea',ph:''}
+  ]},
+  vaccine: { title:'Nova vacuna', fields:[
+    {id:'name',label:'Vacuna *',type:'text',ph:'Ex. Grip, COVID-19, Tètanus...'},
+    {id:'date',label:'Data',type:'date'},
+    {id:'notes',label:'Notes / lot',type:'textarea',ph:''}
+  ]}
+};
+
+function openAddModal(type) {
+  currentItemType = type;
+  const cfg = modalForms[type];
+  document.getElementById('add-modal-title').textContent = cfg.title;
+  document.getElementById('add-modal-form').innerHTML = buildForm(cfg.fields);
+  openModal('modal-add-item');
+}
+
+function buildForm(fields) {
+  let html = '';
+  let row = '';
+  let inRow = false;
+  fields.forEach((f,i) => {
+    if(f.type === 'textarea') {
+      if(inRow) { html += '<div class="form-row">'+row+'</div>'; row=''; inRow=false; }
+      html += `<div class="form-row single"><div><label>${f.label}</label><textarea id="fi-${f.id}" placeholder="${f.ph||''}"></textarea></div></div>`;
+    } else {
+      const inp = f.type==='date'
+        ? `<input type="date" id="fi-${f.id}" />`
+        : `<input type="text" id="fi-${f.id}" placeholder="${f.ph||''}" />`;
+      row += `<div><label>${f.label}</label>${inp}</div>`;
+      if(inRow || row.split('<div>').length-1 >= 2) {
+        html += `<div class="form-row">${row}</div>`;
+        row=''; inRow=false;
+      } else { inRow=true; }
+    }
+  });
+  if(row) html += `<div class="form-row">${row}</div>`;
+  return html;
+}
+
+function saveItem() {
+  const cfg = modalForms[currentItemType];
+  const item = {};
+  let hasRequired = false;
+  cfg.fields.forEach(f => {
+    const el = document.getElementById('fi-'+f.id);
+    if(el) {
+      item[f.id] = el.value.trim();
+      if(f.label.includes('*') && el.value.trim()) hasRequired=true;
+    }
+  });
+  if(!hasRequired) { alert('El camp marcat amb * és obligatori.'); return; }
+
+  // Normalise key names
+  if(item.reason) { item.name = item.reason; delete item.reason; }
+
+  updatePerson(p => {
+    if(!p[currentItemType]) p[currentItemType]=[];
+    p[currentItemType].push(item);
+  });
+  closeModal('modal-add-item');
+  renderFitxa();
+  renderDashboard();
+}
+
+// ===================== BITÀCORA =====================
+function renderCalendar() {
+  const monthNames = ['Gener','Febrer','Març','Abril','Maig','Juny','Juliol','Agost','Setembre','Octubre','Novembre','Desembre'];
+  document.getElementById('cal-month-label').textContent = monthNames[calMonth]+' '+calYear;
+  const p = getPerson();
+  const logDates = new Set((p.logs||[]).map(l=>l.date));
+
+  const grid = document.getElementById('calendar-grid');
+  const dayHeaders = ['Dl','Dt','Dc','Dj','Dv','Ds','Dg'];
+  let html = dayHeaders.map(d=>`<div class="cal-day-header">${d}</div>`).join('');
+
+  const first = new Date(calYear,calMonth,1);
+  let dow = first.getDay(); // 0=Sun
+  dow = dow===0?6:dow-1; // Mon=0
+  for(let i=0;i<dow;i++) html+=`<div class="cal-day other-month"></div>`;
+
+  const days = new Date(calYear,calMonth+1,0).getDate();
+  for(let d=1;d<=days;d++) {
+    const dateStr = calYear+'-'+(String(calMonth+1).padStart(2,'0'))+'-'+(String(d).padStart(2,'0'));
+    let cls = 'cal-day';
+    if(dateStr===TODAY) cls+=' today';
+    else if(dateStr===selectedDate) cls+=' selected';
+    if(logDates.has(dateStr)) cls+=' has-entry';
+    html+=`<div class="${cls}" onclick="selectDate('${dateStr}')">${d}</div>`;
+  }
+  grid.innerHTML = html;
+}
+
+function selectDate(dateStr) {
+  selectedDate = dateStr;
+  renderCalendar();
+  renderLogEntries();
+}
+
+function changeMonth(dir) {
+  calMonth += dir;
+  if(calMonth>11){calMonth=0;calYear++;}
+  if(calMonth<0){calMonth=11;calYear--;}
+  renderCalendar();
+}
+
+function renderLogEntries() {
+  const p = getPerson();
+  const entries = (p.logs||[]).filter(l=>l.date===selectedDate);
+  const d = new Date(selectedDate+'T12:00:00');
+  const days=['diumenge','dilluns','dimarts','dimecres','dijous','divendres','dissabte'];
+  const months=['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'];
+  document.getElementById('entry-day-label').textContent = days[d.getDay()]+', '+d.getDate()+' de '+months[d.getMonth()]+' de '+d.getFullYear();
+  const container = document.getElementById('log-entries-container');
+
+  if(!entries.length) {
+    container.innerHTML = `<div class="card"><p class="empty-msg">Sense entrades per aquest dia.</p>
+      <button class="btn btn-primary btn-sm mt2" onclick="openNewLog()">+ Afegir entrada</button></div>`;
+    return;
+  }
+
+  container.innerHTML = `<button class="btn btn-secondary btn-sm" style="margin-bottom:0.8rem;" onclick="openNewLog()">+ Afegir entrada</button>` +
+    entries.map((e,i) => `
+    <div class="log-entry-card">
+      <div class="log-time">${e.time||''}</div>
+      ${e.symptoms?`<div class="log-field"><div class="log-field-label">Símptomes</div><div class="log-field-val">${e.symptoms}</div>
+        <div class="energy-bar"><div class="intensity-fill" style="width:${(e.intensity||5)*10}%"></div></div>
+        <div style="font-size:0.72rem;color:var(--text-light);margin-top:2px;">Intensitat: ${e.intensity||5}/10</div>
+      </div>`:''}
+      ${e.moods&&e.moods.length?`<div class="log-field"><div class="log-field-label">Estat anímic</div><div class="mood-chips">${e.moods.map(m=>`<span class="mood-chip">${m}</span>`).join('')}</div></div>`:''}
+      <div class="log-field"><div class="log-field-label">Energia</div>
+        <div class="energy-bar"><div class="energy-fill" style="width:${(e.energy||5)*10}%"></div></div>
+        <div style="font-size:0.72rem;color:var(--text-light);margin-top:2px;">${e.energy||5}/10</div>
+      </div>
+      ${e.notes?`<div class="log-field"><div class="log-field-label">Notes</div><div class="log-field-val">${e.notes}</div></div>`:''}
+      ${e.questions?`<div class="log-field" style="background:var(--amber-light);padding:0.6rem;border-radius:var(--radius-sm);border-left:3px solid var(--amber);">
+        <div class="log-field-label">❓ Preguntes per al metge</div>
+        <div class="log-field-val">${e.questions}</div>
+      </div>`:''}
+      <div style="display:flex;justify-content:flex-end;margin-top:0.6rem;">
+        <button class="btn btn-danger btn-sm" onclick="deleteLog(${i})">Eliminar</button>
+      </div>
+    </div>`).join('');
+}
+
+function openNewLog() {
+  document.getElementById('log-date').value = selectedDate||TODAY;
+  document.getElementById('log-symptoms').value='';
+  document.getElementById('log-notes').value='';
+  document.getElementById('log-questions').value='';
+  document.getElementById('log-intensity').value=5;
+  document.getElementById('log-intensity-val').textContent='5/10';
+  document.getElementById('log-energy').value=5;
+  document.getElementById('log-energy-val').textContent='5/10';
+  document.querySelectorAll('.mood-opt').forEach(b=>b.classList.remove('sel'));
+  openModal('modal-new-log');
+}
+
+function toggleMood(btn) { btn.classList.toggle('sel'); }
+
+function saveLogEntry() {
+  const date = document.getElementById('log-date').value || TODAY;
+  const moods = [...document.querySelectorAll('.mood-opt.sel')].map(b=>b.dataset.val);
+  const entry = {
+    date,
+    time: new Date().toLocaleTimeString('ca',{hour:'2-digit',minute:'2-digit'}),
+    symptoms: document.getElementById('log-symptoms').value.trim(),
+    intensity: parseInt(document.getElementById('log-intensity').value),
+    moods,
+    energy: parseInt(document.getElementById('log-energy').value),
+    notes: document.getElementById('log-notes').value.trim(),
+    questions: document.getElementById('log-questions').value.trim()
+  };
+  updatePerson(p => { if(!p.logs) p.logs=[]; p.logs.push(entry); });
+  closeModal('modal-new-log');
+  selectedDate = date;
+  renderCalendar();
+  renderLogEntries();
+  renderDashboard();
+}
+
+function deleteLog(i) {
+  const p = getPerson();
+  const entries = (p.logs||[]).filter(l=>l.date===selectedDate);
+  const target = entries[i];
+  if(!confirm('Eliminar aquesta entrada?')) return;
+  updatePerson(p => {
+    const gi = p.logs.findIndex(l=>l.date===target.date&&l.time===target.time&&l.symptoms===target.symptoms);
+    if(gi>=0) p.logs.splice(gi,1);
+  });
+  renderCalendar();
+  renderLogEntries();
+  renderDashboard();
+}
+
+// ===================== PDF =====================
+function generateMedicalPDF() {
+  const p = getPerson();
+  if(!p) return;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const margin = 20;
+  let y = margin;
+  const pageH = 297;
+  const lineH = 6;
+
+  function checkPage(needed=10) {
+    if(y + needed > pageH - margin) { doc.addPage(); y = margin; }
+  }
+
+  function heading1(text) {
+    checkPage(12);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(18);
+    doc.setTextColor(61,89,73);
+    doc.text(text, margin, y);
+    y += 8;
+  }
+  function heading2(text, color=[61,89,73]) {
+    checkPage(10);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(12);
+    doc.setTextColor(...color);
+    doc.text(text, margin, y);
+    y += 2;
+    doc.setDrawColor(...color);
+    doc.setLineWidth(0.5);
+    doc.line(margin, y, 210-margin, y);
+    y += 5;
+  }
+  function bodyText(text, indent=0) {
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10);
+    doc.setTextColor(42,42,42);
+    const lines = doc.splitTextToSize(text, 170-indent);
+    lines.forEach(line => {
+      checkPage(lineH);
+      doc.text(line, margin+indent, y);
+      y += lineH;
+    });
+  }
+  function subLabel(text) {
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(9);
+    doc.setTextColor(120,120,120);
+    doc.text(text, margin+4, y);
+    y += 4;
+  }
+
+  // Header
+  doc.setFillColor(90,125,106);
+  doc.rect(0,0,210,32,'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(20);
+  doc.setTextColor(255,255,255);
+  doc.text('Historial Mèdic Personal', margin, 15);
+  doc.setFontSize(10);
+  doc.setFont('helvetica','normal');
+  doc.text(p.name + (p.relation&&p.relation!=='Jo mateix'?' · '+p.relation:'') + (p.age?' · '+p.age+' anys':''), margin, 23);
+  doc.text('Generat el '+new Date().toLocaleDateString('ca'), margin, 29);
+  y = 42;
+
+  // Dades bàsiques
+  const basics = [];
+  if(p.blood) basics.push('Grup sanguini: '+p.blood);
+  if(p.weight) basics.push('Pes: '+p.weight+' kg');
+  if(p.height) basics.push('Alçada: '+p.height+' cm');
+  if(p.emergency) basics.push('Contacte emergència: '+p.emergency);
+  if(basics.length) {
+    doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(80,80,80);
+    doc.text(basics.join('   ·   '), margin, y);
+    y += 8;
+  }
+
+  // AL·LÈRGIES
+  if(p.allergies?.length) {
+    heading2('⚠ AL·LÈRGIES', [192,57,43]);
+    doc.setFillColor(253,242,241);
+    doc.rect(margin-2, y-2, 170+4, p.allergies.length*10+4, 'F');
+    p.allergies.forEach(a => {
+      bodyText('• '+a.name+(a.reaction?' — '+a.reaction:'')+(a.notes?' ('+a.notes+')':''), 2);
+    });
+    y += 4;
+  }
+
+  // CONDICIONS
+  if(p.conditions?.length) {
+    heading2('Condicions cròniques actuals');
+    p.conditions.forEach(c => {
+      bodyText('• '+c.name+(c.since?' (des de '+c.since+')':(c.doctor?'':(c.notes?'':'')))+(c.doctor?', Dr/a. '+c.doctor:'')+(c.notes?' — '+c.notes:''), 2);
+    });
+    y += 3;
+  }
+
+  // MEDICAMENTS
+  if(p.meds?.length) {
+    heading2('Medicaments actuals');
+    p.meds.forEach(m => {
+      let line = '• '+m.name;
+      if(m.dose) line += ' '+m.dose;
+      if(m.frequency) line += ', '+m.frequency;
+      if(m.since) line += ' (des de '+m.since+')';
+      if(m.notes) line += ' — '+m.notes;
+      bodyText(line, 2);
+    });
+    y += 3;
+  }
+
+  // CIRURGIES
+  if(p.surgeries?.length) {
+    heading2('Cirurgies i procediments');
+    p.surgeries.forEach(s => {
+      let line = '• '+s.name;
+      if(s.date) line += ' ('+s.date+')';
+      if(s.hospital) line += ' · '+s.hospital;
+      if(s.doctor) line += ' · Dr/a. '+s.doctor;
+      if(s.notes) line += ' — '+s.notes;
+      bodyText(line, 2);
+    });
+    y += 3;
+  }
+
+  // HOSPITALITZACIONS
+  if(p.hospitals?.length) {
+    heading2('Hospitalitzacions');
+    p.hospitals.forEach(h => {
+      let line = '• '+(h.name||h.reason||'—');
+      if(h.date) line += ' ('+h.date+(h.until?' – '+h.until:'')+')';
+      if(h.hospital) line += ' · '+h.hospital;
+      if(h.notes) line += ' — '+h.notes;
+      bodyText(line, 2);
+    });
+    y += 3;
+  }
+
+  // EXÀMENS
+  if(p.exams?.length) {
+    heading2('Exàmens rellevants');
+    p.exams.forEach(e => {
+      let line = '• '+e.name;
+      if(e.date) line += ' ('+e.date+')';
+      if(e.result) line += ' — '+e.result;
+      if(e.notes) line += ' · '+e.notes;
+      bodyText(line, 2);
+    });
+    y += 3;
+  }
+
+  // ANTECEDENTS
+  if(p.family?.length) {
+    heading2('Antecedents familiars');
+    p.family.forEach(f => {
+      bodyText('• '+f.name+(f.relation?' ('+f.relation+')':(f.notes?'':''+(f.notes?' — '+f.notes:'')))+(f.notes?' — '+f.notes:''), 2);
+    });
+    y += 3;
+  }
+
+  // VACUNES
+  if(p.vaccines?.length) {
+    heading2('Vacunes');
+    p.vaccines.forEach(v => {
+      bodyText('• '+v.name+(v.date?' ('+v.date+')':(v.notes?'':''+(v.notes?'':'')))+(v.notes?' — '+v.notes:''), 2);
+    });
+    y += 3;
+  }
+
+  // Footer avís
+  checkPage(20);
+  y = pageH - 20;
+  doc.setFont('helvetica','italic');
+  doc.setFontSize(8);
+  doc.setTextColor(160,160,160);
+  doc.text('Aquest document és material de suport personal i no reemplaça l\'avaluació ni el criteri professional d\'un metge.', margin, y);
+  doc.text('Generat per Salut Familiar — '+new Date().toLocaleDateString('ca'), margin, y+4);
+
+  doc.save('fitxa-medica-'+p.name.toLowerCase().replace(/\s/g,'-')+'.pdf');
+}
+
+function generateLogPDF() {
+  const p = getPerson();
+  if(!p) return;
+  const from = document.getElementById('pdf-from').value;
+  const to = document.getElementById('pdf-to').value;
+  if(!from||!to) { alert('Selecciona el rang de dates.'); return; }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const margin = 20;
+  let y = margin;
+  const pageH = 297;
+
+  function checkPage(needed=10) {
+    if(y + needed > pageH - margin) { doc.addPage(); y = margin; }
+  }
+  function heading2(text) {
+    checkPage(12);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(12);
+    doc.setTextColor(61,89,73);
+    doc.text(text, margin, y);
+    y += 2;
+    doc.setDrawColor(61,89,73);
+    doc.line(margin, y, 210-margin, y);
+    y += 5;
+  }
+  function bodyText(text, indent=0) {
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10);
+    doc.setTextColor(42,42,42);
+    const lines = doc.splitTextToSize(text, 170-indent);
+    lines.forEach(line => {
+      checkPage(6);
+      doc.text(line, margin+indent, y);
+      y += 6;
+    });
+  }
+
+  // Header
+  doc.setFillColor(90,125,106);
+  doc.rect(0,0,210,32,'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(18);
+  doc.setTextColor(255,255,255);
+  doc.text('Informe de Bitàcora', margin, 15);
+  doc.setFontSize(10);
+  doc.setFont('helvetica','normal');
+  doc.text(p.name+' · Del '+from+' al '+to, margin, 23);
+  doc.text('Generat el '+new Date().toLocaleDateString('ca'), margin, 29);
+  y = 42;
+
+  const entries = (p.logs||[]).filter(l=>l.date>=from&&l.date<=to).sort((a,b)=>a.date.localeCompare(b.date));
+
+  // Preguntes per al metge
+  const questions = entries.filter(e=>e.questions).map(e=>({date:e.date,q:e.questions}));
+  if(questions.length) {
+    heading2('❓ Preguntes per al metge');
+    questions.forEach(q => {
+      bodyText('• ['+q.date+'] '+q.q, 2);
+    });
+    y += 5;
+  }
+
+  // Resum
+  if(entries.length) {
+    const avgEnergy = (entries.reduce((s,e)=>s+(e.energy||5),0)/entries.length).toFixed(1);
+    const avgInt = (entries.filter(e=>e.symptoms).reduce((s,e)=>s+(e.intensity||5),0)/(entries.filter(e=>e.symptoms).length||1)).toFixed(1);
+    const allMoods = {};
+    entries.forEach(e=>(e.moods||[]).forEach(m=>allMoods[m]=(allMoods[m]||0)+1));
+    const topMoods = Object.entries(allMoods).sort((a,b)=>b[1]-a[1]).slice(0,3).map(m=>m[0]).join(', ');
+
+    heading2('Resum estadístic');
+    bodyText('Total d\'entrades: '+entries.length);
+    bodyText('Energia mitjana: '+avgEnergy+'/10');
+    bodyText('Intensitat de símptomes (mitjana): '+avgInt+'/10');
+    if(topMoods) bodyText('Estats més freqüents: '+topMoods);
+    y += 5;
+  }
+
+  // Entrades detallades
+  heading2('Detall d\'entrades');
+  if(!entries.length) {
+    bodyText('Cap entrada en aquest període.');
+  } else {
+    entries.forEach(e => {
+      checkPage(20);
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(10);
+      doc.setTextColor(61,89,73);
+      doc.text(e.date+(e.time?' · '+e.time:''), margin, y);
+      y += 5;
+      if(e.symptoms) bodyText('Símptomes: '+e.symptoms+' (intensitat '+e.intensity+'/10)', 4);
+      if(e.moods?.length) bodyText('Ànim: '+e.moods.join(', '), 4);
+      bodyText('Energia: '+e.energy+'/10', 4);
+      if(e.notes) bodyText('Notes: '+e.notes, 4);
+      if(e.questions) bodyText('Preguntes metge: '+e.questions, 4);
+      y += 3;
+    });
+  }
+
+  // Footer
+  y = pageH - 20;
+  doc.setFont('helvetica','italic');
+  doc.setFontSize(8);
+  doc.setTextColor(160,160,160);
+  doc.text('Aquest document és material de suport personal i no reemplaça l\'avaluació ni el criteri professional d\'un metge.', margin, y);
+  doc.text('Generat per Salut Familiar — '+new Date().toLocaleDateString('ca'), margin, y+4);
+
+  doc.save('bitacora-'+p.name.toLowerCase().replace(/\s/g,'-')+'-'+from+'-'+to+'.pdf');
+}
+
+// ===================== MODAL UTILS =====================
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// Close on bg click
+document.querySelectorAll('.modal-bg').forEach(bg => {
+  bg.addEventListener('click', e => { if(e.target===bg) bg.classList.remove('open'); });
+});
+
+// ===================== INIT =====================
+renderSplash();
+document.getElementById('pdf-to') && (document.getElementById('pdf-to').value=TODAY);
+</script>
+</body>
+</html>
