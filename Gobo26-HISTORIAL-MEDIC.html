@@ -487,9 +487,282 @@
     .topbar-nav { display: none; }
     .main { padding: 1rem; }
   }
+
+  /* ========= TOAST ========= */
+  #toast-container {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: none;
+  }
+  .toast {
+    background: var(--green);
+    color: var(--white);
+    padding: 0.75rem 1.3rem;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+    font-weight: 700;
+    font-size: 0.92rem;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    animation: toastIn 0.25s ease-out;
+    max-width: 90vw;
+  }
+  .toast.error { background: var(--red); }
+  .toast.warn { background: var(--amber); }
+  .toast.info { background: var(--accent); }
+  @keyframes toastIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes toastOut {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-12px); opacity: 0; }
+  }
+  .toast.out { animation: toastOut 0.25s ease-in forwards; }
+
+  /* ========= BANNER BACKUP ========= */
+  .backup-banner {
+    background: linear-gradient(90deg, #fef3c7, #fef9e7);
+    border: 1px solid #fcd34d;
+    border-radius: var(--radius);
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    box-shadow: var(--shadow);
+  }
+  .backup-banner-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .backup-banner-text { flex: 1; font-size: 0.85rem; color: var(--text); line-height: 1.4; }
+  .backup-banner-text strong { color: var(--amber); }
+  .backup-banner-actions { display: flex; gap: 0.4rem; flex-shrink: 0; flex-wrap: wrap; }
+
+  /* ========= URGÈNCIA ========= */
+  .btn-urgencia {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    padding: 1rem 1.3rem;
+    cursor: pointer;
+    margin-bottom: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(220,38,38,0.35);
+    transition: all 0.2s;
+  }
+  .btn-urgencia:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(220,38,38,0.45); }
+  .btn-urgencia .ico { font-size: 1.5rem; }
+  .btn-urgencia .txt1 { font-size: 1rem; font-weight: 800; letter-spacing: 0.02em; }
+  .btn-urgencia .txt2 { font-size: 0.78rem; opacity: 0.92; font-weight: 600; }
+
+  #urgencia-screen {
+    display: none;
+    position: fixed; inset: 0;
+    background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 100%);
+    z-index: 1500;
+    overflow-y: auto;
+    padding: 0 1rem 2rem;
+  }
+  #urgencia-screen.open { display: block; }
+  .urg-wrap { max-width: 720px; margin: 0 auto; }
+  .urg-close-bar {
+    position: sticky; top: 0;
+    background: rgba(254,242,242,0.96);
+    backdrop-filter: blur(6px);
+    padding: 0.7rem 0;
+    margin: 0 -1rem 1rem;
+    padding: 0.7rem 1rem;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid rgba(220,38,38,0.2);
+    z-index: 10;
+  }
+  .urg-close-bar .ttl { font-weight: 800; color: var(--red); font-size: 0.9rem; }
+  .urg-close-bar-actions { display: flex; gap: 0.5rem; }
+  .btn-close-urg {
+    background: var(--red); color: var(--white);
+    border: none; border-radius: var(--radius-sm);
+    padding: 0.5rem 1rem; font-weight: 700; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+  }
+  .btn-print-urg {
+    background: var(--white); color: var(--red);
+    border: 1.5px solid var(--red); border-radius: var(--radius-sm);
+    padding: 0.5rem 1rem; font-weight: 700; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+  }
+  .urg-header {
+    background: var(--red);
+    color: var(--white);
+    padding: 1.4rem 1.2rem;
+    border-radius: var(--radius);
+    text-align: center;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 14px rgba(220,38,38,0.3);
+  }
+  .urg-title { font-size: 1.2rem; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+  .urg-name { font-size: 2rem; font-weight: 900; line-height: 1.1; }
+  .urg-meta { font-size: 0.95rem; opacity: 0.92; margin-top: 0.4rem; font-weight: 600; }
+
+  .urg-block {
+    background: var(--white);
+    border: 2px solid var(--red);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+    box-shadow: var(--shadow);
+  }
+  .urg-block.critical {
+    background: var(--red);
+    color: var(--white);
+    border-color: var(--red);
+  }
+  .urg-block-label {
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .urg-block.critical .urg-block-label { color: rgba(255,255,255,0.95); }
+  .urg-block:not(.critical) .urg-block-label { color: var(--red); }
+  .urg-list-item {
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    line-height: 1.35;
+  }
+  .urg-block.critical .urg-list-item { border-bottom-color: rgba(255,255,255,0.2); font-size: 1.15rem; }
+  .urg-list-item:last-child { border-bottom: none; }
+  .urg-list-item .sub { font-size: 0.85rem; font-weight: 500; opacity: 0.85; display: block; margin-top: 2px; }
+
+  .urg-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+  .urg-quick {
+    background: var(--white);
+    border: 1.5px solid var(--border2);
+    border-radius: var(--radius);
+    padding: 0.85rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .urg-quick-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .urg-quick-val { font-size: 1.4rem; font-weight: 900; color: var(--header); margin-top: 4px; }
+  .urg-emerg-contact {
+    background: var(--accent);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 1rem;
+    text-align: center;
+    margin-top: 0.5rem;
+    text-decoration: none;
+    display: block;
+    font-weight: 700;
+    box-shadow: var(--shadow);
+  }
+  .urg-emerg-contact .lbl { font-size: 0.78rem; opacity: 0.9; font-weight: 600; }
+  .urg-emerg-contact .val { font-size: 1.2rem; font-weight: 800; margin-top: 4px; }
+
+  @media print {
+    body * { visibility: hidden; }
+    #urgencia-screen, #urgencia-screen * { visibility: visible; }
+    #urgencia-screen { position: absolute; left: 0; top: 0; width: 100%; background: white; }
+    .urg-close-bar { display: none !important; }
+    .urg-block { page-break-inside: avoid; }
+  }
+
+  /* ========= MÈTRIQUES ========= */
+  .metric-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.55rem;
+    margin-bottom: 1rem;
+  }
+  .metric-type {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.75rem 0.6rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .metric-type:hover { border-color: var(--accent); }
+  .metric-type.active { background: var(--accent-light); border-color: var(--accent2); }
+  .metric-type-icon { font-size: 1.3rem; }
+  .metric-type-name { font-size: 0.74rem; font-weight: 700; color: var(--text); margin-top: 3px; }
+  .metric-type-last {
+    font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;
+    font-weight: 600;
+  }
+  .metric-type.active .metric-type-last { color: var(--accent); }
+
+  .metric-chart {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin-bottom: 0.9rem;
+    min-height: 180px;
+  }
+  .metric-chart svg { width: 100%; height: 160px; display: block; overflow: visible; }
+  .metric-chart .empty {
+    color: var(--text-light); font-style: italic; text-align: center;
+    padding: 2.5rem 0; font-size: 0.85rem;
+  }
+  .metric-readings { display: flex; flex-direction: column; gap: 0; }
+  .metric-reading {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.55rem 0; border-bottom: 1px solid var(--bg2);
+    gap: 0.5rem;
+  }
+  .metric-reading:last-child { border-bottom: none; }
+  .metric-reading-val { font-weight: 700; color: var(--text); font-size: 0.92rem; }
+  .metric-reading-date { font-size: 0.78rem; color: var(--text-muted); }
+  .metric-reading-actions { display: flex; gap: 0.3rem; flex-shrink: 0; }
+
+  /* ========= INPUT TENSIO ========= */
+  .bp-row { display: flex; align-items: center; gap: 0.5rem; }
+  .bp-row input { width: 90px; }
+  .bp-sep { font-weight: 700; color: var(--text-muted); }
 </style>
 </head>
 <body>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- PANTALLA D'URGÈNCIA -->
+<div id="urgencia-screen">
+  <div class="urg-wrap">
+    <div class="urg-close-bar">
+      <span class="ttl">🚨 MODE URGÈNCIA</span>
+      <div class="urg-close-bar-actions">
+        <button class="btn-print-urg" onclick="window.print()">🖨 Imprimir</button>
+        <button class="btn-close-urg" onclick="closeUrgencia()">✕ Tancar</button>
+      </div>
+    </div>
+    <div id="urgencia-content"></div>
+  </div>
+</div>
 
 <!-- SPLASH / SELECTOR PERSONA -->
 <div id="splash">
@@ -548,6 +821,17 @@
     <div class="section active" id="sec-inici">
       <h1 class="section-title" id="dash-greeting">Hola!</h1>
       <p class="section-sub" id="dash-date"></p>
+
+      <div id="backup-banner-container"></div>
+
+      <button class="btn-urgencia" onclick="openUrgencia()">
+        <span class="ico">🚨</span>
+        <div class="dash-action-text">
+          <div class="txt1">MOSTRAR EN URGÈNCIA</div>
+          <div class="txt2">Pantalla per ensenyar a un sanitari</div>
+        </div>
+      </button>
+
       <button class="dash-action" onclick="openNewLog()">
         <span class="dash-action-icon">✏️</span>
         <div class="dash-action-text">
@@ -717,6 +1001,21 @@
         <div class="card-body hidden" id="body-vaccines">
           <div id="list-vaccines"><p class="empty-msg">Encara sense registres.</p></div>
           <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('vaccine')">+ Agrega</button>
+        </div>
+      </div>
+
+      <!-- MÈTRIQUES DE SALUT -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard('metrics')">
+          <div class="card-header-title">📈 Mètriques de salut <span class="card-count" id="cnt-metrics">0</span></div>
+          <span class="card-toggle" id="tog-metrics">▼</span>
+        </div>
+        <div class="card-body hidden" id="body-metrics">
+          <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.8rem;">Tensió, glucèmia, pes, oxigen i temperatura amb evolució temporal</p>
+          <div class="metric-types" id="metric-types"></div>
+          <div class="metric-chart" id="metric-chart"><p class="empty">Tria una mètrica</p></div>
+          <div class="metric-readings" id="metric-readings"></div>
+          <button class="btn btn-primary btn-sm mt2" id="btn-add-reading" style="display:none;" onclick="openAddReading()">+ Nova lectura</button>
         </div>
       </div>
     </div>
@@ -984,6 +1283,31 @@
   </div>
 </div>
 
+<!-- MODAL: Nova lectura de mètrica -->
+<div class="modal-bg" id="modal-new-reading">
+  <div class="modal" style="max-width:480px;">
+    <button class="modal-close" onclick="closeModal('modal-new-reading')">✕</button>
+    <h2 id="reading-title">Nova lectura</h2>
+    <div class="form-row single">
+      <div>
+        <label>Data</label>
+        <input type="date" id="reading-date" />
+      </div>
+    </div>
+    <div id="reading-value-container"></div>
+    <div class="form-row single">
+      <div>
+        <label>Notes (opcional)</label>
+        <textarea id="reading-notes" placeholder="Ex. després d'esmorzar, en repòs..."></textarea>
+      </div>
+    </div>
+    <div class="flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('modal-new-reading')">Cancel·lar</button>
+      <button class="btn btn-primary" onclick="saveReading()">✓ Guardar lectura</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: Afegir ítem fitxa -->
 <div class="modal-bg" id="modal-add-item">
   <div class="modal">
@@ -1001,6 +1325,7 @@
 // ===================== DATA =====================
 let currentPersonId = null;
 let currentItemType = null;
+let currentMetricType = null;
 let calYear = new Date().getFullYear();
 let calMonth = new Date().getMonth();
 let selectedDate = new Date().toISOString().split('T')[0];
@@ -1009,21 +1334,52 @@ const TODAY = new Date().toISOString().split('T')[0];
 
 // ===================== DADES =====================
 const STORAGE_KEY = 'historial_medic_v4';
+const BACKUP_KEY = 'historial_medic_lastbackup';
+let _storageOK = true;
 
 function loadDB() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw) return JSON.parse(raw);
-  } catch(e) {}
+  } catch(e) { console.error('loadDB:', e); }
   return {persons:[]};
 }
 
 function saveDB(db) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    return true;
   } catch(e) {
-    console.warn('No es pot guardar al localStorage:', e);
+    console.error('saveDB falla:', e);
+    showToast('No s\'han pogut guardar les dades. ' + (e.name==='QuotaExceededError' ? 'Espai esgotat.' : 'El navegador bloqueja localStorage.'), 'error', 6000);
+    return false;
   }
+}
+
+function checkStorage() {
+  try {
+    localStorage.setItem('__test__', '1');
+    localStorage.removeItem('__test__');
+    return true;
+  } catch(e) {
+    _storageOK = false;
+    return false;
+  }
+}
+
+// ===================== TOAST =====================
+function showToast(msg, type='success', duration=2400) {
+  const cont = document.getElementById('toast-container');
+  if(!cont) return;
+  const el = document.createElement('div');
+  el.className = 'toast' + (type==='success'?'':' '+type);
+  const icon = type==='success'?'✓':type==='error'?'✕':type==='warn'?'⚠':'ℹ';
+  el.innerHTML = `<span>${icon}</span><span>${msg}</span>`;
+  cont.appendChild(el);
+  setTimeout(() => {
+    el.classList.add('out');
+    setTimeout(() => el.remove(), 250);
+  }, duration);
 }
 
 function getDB() {
@@ -1101,7 +1457,7 @@ function editPerson() {
 
 function createPerson() {
   const name = document.getElementById('np-name').value.trim();
-  if(!name) { alert('El nom és obligatori.'); return; }
+  if(!name) { showToast('El nom és obligatori', 'error'); return; }
   const isEdit = document.getElementById('np-save-btn').dataset.mode === 'edit';
   const db = loadDB();
 
@@ -1115,12 +1471,14 @@ function createPerson() {
       db.persons[idx].weight = document.getElementById('np-weight').value;
       db.persons[idx].height = document.getElementById('np-height').value;
       db.persons[idx].emergency = document.getElementById('np-emergency').value.trim();
-      saveDB(db);
-      document.getElementById('topbar-av').textContent = initials(name);
-      document.getElementById('topbar-name').textContent = name;
-      closeModal('modal-new-person');
-      renderDashboard();
-      renderSplash();
+      if(saveDB(db)) {
+        document.getElementById('topbar-av').textContent = initials(name);
+        document.getElementById('topbar-name').textContent = name;
+        closeModal('modal-new-person');
+        renderDashboard();
+        renderSplash();
+        showToast('Perfil actualitzat');
+      }
     }
     return;
   }
@@ -1136,12 +1494,14 @@ function createPerson() {
     emergency: document.getElementById('np-emergency').value.trim(),
     allergies: [], conditions: [], meds: [], medshistory: [],
     surgeries: [], hospitals: [], exams: [], family: [], vaccines: [],
-    logs: []
+    logs: [], metrics: {}
   };
   db.persons.push(p);
-  saveDB(db);
-  closeModal('modal-new-person');
-  loadPerson(p.id);
+  if(saveDB(db)) {
+    closeModal('modal-new-person');
+    loadPerson(p.id);
+    showToast('Perfil creat');
+  }
 }
 
 function loadPerson(id) {
@@ -1169,9 +1529,9 @@ function showSection(name) {
   document.querySelectorAll('.nav-btn').forEach(b=>{
     b.classList.toggle('active', b.textContent.toLowerCase().includes(name==='inici'?'inici':name==='fitxa'?'fitxa':name==='bitacora'?'bitàcora':'pdf'));
   });
-  if(name==='fitxa') renderFitxa();
+  if(name==='fitxa') { renderFitxa(); renderMetricTypes(); }
   if(name==='bitacora') { renderCalendar(); renderLogEntries(); }
-  if(name==='inici') renderDashboard();
+  if(name==='inici') { renderDashboard(); renderBackupBanner(); }
   if(name==='pdf') {
     const now = new Date();
     const from = new Date(); from.setMonth(from.getMonth()-1);
@@ -1333,55 +1693,118 @@ function editItem(type, i) {
   openModal('modal-add-item');
 }
 
+// Mapa nom de tipus -> id de targeta plegable
+const typeToCardId = {
+  allergy:'allergies', condition:'conditions', med:'meds', medhist:'medshistory',
+  surgery:'surgeries', hospital:'hospitals', exam:'exams', family:'family', vaccine:'vaccines'
+};
+// Mapa nom de tipus -> clau de l'array a la persona
+const typeToKey = {
+  allergy:'allergies', condition:'conditions', med:'meds', medhist:'medshistory',
+  surgery:'surgeries', hospital:'hospitals', exam:'exams', family:'family', vaccine:'vaccines'
+};
+
+function expandCard(cardId) {
+  const body = document.getElementById('body-'+cardId);
+  const tog = document.getElementById('tog-'+cardId);
+  if(body && body.classList.contains('hidden')) {
+    body.classList.remove('hidden');
+    if(tog) tog.textContent = '▲';
+  }
+}
+
 function saveItem() {
+  if(!currentItemType) { showToast('Error intern: cap tipus seleccionat', 'error'); return; }
+  if(!currentPersonId) { showToast('No hi ha cap perfil actiu', 'error'); return; }
   const cfg = modalForms[currentItemType];
+  if(!cfg) { showToast('Tipus desconegut: '+currentItemType, 'error'); return; }
+
   const item = {};
-  let hasRequired = false;
+  // Trobem el camp obligatori (label amb '*')
+  const requiredField = cfg.fields.find(f => f.label.includes('*'));
+  let isValid = false;
+
   cfg.fields.forEach(f => {
     const el = document.getElementById('fi-'+f.id);
     if(el) {
-      item[f.id] = el.value.trim();
-      if(f.label.includes('*') && el.value.trim()) hasRequired=true;
+      const v = (el.value || '').trim();
+      item[f.id] = v;
+      if(requiredField && f.id === requiredField.id && v) isValid = true;
     }
   });
-  if(!hasRequired) { alert('El camp marcat amb * és obligatori.'); return; }
+
+  if(!isValid) {
+    showToast('El camp "' + (requiredField ? requiredField.label.replace(' *','') : 'obligatori') + '" no pot estar buit', 'error', 3500);
+    const reqEl = document.getElementById('fi-'+requiredField.id);
+    if(reqEl) reqEl.focus();
+    return;
+  }
+
+  // Camp 'reason' (hospital) es desa com 'name'
   if(item.reason) { item.name = item.reason; delete item.reason; }
 
   const editIdxStr = document.getElementById('modal-add-item').dataset.editIdx;
+  const isEdit = editIdxStr !== '' && editIdxStr !== undefined;
+  const typeKey = typeToKey[currentItemType] || currentItemType;
+
+  let ok = false;
   updatePerson(p => {
-    if(!p[currentItemType]) p[currentItemType]=[];
-    if(editIdxStr !== '' && editIdxStr !== undefined) {
-      p[currentItemType][parseInt(editIdxStr)] = item;
+    if(!p[typeKey]) p[typeKey]=[];
+    if(isEdit) {
+      p[typeKey][parseInt(editIdxStr)] = item;
     } else {
-      p[currentItemType].push(item);
+      p[typeKey].push(item);
     }
+    ok = true;
   });
+
+  if(!ok) { showToast('No s\'ha pogut desar', 'error'); return; }
+
+  const cardId = typeToCardId[currentItemType];
   closeModal('modal-add-item');
   renderFitxa();
   renderDashboard();
+  if(cardId) expandCard(cardId);
+  showToast(isEdit ? 'Canvis desats' : 'Afegit correctament');
 }
 
 function buildForm(fields) {
+  // Renderitzem en files de 2 camps. Els textarea sempre ocupen una fila sencera.
   let html = '';
-  let row = '';
-  let inRow = false;
-  fields.forEach((f,i) => {
+  let pendingField = null;
+  const flushPending = () => {
+    if(pendingField) {
+      html += `<div class="form-row"><div>${fieldHtml(pendingField)}</div></div>`;
+      pendingField = null;
+    }
+  };
+  fields.forEach(f => {
     if(f.type === 'textarea') {
-      if(inRow) { html += '<div class="form-row">'+row+'</div>'; row=''; inRow=false; }
-      html += `<div class="form-row single"><div><label>${f.label}</label><textarea id="fi-${f.id}" placeholder="${f.ph||''}"></textarea></div></div>`;
+      flushPending();
+      html += `<div class="form-row single"><div>${fieldHtml(f)}</div></div>`;
     } else {
-      const inp = f.type==='date'
-        ? `<input type="date" id="fi-${f.id}" />`
-        : `<input type="text" id="fi-${f.id}" placeholder="${f.ph||''}" />`;
-      row += `<div><label>${f.label}</label>${inp}</div>`;
-      if(inRow || row.split('<div>').length-1 >= 2) {
-        html += `<div class="form-row">${row}</div>`;
-        row=''; inRow=false;
-      } else { inRow=true; }
+      if(pendingField) {
+        html += `<div class="form-row"><div>${fieldHtml(pendingField)}</div><div>${fieldHtml(f)}</div></div>`;
+        pendingField = null;
+      } else {
+        pendingField = f;
+      }
     }
   });
-  if(row) html += `<div class="form-row">${row}</div>`;
+  flushPending();
   return html;
+}
+
+function fieldHtml(f) {
+  let inp;
+  if(f.type === 'textarea') {
+    inp = `<textarea id="fi-${f.id}" placeholder="${f.ph||''}"></textarea>`;
+  } else if(f.type === 'date') {
+    inp = `<input type="date" id="fi-${f.id}" />`;
+  } else {
+    inp = `<input type="text" id="fi-${f.id}" placeholder="${f.ph||''}" />`;
+  }
+  return `<label>${f.label}</label>${inp}`;
 }
 
 // ===================== BITÀCORA =====================
@@ -1498,6 +1921,7 @@ function saveLogEntry() {
   renderCalendar();
   renderLogEntries();
   renderDashboard();
+  showToast('Entrada de bitàcora desada');
 }
 
 function deleteLog(i) {
@@ -1512,6 +1936,365 @@ function deleteLog(i) {
   renderCalendar();
   renderLogEntries();
   renderDashboard();
+}
+
+// ===================== MÈTRIQUES =====================
+const metricDefs = {
+  bp:        { name:'Tensió',     icon:'❤️',  unit:'mmHg',   compound:true,  fields:['sys','dia'], range:[80,180] },
+  glucose:   { name:'Glucèmia',   icon:'🩸',  unit:'mg/dL',  range:[60,250] },
+  weight:    { name:'Pes',        icon:'⚖️',  unit:'kg',     range:[40,150] },
+  oxygen:    { name:'Oxigen',     icon:'💨',  unit:'%',      range:[80,100] },
+  temp:      { name:'Temperatura',icon:'🌡️',  unit:'°C',     range:[35,42], step:0.1 },
+  heartrate: { name:'Pulsacions', icon:'💓',  unit:'bpm',    range:[40,180] }
+};
+
+function renderMetricTypes() {
+  const p = getPerson();
+  if(!p) return;
+  if(!p.metrics) p.metrics = {};
+  const cont = document.getElementById('metric-types');
+  if(!cont) return;
+  let totalReadings = 0;
+  cont.innerHTML = Object.entries(metricDefs).map(([key, def]) => {
+    const arr = p.metrics[key] || [];
+    totalReadings += arr.length;
+    const last = arr[arr.length-1];
+    const lastTxt = last ? formatMetricValue(key, last) + ' · ' + last.date : 'Sense dades';
+    return `<div class="metric-type${currentMetricType===key?' active':''}" onclick="selectMetric('${key}')">
+      <div class="metric-type-icon">${def.icon}</div>
+      <div class="metric-type-name">${def.name}</div>
+      <div class="metric-type-last">${lastTxt}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('cnt-metrics').textContent = totalReadings;
+  if(currentMetricType) renderMetricChart();
+}
+
+function formatMetricValue(key, reading) {
+  const def = metricDefs[key];
+  if(def.compound) return reading.sys + '/' + reading.dia + ' ' + def.unit;
+  return reading.value + ' ' + def.unit;
+}
+
+function selectMetric(key) {
+  currentMetricType = key;
+  renderMetricTypes();
+  renderMetricChart();
+  document.getElementById('btn-add-reading').style.display = 'inline-block';
+}
+
+function renderMetricChart() {
+  const p = getPerson();
+  if(!p || !currentMetricType) return;
+  const def = metricDefs[currentMetricType];
+  const arr = (p.metrics && p.metrics[currentMetricType]) || [];
+  const chartEl = document.getElementById('metric-chart');
+  const readingsEl = document.getElementById('metric-readings');
+
+  if(!arr.length) {
+    chartEl.innerHTML = `<p class="empty">${def.icon} Cap lectura de ${def.name.toLowerCase()} encara.<br>Clica "+ Nova lectura" per començar.</p>`;
+    readingsEl.innerHTML = '';
+    return;
+  }
+  chartEl.innerHTML = buildChartSVG(currentMetricType, arr);
+  // Llista (més recent primer)
+  const sorted = [...arr].sort((a,b) => b.date.localeCompare(a.date));
+  readingsEl.innerHTML = sorted.map((r,i) => {
+    const origIdx = arr.indexOf(r);
+    return `<div class="metric-reading">
+      <div>
+        <div class="metric-reading-val">${formatMetricValue(currentMetricType, r)}</div>
+        <div class="metric-reading-date">${r.date}${r.notes?' · '+r.notes:''}</div>
+      </div>
+      <div class="metric-reading-actions">
+        <button class="btn btn-danger btn-sm" onclick="deleteReading(${origIdx})">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buildChartSVG(key, arr) {
+  const def = metricDefs[key];
+  const W = 600, H = 160, padL = 38, padR = 12, padT = 12, padB = 28;
+  const innerW = W - padL - padR;
+  const innerH = H - padT - padB;
+  const sorted = [...arr].sort((a,b) => a.date.localeCompare(b.date));
+  const dates = sorted.map(r => r.date);
+  const values = def.compound
+    ? sorted.flatMap(r => [Number(r.sys), Number(r.dia)])
+    : sorted.map(r => Number(r.value));
+  let minV = Math.min(...values);
+  let maxV = Math.max(...values);
+  if(minV === maxV) { minV -= 5; maxV += 5; }
+  const pad = (maxV - minV) * 0.15;
+  minV -= pad; maxV += pad;
+  const xPos = i => sorted.length === 1 ? padL + innerW/2 : padL + (i * innerW) / (sorted.length - 1);
+  const yPos = v => padT + innerH - ((v - minV) / (maxV - minV)) * innerH;
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`;
+  // Grid horitzontal
+  for(let i=0;i<=3;i++) {
+    const y = padT + (i * innerH/3);
+    const v = (maxV - (i * (maxV-minV)/3)).toFixed(def.step?1:0);
+    svg += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#e2e8f0" stroke-width="1"/>`;
+    svg += `<text x="${padL-4}" y="${y+3}" text-anchor="end" font-size="10" fill="#94a3b8" font-family="Montserrat">${v}</text>`;
+  }
+  // Línies
+  if(def.compound) {
+    const sysPts = sorted.map((r,i) => `${xPos(i)},${yPos(Number(r.sys))}`).join(' ');
+    const diaPts = sorted.map((r,i) => `${xPos(i)},${yPos(Number(r.dia))}`).join(' ');
+    svg += `<polyline fill="none" stroke="#dc2626" stroke-width="2" points="${sysPts}"/>`;
+    svg += `<polyline fill="none" stroke="#2563eb" stroke-width="2" points="${diaPts}"/>`;
+    sorted.forEach((r,i) => {
+      svg += `<circle cx="${xPos(i)}" cy="${yPos(Number(r.sys))}" r="3" fill="#dc2626"/>`;
+      svg += `<circle cx="${xPos(i)}" cy="${yPos(Number(r.dia))}" r="3" fill="#2563eb"/>`;
+    });
+    svg += `<text x="${W-padR}" y="${padT+8}" text-anchor="end" font-size="9" fill="#dc2626" font-weight="700">● Sistòlica</text>`;
+    svg += `<text x="${W-padR}" y="${padT+20}" text-anchor="end" font-size="9" fill="#2563eb" font-weight="700">● Diastòlica</text>`;
+  } else {
+    const pts = sorted.map((r,i) => `${xPos(i)},${yPos(Number(r.value))}`).join(' ');
+    svg += `<polyline fill="none" stroke="#2563eb" stroke-width="2.5" points="${pts}"/>`;
+    sorted.forEach((r,i) => {
+      svg += `<circle cx="${xPos(i)}" cy="${yPos(Number(r.value))}" r="4" fill="#2563eb"/>`;
+    });
+  }
+  // Etiquetes X (només primera, mitja i última)
+  const labelIdxs = sorted.length<=3 ? sorted.map((_,i)=>i) : [0, Math.floor(sorted.length/2), sorted.length-1];
+  labelIdxs.forEach(i => {
+    svg += `<text x="${xPos(i)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#64748b" font-family="Montserrat">${dates[i].slice(5)}</text>`;
+  });
+  svg += `</svg>`;
+  return svg;
+}
+
+function openAddReading() {
+  if(!currentMetricType) return;
+  const def = metricDefs[currentMetricType];
+  document.getElementById('reading-title').textContent = 'Nova lectura · ' + def.name;
+  document.getElementById('reading-date').value = TODAY;
+  document.getElementById('reading-notes').value = '';
+  const cont = document.getElementById('reading-value-container');
+  if(def.compound) {
+    cont.innerHTML = `<div class="form-row single"><div>
+      <label>Tensió arterial (sistòlica / diastòlica)</label>
+      <div class="bp-row">
+        <input type="number" id="reading-sys" placeholder="120" min="50" max="250" />
+        <span class="bp-sep">/</span>
+        <input type="number" id="reading-dia" placeholder="80" min="30" max="150" />
+        <span class="bp-sep" style="font-weight:600;color:var(--text-light);font-size:0.85rem;">mmHg</span>
+      </div>
+    </div></div>`;
+  } else {
+    const step = def.step ? `step="${def.step}"` : '';
+    cont.innerHTML = `<div class="form-row single"><div>
+      <label>${def.name} (${def.unit})</label>
+      <input type="number" id="reading-value" ${step} min="${def.range[0]}" max="${def.range[1]}" placeholder="" />
+    </div></div>`;
+  }
+  openModal('modal-new-reading');
+  setTimeout(() => {
+    const f = document.getElementById(def.compound ? 'reading-sys' : 'reading-value');
+    if(f) f.focus();
+  }, 100);
+}
+
+function saveReading() {
+  if(!currentMetricType) return;
+  const def = metricDefs[currentMetricType];
+  const date = document.getElementById('reading-date').value || TODAY;
+  const notes = document.getElementById('reading-notes').value.trim();
+  const reading = { date, notes };
+  if(def.compound) {
+    const sys = document.getElementById('reading-sys').value;
+    const dia = document.getElementById('reading-dia').value;
+    if(!sys || !dia) { showToast('Falten valors de tensió', 'error'); return; }
+    reading.sys = sys; reading.dia = dia;
+  } else {
+    const value = document.getElementById('reading-value').value;
+    if(!value) { showToast('Falta el valor', 'error'); return; }
+    reading.value = value;
+  }
+  updatePerson(p => {
+    if(!p.metrics) p.metrics = {};
+    if(!p.metrics[currentMetricType]) p.metrics[currentMetricType] = [];
+    p.metrics[currentMetricType].push(reading);
+  });
+  closeModal('modal-new-reading');
+  renderMetricTypes();
+  renderMetricChart();
+  showToast('Lectura desada');
+}
+
+function deleteReading(idx) {
+  if(!confirm('Eliminar aquesta lectura?')) return;
+  updatePerson(p => {
+    if(p.metrics && p.metrics[currentMetricType]) {
+      p.metrics[currentMetricType].splice(idx, 1);
+    }
+  });
+  renderMetricTypes();
+  renderMetricChart();
+}
+
+// ===================== URGÈNCIA =====================
+function openUrgencia() {
+  const p = getPerson();
+  if(!p) return;
+  const cont = document.getElementById('urgencia-content');
+
+  let html = `<div class="urg-header">
+    <div class="urg-title">DADES MÈDIQUES D'URGÈNCIA</div>
+    <div class="urg-name">${escapeHtml(p.name)}</div>
+    <div class="urg-meta">${p.relation && p.relation!=='Jo mateix' ? p.relation+' · ' : ''}${p.age?p.age+' anys':''}</div>
+  </div>`;
+
+  // Quick stats
+  const quicks = [];
+  if(p.blood) quicks.push({lbl:'Grup sanguini', val:p.blood});
+  if(p.weight) quicks.push({lbl:'Pes', val:p.weight+' kg'});
+  if(p.height) quicks.push({lbl:'Alçada', val:p.height+' cm'});
+  if(p.age) quicks.push({lbl:'Edat', val:p.age+' anys'});
+  if(quicks.length) {
+    html += `<div class="urg-grid">${quicks.map(q => `
+      <div class="urg-quick">
+        <div class="urg-quick-label">${q.lbl}</div>
+        <div class="urg-quick-val">${escapeHtml(q.val)}</div>
+      </div>`).join('')}</div>`;
+  }
+
+  // Al·lèrgies — destacades
+  if((p.allergies||[]).length) {
+    html += `<div class="urg-block critical">
+      <div class="urg-block-label">⚠ AL·LÈRGIES</div>
+      ${p.allergies.map(a => `<div class="urg-list-item">${escapeHtml(a.name)}${a.reaction?`<span class="sub">→ ${escapeHtml(a.reaction)}</span>`:''}</div>`).join('')}
+    </div>`;
+  } else {
+    html += `<div class="urg-block">
+      <div class="urg-block-label">⚠ Al·lèrgies</div>
+      <div class="urg-list-item" style="font-weight:500;color:var(--text-muted);">Sense al·lèrgies registrades</div>
+    </div>`;
+  }
+
+  // Medicaments actuals
+  if((p.meds||[]).length) {
+    html += `<div class="urg-block">
+      <div class="urg-block-label">💊 Medicació actual</div>
+      ${p.meds.map(m => `<div class="urg-list-item">${escapeHtml(m.name)}${m.dose?` · ${escapeHtml(m.dose)}`:''}${m.frequency?`<span class="sub">${escapeHtml(m.frequency)}</span>`:''}</div>`).join('')}
+    </div>`;
+  }
+
+  // Condicions cròniques
+  if((p.conditions||[]).length) {
+    html += `<div class="urg-block">
+      <div class="urg-block-label">❤️ Condicions cròniques</div>
+      ${p.conditions.map(c => `<div class="urg-list-item">${escapeHtml(c.name)}${c.since?`<span class="sub">des de ${escapeHtml(c.since)}</span>`:''}</div>`).join('')}
+    </div>`;
+  }
+
+  // Cirurgies recents (últimes 3)
+  if((p.surgeries||[]).length) {
+    const recent = [...p.surgeries].sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0,3);
+    html += `<div class="urg-block">
+      <div class="urg-block-label">🏥 Cirurgies / procediments rellevants</div>
+      ${recent.map(s => `<div class="urg-list-item">${escapeHtml(s.name)}${s.date?`<span class="sub">${escapeHtml(s.date)}</span>`:''}</div>`).join('')}
+    </div>`;
+  }
+
+  // Mètriques recents (últim valor de cada)
+  if(p.metrics) {
+    const recentMetrics = [];
+    Object.entries(p.metrics).forEach(([key, arr]) => {
+      if(arr && arr.length) {
+        const last = arr[arr.length-1];
+        recentMetrics.push({def: metricDefs[key], reading: last, key});
+      }
+    });
+    if(recentMetrics.length) {
+      html += `<div class="urg-block">
+        <div class="urg-block-label">📈 Última lectura mètriques</div>
+        ${recentMetrics.map(m => `<div class="urg-list-item">${m.def.icon} ${m.def.name}: ${formatMetricValue(m.key, m.reading)}<span class="sub">${m.reading.date}</span></div>`).join('')}
+      </div>`;
+    }
+  }
+
+  // Contacte d'emergència
+  if(p.emergency) {
+    const tel = p.emergency.match(/(\+?\d[\d\s\-]{6,})/);
+    const telHref = tel ? `tel:${tel[1].replace(/\s|-/g,'')}` : null;
+    html += telHref
+      ? `<a href="${telHref}" class="urg-emerg-contact"><div class="lbl">CONTACTE D'EMERGÈNCIA · TRUCAR</div><div class="val">${escapeHtml(p.emergency)}</div></a>`
+      : `<div class="urg-emerg-contact" style="cursor:default;"><div class="lbl">CONTACTE D'EMERGÈNCIA</div><div class="val">${escapeHtml(p.emergency)}</div></div>`;
+  }
+
+  html += `<div style="text-align:center;color:var(--text-muted);font-size:0.75rem;margin-top:1.2rem;font-style:italic;">Generat el ${new Date().toLocaleString('ca')}</div>`;
+
+  cont.innerHTML = html;
+  document.getElementById('urgencia-screen').classList.add('open');
+}
+
+function closeUrgencia() {
+  document.getElementById('urgencia-screen').classList.remove('open');
+}
+
+function escapeHtml(s) {
+  if(s==null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ===================== BACKUP RECORDATORI =====================
+function getLastBackup() {
+  try { return localStorage.getItem(BACKUP_KEY); } catch(e) { return null; }
+}
+function setLastBackup(date) {
+  try { localStorage.setItem(BACKUP_KEY, date); } catch(e) {}
+}
+function daysSinceBackup() {
+  const last = getLastBackup();
+  if(!last) return null;
+  const lastD = new Date(last);
+  const now = new Date();
+  return Math.floor((now - lastD) / (1000*60*60*24));
+}
+
+function renderBackupBanner() {
+  const cont = document.getElementById('backup-banner-container');
+  if(!cont) return;
+  const db = getDB();
+  const hasData = (db.persons||[]).some(p =>
+    (p.allergies||[]).length + (p.conditions||[]).length + (p.meds||[]).length +
+    (p.surgeries||[]).length + (p.exams||[]).length + (p.logs||[]).length > 0
+  );
+  if(!hasData) { cont.innerHTML = ''; return; }
+
+  const days = daysSinceBackup();
+  const last = getLastBackup();
+  const snoozed = sessionStorage.getItem('backup_snoozed') === '1';
+  if(snoozed) { cont.innerHTML = ''; return; }
+
+  let show = false;
+  let msg = '';
+  if(!last) {
+    show = true;
+    msg = `Encara no has fet cap <strong>còpia de seguretat</strong>. És recomanable per no perdre les dades.`;
+  } else if(days >= 30) {
+    show = true;
+    msg = `Fa <strong>${days} dies</strong> que no fas còpia de seguretat. T'aconsello fer-ne una.`;
+  }
+  if(!show) { cont.innerHTML = ''; return; }
+
+  cont.innerHTML = `<div class="backup-banner">
+    <div class="backup-banner-icon">💾</div>
+    <div class="backup-banner-text">${msg}</div>
+    <div class="backup-banner-actions">
+      <button class="btn btn-primary btn-sm" onclick="exportData()">Fer còpia ara</button>
+      <button class="btn btn-secondary btn-sm" onclick="snoozeBackup()">Després</button>
+    </div>
+  </div>`;
+}
+
+function snoozeBackup() {
+  sessionStorage.setItem('backup_snoozed', '1');
+  renderBackupBanner();
 }
 
 // ===================== PDF =====================
@@ -1693,9 +2476,28 @@ function generateMedicalPDF(mode='preview') {
   if(p.vaccines?.length) {
     heading2('Vacunes');
     p.vaccines.forEach(v => {
-      bodyText('• '+v.name+(v.date?' ('+v.date+')':(v.notes?'':''+(v.notes?'':'')))+(v.notes?' — '+v.notes:''), 2);
+      bodyText('• '+v.name+(v.date?' ('+v.date+')':'')+(v.notes?' — '+v.notes:''), 2);
     });
     y += 3;
+  }
+
+  // MÈTRIQUES (últimes lectures)
+  if(p.metrics) {
+    const recents = [];
+    Object.entries(p.metrics).forEach(([k, arr]) => {
+      if(arr && arr.length) {
+        const last = arr[arr.length-1];
+        const def = metricDefs[k];
+        if(def) recents.push({key:k, def, last, count:arr.length});
+      }
+    });
+    if(recents.length) {
+      heading2('Mètriques de salut (últimes lectures)');
+      recents.forEach(m => {
+        bodyText('• '+m.def.name+': '+formatMetricValue(m.key, m.last)+' ('+m.last.date+')'+(m.count>1?' · '+m.count+' lectures totals':''), 2);
+      });
+      y += 3;
+    }
   }
 
   // Footer avís
@@ -1835,6 +2637,10 @@ function exportData() {
   a.download = 'historial-medic-backup-'+TODAY+'.json';
   a.click();
   URL.revokeObjectURL(url);
+  setLastBackup(TODAY);
+  sessionStorage.removeItem('backup_snoozed');
+  renderBackupBanner();
+  showToast('Còpia descarregada');
 }
 function importData(input) {
   const file = input.files[0];
@@ -1881,8 +2687,16 @@ document.querySelectorAll('.modal-bg').forEach(bg => {
 });
 
 // ===================== INIT =====================
+if(!checkStorage()) {
+  setTimeout(() => showToast('El navegador no permet desar dades en aquest mode (privat?). Les dades no es conservaran.', 'warn', 8000), 600);
+}
 renderSplash();
 document.getElementById('pdf-to') && (document.getElementById('pdf-to').value=TODAY);
+
+// Tancar pantalla d'urgència amb Escape
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && document.getElementById('urgencia-screen').classList.contains('open')) closeUrgencia();
+});
 </script>
 </body>
 </html>
