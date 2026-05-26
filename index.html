@@ -99,17 +99,25 @@ main{max-width:1040px;margin:0 auto;padding:28px 16px 80px;}
 .app-card.c-lila{background:linear-gradient(145deg,#faf5ff 0%,#f8fafc 50%,#fff 100%);border-color:#e9d5ff;}
 .app-card.c-lila:hover{border-color:#c4b5fd;box-shadow:0 10px 30px rgba(124,58,237,.12);}
 
+/* Colors per categoria — creació (rosa/carmí) */
+.sec-icona.rosa{background:linear-gradient(135deg,#9f1239,#e11d48);box-shadow:0 4px 12px rgba(159,18,57,.35);}
+.sec-badge.rosa{background:#ffe4e6;color:#9f1239;}
+.app-card.c-rosa{background:linear-gradient(145deg,#fff1f2 0%,#f8fafc 50%,#fff 100%);border-color:#fecdd3;}
+.app-card.c-rosa:hover{border-color:#fda4af;box-shadow:0 10px 30px rgba(159,18,57,.13);}
+
 /* Franja de color superior de cada targeta */
 .app-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;opacity:.7;}
 .app-card.c-blau::before{background:linear-gradient(90deg,#2563eb,#60a5fa);}
 .app-card.c-verd::before{background:linear-gradient(90deg,#16a34a,#4ade80);}
 .app-card.c-lila::before{background:linear-gradient(90deg,#7c3aed,#c4b5fd);}
+.app-card.c-rosa::before{background:linear-gradient(90deg,#9f1239,#fb7185);}
 
 /* Icona amb fons pill */
 .app-icon-wrap{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:2rem;line-height:1;flex-shrink:0;}
 .c-blau .app-icon-wrap{background:linear-gradient(135deg,#dbeafe,#bfdbfe);box-shadow:0 4px 12px rgba(37,99,235,.18);}
 .c-verd .app-icon-wrap{background:linear-gradient(135deg,#dcfce7,#bbf7d0);box-shadow:0 4px 12px rgba(22,163,74,.18);}
 .c-lila .app-icon-wrap{background:linear-gradient(135deg,#ede9fe,#ddd6fe);box-shadow:0 4px 12px rgba(124,58,237,.18);}
+.c-rosa .app-icon-wrap{background:linear-gradient(135deg,#ffe4e6,#fecdd3);box-shadow:0 4px 12px rgba(159,18,57,.18);}
 
 .app-name{font-size:.74rem;font-weight:800;color:#0f172a;line-height:1.3;}
 .app-desc{font-size:.66rem;color:#64748b;line-height:1.45;font-weight:500;}
@@ -390,6 +398,32 @@ footer a{color:#475569;text-decoration:none;}
             <div class="app-icon-wrap">🎙</div>
             <div class="app-name">La Darrera Emissió</div>
             <div class="app-desc">Un guió de ràdio que no és ficció. Quinze anys de silenci. Una sola nit per dir la veritat.</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CREACIÓ ── -->
+  <div class="seccio" id="s-creacio">
+    <div class="sec-cap" onclick="toggle('s-creacio')">
+      <div class="sec-icona rosa">✒️</div>
+      <div class="sec-titols">
+        <div class="sec-title">Creació</div>
+        <div class="sec-sub">Poemes que es fan cançons</div>
+      </div>
+      <div class="sec-dreta">
+        <span class="sec-badge rosa">Taller de Lletres</span>
+        <span class="sec-chevron">▾</span>
+      </div>
+    </div>
+    <div class="sec-cos">
+      <div class="sec-cos-inner">
+        <div class="app-grid">
+          <a class="app-card c-rosa" href="https://gobo26.github.io/Taller_de_lletres/" target="_blank" rel="noopener">
+            <div class="app-icon-wrap">✒️</div>
+            <div class="app-name">Taller de Lletres</div>
+            <div class="app-desc">Poemes i cançons de Gobo26</div>
           </a>
         </div>
       </div>
