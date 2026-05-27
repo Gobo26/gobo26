@@ -6,7 +6,7 @@
 <title>Gobo26 — Jocs i Eines Gratuïtes</title>
 <meta name="application-name" content="Gobo26">
 <meta name="description" content="Jocs i eines per mantenir la ment activa. Sense anuncis, sense esperes, al teu ritme.">
-<meta name="theme-color" content="#1e293b">
+<meta name="theme-color" content="#c4556a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,138 +16,392 @@
 <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
 <link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Barlow+Condensed:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:system-ui, -apple-system, sans-serif;background:#f1f5f9;color:#334155;min-height:100vh;overflow-x:hidden;}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rosa:       #c4556a;
+  --rosa-clar:  #f8e8eb;
+  --oliva:      #7a8040;
+  --oliva-clar: #eaecda;
+  --cel:        #4a7a8a;
+  --cel-clar:   #d8eaee;
+  --sorra:      #b86840;
+  --sorra-clar: #f5e4d8;
+  --fosc:       #1c1a18;
+  --gris:       #f0ede8;
+  --blanc:      #faf8f5;
+  --text:       #2e2c2a;
+  --text2:      #6a6560;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--blanc);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
 /* ── HEADER ── */
-header{background:#0f172a;color:white;padding:0 20px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.35);}
-.hd-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:white;}
-.hd-logo-text{font-size:.78rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;}
-.hd-tagline{font-size:.63rem;font-weight:600;color:#475569;letter-spacing:.06em;display:none;}
-@media(min-width:480px){.hd-tagline{display:block;}}
+header {
+  background: var(--rosa);
+  padding: .8rem 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  gap: 1rem;
+}
+.hd-logo {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  text-decoration: none;
+  color: white;
+}
+.hd-logo-text {
+  font-family: 'Caveat', cursive;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: white;
+}
+.hd-tagline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.75);
+  display: none;
+}
+@media (min-width: 480px) { .hd-tagline { display: block; } }
 
 /* ── HERO ── */
-.hero{background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 55%,#1d4ed8 100%);color:white;padding:48px 20px 60px;text-align:center;position:relative;overflow:hidden;}
-.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:40px;background:#f1f5f9;clip-path:ellipse(55% 100% at 50% 100%);}
-.hero-eyebrow{font-size:.65rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:#93c5fd;margin-bottom:14px;}
-.hero-tit{font-size:clamp(2.2rem,7vw,3.6rem);font-weight:900;line-height:1;letter-spacing:-.04em;margin-bottom:14px;}
-.hero-tit em{color:#60a5fa;font-style:normal;}
-.hero-sub{font-size:clamp(.9rem,2.5vw,1.05rem);font-weight:500;color:#cbd5e1;line-height:1.7;max-width:500px;margin:0 auto 28px;}
-.hero-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
-.pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:6px 14px;font-size:.75rem;font-weight:700;color:white;backdrop-filter:blur(4px);}
+.hero {
+  background: var(--fosc);
+  color: white;
+  padding: 4rem 1.5rem 4rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.hero::after {
+  content: '"';
+  position: absolute;
+  right: -1rem;
+  top: 50%;
+  transform: translateY(-55%);
+  font-family: 'Caveat', cursive;
+  font-size: clamp(14rem, 30vw, 26rem);
+  line-height: 1;
+  color: rgba(196,85,106,.18);
+  pointer-events: none;
+  user-select: none;
+}
+.hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+.hero-eyebrow {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  background: var(--rosa);
+  color: white;
+  padding: .3rem .8rem;
+  margin-bottom: 1.2rem;
+}
+.hero-tit {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(3.5rem, 10vw, 6.2rem);
+  line-height: 1;
+  color: white;
+  margin-bottom: .4rem;
+}
+.hero-tit em { color: var(--rosa); font-style: normal; }
+.hero-sub {
+  font-style: italic;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,.65);
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 auto 1.6rem;
+}
+.hero-pills { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
+.pill {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .4rem .9rem;
+  border: 1px solid rgba(255,255,255,.3);
+  color: rgba(255,255,255,.85);
+  background: transparent;
+}
 
 /* ── MAIN ── */
-main{max-width:1040px;margin:0 auto;padding:28px 16px 80px;}
-
+main { max-width: 1040px; margin: 0 auto; padding: 2.5rem 1rem 4rem; }
 
 /* ── SECCIÓ DESPLEGABLE ── */
-.seccio{margin-bottom:12px;}
+.seccio { margin-bottom: 1rem; }
+.sec-cap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: white;
+  border: 1px solid rgba(0,0,0,.1);
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s, border-color .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.sec-cap:hover { background: var(--gris); }
+.seccio.obert .sec-cap { border-bottom-color: transparent; background: var(--gris); }
 
-.sec-cap{display:flex;align-items:center;gap:14px;padding:16px 18px;background:white;border-radius:16px;border:2px solid #e2e8f0;cursor:pointer;user-select:none;transition:background .15s,border-color .15s,box-shadow .15s;-webkit-tap-highlight-color:transparent;}
-.sec-cap:hover{background:#f8fafc;border-color:#cbd5e1;box-shadow:0 4px 12px rgba(0,0,0,.06);}
-.seccio.obert .sec-cap{border-radius:16px 16px 0 0;border-bottom-color:transparent;background:#f8fafc;}
+.sec-icona {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  color: white;
+}
+.sec-icona.cel    { background: var(--cel); }
+.sec-icona.oliva  { background: var(--oliva); }
+.sec-icona.sorra  { background: var(--sorra); }
+.sec-icona.rosa   { background: var(--rosa); }
+.sec-icona.fosc   { background: var(--fosc); }
 
-.sec-icona{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
-.sec-icona.blau{background:linear-gradient(135deg,#2563eb,#3b82f6);box-shadow:0 4px 12px rgba(37,99,235,.35);}
-.sec-icona.verd{background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 4px 12px rgba(22,163,74,.35);}
-.sec-icona.lila{background:linear-gradient(135deg,#7c3aed,#a78bfa);box-shadow:0 4px 12px rgba(124,58,237,.35);}
-.sec-icona.ambre{background:linear-gradient(135deg,#b45309,#f59e0b);box-shadow:0 4px 12px rgba(180,83,9,.35);}
-.sec-badge.ambre{background:#fef3c7;color:#92400e;}
-.app-card.c-ambre{background:linear-gradient(145deg,#fffbeb 0%,#f8fafc 50%,#fff 100%);border-color:#fde68a;}
-.app-card.c-ambre:hover{border-color:#fbbf24;box-shadow:0 10px 30px rgba(180,83,9,.13);}
-.app-card.c-ambre::before{background:linear-gradient(90deg,#b45309,#fbbf24);}
-.c-ambre .app-icon-wrap{background:linear-gradient(135deg,#fef3c7,#fde68a);box-shadow:0 4px 12px rgba(180,83,9,.18);}
+.sec-titols { flex: 1; min-width: 0; }
+.sec-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--fosc);
+  line-height: 1.1;
+}
+.sec-sub {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: .82rem;
+  color: var(--text2);
+  margin-top: .25rem;
+  line-height: 1.4;
+}
+.sec-dreta { display: flex; align-items: center; gap: .8rem; flex-shrink: 0; }
+.sec-badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .28rem .7rem;
+  color: white;
+  white-space: nowrap;
+}
+.sec-badge.cel    { background: var(--cel); }
+.sec-badge.oliva  { background: var(--oliva); }
+.sec-badge.sorra  { background: var(--sorra); }
+.sec-badge.rosa   { background: var(--rosa); }
+.sec-badge.fosc   { background: var(--fosc); }
 
-.sec-titols{flex:1;min-width:0;}
-.sec-title{font-size:.95rem;font-weight:900;color:#0f172a;letter-spacing:-.02em;}
-.sec-sub{font-size:.72rem;color:#64748b;font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.sec-dreta{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.sec-badge{font-size:.6rem;font-weight:800;padding:3px 10px;border-radius:99px;text-transform:uppercase;letter-spacing:.12em;}
-.sec-badge.blau{background:#dbeafe;color:#1d4ed8;}
-.sec-badge.verd{background:#dcfce7;color:#15803d;}
-.sec-badge.lila{background:#ede9fe;color:#6d28d9;}
-
-.sec-chevron{font-size:.9rem;color:#94a3b8;transition:transform .3s ease;line-height:1;}
-.seccio.obert .sec-chevron{transform:rotate(180deg);}
+.sec-chevron { color: var(--text2); transition: transform .3s ease; font-size: .9rem; line-height: 1; }
+.seccio.obert .sec-chevron { transform: rotate(180deg); }
 
 /* ── PANELL CONTINGUT ── */
-.sec-cos{overflow:hidden;max-height:0;transition:max-height .4s ease;}
-.seccio.obert .sec-cos{max-height:3000px;}
-.sec-cos-inner{background:white;border:2px solid #e2e8f0;border-top:none;border-radius:0 0 16px 16px;padding:16px;}
+.sec-cos { overflow: hidden; max-height: 0; transition: max-height .4s ease; }
+.seccio.obert .sec-cos { max-height: 3000px; }
+.sec-cos-inner {
+  background: white;
+  border: 1px solid rgba(0,0,0,.1);
+  border-top: none;
+  padding: 1.2rem;
+}
 
 /* ── GRID APPS ── */
-.app-grid{display:grid;gap:10px;grid-template-columns:repeat(2,1fr);}
-@media(min-width:480px){.app-grid{grid-template-columns:repeat(3,1fr);}}
-@media(min-width:680px){.app-grid{grid-template-columns:repeat(4,1fr);}}
-@media(min-width:900px){.app-grid{grid-template-columns:repeat(5,1fr);}}
+.app-grid {
+  display: grid;
+  gap: .6rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 480px) { .app-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 680px) { .app-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 900px) { .app-grid { grid-template-columns: repeat(5, 1fr); } }
 
 /* ── TARGETES APP ── */
-.app-card{border-radius:14px;padding:18px 12px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;transition:transform .18s,box-shadow .18s;-webkit-tap-highlight-color:transparent;position:relative;border:1.5px solid transparent;}
-.app-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.13);}
-.app-card:active{transform:translateY(0);box-shadow:none;}
+.app-card {
+  padding: 1rem .8rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: .5rem;
+  transition: opacity .18s, border-color .18s;
+  border: 1px solid rgba(0,0,0,.08);
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.app-card:hover { opacity: .9; }
 
-/* Colors per categoria — jocs (blau) */
-.app-card.c-blau{background:linear-gradient(145deg,#eff6ff 0%,#f8fafc 50%,#fff 100%);border-color:#bfdbfe;}
-.app-card.c-blau:hover{border-color:#93c5fd;box-shadow:0 10px 30px rgba(37,99,235,.14);}
+.app-card.c-cel   { background: var(--cel-clar); }
+.app-card.c-cel:hover   { border-color: var(--cel); }
+.app-card.c-oliva { background: var(--oliva-clar); }
+.app-card.c-oliva:hover { border-color: var(--oliva); }
+.app-card.c-sorra { background: var(--sorra-clar); }
+.app-card.c-sorra:hover { border-color: var(--sorra); }
+.app-card.c-rosa  { background: var(--rosa-clar); }
+.app-card.c-rosa:hover  { border-color: var(--rosa); }
+.app-card.c-fosc  { background: var(--gris); }
+.app-card.c-fosc:hover  { border-color: var(--fosc); }
 
-/* Colors per categoria — eines (verd) */
-.app-card.c-verd{background:linear-gradient(145deg,#f0fdf4 0%,#f8fafc 50%,#fff 100%);border-color:#bbf7d0;}
-.app-card.c-verd:hover{border-color:#86efac;box-shadow:0 10px 30px rgba(22,163,74,.13);}
+/* Targeta destacada (featured) per al Taller */
+.app-card.destacada {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  padding: 1.4rem 1.4rem;
+  gap: 1.2rem;
+}
+.app-card.destacada .app-icon-wrap { width: 64px; height: 64px; font-size: 2.4rem; flex-shrink: 0; }
+.app-card.destacada .app-cos { flex: 1; min-width: 0; }
+.app-card.destacada .app-name { font-size: 1rem; margin-bottom: .25rem; }
+.app-card.destacada .app-desc { font-size: .82rem; line-height: 1.55; }
+.app-card.destacada .app-cta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--rosa);
+  white-space: nowrap;
+  border: 1px solid var(--rosa);
+  padding: .4rem .8rem;
+  flex-shrink: 0;
+}
 
-/* Colors per categoria — amics (lila/neutre) */
-.app-card.c-lila{background:linear-gradient(145deg,#faf5ff 0%,#f8fafc 50%,#fff 100%);border-color:#e9d5ff;}
-.app-card.c-lila:hover{border-color:#c4b5fd;box-shadow:0 10px 30px rgba(124,58,237,.12);}
-
-/* Colors per categoria — creació (rosa/carmí) */
-.sec-icona.rosa{background:linear-gradient(135deg,#9f1239,#e11d48);box-shadow:0 4px 12px rgba(159,18,57,.35);}
-.sec-badge.rosa{background:#ffe4e6;color:#9f1239;}
-.app-card.c-rosa{background:linear-gradient(145deg,#fff1f2 0%,#f8fafc 50%,#fff 100%);border-color:#fecdd3;}
-.app-card.c-rosa:hover{border-color:#fda4af;box-shadow:0 10px 30px rgba(159,18,57,.13);}
-
-/* Franja de color superior de cada targeta */
-.app-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;opacity:.7;}
-.app-card.c-blau::before{background:linear-gradient(90deg,#2563eb,#60a5fa);}
-.app-card.c-verd::before{background:linear-gradient(90deg,#16a34a,#4ade80);}
-.app-card.c-lila::before{background:linear-gradient(90deg,#7c3aed,#c4b5fd);}
-.app-card.c-rosa::before{background:linear-gradient(90deg,#9f1239,#fb7185);}
-
-/* Icona amb fons pill */
-.app-icon-wrap{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:2rem;line-height:1;flex-shrink:0;}
-.c-blau .app-icon-wrap{background:linear-gradient(135deg,#dbeafe,#bfdbfe);box-shadow:0 4px 12px rgba(37,99,235,.18);}
-.c-verd .app-icon-wrap{background:linear-gradient(135deg,#dcfce7,#bbf7d0);box-shadow:0 4px 12px rgba(22,163,74,.18);}
-.c-lila .app-icon-wrap{background:linear-gradient(135deg,#ede9fe,#ddd6fe);box-shadow:0 4px 12px rgba(124,58,237,.18);}
-.c-rosa .app-icon-wrap{background:linear-gradient(135deg,#ffe4e6,#fecdd3);box-shadow:0 4px 12px rgba(159,18,57,.18);}
-
-.app-name{font-size:.74rem;font-weight:800;color:#0f172a;line-height:1.3;}
-.app-desc{font-size:.66rem;color:#64748b;line-height:1.45;font-weight:500;}
+.app-icon-wrap {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.app-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--fosc);
+  line-height: 1.2;
+}
+.app-desc {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: .72rem;
+  color: var(--text2);
+  line-height: 1.45;
+}
 
 /* Distintiu "NOU" */
-.nou-badge{position:absolute;top:-7px;right:-7px;background:linear-gradient(135deg,#dc2626,#ef4444);color:white;font-size:.52rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:99px;box-shadow:0 2px 8px rgba(220,38,38,.5);}
+.nou-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--rosa);
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .58rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .22rem .55rem;
+}
 
 /* ── BIO ── */
-.bio-card{background:white;border-radius:18px;border:2px solid #e2e8f0;padding:24px 26px;display:flex;gap:18px;align-items:flex-start;box-shadow:0 4px 16px rgba(0,0,0,.05);margin-top:16px;}
-.bio-avatar{font-size:2.8rem;flex-shrink:0;line-height:1;}
-.bio-label{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.28em;color:#2563eb;margin-bottom:8px;}
-.bio-text{font-size:.88rem;color:#475569;line-height:1.75;font-weight:500;}
-.bio-text strong{color:#1e293b;font-weight:800;}
-@media(max-width:520px){.bio-card{flex-direction:column;gap:10px;padding:18px;}.bio-avatar{font-size:2.2rem;}}
+.bio-card {
+  background: white;
+  border-top: 3px solid var(--rosa);
+  padding: 1.5rem 1.8rem;
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+}
+.bio-avatar { font-size: 2.4rem; flex-shrink: 0; line-height: 1; }
+.bio-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--rosa);
+  margin-bottom: .5rem;
+}
+.bio-text {
+  font-family: 'Lora', serif;
+  font-size: .92rem;
+  color: var(--text2);
+  line-height: 1.75;
+}
+.bio-text strong { color: var(--fosc); font-weight: 600; }
+@media (max-width: 520px) {
+  .bio-card { flex-direction: column; gap: .8rem; padding: 1.2rem; }
+  .bio-avatar { font-size: 2rem; }
+  .app-card.destacada { flex-direction: column; text-align: center; gap: .8rem; }
+  .app-card.destacada .app-cos { text-align: center; }
+}
 
 /* ── FOOTER ── */
-footer{background:#0f172a;color:#475569;text-align:center;padding:14px;font-size:.65rem;font-weight:600;}
-footer a{color:#475569;text-decoration:none;}
+footer {
+  background: var(--fosc);
+  color: rgba(255,255,255,.55);
+  text-align: center;
+  padding: 1.2rem 1rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+footer a {
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.3);
+}
+footer a:hover { border-bottom-color: white; }
 
 /* ── ANIMACIONS ── */
-@keyframes popIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-.hero{animation:popIn .5s ease both;}
-
-.seccio{animation:slideUp .4s ease both;}
-.seccio:nth-child(1){animation-delay:.08s;}
-.seccio:nth-child(2){animation-delay:.14s;}
-.seccio:nth-child(3){animation-delay:.20s;}
-.seccio:nth-child(4){animation-delay:.26s;}
-.seccio:nth-child(5){animation-delay:.32s;}
+@keyframes popIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.hero { animation: popIn .5s ease both; }
+.seccio { animation: slideUp .4s ease both; }
+.seccio:nth-child(1) { animation-delay: .08s; }
+.seccio:nth-child(2) { animation-delay: .14s; }
+.seccio:nth-child(3) { animation-delay: .20s; }
+.seccio:nth-child(4) { animation-delay: .26s; }
+.seccio:nth-child(5) { animation-delay: .32s; }
 </style>
 </head>
 <body>
@@ -155,137 +409,133 @@ footer a{color:#475569;text-decoration:none;}
 <!-- HEADER -->
 <header>
   <a class="hd-logo" href="https://gobo26.github.io/gobo26/" target="_self">
-    <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
-      <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
-      <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
-      <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
-    </svg>
     <span class="hd-logo-text">Gobo26</span>
   </a>
   <span class="hd-tagline">Jocs i eines gratuïtes</span>
 </header>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="hero-eyebrow"></div>
-  <h1 class="hero-tit"><em>Gobo26</em><br>Juga. Aprèn. Gaudeix.</h1>
-  <p class="hero-sub">Jocs i eines gratuïts per a totes les edats.</p>
-  <div class="hero-pills">
-    <span class="pill">🆓 100% gratuït</span>
-
-    <span class="pill">📱 Mòbil i ordinador</span>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Col·lecció Gobo26</div>
+    <h1 class="hero-tit">Gobo26</h1>
+    <p class="hero-sub">Juga. Aprèn. Gaudeix. — jocs i eines gratuïts per a totes les edats.</p>
+    <div class="hero-pills">
+      <span class="pill">100% gratuït</span>
+      <span class="pill">Mòbil i ordinador</span>
+    </div>
   </div>
-</div>
+</section>
 
 <main>
 
   <!-- ── JOCS I MEMÒRIA ── -->
   <div class="seccio" id="s-jocs">
     <div class="sec-cap" onclick="toggle('s-jocs')">
-      <div class="sec-icona blau">🎮</div>
+      <div class="sec-icona cel">🎮</div>
       <div class="sec-titols">
         <div class="sec-title">Jocs i Memòria</div>
         <div class="sec-sub">Reptes numèrics, de paraules i memòria per exercitar la ment</div>
       </div>
       <div class="sec-dreta">
-        <span class="sec-badge blau">19 apps</span>
+        <span class="sec-badge cel">19 apps</span>
         <span class="sec-chevron">▾</span>
       </div>
     </div>
     <div class="sec-cos">
       <div class="sec-cos-inner">
         <div class="app-grid">
-          <a class="app-card c-blau" href="Gobo26-DOMINO.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-DOMINO.html" target="_self">
             <div class="app-icon-wrap">🁣</div>
             <div class="app-name">Dominó</div>
             <div class="app-desc">El clàssic joc de fitxes contra la màquina</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-PARAULA-SECRETA.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-PARAULA-SECRETA.html" target="_self">
             <div class="app-icon-wrap">🔐</div>
             <div class="app-name">Paraula Secreta</div>
             <div class="app-desc">Endevina la paraula oculta lletra a lletra</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-SUDOKU.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-SUDOKU.html" target="_self">
             <div class="app-icon-wrap">🔲</div>
             <div class="app-name">Sudoku</div>
             <div class="app-desc">El clàssic joc de números amb diverses dificultats</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-REPTE-NUMERIC.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-REPTE-NUMERIC.html" target="_self">
             <div class="app-icon-wrap">🧮</div>
             <div class="app-name">Repte Numèric</div>
             <div class="app-desc">Operacions aritmètiques contra el temps</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-CASCADA-NUMERICA.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-CASCADA-NUMERICA.html" target="_self">
             <div class="app-icon-wrap">🌊</div>
             <div class="app-name">Cascada Numèrica</div>
             <div class="app-desc">Seqüències de números en cascada</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-AMAGADES.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-AMAGADES.html" target="_self">
             <div class="app-icon-wrap">🔍</div>
             <div class="app-name">Amagades</div>
             <div class="app-desc">Troba les paraules amagades en una graella</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-ANAGRAMES.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-ANAGRAMES.html" target="_self">
             <div class="app-icon-wrap">🔀</div>
             <div class="app-name">Anagrames</div>
             <div class="app-desc">Reordena les lletres per trobar la paraula</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-DITES-INACABADES.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-DITES-INACABADES.html" target="_self">
             <div class="app-icon-wrap">💬</div>
             <div class="app-name">Dites Inacabades</div>
             <div class="app-desc">Completa les dites populars catalanes</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-ENDEVINA.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-ENDEVINA.html" target="_self">
             <div class="app-icon-wrap">🤔</div>
             <div class="app-name">Endevina</div>
             <div class="app-desc">Endevinalles i qüestions de vocabulari</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-ENFILALL.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-ENFILALL.html" target="_self">
             <div class="app-icon-wrap">🧵</div>
             <div class="app-name">Enfilall de Mots</div>
             <div class="app-desc">Paraules encadenades lletra a lletra</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-PINTA-PARAULES.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-PINTA-PARAULES.html" target="_self">
             <div class="app-icon-wrap">🎨</div>
             <div class="app-name">Pinta Paraules</div>
             <div class="app-desc">Efecte Stroop: color i paraula en conflicte</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-COLECT.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-COLECT.html" target="_self">
             <div class="app-icon-wrap">🗂️</div>
             <div class="app-name">Col·leccionista</div>
             <div class="app-desc">Joc de memòria i col·lecció d'objectes</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-MESTRE-JOIER.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-MESTRE-JOIER.html" target="_self">
             <div class="app-icon-wrap">📿</div>
             <div class="app-name">Mestre Joier</div>
             <div class="app-desc">Recorda i reprodueix seqüències de colors</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-TRES-EN-RATLLA.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-TRES-EN-RATLLA.html" target="_self">
             <div class="app-icon-wrap">⭕</div>
             <div class="app-name">Tres en Ratlla</div>
             <div class="app-desc">El joc clàssic contra la IA amb emojis</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-MERCATUS.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-MERCATUS.html" target="_self">
             <div class="app-icon-wrap">🛒</div>
             <div class="app-name">Mercatus</div>
             <div class="app-desc">Llista de la compra intel·ligent</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-LA_BOTIGA.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-LA_BOTIGA.html" target="_self">
             <div class="app-icon-wrap">🏪</div>
             <div class="app-name">La Botiga</div>
             <div class="app-desc">Calcula el canvi donant les monedes justes</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-INTRUS.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-INTRUS.html" target="_self">
             <div class="app-icon-wrap">🕵️</div>
             <div class="app-name">L'Intrús</div>
             <div class="app-desc">Troba l'element que no pertany al grup</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-MAONS.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-MAONS.html" target="_self">
             <div class="app-icon-wrap">🧱</div>
             <div class="app-name">Maons</div>
             <div class="app-desc">Joc d'habilitat i reflexos amb blocs de colors</div>
           </a>
-          <a class="app-card c-blau" href="Gobo26-ONCLE-ALBERT.html" target="_self">
+          <a class="app-card c-cel" href="Gobo26-ONCLE-ALBERT.html" target="_self">
             <div class="app-icon-wrap">🗝️</div>
             <div class="app-name">L'Oncle Albert</div>
             <div class="app-desc">Escape room amb enigmes de xifres i codis</div>
@@ -298,56 +548,56 @@ footer a{color:#475569;text-decoration:none;}
   <!-- ── EINES I CURIOSITATS ── -->
   <div class="seccio" id="s-eines">
     <div class="sec-cap" onclick="toggle('s-eines')">
-      <div class="sec-icona verd">🛠️</div>
+      <div class="sec-icona oliva">🛠️</div>
       <div class="sec-titols">
         <div class="sec-title">Eines i Curiositats</div>
         <div class="sec-sub">Utilitats per al cos, la salut i la música</div>
       </div>
       <div class="sec-dreta">
-        <span class="sec-badge verd">8 apps</span>
+        <span class="sec-badge oliva">8 apps</span>
         <span class="sec-chevron">▾</span>
       </div>
     </div>
     <div class="sec-cos">
       <div class="sec-cos-inner">
         <div class="app-grid">
-          <a class="app-card c-verd" href="Gobo26-GIMNAS-CASA.html" target="_self">
+          <a class="app-card c-oliva" href="Gobo26-GIMNAS-CASA.html" target="_self">
             <div class="app-icon-wrap">🏋️</div>
             <div class="app-name">Gimnàs a Casa</div>
             <div class="app-desc">Exercicis guiats per fer a casa</div>
           </a>
-          <a class="app-card c-verd" href="Gobo26-TENSIO_ARTERIAL.html" target="_self">
+          <a class="app-card c-oliva" href="Gobo26-TENSIO_ARTERIAL.html" target="_self">
             <div class="app-icon-wrap">❤️</div>
             <div class="app-name">Tensió Arterial</div>
             <div class="app-desc">Registre i seguiment de la tensió arterial</div>
           </a>
-          <a class="app-card c-verd" href="Gobo26-MORSE-FACIL.html" target="_self">
+          <a class="app-card c-oliva" href="Gobo26-MORSE-FACIL.html" target="_self">
             <div class="app-icon-wrap">📡</div>
             <div class="app-name">Morse Fàcil</div>
             <div class="app-desc">Aprèn el codi Morse de manera progressiva</div>
           </a>
-          <a class="app-card c-verd" href="Gobo26-CANCONER-SDM.html" target="_self">
+          <a class="app-card c-oliva" href="Gobo26-CANCONER-SDM.html" target="_self">
             <div class="app-icon-wrap">🎵</div>
             <div class="app-name">Cançoner SDM</div>
             <div class="app-desc">Cançoner d'havaneres dels Sons del Mar</div>
           </a>
-          <a class="app-card c-verd" href="Gobo26-SUMA_MINUTS.html" target="_self">
+          <a class="app-card c-oliva" href="Gobo26-SUMA_MINUTS.html" target="_self">
             <div class="app-icon-wrap">⏱️</div>
             <div class="app-name">Suma Minuts</div>
             <div class="app-desc">Càlcul mental de temps i minuts</div>
           </a>
-          <a class="app-card c-verd" href="Gobo26-Herbes.html" target="_self">
+          <a class="app-card c-oliva" href="Gobo26-Herbes.html" target="_self">
             <div class="app-icon-wrap">🌿</div>
             <div class="app-name">Herbes mediterrànies</div>
             <div class="app-desc">Guia d'herbes, oracle i tradicions populars</div>
           </a>
-          <a class="app-card c-verd" href="Gobo26-Tarot.html" target="_self">
+          <a class="app-card c-oliva" href="Gobo26-Tarot.html" target="_self">
             <div class="app-icon-wrap">✦</div>
             <div class="app-name">Santuari de Tarot</div>
             <div class="app-desc">Tirades dels Arcans Majors i diari de lectures</div>
           </a>
 
-          <a class="app-card c-verd" href="Gobo26-HISTORIAL-MEDIC.html" target="_self">
+          <a class="app-card c-oliva" href="Gobo26-HISTORIAL-MEDIC.html" target="_self">
             <span class="nou-badge">NOU</span>
             <div class="app-icon-wrap">
               <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
@@ -370,30 +620,30 @@ footer a{color:#475569;text-decoration:none;}
   <!-- ── AVENTURES ── -->
   <div class="seccio" id="s-aventures">
     <div class="sec-cap" onclick="toggle('s-aventures')">
-      <div class="sec-icona ambre">📖</div>
+      <div class="sec-icona sorra">📖</div>
       <div class="sec-titols">
         <div class="sec-title">Aventures Interactives</div>
         <div class="sec-sub">Històries de tria pròpia: cada decisió canvia el final</div>
       </div>
       <div class="sec-dreta">
-        <span class="sec-badge ambre">3 aventures</span>
+        <span class="sec-badge sorra">3 aventures</span>
         <span class="sec-chevron">▾</span>
       </div>
     </div>
     <div class="sec-cos">
       <div class="sec-cos-inner">
         <div class="app-grid">
-          <a class="app-card c-ambre" href="Gobo26-AVENTURA_RETRAT.html" target="_self">
+          <a class="app-card c-sorra" href="Gobo26-AVENTURA_RETRAT.html" target="_self">
             <div class="app-icon-wrap">🎨</div>
             <div class="app-name">El Retrat de la Reina</div>
             <div class="app-desc">Misteri medieval: un pintor, un crim i una trama de poder</div>
           </a>
-          <a class="app-card c-ambre" href="Gobo26-AVENTURA_CORAL.html" target="_self">
+          <a class="app-card c-sorra" href="Gobo26-AVENTURA_CORAL.html" target="_self">
             <div class="app-icon-wrap">🎭</div>
             <div class="app-name">La Nit de la Coral</div>
             <div class="app-desc">Un director assassinat, una soprano i menys d'una hora per descobrir la veritat</div>
           </a>
-          <a class="app-card c-ambre" href="Gobo26-AVENTURA_RADIO.html" target="_self">
+          <a class="app-card c-sorra" href="Gobo26-AVENTURA_RADIO.html" target="_self">
             <div class="nou-badge">NOU</div>
             <div class="app-icon-wrap">🎙</div>
             <div class="app-name">La Darrera Emissió</div>
@@ -405,12 +655,12 @@ footer a{color:#475569;text-decoration:none;}
   </div>
 
   <!-- ── CREACIÓ ── -->
-  <div class="seccio" id="s-creacio">
+  <div class="seccio obert" id="s-creacio">
     <div class="sec-cap" onclick="toggle('s-creacio')">
       <div class="sec-icona rosa">✒️</div>
       <div class="sec-titols">
         <div class="sec-title">Creació</div>
-        <div class="sec-sub">Poemes que es fan cançons</div>
+        <div class="sec-sub">Poemes que es fan cançons — havaneres, boleros, rumbes i valsets</div>
       </div>
       <div class="sec-dreta">
         <span class="sec-badge rosa">Taller de Lletres</span>
@@ -420,10 +670,13 @@ footer a{color:#475569;text-decoration:none;}
     <div class="sec-cos">
       <div class="sec-cos-inner">
         <div class="app-grid">
-          <a class="app-card c-rosa" href="https://gobo26.github.io/Taller_de_lletres/" target="_blank" rel="noopener">
+          <a class="app-card c-rosa destacada" href="https://gobo26.github.io/Taller_de_lletres/" target="_blank" rel="noopener">
             <div class="app-icon-wrap">✒️</div>
-            <div class="app-name">Taller de Lletres</div>
-            <div class="app-desc">Poemes i cançons de Gobo26</div>
+            <div class="app-cos">
+              <div class="app-name">Taller de Lletres</div>
+              <div class="app-desc">Col·lecció de poemes i cançons originals de Gobo26: havaneres, boleros, rumbes i valsets. Lletra de Juan Martínez Díaz (JRLP), producció musical amb Suno AI. Pots llegir-los i escoltar-los directament al web.</div>
+            </div>
+            <span class="app-cta">Entra al Taller →</span>
           </a>
         </div>
       </div>
@@ -433,13 +686,13 @@ footer a{color:#475569;text-decoration:none;}
   <!-- ── AMICS DE GOBO26 ── -->
   <div class="seccio" id="s-amics">
     <div class="sec-cap" onclick="toggle('s-amics')">
-      <div class="sec-icona lila">🌐</div>
+      <div class="sec-icona fosc">🌐</div>
       <div class="sec-titols">
         <div class="sec-title">Amics de Gobo26</div>
         <div class="sec-sub">Artesania, música coral, havaneres i més</div>
       </div>
       <div class="sec-dreta">
-        <span class="sec-badge lila">10 links</span>
+        <span class="sec-badge fosc">10 links</span>
         <span class="sec-chevron">▾</span>
       </div>
     </div>
@@ -447,7 +700,7 @@ footer a{color:#475569;text-decoration:none;}
       <div class="sec-cos-inner">
         <div class="app-grid">
 
-          <a class="app-card c-lila" href="https://www.instagram.com/fetdefils/" target="_blank" rel="noopener">
+          <a class="app-card c-fosc" href="https://www.instagram.com/fetdefils/" target="_blank" rel="noopener">
             <div class="app-icon-wrap">
               <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#e0d7f0" stroke="#7c3aed" stroke-width="2"/>
@@ -462,7 +715,7 @@ footer a{color:#475569;text-decoration:none;}
             <div class="app-desc">Amigurumis artesans</div>
           </a>
 
-          <a class="app-card c-lila" href="https://www.instagram.com/fustaventura/" target="_blank" rel="noopener">
+          <a class="app-card c-fosc" href="https://www.instagram.com/fustaventura/" target="_blank" rel="noopener">
             <div class="app-icon-wrap">
               <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
@@ -477,7 +730,7 @@ footer a{color:#475569;text-decoration:none;}
             <div class="app-desc">Artesania en fusta</div>
           </a>
 
-          <a class="app-card c-lila" href="https://www.instagram.com/sonsdelmar/" target="_blank" rel="noopener">
+          <a class="app-card c-fosc" href="https://www.instagram.com/sonsdelmar/" target="_blank" rel="noopener">
             <div class="app-icon-wrap">
               <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#e0f2fe" stroke="#0369a1" stroke-width="2"/>
@@ -492,7 +745,7 @@ footer a{color:#475569;text-decoration:none;}
             <div class="app-desc">Grup d'havaneres</div>
           </a>
 
-          <a class="app-card c-lila" href="https://www.instagram.com/cor_lianna/" target="_blank" rel="noopener">
+          <a class="app-card c-fosc" href="https://www.instagram.com/cor_lianna/" target="_blank" rel="noopener">
             <div class="app-icon-wrap">
               <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#fce7f3" stroke="#be185d" stroke-width="2"/>
@@ -505,7 +758,7 @@ footer a{color:#475569;text-decoration:none;}
             <div class="app-desc">Castellvell del Camp</div>
           </a>
 
-          <a class="app-card c-lila" href="https://www.instagram.com/corluia/" target="_blank" rel="noopener">
+          <a class="app-card c-fosc" href="https://www.instagram.com/corluia/" target="_blank" rel="noopener">
             <div class="app-icon-wrap">
               <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
@@ -521,7 +774,7 @@ footer a{color:#475569;text-decoration:none;}
             <div class="app-desc">Tarragona</div>
           </a>
 
-          <a class="app-card c-lila" href="https://www.instagram.com/corginesta.riudoms/" target="_blank" rel="noopener">
+          <a class="app-card c-fosc" href="https://www.instagram.com/corginesta.riudoms/" target="_blank" rel="noopener">
             <div class="app-icon-wrap">
               <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/>
@@ -540,7 +793,7 @@ footer a{color:#475569;text-decoration:none;}
             <div class="app-desc">Riudoms</div>
           </a>
 
-          <a class="app-card c-lila" href="https://www.instagram.com/corxamusia/" target="_blank" rel="noopener">
+          <a class="app-card c-fosc" href="https://www.instagram.com/corxamusia/" target="_blank" rel="noopener">
             <div class="app-icon-wrap">
               <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
@@ -555,7 +808,7 @@ footer a{color:#475569;text-decoration:none;}
             <div class="app-desc">Vilafranca del Penedès</div>
           </a>
 
-          <a class="app-card c-lila" href="https://www.instagram.com/duosuay/" target="_blank" rel="noopener">
+          <a class="app-card c-fosc" href="https://www.instagram.com/duosuay/" target="_blank" rel="noopener">
             <div class="app-icon-wrap">
               <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
@@ -571,7 +824,7 @@ footer a{color:#475569;text-decoration:none;}
             <div class="app-desc">Tarragona</div>
           </a>
 
-          <a class="app-card c-lila" href="https://www.instagram.com/rpl_invest/" target="_blank" rel="noopener">
+          <a class="app-card c-fosc" href="https://www.instagram.com/rpl_invest/" target="_blank" rel="noopener">
             <div class="app-icon-wrap">
               <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/>
@@ -586,7 +839,7 @@ footer a{color:#475569;text-decoration:none;}
             <div class="app-desc">Serveis d'inversió</div>
           </a>
 
-          <a class="app-card c-lila" href="https://www.instagram.com/lito.wakame/" target="_blank" rel="noopener">
+          <a class="app-card c-fosc" href="https://www.instagram.com/lito.wakame/" target="_blank" rel="noopener">
             <div class="app-icon-wrap">
               <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#fdf4ff" stroke="#9333ea" stroke-width="2"/>
