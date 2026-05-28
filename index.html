@@ -158,6 +158,7 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.5rem 1rem 4rem; }
   display: flex;
   align-items: center;
   gap: 1rem;
+  width: 100%;
   padding: 1rem 1.2rem;
   background: white;
   border: 1px solid rgba(0,0,0,.1);
@@ -165,6 +166,12 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.5rem 1rem 4rem; }
   user-select: none;
   transition: background .15s, border-color .15s;
   -webkit-tap-highlight-color: transparent;
+  font: inherit;
+  text-align: left;
+}
+.sec-cap:focus-visible {
+  outline: 3px solid rgba(196,85,106,.35);
+  outline-offset: 2px;
 }
 .sec-cap:hover { background: var(--gris); }
 .seccio.obert .sec-cap { border-bottom-color: transparent; background: var(--gris); }
@@ -431,7 +438,7 @@ footer a:hover { border-bottom-color: white; }
 
   <!-- ── JOCS I MEMÒRIA ── -->
   <div class="seccio" id="s-jocs">
-    <div class="sec-cap" onclick="toggle('s-jocs')">
+    <button class="sec-cap" type="button" onclick="toggle('s-jocs')" aria-expanded="false" aria-controls="s-jocs-cos">
       <div class="sec-icona cel">🎮</div>
       <div class="sec-titols">
         <div class="sec-title">Jocs i Memòria</div>
@@ -441,8 +448,8 @@ footer a:hover { border-bottom-color: white; }
         <span class="sec-badge cel">19 apps</span>
         <span class="sec-chevron">▾</span>
       </div>
-    </div>
-    <div class="sec-cos">
+    </button>
+    <div class="sec-cos" id="s-jocs-cos">
       <div class="sec-cos-inner">
         <div class="app-grid">
           <a class="app-card c-cel" href="Gobo26-DOMINO.html" target="_self">
@@ -547,7 +554,7 @@ footer a:hover { border-bottom-color: white; }
 
   <!-- ── EINES I CURIOSITATS ── -->
   <div class="seccio" id="s-eines">
-    <div class="sec-cap" onclick="toggle('s-eines')">
+    <button class="sec-cap" type="button" onclick="toggle('s-eines')" aria-expanded="false" aria-controls="s-eines-cos">
       <div class="sec-icona oliva">🛠️</div>
       <div class="sec-titols">
         <div class="sec-title">Eines i Curiositats</div>
@@ -557,8 +564,8 @@ footer a:hover { border-bottom-color: white; }
         <span class="sec-badge oliva">8 apps</span>
         <span class="sec-chevron">▾</span>
       </div>
-    </div>
-    <div class="sec-cos">
+    </button>
+    <div class="sec-cos" id="s-eines-cos">
       <div class="sec-cos-inner">
         <div class="app-grid">
           <a class="app-card c-oliva" href="Gobo26-GIMNAS-CASA.html" target="_self">
@@ -619,7 +626,7 @@ footer a:hover { border-bottom-color: white; }
 
   <!-- ── AVENTURES ── -->
   <div class="seccio" id="s-aventures">
-    <div class="sec-cap" onclick="toggle('s-aventures')">
+    <button class="sec-cap" type="button" onclick="toggle('s-aventures')" aria-expanded="false" aria-controls="s-aventures-cos">
       <div class="sec-icona sorra">📖</div>
       <div class="sec-titols">
         <div class="sec-title">Aventures Interactives</div>
@@ -629,8 +636,8 @@ footer a:hover { border-bottom-color: white; }
         <span class="sec-badge sorra">3 aventures</span>
         <span class="sec-chevron">▾</span>
       </div>
-    </div>
-    <div class="sec-cos">
+    </button>
+    <div class="sec-cos" id="s-aventures-cos">
       <div class="sec-cos-inner">
         <div class="app-grid">
           <a class="app-card c-sorra" href="Gobo26-AVENTURA_RETRAT.html" target="_self">
@@ -656,7 +663,7 @@ footer a:hover { border-bottom-color: white; }
 
   <!-- ── CREACIÓ ── -->
   <div class="seccio obert" id="s-creacio">
-    <div class="sec-cap" onclick="toggle('s-creacio')">
+    <button class="sec-cap" type="button" onclick="toggle('s-creacio')" aria-expanded="true" aria-controls="s-creacio-cos">
       <div class="sec-icona rosa">✒️</div>
       <div class="sec-titols">
         <div class="sec-title">Creació</div>
@@ -666,8 +673,8 @@ footer a:hover { border-bottom-color: white; }
         <span class="sec-badge rosa">Taller de Lletres</span>
         <span class="sec-chevron">▾</span>
       </div>
-    </div>
-    <div class="sec-cos">
+    </button>
+    <div class="sec-cos" id="s-creacio-cos">
       <div class="sec-cos-inner">
         <div class="app-grid">
           <a class="app-card c-rosa destacada" href="https://gobo26.github.io/Taller_de_lletres/" target="_blank" rel="noopener">
@@ -685,7 +692,7 @@ footer a:hover { border-bottom-color: white; }
 
   <!-- ── AMICS DE GOBO26 ── -->
   <div class="seccio" id="s-amics">
-    <div class="sec-cap" onclick="toggle('s-amics')">
+    <button class="sec-cap" type="button" onclick="toggle('s-amics')" aria-expanded="false" aria-controls="s-amics-cos">
       <div class="sec-icona fosc">🌐</div>
       <div class="sec-titols">
         <div class="sec-title">Amics de Gobo26</div>
@@ -695,8 +702,8 @@ footer a:hover { border-bottom-color: white; }
         <span class="sec-badge fosc">10 links</span>
         <span class="sec-chevron">▾</span>
       </div>
-    </div>
-    <div class="sec-cos">
+    </button>
+    <div class="sec-cos" id="s-amics-cos">
       <div class="sec-cos-inner">
         <div class="app-grid">
 
@@ -880,6 +887,8 @@ footer a:hover { border-bottom-color: white; }
 function toggle(id) {
   var el = document.getElementById(id);
   el.classList.toggle('obert');
+  var btn = el.querySelector('.sec-cap');
+  if (btn) btn.setAttribute('aria-expanded', el.classList.contains('obert') ? 'true' : 'false');
 }
 </script>
 

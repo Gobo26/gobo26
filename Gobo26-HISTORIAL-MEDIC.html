@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El meu historial mèdic · Gobo26</title>
+<meta name="description" content="El meu historial mèdic: eina local per organitzar informació mèdica personal i familiar al navegador.">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -766,7 +767,7 @@
 
 <!-- SPLASH / SELECTOR PERSONA -->
 <div id="splash">
-  <a href="https://ja.cat/appgobo" target="_self" style="display:flex;align-items:center;gap:0.6rem;text-decoration:none;margin-bottom:1.6rem;">
+  <a href="https://gobo26.github.io/gobo26/" target="_self" style="display:flex;align-items:center;gap:0.6rem;text-decoration:none;margin-bottom:1.6rem;">
     <svg width="42" height="42" viewBox="0 0 100 100" fill="none">
       <polygon points="50,3 93,27 93,73 50,97 7,73 7,27" fill="#1e293b"/>
       <text x="50" y="44" text-anchor="middle" fill="white" font-size="28" font-weight="900" font-family="Montserrat,sans-serif">G</text>
@@ -792,7 +793,7 @@
 <div id="app">
   <div class="topbar">
     <div class="topbar-left">
-      <a href="https://ja.cat/appgobo" target="_self" class="topbar-logo-link">
+      <a href="https://gobo26.github.io/gobo26/" target="_self" class="topbar-logo-link">
         <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
           <polygon points="50,3 93,27 93,73 50,97 7,73 7,27" fill="#334155"/>
           <text x="50" y="43" text-anchor="middle" fill="white" font-size="28" font-weight="900" font-family="Montserrat,sans-serif">G</text>
@@ -1091,7 +1092,7 @@
 
   <!-- FOOTER GOBO26 -->
   <footer class="gobo-footer">
-    <a href="https://ja.cat/appgobo" target="_self">
+    <a href="https://gobo26.github.io/gobo26/" target="_self">
       <svg width="13" height="13" viewBox="0 0 100 100" fill="none">
         <polygon points="50,3 93,27 93,73 50,97 7,73 7,27" fill="#94a3b8"/>
         <text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="900" font-family="sans-serif">G</text>
@@ -1127,9 +1128,14 @@
     <div class="info-section">
       <h3>🔒 On es guarden les dades?</h3>
       <div class="privacy-box">
-        <p><strong>Les teves dades es guarden únicament al teu navegador</strong>, al dispositiu que estàs fent servir ara. Ni l'aplicació, ni el servidor de GitHub on s'allotja, ni ningú extern pot veure, llegir ni accedir a cap de les teves dades personals o mèdiques. No queda cap rastre a internet.</p>
-        <p style="margin-top:0.6rem;">Si vols conservar les dades o usar-les en un altre dispositiu, utilitza la funció <strong>Exportar dades</strong> de la secció PDF per fer-ne una còpia de seguretat en format JSON, i <strong>Importar dades</strong> per restaurar-les.</p>
+        <p><strong>Les dades es guarden al navegador d'aquest dispositiu</strong>, mitjançant emmagatzematge local. L'aplicació no envia aquesta informació a cap servidor propi, però cal evitar-la en ordinadors compartits o navegadors que no controlis.</p>
+        <p style="margin-top:0.6rem;">Si exportes un PDF o un fitxer JSON, aquest fitxer queda fora de l'aplicació: desa'l en un lloc segur i no el comparteixis si conté dades sensibles.</p>
       </div>
+    </div>
+
+    <div class="info-section">
+      <h3>⚕️ Avís important</h3>
+      <p>Aquesta eina només ajuda a ordenar informació personal. No substitueix el criteri d'un professional sanitari, cap diagnòstic ni cap indicació mèdica. En cas de dubte o urgència, cal contactar amb els serveis mèdics corresponents.</p>
     </div>
 
     <div class="info-section">

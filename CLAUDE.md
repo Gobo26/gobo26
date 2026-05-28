@@ -32,7 +32,7 @@ Cada `Gobo26-*.html` segueix aquest patró:
 
 1. **CSS amb variables CSS** a `:root` per a colors del disseny (paleta Slate de Tailwind: `--s800: #1e293b`, `--blue: #2563eb`, etc.)
 2. **Font**: `Montserrat` (Google Fonts), pesos 400/600/700/800/900
-3. **Header** estàndard: fons `#1e293b`, logo Gobo26 (hexàgon SVG) que enllaça a `https://ja.cat/appgobo`, títol centrat i acció a la dreta
+3. **Header** estàndard: fons `#1e293b`, logo Gobo26 (hexàgon SVG) que enllaça a `https://gobo26.github.io/gobo26/`, títol centrat i acció a la dreta
 4. **JavaScript vanilla** sense frameworks ni imports. Es barreja `const`/`let` amb `var` (acceptat)
 5. **Persistència**: `localStorage` amb claus prefixades per app (ex: `3r_partides`, `intrus_punts`)
 6. **Sense peticions de xarxa en temps d'execució**: les dades (llistes de paraules, preguntes, etc.) estan incrustades directament al JavaScript del fitxer
