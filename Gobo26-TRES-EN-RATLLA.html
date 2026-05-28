@@ -10,24 +10,29 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --fons: #f1f5f9;
-            --text: #334155;
-            --primari: #2563eb;
-            --primari-fosc: #1d4ed8;
-            --header-bg: #1e293b;
-            --blanc: #ffffff;
-            --verd: #16a34a;
-            --vermell: #dc2626;
-            --taronja: #ea580c;
-            --gris: #94a3b8;
-            --ombra: rgba(0,0,0,0.10);
+            --fons: #f6f0e6;
+            --paper: #fffaf1;
+            --text: #31312d;
+            --primari: #2f6f73;
+            --primari-fosc: #245a5d;
+            --header-bg: #2c2620;
+            --blanc: #fffdf8;
+            --verd: #2f7d55;
+            --vermell: #b33b3b;
+            --taronja: #b86537;
+            --gris: #8d8378;
+            --linia: rgba(86,62,42,.18);
+            --ombra: rgba(74,47,24,0.12);
         }
 
         html, body {
             height: 100%;
             overflow: hidden;
             font-family: system-ui, -apple-system, sans-serif;
-            background: var(--fons);
+            background:
+                radial-gradient(circle at top left, rgba(184,101,55,.18), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(47,111,115,.18), transparent 34%),
+                linear-gradient(135deg, #f9f2e7, #efe5d5);
             color: var(--text);
         }
 
@@ -35,8 +40,14 @@
             display: flex;
             flex-direction: column;
             min-height: 100dvh;
-            max-width: 520px;
+            max-width: 540px;
             margin: 0 auto;
+            background:
+                linear-gradient(rgba(255,250,241,.92), rgba(255,250,241,.92)),
+                repeating-linear-gradient(0deg, transparent 0 27px, rgba(86,62,42,.035) 28px);
+            border-left: 1px solid rgba(86,62,42,.12);
+            border-right: 1px solid rgba(86,62,42,.12);
+            box-shadow: 0 0 45px rgba(74,47,24,.12);
         }
 
         /* ===== HEADER ===== */
@@ -44,13 +55,16 @@
             position: sticky;
             top: 0;
             z-index: 50;
-            background: var(--header-bg);
+            background:
+                linear-gradient(135deg, rgba(44,38,32,.96), rgba(68,48,38,.94));
             color: white;
             padding: 0 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-shrink: 0;
+            min-height: 54px;
+            border-bottom: 1px solid rgba(255,245,225,.16);
         }
 
         .logo { display:flex; align-items:center; gap:8px; text-decoration:none; flex-shrink:0; }
@@ -103,10 +117,11 @@
         }
 
         .marca-card {
-            background: var(--blanc);
-            border-radius: 12px;
+            background: rgba(255,253,248,.82);
+            border: 1px solid var(--linia);
+            border-radius: 14px;
             padding: clamp(4px, 1vh, 6px) 8px;
-            box-shadow: 0 2px 6px var(--ombra);
+            box-shadow: 0 8px 20px rgba(74,47,24,.08);
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -161,10 +176,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--blanc);
-            border-radius: 10px;
+            background: rgba(255,253,248,.82);
+            border: 1px solid var(--linia);
+            border-radius: 14px;
             padding: clamp(3px, 0.8vh, 5px) 12px;
-            box-shadow: 0 2px 6px var(--ombra);
+            box-shadow: 0 8px 20px rgba(74,47,24,.08);
             flex-shrink: 0;
         }
 
@@ -235,24 +251,27 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: clamp(6px, 2vw, 12px);
-            background: #cbd5e1;
+            background:
+                linear-gradient(135deg, rgba(44,38,32,.95), rgba(88,61,43,.92));
             padding: clamp(6px, 2vw, 12px);
-            border-radius: 18px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,245,225,.18);
+            border-radius: 22px;
+            box-shadow: 0 18px 42px rgba(74,47,24,.22), inset 0 1px 0 rgba(255,255,255,.12);
             width: min(100%, 320px);
             aspect-ratio: 1/1;
         }
 
         .cella {
-            background: var(--blanc);
-            border: 2.5px solid #94a3b8;
-            border-radius: 12px;
+            background: linear-gradient(145deg, #fffdf8, #f0e5d4);
+            border: 2px solid rgba(255,245,225,.72);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: clamp(1.6rem, 8vw, 2.5rem);
             cursor: pointer;
-            transition: transform 0.12s, border-color 0.12s, background 0.12s;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 4px 10px rgba(0,0,0,.12);
+            transition: transform 0.12s, border-color 0.12s, background 0.12s, box-shadow 0.12s;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             min-height: 44px;
@@ -260,13 +279,14 @@
         }
 
         .cella:not(.ocupada):hover {
-            background: #eff6ff;
+            background: #f4fbf9;
             border-color: var(--primari);
             transform: scale(1.05);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 8px 18px rgba(47,111,115,.22);
         }
 
-        .cella.jugador { border-color: var(--primari); background: #eff6ff; }
-        .cella.maquina { border-color: var(--taronja); background: #fff7ed; }
+        .cella.jugador { border-color: var(--primari); background: #e7f4f1; }
+        .cella.maquina { border-color: var(--taronja); background: #fff0e4; }
 
         .cella.guanyadora { animation: pulsaG 0.45s ease-in-out 3; }
 
@@ -282,7 +302,7 @@
             flex-shrink: 0;
             position: sticky;
             bottom: 0;
-            background: var(--fons);
+            background: linear-gradient(180deg, rgba(246,240,230,0), rgba(255,250,241,.96) 30%);
             padding-top: 2px;
             padding-bottom: max(env(safe-area-inset-bottom, 0px), 2px);
         }
@@ -296,9 +316,15 @@
             border: none;
             border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 3px 8px var(--ombra);
+            box-shadow: 0 8px 18px rgba(74,47,24,.12);
             transition: transform 0.1s;
             min-height: 44px;
+        }
+        .btn:focus-visible,
+        #btn-ajuda:focus-visible,
+        .cella:focus-visible {
+            outline: 3px solid rgba(47,111,115,.32);
+            outline-offset: 2px;
         }
         .btn:active { transform: scale(0.95); }
         .btn-nova  { background: var(--primari); color: white; }
@@ -336,6 +362,7 @@
         .modal {
             background: var(--blanc);
             border-radius: 20px;
+            border: 1px solid var(--linia);
             padding: 22px 18px 18px;
             max-width: 380px;
             width: 100%;
@@ -498,15 +525,15 @@
     <!-- TAULELL -->
     <div class="taulell-wrap">
         <div class="taulell" id="taulell">
-            <div class="cella" data-index="0"></div>
-            <div class="cella" data-index="1"></div>
-            <div class="cella" data-index="2"></div>
-            <div class="cella" data-index="3"></div>
-            <div class="cella" data-index="4"></div>
-            <div class="cella" data-index="5"></div>
-            <div class="cella" data-index="6"></div>
-            <div class="cella" data-index="7"></div>
-            <div class="cella" data-index="8"></div>
+            <div class="cella" data-index="0" role="button" tabindex="0" aria-label="Casella 1 buida"></div>
+            <div class="cella" data-index="1" role="button" tabindex="0" aria-label="Casella 2 buida"></div>
+            <div class="cella" data-index="2" role="button" tabindex="0" aria-label="Casella 3 buida"></div>
+            <div class="cella" data-index="3" role="button" tabindex="0" aria-label="Casella 4 buida"></div>
+            <div class="cella" data-index="4" role="button" tabindex="0" aria-label="Casella 5 buida"></div>
+            <div class="cella" data-index="5" role="button" tabindex="0" aria-label="Casella 6 buida"></div>
+            <div class="cella" data-index="6" role="button" tabindex="0" aria-label="Casella 7 buida"></div>
+            <div class="cella" data-index="7" role="button" tabindex="0" aria-label="Casella 8 buida"></div>
+            <div class="cella" data-index="8" role="button" tabindex="0" aria-label="Casella 9 buida"></div>
         </div>
     </div>
 
@@ -677,12 +704,26 @@
         missatgeEl.className   = 'missatge' + (tipus ? ' ' + tipus : '');
     }
 
+    function actualitzarAccessibilitatCasella(c, index, jugador = '') {
+        if (!jugador) {
+            c.setAttribute('aria-label', 'Casella ' + (index + 1) + ' buida');
+            c.setAttribute('tabindex', '0');
+            return;
+        }
+        c.setAttribute('aria-label', 'Casella ' + (index + 1) + ' ocupada per ' + (jugador === 'J' ? 'jugador 1' : 'jugador 2'));
+        c.setAttribute('tabindex', '-1');
+    }
+
     function novaPartida() {
         triarPeces();
         estat = ["","","","","","","","",""];
         jocActiu = true;
         torn_2j = 'J';
-        cel_les.forEach(c => { c.textContent = ''; c.className = 'cella'; });
+        cel_les.forEach((c, i) => {
+            c.textContent = '';
+            c.className = 'cella';
+            actualitzarAccessibilitatCasella(c, i);
+        });
         actualitzarUI();
 
         if (mode === '2j') {
@@ -701,6 +742,7 @@
         const c = cel_les[index];
         c.textContent = jugador === 'J' ? icona_jugador : icona_maquina;
         c.classList.add('ocupada', jugador === 'J' ? 'jugador' : 'maquina');
+        actualitzarAccessibilitatCasella(c, index, jugador);
     }
 
     function clickCella(e) {
@@ -854,7 +896,15 @@
         if (e.target === this) tancarAjuda();
     });
 
-    cel_les.forEach(c => c.addEventListener('click', clickCella));
+    cel_les.forEach(c => {
+        c.addEventListener('click', clickCella);
+        c.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                c.click();
+            }
+        });
+    });
 
     // Arrencada
     setMode('ia');
