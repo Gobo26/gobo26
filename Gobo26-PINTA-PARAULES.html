@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Pinta Paraules · Gobo26</title>
 <meta name="description" content="Pinta Paraules: joc tipus Stroop per entrenar atenció, colors i rapidesa mental.">
+<meta name="theme-color" content="#1e293b">
 <style>
 :root {
     --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
@@ -174,11 +175,11 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
     <div id="inici-titol">🎨 PINTA<br>PARAULES</div>
     <div id="inici-sub">Clica el color de la <strong>tinta</strong> amb la qual està escrita cada paraula.<br>Ignora el que diu!</div>
     <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
-        <button id="btn-normal" onclick="triarModeIInici('normal')"
+        <button type="button" id="btn-normal" onclick="triarModeIInici('normal')"
             style="font-family:system-ui, -apple-system, sans-serif;font-size:1rem;font-weight:900;background:#1e293b;color:white;border:3px solid #2563eb;border-radius:14px;padding:14px 28px;cursor:pointer;min-width:140px;">
             🎯 Normal
         </button>
-        <button id="btn-facil" onclick="triarModeIInici('facil')"
+        <button type="button" id="btn-facil" onclick="triarModeIInici('facil')"
             style="font-family:system-ui, -apple-system, sans-serif;font-size:1rem;font-weight:900;background:#1e293b;color:white;border:3px solid #16a34a;border-radius:14px;padding:14px 28px;cursor:pointer;min-width:140px;">
             🌿 Fàcil
         </button>
@@ -222,7 +223,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
             <h3>🏆 Millor jugada</h3>
         </div>
         <div id="taula-recs"></div>
-        <button class="btn-esborrar" onclick="esborrarRecs()">Esborrar dades</button>
+        <button type="button" class="btn-esborrar" onclick="esborrarRecs()">Esborrar dades</button>
     </div>
 </main>
 
@@ -233,7 +234,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
         <div class="modal-titol" id="m-titol">Completat!</div>
         <div class="modal-text" id="m-text"></div>
         <div class="modal-rec" id="m-rec"></div>
-        <button class="btn-modal" onclick="iniciar()">Torna a jugar 🎨</button>
+        <button type="button" class="btn-modal" onclick="iniciar()">Torna a jugar 🎨</button>
     </div>
 </div>
 
@@ -248,7 +249,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
         <div class="ajuda-pas"><div class="ajuda-ico">🔄</div><div class="ajuda-txt"><strong>Temps esgotat:</strong> les paraules i colors es barregen de nou i ho tornes a intentar. Tens fins a <strong>3 intents</strong> (Normal) o <strong>4 intents</strong> (Fàcil) per pantalla.</div></div>
         <div class="ajuda-pas"><div class="ajuda-ico">💔</div><div class="ajuda-txt"><strong>Intents esgotats:</strong> tornes a la pantalla 1. Es guarda la pantalla màxima assolida com a rècord.</div></div>
         <div class="ajuda-pas"><div class="ajuda-ico">🔥</div><div class="ajuda-txt"><strong>Puntuació:</strong> +10 per encert, -5 per error. Cada 3 encerts seguits +5 bonus. Cada pantalla superada +20 extra.</div></div>
-        <button class="btn-tancar" onclick="tancarAjuda()">Entesos! A jugar 🎮</button>
+        <button type="button" class="btn-tancar" onclick="tancarAjuda()">Entesos! A jugar 🎮</button>
     </div>
 </div>
 

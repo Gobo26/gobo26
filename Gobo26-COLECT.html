@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Col·leccionista – Gobo26</title>
 <meta name="description" content="Col·leccionista: joc de memòria i objectes per recordar seqüències i superar reptes progressius.">
+<meta name="theme-color" content="#1e293b">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -406,7 +407,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
                     <div class="lbl"><i class="fa-solid fa-layer-group"></i> Ara</div>
                 </div>
             </div>
-            <button class="btn btn-primary" onclick="app.comencar()">
+            <button type="button" class="btn btn-primary" onclick="app.comencar()">
                 <i class="fa-solid fa-play"></i> COMENÇAR A COL·LECCIONAR
             </button>
         </div>
@@ -439,10 +440,10 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
                 <div id="colleccio-visual" class="colleccio-visual"></div>
             </div>
 
-            <button class="btn btn-success" onclick="app.verificar()">
+            <button type="button" class="btn btn-success" onclick="app.verificar()">
                 <i class="fa-solid fa-check"></i> CONFIRMAR COL·LECCIÓ
             </button>
-            <button class="btn btn-muted" onclick="app.esborrarUltima()">
+            <button type="button" class="btn btn-muted" onclick="app.esborrarUltima()">
                 <i class="fa-solid fa-delete-left"></i> Esborrar últim objecte
             </button>
         </div>
@@ -458,10 +459,10 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
             </div>
             <div id="res-nivell" class="nivell-badge" style="display:none"></div>
 
-            <button class="btn btn-primary" id="btn-resultat" onclick="app.accioResultat()">
+            <button type="button" class="btn btn-primary" id="btn-resultat" onclick="app.accioResultat()">
                 <i class="fa-solid fa-forward"></i> CONTINUAR
             </button>
-            <button class="btn btn-muted" onclick="app.tornarInici()">
+            <button type="button" class="btn btn-muted" onclick="app.tornarInici()">
                 <i class="fa-solid fa-rotate-left"></i> Tornar a l'inici
             </button>
         </div>

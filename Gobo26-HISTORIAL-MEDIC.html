@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El meu historial mèdic · Gobo26</title>
 <meta name="description" content="El meu historial mèdic: eina local per organitzar informació mèdica personal i familiar al navegador.">
+<meta name="theme-color" content="#1e293b">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -757,8 +758,8 @@
     <div class="urg-close-bar">
       <span class="ttl">🚨 MODE URGÈNCIA</span>
       <div class="urg-close-bar-actions">
-        <button class="btn-print-urg" onclick="window.print()">🖨 Imprimir</button>
-        <button class="btn-close-urg" onclick="closeUrgencia()">✕ Tancar</button>
+        <button type="button" class="btn-print-urg" onclick="window.print()">🖨 Imprimir</button>
+        <button type="button" class="btn-close-urg" onclick="closeUrgencia()">✕ Tancar</button>
       </div>
     </div>
     <div id="urgencia-content"></div>
@@ -778,11 +779,11 @@
   <h1 class="splash-title">El meu historial mèdic</h1>
   <p class="splash-sub">El teu historial mèdic personal i familiar. Sempre a mà.</p>
   <div class="person-grid" id="person-grid"></div>
-  <button class="btn-new-person" onclick="openNewPerson()">
+  <button type="button" class="btn-new-person" onclick="openNewPerson()">
     <span style="font-size:1.1rem;">＋</span> Nova persona
   </button>
   <div style="margin-top:1.8rem;">
-    <button onclick="openModal('modal-info')" style="background:none;border:1px solid var(--border2);border-radius:30px;color:var(--text-muted);font-size:0.78rem;cursor:pointer;display:flex;align-items:center;gap:0.45rem;font-family:'Montserrat',sans-serif;font-weight:600;padding:0.4rem 1rem;transition:all 0.2s;" onmouseover="this.style.borderColor='#2563eb';this.style.color='#2563eb'" onmouseout="this.style.borderColor='';this.style.color=''">
+    <button type="button" onclick="openModal('modal-info')" style="background:none;border:1px solid var(--border2);border-radius:30px;color:var(--text-muted);font-size:0.78rem;cursor:pointer;display:flex;align-items:center;gap:0.45rem;font-family:'Montserrat',sans-serif;font-weight:600;padding:0.4rem 1rem;transition:all 0.2s;" onmouseover="this.style.borderColor='#2563eb';this.style.color='#2563eb'" onmouseout="this.style.borderColor='';this.style.color=''">
       <span style="width:18px;height:18px;border-radius:50%;background:#e2e8f0;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:0.72rem;color:#64748b;flex-shrink:0;">?</span>
       Com funciona? On es guarden les dades?
     </button>
@@ -801,19 +802,19 @@
         </svg>
         <span class="topbar-appname">El meu historial mèdic</span>
       </a>
-      <button class="topbar-person" id="topbar-person-btn" onclick="goSplash()">
+      <button type="button" class="topbar-person" id="topbar-person-btn" onclick="goSplash()">
         <div class="av-sm" id="topbar-av"></div>
         <span id="topbar-name"></span>
       </button>
     </div>
     <div class="topbar-right">
       <nav class="topbar-nav">
-        <button class="nav-btn active" onclick="showSection('inici')">Inici</button>
-        <button class="nav-btn" onclick="showSection('fitxa')">Fitxa mèdica</button>
-        <button class="nav-btn" onclick="showSection('bitacora')">Bitàcora</button>
-        <button class="nav-btn" onclick="showSection('pdf')">PDF</button>
+        <button type="button" class="nav-btn active" onclick="showSection('inici')">Inici</button>
+        <button type="button" class="nav-btn" onclick="showSection('fitxa')">Fitxa mèdica</button>
+        <button type="button" class="nav-btn" onclick="showSection('bitacora')">Bitàcora</button>
+        <button type="button" class="nav-btn" onclick="showSection('pdf')">PDF</button>
       </nav>
-      <button class="btn-info-topbar" onclick="openModal('modal-info')" title="Informació i privacitat">?</button>
+      <button type="button" class="btn-info-topbar" onclick="openModal('modal-info')" title="Informació i privacitat">?</button>
     </div>
   </div>
 
@@ -825,7 +826,7 @@
 
       <div id="backup-banner-container"></div>
 
-      <button class="btn-urgencia" onclick="openUrgencia()">
+      <button type="button" class="btn-urgencia" onclick="openUrgencia()">
         <span class="ico">🚨</span>
         <div class="dash-action-text">
           <div class="txt1">MOSTRAR EN URGÈNCIA</div>
@@ -833,7 +834,7 @@
         </div>
       </button>
 
-      <button class="dash-action" onclick="openNewLog()">
+      <button type="button" class="dash-action" onclick="openNewLog()">
         <span class="dash-action-icon">✏️</span>
         <div class="dash-action-text">
           <div class="t1">Afegir entrada d'avui</div>
@@ -904,7 +905,7 @@
         <div class="card-body hidden" id="body-allergies">
           <p style="font-size:0.78rem;color:var(--red);margin-bottom:0.8rem;">Important: es destaquen en tots els informes</p>
           <div id="list-allergies"><p class="empty-msg">Encara sense registres.</p></div>
-          <button class="btn btn-danger btn-sm mt2" onclick="openAddModal('allergy')">+ Agrega</button>
+          <button type="button" class="btn btn-danger btn-sm mt2" onclick="openAddModal('allergy')">+ Agrega</button>
         </div>
       </div>
 
@@ -916,7 +917,7 @@
         </div>
         <div class="card-body hidden" id="body-conditions">
           <div id="list-conditions"><p class="empty-msg">Encara sense registres.</p></div>
-          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('condition')">+ Agrega</button>
+          <button type="button" class="btn btn-secondary btn-sm mt2" onclick="openAddModal('condition')">+ Agrega</button>
         </div>
       </div>
 
@@ -928,7 +929,7 @@
         </div>
         <div class="card-body hidden" id="body-meds">
           <div id="list-meds"><p class="empty-msg">Encara sense registres.</p></div>
-          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('med')">+ Agrega</button>
+          <button type="button" class="btn btn-secondary btn-sm mt2" onclick="openAddModal('med')">+ Agrega</button>
         </div>
       </div>
 
@@ -941,7 +942,7 @@
         <div class="card-body hidden" id="body-medshistory">
           <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.8rem;">Medicaments que ja no prens</p>
           <div id="list-medshistory"><p class="empty-msg">Encara sense registres.</p></div>
-          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('medhist')">+ Agrega</button>
+          <button type="button" class="btn btn-secondary btn-sm mt2" onclick="openAddModal('medhist')">+ Agrega</button>
         </div>
       </div>
 
@@ -953,7 +954,7 @@
         </div>
         <div class="card-body hidden" id="body-surgeries">
           <div id="list-surgeries"><p class="empty-msg">Encara sense registres.</p></div>
-          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('surgery')">+ Agrega</button>
+          <button type="button" class="btn btn-secondary btn-sm mt2" onclick="openAddModal('surgery')">+ Agrega</button>
         </div>
       </div>
 
@@ -965,7 +966,7 @@
         </div>
         <div class="card-body hidden" id="body-hospitals">
           <div id="list-hospitals"><p class="empty-msg">Encara sense registres.</p></div>
-          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('hospital')">+ Agrega</button>
+          <button type="button" class="btn btn-secondary btn-sm mt2" onclick="openAddModal('hospital')">+ Agrega</button>
         </div>
       </div>
 
@@ -977,7 +978,7 @@
         </div>
         <div class="card-body hidden" id="body-exams">
           <div id="list-exams"><p class="empty-msg">Encara sense registres.</p></div>
-          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('exam')">+ Agrega</button>
+          <button type="button" class="btn btn-secondary btn-sm mt2" onclick="openAddModal('exam')">+ Agrega</button>
         </div>
       </div>
 
@@ -989,7 +990,7 @@
         </div>
         <div class="card-body hidden" id="body-family">
           <div id="list-family"><p class="empty-msg">Encara sense registres.</p></div>
-          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('family')">+ Agrega</button>
+          <button type="button" class="btn btn-secondary btn-sm mt2" onclick="openAddModal('family')">+ Agrega</button>
         </div>
       </div>
 
@@ -1001,7 +1002,7 @@
         </div>
         <div class="card-body hidden" id="body-vaccines">
           <div id="list-vaccines"><p class="empty-msg">Encara sense registres.</p></div>
-          <button class="btn btn-secondary btn-sm mt2" onclick="openAddModal('vaccine')">+ Agrega</button>
+          <button type="button" class="btn btn-secondary btn-sm mt2" onclick="openAddModal('vaccine')">+ Agrega</button>
         </div>
       </div>
 
@@ -1016,7 +1017,7 @@
           <div class="metric-types" id="metric-types"></div>
           <div class="metric-chart" id="metric-chart"><p class="empty">Tria una mètrica</p></div>
           <div class="metric-readings" id="metric-readings"></div>
-          <button class="btn btn-primary btn-sm mt2" id="btn-add-reading" style="display:none;" onclick="openAddReading()">+ Nova lectura</button>
+          <button type="button" class="btn btn-primary btn-sm mt2" id="btn-add-reading" style="display:none;" onclick="openAddReading()">+ Nova lectura</button>
         </div>
       </div>
     </div>
@@ -1027,9 +1028,9 @@
       <p class="section-sub">Registra com et sents cada dia.</p>
       <div class="card">
         <div class="calendar-nav">
-          <button class="cal-btn" onclick="changeMonth(-1)">‹</button>
+          <button type="button" class="cal-btn" onclick="changeMonth(-1)">‹</button>
           <div class="cal-month" id="cal-month-label"></div>
-          <button class="cal-btn" onclick="changeMonth(1)">›</button>
+          <button type="button" class="cal-btn" onclick="changeMonth(1)">›</button>
         </div>
         <div class="calendar-grid" id="calendar-grid"></div>
       </div>
@@ -1046,8 +1047,8 @@
           <h3>📋 Fitxa completa per al metge</h3>
           <p>Inclou al·lèrgies destacades, condicions cròniques, medicaments actuals, cirurgies i antecedents.</p>
           <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-            <button class="btn btn-pdf" onclick="generateMedicalPDF('preview')">👁 Previsualitzar</button>
-            <button class="btn btn-secondary" onclick="generateMedicalPDF('download')" style="display:flex;align-items:center;gap:0.4rem;">⬇ Descarregar</button>
+            <button type="button" class="btn btn-pdf" onclick="generateMedicalPDF('preview')">👁 Previsualitzar</button>
+            <button type="button" class="btn btn-secondary" onclick="generateMedicalPDF('download')" style="display:flex;align-items:center;gap:0.4rem;">⬇ Descarregar</button>
           </div>
         </div>
         <div class="pdf-card">
@@ -1064,8 +1065,8 @@
             </div>
           </div>
           <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-            <button class="btn btn-pdf" onclick="generateLogPDF('preview')">👁 Previsualitzar</button>
-            <button class="btn btn-secondary" onclick="generateLogPDF('download')" style="display:flex;align-items:center;gap:0.4rem;">⬇ Descarregar</button>
+            <button type="button" class="btn btn-pdf" onclick="generateLogPDF('preview')">👁 Previsualitzar</button>
+            <button type="button" class="btn btn-secondary" onclick="generateLogPDF('download')" style="display:flex;align-items:center;gap:0.4rem;">⬇ Descarregar</button>
           </div>
         </div>
       </div>
@@ -1081,8 +1082,8 @@
         <div class="card-body hidden" id="body-datatools">
           <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;line-height:1.5;">Exporta totes les dades a un fitxer JSON per fer còpia de seguretat o per usar-ho en un altre dispositiu.</p>
           <div style="display:flex;gap:0.7rem;flex-wrap:wrap;">
-            <button class="btn btn-primary" onclick="exportData()">⬇ Exportar dades</button>
-            <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">⬆ Importar dades</button>
+            <button type="button" class="btn btn-primary" onclick="exportData()">⬇ Exportar dades</button>
+            <button type="button" class="btn btn-secondary" onclick="document.getElementById('import-file').click()">⬆ Importar dades</button>
             <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(this)" />
           </div>
         </div>
@@ -1106,7 +1107,7 @@
 <!-- MODAL: Informació i privacitat -->
 <div class="modal-bg" id="modal-info">
   <div class="modal" style="max-width:500px;">
-    <button class="modal-close" onclick="closeModal('modal-info')">✕</button>
+    <button type="button" class="modal-close" onclick="closeModal('modal-info')">✕</button>
     <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1.3rem;">
       <div style="width:40px;height:40px;border-radius:50%;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">ℹ️</div>
       <div>
@@ -1141,13 +1142,13 @@
     <div class="info-section">
       <h3>💾 Vols tenir-la al teu ordinador?</h3>
       <p>Pots descarregar una còpia completa d'aquesta aplicació i usar-la directament des del teu ordinador, sense internet. Cada persona que la descarrega té les seves pròpies dades, completament independents de les dels altres.</p>
-      <button class="btn btn-primary" onclick="downloadApp()" style="margin-top:0.7rem;display:flex;align-items:center;gap:0.5rem;width:100%;justify-content:center;">
+      <button type="button" class="btn btn-primary" onclick="downloadApp()" style="margin-top:0.7rem;display:flex;align-items:center;gap:0.5rem;width:100%;justify-content:center;">
         ⬇ Descarregar còpia de l'aplicació
       </button>
     </div>
 
     <div class="flex-end" style="margin-top:0.8rem;">
-      <button class="btn btn-secondary" onclick="closeModal('modal-info')">Tancar</button>
+      <button type="button" class="btn btn-secondary" onclick="closeModal('modal-info')">Tancar</button>
     </div>
   </div>
 </div>
@@ -1158,8 +1159,8 @@
     <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid var(--border);">
       <span style="font-weight:500;font-size:1rem;">Previsualització de l'informe</span>
       <div style="display:flex;gap:0.5rem;">
-        <button class="btn btn-primary btn-sm" onclick="printPDF()">🖨 Imprimir / Guardar PDF</button>
-        <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-pdf-preview')">Tancar</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="printPDF()">🖨 Imprimir / Guardar PDF</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modal-pdf-preview')">Tancar</button>
       </div>
     </div>
     <iframe id="pdf-preview-frame" style="width:100%;height:80vh;border:none;"></iframe>
@@ -1169,7 +1170,7 @@
 <!-- MODAL: Nova persona -->
 <div class="modal-bg" id="modal-new-person">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-new-person')">✕</button>
+    <button type="button" class="modal-close" onclick="closeModal('modal-new-person')">✕</button>
     <h2>Nova persona</h2>
     <div class="form-row">
       <div>
@@ -1215,8 +1216,8 @@
       </div>
     </div>
     <div class="flex-end">
-      <button class="btn btn-secondary" onclick="closeModal('modal-new-person')">Cancel·lar</button>
-      <button class="btn btn-primary" id="np-save-btn" data-mode="create" onclick="createPerson()">Crear perfil</button>
+      <button type="button" class="btn btn-secondary" onclick="closeModal('modal-new-person')">Cancel·lar</button>
+      <button type="button" class="btn btn-primary" id="np-save-btn" data-mode="create" onclick="createPerson()">Crear perfil</button>
     </div>
   </div>
 </div>
@@ -1224,7 +1225,7 @@
 <!-- MODAL: Nova entrada bitàcora -->
 <div class="modal-bg" id="modal-new-log">
   <div class="modal" style="max-width:540px;">
-    <button class="modal-close" onclick="closeModal('modal-new-log')">✕</button>
+    <button type="button" class="modal-close" onclick="closeModal('modal-new-log')">✕</button>
     <h2>Nova entrada</h2>
     <div class="form-row">
       <div>
@@ -1250,15 +1251,15 @@
     <div style="margin-bottom:0.85rem;">
       <label style="margin-bottom:0.5rem;">Com et sents? (pots triar varis)</label>
       <div class="moods-selector" id="moods-selector">
-        <button class="mood-opt" onclick="toggleMood(this)" data-val="Penat">😔 Penat</button>
-        <button class="mood-opt" onclick="toggleMood(this)" data-val="Angoixa">😰 Angoixa</button>
-        <button class="mood-opt" onclick="toggleMood(this)" data-val="Por">😨 Por</button>
-        <button class="mood-opt" onclick="toggleMood(this)" data-val="Calme">😌 Calme</button>
-        <button class="mood-opt" onclick="toggleMood(this)" data-val="Esperança">🌱 Esperança</button>
-        <button class="mood-opt" onclick="toggleMood(this)" data-val="Cansament">😴 Cansament</button>
-        <button class="mood-opt" onclick="toggleMood(this)" data-val="Irritabilitat">😤 Irritabilitat</button>
-        <button class="mood-opt" onclick="toggleMood(this)" data-val="Bé">😊 Bé</button>
-        <button class="mood-opt" onclick="toggleMood(this)" data-val="Altre">❓ Altre</button>
+        <button type="button" class="mood-opt" onclick="toggleMood(this)" data-val="Penat">😔 Penat</button>
+        <button type="button" class="mood-opt" onclick="toggleMood(this)" data-val="Angoixa">😰 Angoixa</button>
+        <button type="button" class="mood-opt" onclick="toggleMood(this)" data-val="Por">😨 Por</button>
+        <button type="button" class="mood-opt" onclick="toggleMood(this)" data-val="Calme">😌 Calme</button>
+        <button type="button" class="mood-opt" onclick="toggleMood(this)" data-val="Esperança">🌱 Esperança</button>
+        <button type="button" class="mood-opt" onclick="toggleMood(this)" data-val="Cansament">😴 Cansament</button>
+        <button type="button" class="mood-opt" onclick="toggleMood(this)" data-val="Irritabilitat">😤 Irritabilitat</button>
+        <button type="button" class="mood-opt" onclick="toggleMood(this)" data-val="Bé">😊 Bé</button>
+        <button type="button" class="mood-opt" onclick="toggleMood(this)" data-val="Altre">❓ Altre</button>
       </div>
     </div>
     <div style="margin-bottom:0.85rem;">
@@ -1283,8 +1284,8 @@
       </div>
     </div>
     <div class="flex-end">
-      <button class="btn btn-secondary" onclick="closeModal('modal-new-log')">Cancel·lar</button>
-      <button class="btn btn-primary" onclick="saveLogEntry()">✓ Guarda l'entrada</button>
+      <button type="button" class="btn btn-secondary" onclick="closeModal('modal-new-log')">Cancel·lar</button>
+      <button type="button" class="btn btn-primary" onclick="saveLogEntry()">✓ Guarda l'entrada</button>
     </div>
   </div>
 </div>
@@ -1292,7 +1293,7 @@
 <!-- MODAL: Nova lectura de mètrica -->
 <div class="modal-bg" id="modal-new-reading">
   <div class="modal" style="max-width:480px;">
-    <button class="modal-close" onclick="closeModal('modal-new-reading')">✕</button>
+    <button type="button" class="modal-close" onclick="closeModal('modal-new-reading')">✕</button>
     <h2 id="reading-title">Nova lectura</h2>
     <div class="form-row single">
       <div>
@@ -1308,8 +1309,8 @@
       </div>
     </div>
     <div class="flex-end">
-      <button class="btn btn-secondary" onclick="closeModal('modal-new-reading')">Cancel·lar</button>
-      <button class="btn btn-primary" onclick="saveReading()">✓ Guardar lectura</button>
+      <button type="button" class="btn btn-secondary" onclick="closeModal('modal-new-reading')">Cancel·lar</button>
+      <button type="button" class="btn btn-primary" onclick="saveReading()">✓ Guardar lectura</button>
     </div>
   </div>
 </div>
@@ -1317,12 +1318,12 @@
 <!-- MODAL: Afegir ítem fitxa -->
 <div class="modal-bg" id="modal-add-item">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-add-item')">✕</button>
+    <button type="button" class="modal-close" onclick="closeModal('modal-add-item')">✕</button>
     <h2 id="add-modal-title">Afegir</h2>
     <div id="add-modal-form"></div>
     <div class="flex-end">
-      <button class="btn btn-secondary" onclick="closeModal('modal-add-item')">Cancel·lar</button>
-      <button class="btn btn-primary" onclick="saveItem()">Desar</button>
+      <button type="button" class="btn btn-secondary" onclick="closeModal('modal-add-item')">Cancel·lar</button>
+      <button type="button" class="btn btn-primary" onclick="saveItem()">Desar</button>
     </div>
   </div>
 </div>
@@ -1594,8 +1595,8 @@ function renderItem(type, item, i) {
       ${sub?`<div class="item-sub">${sub}</div>`:''}
     </div>
     <div class="item-actions">
-      <button class="btn btn-secondary btn-sm" onclick="editItem('${type}',${i})">Editar</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteItem('${type}',${i})">Eliminar</button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="editItem('${type}',${i})">Editar</button>
+      <button type="button" class="btn btn-danger btn-sm" onclick="deleteItem('${type}',${i})">Eliminar</button>
     </div>
   </div>`;
 }
@@ -1865,11 +1866,11 @@ function renderLogEntries() {
 
   if(!entries.length) {
     container.innerHTML = `<div class="card"><p class="empty-msg">Sense entrades per aquest dia.</p>
-      <button class="btn btn-primary btn-sm mt2" onclick="openNewLog()">+ Afegir entrada</button></div>`;
+      <button type="button" class="btn btn-primary btn-sm mt2" onclick="openNewLog()">+ Afegir entrada</button></div>`;
     return;
   }
 
-  container.innerHTML = `<button class="btn btn-secondary btn-sm" style="margin-bottom:0.8rem;" onclick="openNewLog()">+ Afegir entrada</button>` +
+  container.innerHTML = `<button type="button" class="btn btn-secondary btn-sm" style="margin-bottom:0.8rem;" onclick="openNewLog()">+ Afegir entrada</button>` +
     entries.map((e,i) => `
     <div class="log-entry-card">
       <div class="log-time">${e.time||''}</div>
@@ -1888,7 +1889,7 @@ function renderLogEntries() {
         <div class="log-field-val">${e.questions}</div>
       </div>`:''}
       <div style="display:flex;justify-content:flex-end;margin-top:0.6rem;">
-        <button class="btn btn-danger btn-sm" onclick="deleteLog(${i})">Eliminar</button>
+        <button type="button" class="btn btn-danger btn-sm" onclick="deleteLog(${i})">Eliminar</button>
       </div>
     </div>`).join('');
 }
@@ -2013,7 +2014,7 @@ function renderMetricChart() {
         <div class="metric-reading-date">${r.date}${r.notes?' · '+r.notes:''}</div>
       </div>
       <div class="metric-reading-actions">
-        <button class="btn btn-danger btn-sm" onclick="deleteReading(${origIdx})">✕</button>
+        <button type="button" class="btn btn-danger btn-sm" onclick="deleteReading(${origIdx})">✕</button>
       </div>
     </div>`;
   }).join('');
@@ -2292,8 +2293,8 @@ function renderBackupBanner() {
     <div class="backup-banner-icon">💾</div>
     <div class="backup-banner-text">${msg}</div>
     <div class="backup-banner-actions">
-      <button class="btn btn-primary btn-sm" onclick="exportData()">Fer còpia ara</button>
-      <button class="btn btn-secondary btn-sm" onclick="snoozeBackup()">Després</button>
+      <button type="button" class="btn btn-primary btn-sm" onclick="exportData()">Fer còpia ara</button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="snoozeBackup()">Després</button>
     </div>
   </div>`;
 }

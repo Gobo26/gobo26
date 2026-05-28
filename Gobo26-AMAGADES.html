@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Amagades! · Gobo26</title>
 <meta name="description" content="Troba paraules amagades en una graella. Joc gratuït en català per practicar atenció, vocabulari i memòria visual.">
+<meta name="theme-color" content="#1e293b">
 <style>
 :root {
     --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
@@ -143,7 +144,7 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">Amagades!</span>
-    <button id="btn-ajuda" onclick="mostrarAjuda()">?</button>
+    <button type="button" id="btn-ajuda" onclick="mostrarAjuda()">?</button>
 </header>
 
 <main>
@@ -151,10 +152,10 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
     <div class="card" id="p-inici">
         <h3>Quantes paraules vols memoritzar?</h3>
         <div class="niv-grid">
-            <button class="niv-btn" onclick="triar(3,this)">3<small>Fàcil</small></button>
-            <button class="niv-btn" onclick="triar(4,this)">4<small>Normal</small></button>
-            <button class="niv-btn" onclick="triar(5,this)">5<small>Difícil</small></button>
-            <button class="niv-btn" onclick="triar(6,this)">6<small>Expert</small></button>
+            <button type="button" class="niv-btn" onclick="triar(3,this)">3<small>Fàcil</small></button>
+            <button type="button" class="niv-btn" onclick="triar(4,this)">4<small>Normal</small></button>
+            <button type="button" class="niv-btn" onclick="triar(5,this)">5<small>Difícil</small></button>
+            <button type="button" class="niv-btn" onclick="triar(6,this)">6<small>Expert</small></button>
         </div>
     </div>
 
@@ -184,7 +185,7 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
         <div class="final-sub" id="final-sub"></div>
         <div class="paraules-correctes" id="paraules-finals"></div>
         <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-            <button class="boto-gran" onclick="tornarInici()">▶ Nova partida</button>
+            <button type="button" class="boto-gran" onclick="tornarInici()">▶ Nova partida</button>
         </div>
     </div>
 
@@ -231,7 +232,7 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
         <div class="ajuda-pas"><span class="ajuda-ico">✅</span><span>El joc detecta automàticament quan has seleccionat les <strong>N</strong> paraules i comprova si has encertat.</span></div>
         <div class="ajuda-pas"><span class="ajuda-ico">🔄</span><span>Si t'equivoques tens una <strong>segona oportunitat</strong> amb les mateixes paraules. Si tornes a fallar, es mostren les paraules correctes.</span></div>
         <div class="ajuda-pas"><span class="ajuda-ico">⏱</span><span>Més paraules = menys temps per memoritzar. Posa't a prova!</span></div>
-        <button id="btn-tancar-ajuda" onclick="tancarAjuda()">Entès!</button>
+        <button type="button" id="btn-tancar-ajuda" onclick="tancarAjuda()">Entès!</button>
     </div>
 </div>
 
@@ -369,7 +370,7 @@ function anarAlJoc(){
     nuvol.style.gridTemplateColumns = `repeat(${cols},1fr)`;
     nuvol.className = cols === 4 ? 'nuvol cols4' : 'nuvol';
     nuvol.innerHTML = totes.map(p=>
-        `<button class="btn-paraula" onclick="clicParaula(this,'${p}')">${p}</button>`
+        `<button type="button" class="btn-paraula" onclick="clicParaula(this,'${p}')">${p}</button>`
     ).join('');
 }
 

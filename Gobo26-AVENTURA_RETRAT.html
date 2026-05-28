@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>El Retrat de la Reina – Gobo26</title>
 <meta name="description" content="El Retrat de la Reina: aventura interactiva medieval de misteri, pistes i decisions dins la col·lecció Gobo26.">
+<meta name="theme-color" content="#1e293b">
 <style>
 :root {
   --bg: #1a1208;
@@ -560,7 +561,7 @@ footer {
   <div class="clues-panel">
     <div class="clues-panel-header">
       <span class="clues-panel-title">DEDUCCIONS</span>
-      <button class="clues-panel-close" onclick="toggleCluesPanel()">×</button>
+      <button type="button" class="clues-panel-close" onclick="toggleCluesPanel()">×</button>
     </div>
     <div class="clues-panel-body" id="clues-list"></div>
   </div>
@@ -594,7 +595,7 @@ footer {
     Però aquest matí, el teu ajudant <em>en Guillem</em> apareix enverinat al taller…
     i les mirades comencen a apuntar cap a tu.
   </p>
-  <button class="btn-begin" onclick="startAdventure()">⚔ Comença l'aventura</button>
+  <button type="button" class="btn-begin" onclick="startAdventure()">⚔ Comença l'aventura</button>
   <div class="runs-count" id="runs-count"></div>
   <div class="endings-gallery-title" id="gallery-title" style="display:none">FINALS DESCOBERTS</div>
   <div class="endings-gallery" id="endings-gallery"></div>
@@ -1486,7 +1487,7 @@ function renderScene(node, newClue, meta) {
   if (node.choices && node.choices.length > 0) {
     const items = node.choices.map((c, i) => {
       const vis = meta.visited.includes(c.next);
-      return `<button class="choice-btn${vis ? ' visited' : ''}"
+      return `<button type="button" class="choice-btn${vis ? ' visited' : ''}"
                       onclick="soClick();goTo('${c.next}')"
                       style="animation-delay:${i * 85}ms">
         <span class="choice-arrow">▶</span>
@@ -1506,8 +1507,8 @@ function renderScene(node, newClue, meta) {
           <span>·</span>
           <span>🔍 ${G.clues.size} pistes</span>
         </div>
-        <button class="btn-restart" onclick="startAdventure()">↺ Torna a començar</button>
-        <button class="btn-restart" style="opacity:.6;margin-top:4px" onclick="toCover()">← Portada</button>
+        <button type="button" class="btn-restart" onclick="startAdventure()">↺ Torna a començar</button>
+        <button type="button" class="btn-restart" style="opacity:.6;margin-top:4px" onclick="toCover()">← Portada</button>
 
       </div>`;
   }

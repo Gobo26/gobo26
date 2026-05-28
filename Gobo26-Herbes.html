@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Herbes mediterrànies – Gobo26</title>
 <meta name="description" content="Herbes mediterrànies: guia, tradicions i curiositats sobre plantes i usos populars.">
+<meta name="theme-color" content="#1e293b">
   <style>
     :root {
       --s800: #1e293b;
@@ -497,7 +498,7 @@
     <div class="oracle-suggestion" id="oSug"></div>
   </div>
 
-  <button class="btn-oracle" id="btnOracle" onclick="showOracle()">
+  <button type="button" class="btn-oracle" id="btnOracle" onclick="showOracle()">
     🌿 Descobreix la teva herba d'avui
   </button>
 </section>
@@ -507,8 +508,8 @@
   <h3>🧓 Saviesa de les àvies</h3>
   <div class="saviesa-quote" id="saviesaText"></div>
   <div class="saviesa-nav">
-    <button class="btn-sav" onclick="moveSaviesa(-1)" aria-label="Anterior">&#9664;</button>
-    <button class="btn-sav" onclick="moveSaviesa(1)"  aria-label="Següent">&#9654;</button>
+    <button type="button" class="btn-sav" onclick="moveSaviesa(-1)" aria-label="Anterior">&#9664;</button>
+    <button type="button" class="btn-sav" onclick="moveSaviesa(1)"  aria-label="Següent">&#9654;</button>
   </div>
 </section>
 
@@ -517,11 +518,11 @@
   <div class="catalog-top">
     <h2>Guia de plantes</h2>
     <div class="filter-tabs">
-      <button class="ftab active" onclick="filtrar('all', this)">Totes</button>
-      <button class="ftab" onclick="filtrar('aromatica', this)">Aromàtiques</button>
-      <button class="ftab" onclick="filtrar('cuina', this)">Cuina</button>
-      <button class="ftab" onclick="filtrar('calmant', this)">Calmants</button>
-      <button class="ftab" onclick="filtrar('especia', this)">Espècies</button>
+      <button type="button" class="ftab active" onclick="filtrar('all', this)">Totes</button>
+      <button type="button" class="ftab" onclick="filtrar('aromatica', this)">Aromàtiques</button>
+      <button type="button" class="ftab" onclick="filtrar('cuina', this)">Cuina</button>
+      <button type="button" class="ftab" onclick="filtrar('calmant', this)">Calmants</button>
+      <button type="button" class="ftab" onclick="filtrar('especia', this)">Espècies</button>
     </div>
   </div>
   <div class="plant-grid" id="plantGrid"></div>
@@ -535,7 +536,7 @@
       <div class="m-title"  id="mTitle"></div>
       <div class="m-sci"    id="mSci"></div>
       <div class="m-family" id="mFamily"></div>
-      <button class="m-close" onclick="tancarModal()">✕</button>
+      <button type="button" class="m-close" onclick="tancarModal()">✕</button>
     </div>
     <div class="modal-body" id="mBody"></div>
   </div>

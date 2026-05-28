@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Tensió Arterial · Gobo26</title>
 <meta name="description" content="Tensió Arterial: registre local de mesures de pressió arterial per consultar l’evolució al teu dispositiu.">
+<meta name="theme-color" content="#1e293b">
 <style>
 :root {
   --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
@@ -178,7 +179,7 @@ footer a{color:var(--s400);text-decoration:none;}
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">🩺 TENSIÓ ARTERIAL</span>
-    <button id="btn-ajuda" onclick="toggleAjuda()">?</button>
+    <button type="button" id="btn-ajuda" onclick="toggleAjuda()">?</button>
 </header>
 
 <!-- MAIN -->
@@ -204,7 +205,7 @@ footer a{color:var(--s400);text-decoration:none;}
         <input type="number" id="edat" placeholder="Ex: 62" min="1" max="120" inputmode="numeric">
       </div>
       <div style="height:12px;"></div>
-      <button class="btn-principal" onclick="comencar()">Començar →</button>
+      <button type="button" class="btn-principal" onclick="comencar()">Començar →</button>
     </div>
   </div>
 
@@ -215,7 +216,7 @@ footer a{color:var(--s400);text-decoration:none;}
     <div class="card" style="padding:10px 16px;">
       <div class="perfil-info">
         <span id="info-perfil">—</span>
-        <button class="btn-perfil" onclick="canviarPerfil()">✎ Canviar perfil</button>
+        <button type="button" class="btn-perfil" onclick="canviarPerfil()">✎ Canviar perfil</button>
       </div>
     </div>
 
@@ -238,7 +239,7 @@ footer a{color:var(--s400);text-decoration:none;}
           <span class="sub-label">La mínima</span>
         </div>
       </div>
-      <button class="btn-principal" onclick="guardarMesura()">＋ Guardar mesura</button>
+      <button type="button" class="btn-principal" onclick="guardarMesura()">＋ Guardar mesura</button>
       <div id="feedback-err"></div>
       <div id="feedback-box">
         <span id="feedback-emoji"></span>
@@ -291,7 +292,7 @@ footer a{color:var(--s400);text-decoration:none;}
       <div class="coll-body">
         <div id="hist-buit" class="buit-msg">Encara no has registrat cap mesura.</div>
         <div id="hist-llista" class="hist-llista"></div>
-        <button id="btn-reset" class="btn-reset" onclick="confirmarEsborrat()" style="display:none;">🗑 Esborrar totes les dades</button>
+        <button type="button" id="btn-reset" class="btn-reset" onclick="confirmarEsborrat()" style="display:none;">🗑 Esborrar totes les dades</button>
       </div>
     </div>
 
@@ -301,24 +302,24 @@ footer a{color:var(--s400);text-decoration:none;}
 <!-- TECLAT NUMÈRIC (fora del main, fixat a baix) -->
 <div class="teclat-numeric" id="teclat-numeric">
   <div class="teclat-num-fila">
-    <button class="tecla-num" ontouchstart="e_num(event,'7')" onmousedown="e_num(event,'7')">7</button>
-    <button class="tecla-num" ontouchstart="e_num(event,'8')" onmousedown="e_num(event,'8')">8</button>
-    <button class="tecla-num" ontouchstart="e_num(event,'9')" onmousedown="e_num(event,'9')">9</button>
+    <button type="button" class="tecla-num" ontouchstart="e_num(event,'7')" onmousedown="e_num(event,'7')">7</button>
+    <button type="button" class="tecla-num" ontouchstart="e_num(event,'8')" onmousedown="e_num(event,'8')">8</button>
+    <button type="button" class="tecla-num" ontouchstart="e_num(event,'9')" onmousedown="e_num(event,'9')">9</button>
   </div>
   <div class="teclat-num-fila">
-    <button class="tecla-num" ontouchstart="e_num(event,'4')" onmousedown="e_num(event,'4')">4</button>
-    <button class="tecla-num" ontouchstart="e_num(event,'5')" onmousedown="e_num(event,'5')">5</button>
-    <button class="tecla-num" ontouchstart="e_num(event,'6')" onmousedown="e_num(event,'6')">6</button>
+    <button type="button" class="tecla-num" ontouchstart="e_num(event,'4')" onmousedown="e_num(event,'4')">4</button>
+    <button type="button" class="tecla-num" ontouchstart="e_num(event,'5')" onmousedown="e_num(event,'5')">5</button>
+    <button type="button" class="tecla-num" ontouchstart="e_num(event,'6')" onmousedown="e_num(event,'6')">6</button>
   </div>
   <div class="teclat-num-fila">
-    <button class="tecla-num" ontouchstart="e_num(event,'1')" onmousedown="e_num(event,'1')">1</button>
-    <button class="tecla-num" ontouchstart="e_num(event,'2')" onmousedown="e_num(event,'2')">2</button>
-    <button class="tecla-num" ontouchstart="e_num(event,'3')" onmousedown="e_num(event,'3')">3</button>
+    <button type="button" class="tecla-num" ontouchstart="e_num(event,'1')" onmousedown="e_num(event,'1')">1</button>
+    <button type="button" class="tecla-num" ontouchstart="e_num(event,'2')" onmousedown="e_num(event,'2')">2</button>
+    <button type="button" class="tecla-num" ontouchstart="e_num(event,'3')" onmousedown="e_num(event,'3')">3</button>
   </div>
   <div class="teclat-num-fila">
-    <button class="tecla-num esborrar" ontouchstart="e_esb(event)" onmousedown="e_esb(event)">⌫</button>
-    <button class="tecla-num" ontouchstart="e_num(event,'0')" onmousedown="e_num(event,'0')">0</button>
-    <button class="tecla-num confirmar" ontouchstart="e_ok(event)" onmousedown="e_ok(event)">OK ✓</button>
+    <button type="button" class="tecla-num esborrar" ontouchstart="e_esb(event)" onmousedown="e_esb(event)">⌫</button>
+    <button type="button" class="tecla-num" ontouchstart="e_num(event,'0')" onmousedown="e_num(event,'0')">0</button>
+    <button type="button" class="tecla-num confirmar" ontouchstart="e_ok(event)" onmousedown="e_ok(event)">OK ✓</button>
   </div>
 </div>
 
@@ -340,7 +341,7 @@ footer a{color:var(--s400);text-decoration:none;}
     <p>Cada vegada que facis una mesura, introdueix la <strong>sistòlica</strong> (màxima) i la <strong>diastòlica</strong> (mínima).</p>
     <p>L'aplicació calcula la <strong>mitjana dels últims 7 registres</strong> i avalua si els valors són normals per al teu perfil.</p>
     <p style="font-size:.75rem;color:var(--s400);">🔒 Les dades es guarden localment en aquest dispositiu. Aquesta eina no substitueix el seguiment d'un professional sanitari.</p>
-    <button class="btn-tancar" onclick="toggleAjuda()">Entès</button>
+    <button type="button" class="btn-tancar" onclick="toggleAjuda()">Entès</button>
   </div>
 </div>
 
@@ -468,7 +469,7 @@ function actualitzarInterficie() {
       '<span class="hist-dot" style="background:' + estat.color + '"></span>' +
       '<span class="hist-data">' + reg.dataText + '<br>' + reg.hora + '</span>' +
       '<span class="hist-vals">' + reg.sis + '<span class="separat">/</span>' + reg.dia + '</span>' +
-      '<button class="btn-del-hist" onclick="eliminarMesura(' + reg.id + ')" title="Eliminar">✕</button>';
+      '<button type="button" class="btn-del-hist" onclick="eliminarMesura(' + reg.id + ')" title="Eliminar">✕</button>';
     llista.appendChild(div);
   });
 

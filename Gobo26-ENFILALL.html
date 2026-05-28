@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enfilall de Mots | Gobo26</title>
 <meta name="description" content="Enfilall de Mots: encadena paraules i treballa vocabulari, memòria i rapidesa mental.">
+<meta name="theme-color" content="#1e293b">
     <style>
         :root {
             --bg: #f1f5f9;
@@ -829,19 +830,19 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
 <div id="selector-paraules">
     <span class="sel-label">Dificultat de la frase</span>
     <div class="sel-botons">
-        <button class="sel-btn actiu" onclick="triarParaules(6,this)">🫘 Llavor</button>
-        <button class="sel-btn" onclick="triarParaules(8,this)">🌱 Brot</button>
-        <button class="sel-btn" onclick="triarParaules(10,this)">🌿 Herba</button>
-        <button class="sel-btn" onclick="triarParaules(12,this)">🌳 Arbre</button>
-        <button class="sel-btn" onclick="triarParaules(16,this)">🌌 Galàxia</button>
+        <button type="button" class="sel-btn actiu" onclick="triarParaules(6,this)">🫘 Llavor</button>
+        <button type="button" class="sel-btn" onclick="triarParaules(8,this)">🌱 Brot</button>
+        <button type="button" class="sel-btn" onclick="triarParaules(10,this)">🌿 Herba</button>
+        <button type="button" class="sel-btn" onclick="triarParaules(12,this)">🌳 Arbre</button>
+        <button type="button" class="sel-btn" onclick="triarParaules(16,this)">🌌 Galàxia</button>
     </div>
 </div>
 
 <!-- Controls -->
 <div id="controls" style="display:flex;flex-direction:column;align-items:center;gap:8px;">
     <div id="carregant"><span class="spinner"></span>Generant frase nova...</div>
-    <button id="btn-panic" onclick="activarPanic()">🆘 Pànic!</button>
-    <button id="btn-parar" onclick="pararPartida()">■ Parar partida</button>
+    <button type="button" id="btn-panic" onclick="activarPanic()">🆘 Pànic!</button>
+    <button type="button" id="btn-parar" onclick="pararPartida()">■ Parar partida</button>
 </div>
 
 <!-- Rècords -->
@@ -904,7 +905,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
         <div class="ajuda-avís">
             ⚠️ Encara que sàpigues quina paraula vindrà a continuació, <strong>no la cliquis fins que el joc te la mostri</strong>. L'objectiu és entrenar la memòria: clicar per avançat és un error.
         </div>
-        <button id="btn-tancar-ajuda" onclick="tancarAjuda()">Entès!</button>
+        <button type="button" id="btn-tancar-ajuda" onclick="tancarAjuda()">Entès!</button>
     </div>
 </div>
 
@@ -916,8 +917,8 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
         <p class="panic-sub">Aquí tens la frase completa</p>
         <div id="panic-frase-display"></div>
         <div class="panic-botons">
-            <button id="btn-panic-continua" onclick="tancarPanic()">▶ Continuar</button>
-            <button id="btn-panic-sortir" onclick="pararDesDesPanic()">✕ Abandonar</button>
+            <button type="button" id="btn-panic-continua" onclick="tancarPanic()">▶ Continuar</button>
+            <button type="button" id="btn-panic-sortir" onclick="pararDesDesPanic()">✕ Abandonar</button>
         </div>
     </div>
 </div>
@@ -931,7 +932,7 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
         <div id="modal-frase"></div>
         <div id="modal-stats"></div>
         <div id="modal-record"></div>
-        <button class="boto-gran" onclick="tancarModal()" style="width:100%">▶ Jugar de nou</button>
+        <button type="button" class="boto-gran" onclick="tancarModal()" style="width:100%">▶ Jugar de nou</button>
     </div>
 </div>
 

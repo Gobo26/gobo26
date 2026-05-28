@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>L'Oncle Albert - Gobo26</title>
 <meta name="description" content="L’Oncle Albert: escape room interactiu amb enigmes, codis i misteris per resoldre.">
+<meta name="theme-color" content="#1e293b">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
@@ -348,7 +349,7 @@ footer a{color:#94a3b8;text-decoration:none;}
         <div class="hd-rang" id="hdr-rang"></div>
         <div class="hd-temps" id="hdr-t">⏱ <span id="hdr-ts">–</span></div>
         <div class="hd-badge" id="hdr-inv" style="display:none;" onclick="obrirInventariModal()">🎒 <span id="hdr-in">0</span></div>
-        <button class="hd-mute" id="hdr-mute" onclick="toggleMute()" title="So on/off">🔊</button>
+        <button type="button" class="hd-mute" id="hdr-mute" onclick="toggleMute()" title="So on/off">🔊</button>
     </div>
 </header>
 
@@ -381,16 +382,16 @@ footer a{color:#94a3b8;text-decoration:none;}
       Mode Zen 🧘
       <span>Sense compte enrere. Juga al teu ritme.</span>
     </div>
-    <button class="toggle-sw" id="zen-sw" onclick="toggleZen()" aria-label="Mode Zen"></button>
+    <button type="button" class="toggle-sw" id="zen-sw" onclick="toggleZen()" aria-label="Mode Zen"></button>
   </div>
   <div class="estat-ant" id="estat-ant" style="display:none;">
     <div style="margin-bottom:8px;">📌 Tens una partida guardada</div>
     <div style="display:flex;gap:8px;flex-direction:column;">
-      <button class="btn-ppal" onclick="reprendre()" style="background:#22c55e;box-shadow:0 4px 0 #16a34a;">↩ Reprendre la partida</button>
-      <button class="btn-sec" onclick="novaPartida()" style="font-size:.85rem;padding:11px;">✨ Començar una nova partida</button>
+      <button type="button" class="btn-ppal" onclick="reprendre()" style="background:#22c55e;box-shadow:0 4px 0 #16a34a;">↩ Reprendre la partida</button>
+      <button type="button" class="btn-sec" onclick="novaPartida()" style="font-size:.85rem;padding:11px;">✨ Començar una nova partida</button>
     </div>
   </div>
-  <button class="btn-ppal" id="btn-comecar" onclick="mostrarDificultat()">Comença l'aventura →</button>
+  <button type="button" class="btn-ppal" id="btn-comecar" onclick="mostrarDificultat()">Comença l'aventura →</button>
 </div>
 
 <!-- ════ DIFICULTAT ════ -->
@@ -435,7 +436,7 @@ footer a{color:#94a3b8;text-decoration:none;}
       </div>
     </div>
   </div>
-  <button class="btn-ppal" id="btn-comencar-dif" onclick="comecar()">Comencem! →</button>
+  <button type="button" class="btn-ppal" id="btn-comencar-dif" onclick="comecar()">Comencem! →</button>
 </div>
 
 <!-- ════ MAPA ════ -->
@@ -454,9 +455,9 @@ footer a{color:#94a3b8;text-decoration:none;}
 <!-- ════ ENIGMA ════ -->
 <div class="pagina fade-in" id="pg-enigma">
   <div class="e-nav">
-    <button class="btn-back" onclick="tornarMapa()">← Mapa</button>
+    <button type="button" class="btn-back" onclick="tornarMapa()">← Mapa</button>
     <span class="e-prog" id="e-prog">–</span>
-    <button class="btn-saltar" onclick="saltarEnigma()" id="btn-saltar">⏭ Més tard</button>
+    <button type="button" class="btn-saltar" onclick="saltarEnigma()" id="btn-saltar">⏭ Més tard</button>
   </div>
   <div>
     <div class="e-cap" id="e-cap">
@@ -475,17 +476,17 @@ footer a{color:#94a3b8;text-decoration:none;}
            onkeydown="if(event.key==='Enter')comprova()">
     <!-- Display tàctil (mòbil) -->
     <div class="inp-display" id="inp-display" onclick="tgActivar()"></div>
-    <button class="btn-ok" id="btn-ok" onclick="comprova()">→</button>
+    <button type="button" class="btn-ok" id="btn-ok" onclick="comprova()">→</button>
   </div>
   <div class="meta">
     <div class="vides-zona" id="vides-zona">
       <span class="vl">Vides:</span>
     </div>
-    <button class="btn-pista" id="btn-pista" onclick="demanaPista()">🔦 Pista</button>
+    <button type="button" class="btn-pista" id="btn-pista" onclick="demanaPista()">🔦 Pista</button>
   </div>
   <div class="fb" id="fb"></div>
   <div class="narr-box" id="narr-enigma" style="display:none;"></div>
-  <button class="btn-seg" id="btn-seg" onclick="seguentAccio()">–</button>
+  <button type="button" class="btn-seg" id="btn-seg" onclick="seguentAccio()">–</button>
 </div>
 
 <!-- ════ GAME OVER ════ -->
@@ -496,7 +497,7 @@ footer a{color:#94a3b8;text-decoration:none;}
     <div class="fin-sub">L'Oncle Albert era molt astut. Els seus enigmes no perdonen. Torna-ho a intentar!</div>
   </div>
   <div class="card"><h3>Resum</h3><ul><li id="go1">–</li><li id="go2">–</li><li id="go3">–</li></ul></div>
-  <button class="btn-ppal" onclick="reiniciar()">↺ Tornar a intentar-ho</button>
+  <button type="button" class="btn-ppal" onclick="reiniciar()">↺ Tornar a intentar-ho</button>
 </div>
 
 <!-- ════ FINAL ════ -->
@@ -522,8 +523,8 @@ footer a{color:#94a3b8;text-decoration:none;}
     <div class="stat"><span class="stat-n" id="fn-nparts">–</span><span class="stat-l">Partides</span></div>
   </div>
   <div class="fin-nota" id="fin-nota">–</div>
-  <button class="btn-compartir" onclick="compartirResultat()">📤 Compartir resultat</button>
-  <button class="btn-sec" onclick="reiniciar()">↺ Tornar a jugar</button>
+  <button type="button" class="btn-compartir" onclick="compartirResultat()">📤 Compartir resultat</button>
+  <button type="button" class="btn-sec" onclick="reiniciar()">↺ Tornar a jugar</button>
 </div>
 
 </div><!-- fi scroll-area -->
@@ -532,59 +533,59 @@ footer a{color:#94a3b8;text-decoration:none;}
 <div class="teclat-gobo" id="teclat-gobo">
   <!-- Files numèriques -->
   <div class="teclat-fila tg-fila-num">
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'1')" onclick="tgLetra(event,'1')"><span class="tg-ll">1</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'2')" onclick="tgLetra(event,'2')"><span class="tg-ll">2</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'3')" onclick="tgLetra(event,'3')"><span class="tg-ll">3</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'1')" onclick="tgLetra(event,'1')"><span class="tg-ll">1</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'2')" onclick="tgLetra(event,'2')"><span class="tg-ll">2</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'3')" onclick="tgLetra(event,'3')"><span class="tg-ll">3</span></button>
   </div>
   <div class="teclat-fila tg-fila-num">
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'4')" onclick="tgLetra(event,'4')"><span class="tg-ll">4</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'5')" onclick="tgLetra(event,'5')"><span class="tg-ll">5</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'6')" onclick="tgLetra(event,'6')"><span class="tg-ll">6</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'4')" onclick="tgLetra(event,'4')"><span class="tg-ll">4</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'5')" onclick="tgLetra(event,'5')"><span class="tg-ll">5</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'6')" onclick="tgLetra(event,'6')"><span class="tg-ll">6</span></button>
   </div>
   <div class="teclat-fila tg-fila-num">
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'7')" onclick="tgLetra(event,'7')"><span class="tg-ll">7</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'8')" onclick="tgLetra(event,'8')"><span class="tg-ll">8</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'9')" onclick="tgLetra(event,'9')"><span class="tg-ll">9</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'7')" onclick="tgLetra(event,'7')"><span class="tg-ll">7</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'8')" onclick="tgLetra(event,'8')"><span class="tg-ll">8</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'9')" onclick="tgLetra(event,'9')"><span class="tg-ll">9</span></button>
   </div>
   <div class="teclat-fila tg-fila-num">
-    <button class="tg-acc" ontouchstart="tgEsborrar(event)" onclick="tgEsborrar(event)">⌫</button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'0')" onclick="tgLetra(event,'0')"><span class="tg-ll">0</span></button>
-    <button class="tg-acc ok" ontouchstart="tgOK(event)" onclick="tgOK(event)">→</button>
+    <button type="button" class="tg-acc" ontouchstart="tgEsborrar(event)" onclick="tgEsborrar(event)">⌫</button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'0')" onclick="tgLetra(event,'0')"><span class="tg-ll">0</span></button>
+    <button type="button" class="tg-acc ok" ontouchstart="tgOK(event)" onclick="tgOK(event)">→</button>
   </div>
   <!-- Files alfabètiques -->
   <div class="teclat-fila tg-fila-alfa">
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'Q')" onclick="tgLetra(event,'Q')"><span class="tg-ll">Q</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'W')" onclick="tgLetra(event,'W')"><span class="tg-ll">W</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'E')" onclick="tgLetra(event,'E')"><span class="tg-ll">E</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'R')" onclick="tgLetra(event,'R')"><span class="tg-ll">R</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'T')" onclick="tgLetra(event,'T')"><span class="tg-ll">T</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'Y')" onclick="tgLetra(event,'Y')"><span class="tg-ll">Y</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'U')" onclick="tgLetra(event,'U')"><span class="tg-ll">U</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'I')" onclick="tgLetra(event,'I')"><span class="tg-ll">I</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'O')" onclick="tgLetra(event,'O')"><span class="tg-ll">O</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'P')" onclick="tgLetra(event,'P')"><span class="tg-ll">P</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'Q')" onclick="tgLetra(event,'Q')"><span class="tg-ll">Q</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'W')" onclick="tgLetra(event,'W')"><span class="tg-ll">W</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'E')" onclick="tgLetra(event,'E')"><span class="tg-ll">E</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'R')" onclick="tgLetra(event,'R')"><span class="tg-ll">R</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'T')" onclick="tgLetra(event,'T')"><span class="tg-ll">T</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'Y')" onclick="tgLetra(event,'Y')"><span class="tg-ll">Y</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'U')" onclick="tgLetra(event,'U')"><span class="tg-ll">U</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'I')" onclick="tgLetra(event,'I')"><span class="tg-ll">I</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'O')" onclick="tgLetra(event,'O')"><span class="tg-ll">O</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'P')" onclick="tgLetra(event,'P')"><span class="tg-ll">P</span></button>
   </div>
   <div class="teclat-fila tg-fila-alfa">
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'A')" onclick="tgLetra(event,'A')"><span class="tg-ll">A</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'S')" onclick="tgLetra(event,'S')"><span class="tg-ll">S</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'D')" onclick="tgLetra(event,'D')"><span class="tg-ll">D</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'F')" onclick="tgLetra(event,'F')"><span class="tg-ll">F</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'G')" onclick="tgLetra(event,'G')"><span class="tg-ll">G</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'H')" onclick="tgLetra(event,'H')"><span class="tg-ll">H</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'J')" onclick="tgLetra(event,'J')"><span class="tg-ll">J</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'K')" onclick="tgLetra(event,'K')"><span class="tg-ll">K</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'L')" onclick="tgLetra(event,'L')"><span class="tg-ll">L</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'A')" onclick="tgLetra(event,'A')"><span class="tg-ll">A</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'S')" onclick="tgLetra(event,'S')"><span class="tg-ll">S</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'D')" onclick="tgLetra(event,'D')"><span class="tg-ll">D</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'F')" onclick="tgLetra(event,'F')"><span class="tg-ll">F</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'G')" onclick="tgLetra(event,'G')"><span class="tg-ll">G</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'H')" onclick="tgLetra(event,'H')"><span class="tg-ll">H</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'J')" onclick="tgLetra(event,'J')"><span class="tg-ll">J</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'K')" onclick="tgLetra(event,'K')"><span class="tg-ll">K</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'L')" onclick="tgLetra(event,'L')"><span class="tg-ll">L</span></button>
   </div>
   <div class="teclat-fila tg-fila-alfa">
-    <button class="tg-acc" ontouchstart="tgEsborrar(event)" onclick="tgEsborrar(event)">⌫</button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'Z')" onclick="tgLetra(event,'Z')"><span class="tg-ll">Z</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'X')" onclick="tgLetra(event,'X')"><span class="tg-ll">X</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'C')" onclick="tgLetra(event,'C')"><span class="tg-ll">C</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'V')" onclick="tgLetra(event,'V')"><span class="tg-ll">V</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'B')" onclick="tgLetra(event,'B')"><span class="tg-ll">B</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'N')" onclick="tgLetra(event,'N')"><span class="tg-ll">N</span></button>
-    <button class="tg-tecla" ontouchstart="tgLetra(event,'M')" onclick="tgLetra(event,'M')"><span class="tg-ll">M</span></button>
-    <button class="tg-acc ok" ontouchstart="tgOK(event)" onclick="tgOK(event)">→</button>
+    <button type="button" class="tg-acc" ontouchstart="tgEsborrar(event)" onclick="tgEsborrar(event)">⌫</button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'Z')" onclick="tgLetra(event,'Z')"><span class="tg-ll">Z</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'X')" onclick="tgLetra(event,'X')"><span class="tg-ll">X</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'C')" onclick="tgLetra(event,'C')"><span class="tg-ll">C</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'V')" onclick="tgLetra(event,'V')"><span class="tg-ll">V</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'B')" onclick="tgLetra(event,'B')"><span class="tg-ll">B</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'N')" onclick="tgLetra(event,'N')"><span class="tg-ll">N</span></button>
+    <button type="button" class="tg-tecla" ontouchstart="tgLetra(event,'M')" onclick="tgLetra(event,'M')"><span class="tg-ll">M</span></button>
+    <button type="button" class="tg-acc ok" ontouchstart="tgOK(event)" onclick="tgOK(event)">→</button>
   </div>
 </div>
 
@@ -594,7 +595,7 @@ footer a{color:#94a3b8;text-decoration:none;}
     <div class="modal-tit" id="minv-tit">–</div>
     <div class="modal-sub" id="minv-sub">–</div>
     <div class="modal-desc" id="minv-desc">–</div>
-    <button class="btn-tancar" onclick="tancarModalInv()">Tanca</button>
+    <button type="button" class="btn-tancar" onclick="tancarModalInv()">Tanca</button>
   </div>
 </div>
 
@@ -885,9 +886,9 @@ function construirEnigmes(params){
         window._cesarState=[...ll];
         const cols=ll.map((c,i)=>`<div class="cesar-col">
           <span class="cesar-xif">${c}</span>
-          <button class="cesar-btn" onclick="cesarCanvia(${i},1)">▲</button>
+          <button type="button" class="cesar-btn" onclick="cesarCanvia(${i},1)">▲</button>
           <div class="cesar-lletra" id="cesar-l-${i}">${c}</div>
-          <button class="cesar-btn" onclick="cesarCanvia(${i},-1)">▼</button>
+          <button type="button" class="cesar-btn" onclick="cesarCanvia(${i},-1)">▼</button>
         </div>`).join('');
         return `Has trobat una carta a l'escriptori. El text diu:<br><br>
           <em>«He xifrat una paraula secreta desplaçant cada lletra <strong>${cesar.desp} posicions cap enrere</strong> a l'alfabet.»</em><br><br>
@@ -1305,7 +1306,7 @@ function mostrarNarrSala(sid,cb){
   box.innerHTML=`<div style="font-size:2.5rem;">${sala?.emoji||'🚪'}</div>
     <div style="font-size:1rem;font-weight:900;color:white;">${sala?.nom||'Nova sala'}</div>
     <div style="font-size:.82rem;font-weight:600;line-height:1.7;font-style:italic;color:#94a3b8;">${NARR_SALA[sid]}</div>
-    <button style="font-family:system-ui,sans-serif;font-weight:800;font-size:.9rem;background:#2563eb;color:white;border:none;border-radius:10px;padding:12px;cursor:pointer;margin-top:4px;">Endavant →</button>`;
+    <button type="button" style="font-family:system-ui,sans-serif;font-weight:800;font-size:.9rem;background:#2563eb;color:white;border:none;border-radius:10px;padding:12px;cursor:pointer;margin-top:4px;">Endavant →</button>`;
   box.querySelector('button').onclick=()=>{overlay.remove();cb();};
   overlay.appendChild(box);
   overlay.onclick=(e)=>{if(e.target===overlay){overlay.remove();cb();}};

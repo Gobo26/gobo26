@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Anagrames · Gobo26</title>
 <meta name="description" content="Reordena lletres i resol anagrames en català. Joc gratuït de paraules per entrenar vocabulari i agilitat mental.">
+<meta name="theme-color" content="#1e293b">
 <style>
 :root {
   --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
@@ -148,7 +149,7 @@ footer a{color:var(--s400);text-decoration:none;}
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">🔤 Anagrames</span>
-    <button id="btn-ajuda" onclick="obrirAjuda()">?</button>
+    <button type="button" id="btn-ajuda" onclick="obrirAjuda()">?</button>
 </header>
 
 <main>
@@ -186,12 +187,12 @@ footer a{color:var(--s400);text-decoration:none;}
     <div class="zona-lletres" id="zona-ll"></div>
 
     <div class="accions">
-      <button class="btn-acc btn-esb" onclick="esborrarUltima()">⌫ Esborra</button>
-      <button class="btn-acc btn-comp" onclick="comprovar()">✓ Comprova</button>
-      <button class="btn-acc btn-barr" onclick="barrejar()">🔀 Barreja</button>
+      <button type="button" class="btn-acc btn-esb" onclick="esborrarUltima()">⌫ Esborra</button>
+      <button type="button" class="btn-acc btn-comp" onclick="comprovar()">✓ Comprova</button>
+      <button type="button" class="btn-acc btn-barr" onclick="barrejar()">🔀 Barreja</button>
     </div>
     <div class="accions" style="margin-top:5px;">
-      <button class="btn-acc" id="btn-pista"
+      <button type="button" class="btn-acc" id="btn-pista"
         style="background:#ede9fe;color:#7c3aed;grid-column:1/-1;flex:1;"
         onclick="donarPista()">💡 Pista (−5 pts)</button>
     </div>
@@ -247,7 +248,7 @@ footer a{color:var(--s400);text-decoration:none;}
       <tr><td>Temps exhaurit</td><td>−5 pts</td></tr>
       <tr><td>💡 Pista (revela una lletra)</td><td>−5 pts</td></tr>
     </table>
-    <button class="btn-tancar" onclick="tancarAjuda()">Entesos, juguem! 🚀</button>
+    <button type="button" class="btn-tancar" onclick="tancarAjuda()">Entesos, juguem! 🚀</button>
   </div>
 </div>
 

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>La Nit de la Coral – Gobo26</title>
 <meta name="description" content="Aventura interactiva de misteri coral: investiga decisions, pistes i finals possibles en una història de Gobo26.">
+<meta name="theme-color" content="#1e293b">
 <style>
 :root {
   --bg:     #0d0f1a;
@@ -390,7 +391,7 @@ footer{
   <h1>La Nit de la Coral</h1>
   <div class="hdr-right">
     <span class="hdr-timer" id="hdr-timer">0:00</span>
-    <button class="hdr-btn" id="btn-clues" onclick="openClues()">
+    <button type="button" class="hdr-btn" id="btn-clues" onclick="openClues()">
       🔍 <span class="clue-badge" id="clue-badge">0</span>
     </button>
   </div>
@@ -410,7 +411,7 @@ footer{
       Quan hi aneu, el trobeu mort. <em>Assassinat.</em>
       Tens menys d'una hora per descobrir qui — i decidir si el concert ha de continuar.
     </p>
-    <button class="btn-begin" onclick="startAdventure()">♪ Comença l'aventura</button>
+    <button type="button" class="btn-begin" onclick="startAdventure()">♪ Comença l'aventura</button>
 
     <!-- Endings gallery (apareix després de la primera partida) -->
     <div class="endings-gallery" id="endings-gallery">
@@ -432,7 +433,7 @@ footer{
   <div class="clues-panel" onclick="event.stopPropagation()">
     <div class="clues-hdr">
       <span class="clues-hdr-title">🔍 Deduccions</span>
-      <button class="clues-close" onclick="closeClues()">✕</button>
+      <button type="button" class="clues-close" onclick="closeClues()">✕</button>
     </div>
     <div class="clues-body" id="clues-body">
       <div class="clues-empty">Encara no has trobat cap pista en aquesta investigació.</div>
@@ -1080,8 +1081,8 @@ function goTo(nodeId, choiceLabel){
       <div class="scene-ending">
         <div class="ending-badge ${node.ending}">${node.endingLabel}</div>
         <br>
-        <button class="btn-restart" onclick="startAdventure()">↺ Torna a començar</button>
-        <button class="btn-restart" onclick="goHome()">← Portada</button>
+        <button type="button" class="btn-restart" onclick="startAdventure()">↺ Torna a començar</button>
+        <button type="button" class="btn-restart" onclick="goHome()">← Portada</button>
       </div>`;
     document.getElementById('screen-game').scrollTo(0,0);
     return;
@@ -1093,7 +1094,7 @@ function goTo(nodeId, choiceLabel){
     <div class="choices">
       ${node.choices.map((c,i)=>{
         const wasVisited = visitedEver.has(c.next);
-        return `<button class="choice-btn${wasVisited?' visited-choice':''}"
+        return `<button type="button" class="choice-btn${wasVisited?' visited-choice':''}"
           style="animation-delay:${i*0.08}s"
           onclick="goTo('${c.next}',${JSON.stringify(c.label.replace(/<[^>]*>/g,''))})">
           <span class="choice-arrow">▶</span>

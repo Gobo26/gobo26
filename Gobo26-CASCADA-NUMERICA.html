@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gobo26 - Cascada Numèrica</title>
 <meta name="description" content="Cascada Numèrica: joc gratuït de seqüències i càlcul mental per entrenar atenció i agilitat numèrica.">
+<meta name="theme-color" content="#1e293b">
     <style>
         :root {
             --bg:      #f1f5f9;
@@ -555,7 +556,7 @@ function obriRegles() {
         <div class="modal-box">
             <div class="modal-header">
                 <div class="modal-title">❓ Com jugar</div>
-                <button class="btn-close" onclick="tancarRegles()">✕</button>
+                <button type="button" class="btn-close" onclick="tancarRegles()">✕</button>
             </div>
             <div class="modal-cos">
                 <div class="rule-item">
@@ -575,7 +576,7 @@ function obriRegles() {
                     <p>El número <strong>1</strong> es resol sol. El número <strong>9</strong> requereix 9 encerts seguits!</p>
                 </div>
             </div>
-            <button class="btn-ok" onclick="tancarRegles()">Entesos!</button>
+            <button type="button" class="btn-ok" onclick="tancarRegles()">Entesos!</button>
         </div>`;
     document.body.appendChild(overlay);
 }
@@ -600,7 +601,7 @@ function render() {
 
 function htmlMenu() {
     const botons = [4, 5, 6, 7, 8, 9, 10].map(n => `
-        <button class="level-btn lc-${n}" onclick="iniciarPartida(${n})">
+        <button type="button" class="level-btn lc-${n}" onclick="iniciarPartida(${n})">
             <div>
                 <span class="lbl">${NIVELLS[n].label}</span>
                 <span class="sub">Nivell ${n}</span>
@@ -614,7 +615,7 @@ function htmlMenu() {
         <div class="menu-card">
             <div class="menu-card-cap">
                 <h2>Tria el teu repte:</h2>
-                <button class="btn-icon" onclick="obriRegles()" title="Com jugar" style="font-size:1.1rem;color:#64748b">❓</button>
+                <button type="button" class="btn-icon" onclick="obriRegles()" title="Com jugar" style="font-size:1.1rem;color:#64748b">❓</button>
             </div>
             <div class="level-grid">${botons}</div>
         </div>`;
@@ -634,7 +635,7 @@ function htmlJoc() {
         if (esPulse) cls += ' fi-pulse';
         if (noClic)  cls += ' no-clic';
         const delay = esPulse ? i * 50 : 0;
-        return `<button class="${cls}" onclick="clicarCel·la(${i})" style="animation-delay:${delay}ms">
+        return `<button type="button" class="${cls}" onclick="clicarCel·la(${i})" style="animation-delay:${delay}ms">
             <span class="cell-spark">✦</span>
             <span class="cell-num">${c.value}</span>
         </button>`;
@@ -645,13 +646,13 @@ function htmlJoc() {
         : '';
 
     const btnMenu = estat === 'acabat'
-        ? `<button class="btn-sec" onclick="tornarMenu()">🏠 Menú</button>`
+        ? `<button type="button" class="btn-sec" onclick="tornarMenu()">🏠 Menú</button>`
         : '';
 
     return `
         <div class="game-header">
             <div class="game-title-area">
-                <button class="btn-icon" onclick="tornarMenu()" title="Menú">
+                <button type="button" class="btn-icon" onclick="tornarMenu()" title="Menú">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
@@ -660,11 +661,11 @@ function htmlJoc() {
                     <div class="game-title">Cascada Numèrica</div>
                     <span class="game-sublabel lc-${nivell}">${cfg.label}</span>
                 </div>
-                <button class="btn-icon" onclick="obriRegles()" title="Ajuda" style="font-size:1rem;color:#94a3b8">❓</button>
+                <button type="button" class="btn-icon" onclick="obriRegles()" title="Ajuda" style="font-size:1rem;color:#94a3b8">❓</button>
             </div>
             <div class="game-actions">
                 ${btnMenu}
-                <button class="btn-pri" onclick="iniciarPartida(${nivell})">
+                <button type="button" class="btn-pri" onclick="iniciarPartida(${nivell})">
                     ↺ ${estat === 'acabat' ? 'Altra' : 'Reiniciar'}
                 </button>
             </div>

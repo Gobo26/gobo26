@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dites Inacabades · Gobo26</title>
 <meta name="description" content="Completa dites populars catalanes i posa a prova memòria, llengua i cultura popular.">
+<meta name="theme-color" content="#1e293b">
 <style>
 :root{
   --bg:#f1f5f9;--paper:#fffcf5;--paper2:#fff8e8;
@@ -230,21 +231,21 @@ footer{
   <div class="inici-titol">Dites Inacabades</div>
   <div class="inici-sub">Com acaba aquesta dita popular?</div>
   <div class="niv-llista">
-    <button class="btn-niv" onclick="iniciar(1)">
+    <button type="button" class="btn-niv" onclick="iniciar(1)">
       <div>
         <div class="btn-niv-nom">🌿 Nivell 1 · Populars</div>
         <div class="btn-niv-desc">Dites que tothom hauria de conèixer</div>
       </div>
       <span class="btn-niv-fletxa">▶</span>
     </button>
-    <button class="btn-niv" onclick="iniciar(2)">
+    <button type="button" class="btn-niv" onclick="iniciar(2)">
       <div>
         <div class="btn-niv-nom">🦉 Nivell 2 · Per pensar-hi</div>
         <div class="btn-niv-desc">Menys habituals, cal reflexionar</div>
       </div>
       <span class="btn-niv-fletxa">▶</span>
     </button>
-    <button class="btn-niv" onclick="iniciar(3)">
+    <button type="button" class="btn-niv" onclick="iniciar(3)">
       <div>
         <div class="btn-niv-nom">🧓 Nivell 3 · Dels avis</div>
         <div class="btn-niv-desc">Les dites més antigues i picants</div>
@@ -271,10 +272,10 @@ footer{
     <div class="fb-titol" id="fb-titol"></div>
     <div class="fb-refrany" id="fb-refrany"></div>
     <div class="fb-desc" id="fb-desc"></div>
-    <button id="btn-seg" onclick="novaRonda()">Següent dita ➔</button>
+    <button type="button" id="btn-seg" onclick="novaRonda()">Següent dita ➔</button>
   </div>
   <div style="text-align:center;margin-top:8px;">
-    <button onclick="tornar()" style="font-family:system-ui, -apple-system, sans-serif;font-size:.78rem;font-weight:700;color:var(--ink3);background:none;border:none;cursor:pointer;text-decoration:underline;padding:8px;">↩ Menú principal</button>
+    <button type="button" onclick="tornar()" style="font-family:system-ui, -apple-system, sans-serif;font-size:.78rem;font-weight:700;color:var(--ink3);background:none;border:none;cursor:pointer;text-decoration:underline;padding:8px;">↩ Menú principal</button>
   </div>
 </div>
 
@@ -292,7 +293,7 @@ footer{
       <strong>🦉 Nivell 2</strong> — Dites que cal pensar-s'hi<br>
       <strong>🧓 Nivell 3</strong> — Les mes antigues i picants
     </div>
-    <button id="btn-tancar-ajuda" onclick="tancarAjuda()">Entesos, a jugar!</button>
+    <button type="button" id="btn-tancar-ajuda" onclick="tancarAjuda()">Entesos, a jugar!</button>
   </div>
 </div>
 

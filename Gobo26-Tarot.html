@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Santuari de Tarot – Gobo26</title>
 <meta name="description" content="Santuari de Tarot: tirades dels Arcans Majors i diari personal de lectures.">
+<meta name="theme-color" content="#1e293b">
 <style>
     :root {
         --fons-fosc: #1a1525;
@@ -375,10 +376,10 @@
 
 <!-- NAV PRINCIPAL -->
 <nav class="nav-principal">
-    <button class="nav-btn" onclick="canviarPantalla('inici')">Inici</button>
-    <button class="nav-btn" onclick="iniciarTiradaPantalla()">Tirar Cartes</button>
-    <button class="nav-btn" onclick="mostrarDiari()">El meu Diari</button>
-    <button class="nav-btn" onclick="mostrarDiccionari()">Diccionari</button>
+    <button type="button" class="nav-btn" onclick="canviarPantalla('inici')">Inici</button>
+    <button type="button" class="nav-btn" onclick="iniciarTiradaPantalla()">Tirar Cartes</button>
+    <button type="button" class="nav-btn" onclick="mostrarDiari()">El meu Diari</button>
+    <button type="button" class="nav-btn" onclick="mostrarDiccionari()">Diccionari</button>
 </nav>
 
 <main>
@@ -394,11 +395,11 @@
         <h2>Què necessites saber avui?</h2>
         <p class="text-gran">Tria el tipus de lectura que prefereixes:</p>
         <div class="opcions-tirada">
-            <button class="btn-tirada" onclick="prepararTirada(1)">
+            <button type="button" class="btn-tirada" onclick="prepararTirada(1)">
                 🃏 Tirada d'1 Carta
                 <small>Consell ràpid o resposta directa</small>
             </button>
-            <button class="btn-tirada" onclick="prepararTirada(3)">
+            <button type="button" class="btn-tirada" onclick="prepararTirada(3)">
                 🃏🃏🃏 Tirada de 3 Cartes
                 <small>Passat, Present i Futur</small>
             </button>
@@ -411,7 +412,7 @@
         <p class="text-gran">Passa el dit per dins del requadre mentre penses en allò que et preocupa.</p>
         <div class="zona-barrejar" id="zona-touch">Frega aquí per barrejar...</div>
         <div class="text-centre">
-            <button class="btn" id="btn-continuar-tirada" onclick="mostrarCartes()" disabled>Continuar a la Tirada</button>
+            <button type="button" class="btn" id="btn-continuar-tirada" onclick="mostrarCartes()" disabled>Continuar a la Tirada</button>
         </div>
     </section>
 
@@ -422,7 +423,7 @@
         <div class="contenidor-cartes" id="taula-cartes"></div>
         <div id="resultat-lectura"></div>
         <div class="text-centre" style="margin-top: 24px;">
-            <button class="btn" id="btn-guardar" style="display: none;" onclick="guardarAlDiari()">Guardar al Diari</button>
+            <button type="button" class="btn" id="btn-guardar" style="display: none;" onclick="guardarAlDiari()">Guardar al Diari</button>
         </div>
     </section>
 
@@ -432,7 +433,7 @@
         <p class="text-gran">Les teves tirades guardades per repassar-les.</p>
         <div id="llista-diari"></div>
         <div class="text-centre" style="margin-top: 32px;">
-            <button class="btn btn-perill" onclick="esborrarDiari()">Esborrar tot el Diari</button>
+            <button type="button" class="btn btn-perill" onclick="esborrarDiari()">Esborrar tot el Diari</button>
         </div>
     </section>
 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Dominó – Gobo26</title>
 <meta name="description" content="Juga al Dominó contra la màquina. Joc clàssic gratuït adaptat per a mòbil i ordinador.">
+<meta name="theme-color" content="#1e293b">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -494,7 +495,7 @@
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">🁣 Dominó</span>
-    <button id="btn-ajuda" onclick="obrirAjuda()" title="Com jugar">?</button>
+    <button type="button" id="btn-ajuda" onclick="obrirAjuda()" title="Com jugar">?</button>
 </header>
 
 <main>
@@ -537,7 +538,7 @@
     <!-- TAULER (expandible) -->
     <div class="tauler-header">
         <span style="font-size:.7rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.1em">Cadena</span>
-        <button class="tauler-toggle" id="btn-tauler" onclick="toggleTauler()">Amagar tauler ▴</button>
+        <button type="button" class="tauler-toggle" id="btn-tauler" onclick="toggleTauler()">Amagar tauler ▴</button>
     </div>
     <div id="tauler-contenidor">
         <div id="tauler"><div class="tauler-buit">Tauler buit</div></div>
@@ -551,13 +552,13 @@
 
     <!-- CONTROLS -->
     <div class="controls" id="controls">
-        <button class="boto boto-reiniciar" onclick="reiniciarJoc()">🔄 Nova Partida</button>
-        <button id="btn-passar" class="boto boto-passar" onclick="accioPasarTorn()" style="display:none">⏭ Passo torn</button>
+        <button type="button" class="boto boto-reiniciar" onclick="reiniciarJoc()">🔄 Nova Partida</button>
+        <button type="button" id="btn-passar" class="boto boto-passar" onclick="accioPasarTorn()" style="display:none">⏭ Passo torn</button>
     </div>
     <div class="controls" id="controls-jugada" style="display:none; margin-top:-4px;">
-        <button id="btn-esq"  class="boto boto-esq"    onclick="jugarSeleccionada('esq')">← Esquerra</button>
-        <button id="btn-dret" class="boto"             onclick="jugarSeleccionada('dret')">Dreta →</button>
-        <button class="boto boto-cancel"               onclick="deseleccionarFitxa()">✕ Cancel·la</button>
+        <button type="button" id="btn-esq"  class="boto boto-esq"    onclick="jugarSeleccionada('esq')">← Esquerra</button>
+        <button type="button" id="btn-dret" class="boto"             onclick="jugarSeleccionada('dret')">Dreta →</button>
+        <button type="button" class="boto boto-cancel"               onclick="deseleccionarFitxa()">✕ Cancel·la</button>
     </div>
 </main>
 
@@ -586,7 +587,7 @@
             <div class="llegenda-item"><div class="llegenda-mostra grisa"></div>Fitxa que no pots jugar ara</div>
             <div class="llegenda-item"><div class="llegenda-mostra blava"></div>Fitxa seleccionada — tria l'extrem</div>
         </div>
-        <button class="modal-btn-tancar" onclick="tancarAjuda()">Entès!</button>
+        <button type="button" class="modal-btn-tancar" onclick="tancarAjuda()">Entès!</button>
     </div>
 </div>
 

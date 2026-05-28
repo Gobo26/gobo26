@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Repte Numèric · Gobo26</title>
 <meta name="description" content="Repte Numèric: operacions i càlcul mental contra el temps, amb dificultat progressiva.">
+<meta name="theme-color" content="#1e293b">
 <style>
 :root {
     --bg:#f1f5f9; --s200:#e2e8f0; --s300:#cbd5e1; --s400:#94a3b8;
@@ -148,19 +149,19 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
     <div id="selector-nivell">
         <h3>Nivell de dificultat</h3>
         <div class="sel-botons">
-            <button class="sel-btn actiu" onclick="triarNivell(1,this)">1️⃣ Seqüència</button>
-            <button class="sel-btn" onclick="triarNivell(2,this)">🔢 Primers</button>
-            <button class="sel-btn" onclick="triarNivell(3,this)">🔁 Dobles</button>
-            <button class="sel-btn" onclick="triarNivell(4,this)">🔁🔢 Primers+</button>
-            <button class="sel-btn" onclick="triarNivell(5,this)">🔚 Dígit final</button>
+            <button type="button" class="sel-btn actiu" onclick="triarNivell(1,this)">1️⃣ Seqüència</button>
+            <button type="button" class="sel-btn" onclick="triarNivell(2,this)">🔢 Primers</button>
+            <button type="button" class="sel-btn" onclick="triarNivell(3,this)">🔁 Dobles</button>
+            <button type="button" class="sel-btn" onclick="triarNivell(4,this)">🔁🔢 Primers+</button>
+            <button type="button" class="sel-btn" onclick="triarNivell(5,this)">🔚 Dígit final</button>
         </div>
     </div>
 
     <div id="taulell"></div>
 
     <div id="controls">
-        <button id="btn-panic" onclick="mostrarReplay(true)">🆘 Mostra'm la seqüència</button>
-        <button id="btn-parar" onclick="pararPartida()">■ Parar partida</button>
+        <button type="button" id="btn-panic" onclick="mostrarReplay(true)">🆘 Mostra'm la seqüència</button>
+        <button type="button" id="btn-parar" onclick="pararPartida()">■ Parar partida</button>
     </div>
 
     <div id="record-panel">
@@ -205,7 +206,7 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
         <div id="modal-subtitol"></div>
         <div id="modal-stats" class="modal-stat-grid"></div>
         <div id="modal-record"></div>
-        <button class="boto-gran" onclick="tancarModal()" style="width:100%">▶ Jugar de nou</button>
+        <button type="button" class="boto-gran" onclick="tancarModal()" style="width:100%">▶ Jugar de nou</button>
     </div>
 </div>
 
@@ -219,7 +220,7 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
         <div class="ajuda-pas"><span class="ajuda-ico">❌</span><span>Si t'equivoques, el joc fa brillar <strong>tota la seqüència a les cel·les</strong> perquè la puguis veure. Llavors tornes a repetir-la.</span></div>
         <div class="ajuda-pas"><span class="ajuda-ico">🆘</span><span>El botó <strong>"Mostra'm la seqüència"</strong> fa brillar la seqüència en qualsevol moment sense penalització.</span></div>
         <div class="ajuda-avis">⚠️ Als nivells <strong>Dobles</strong> i <strong>Primers+</strong> hi ha números repetits visualment idèntics. El joc sap quina cel·la és la correcta en cada pas.</div>
-        <button id="btn-tancar-ajuda" onclick="tancarAjuda()">Entès!</button>
+        <button type="button" id="btn-tancar-ajuda" onclick="tancarAjuda()">Entès!</button>
     </div>
 </div>
 

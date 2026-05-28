@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>3 en Ratlla – Gobo26</title>
 <meta name="description" content="Tres en Ratlla: joc clàssic contra la màquina amb una interfície simple i directa.">
+<meta name="theme-color" content="#1e293b">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -446,7 +447,7 @@
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">3 en Ratlla</span>
-    <button id="btn-ajuda" onclick="obrirAjuda()" aria-label="Instruccions">?</button>
+    <button type="button" id="btn-ajuda" onclick="obrirAjuda()" aria-label="Instruccions">?</button>
 </header>
 
 <!-- MAIN -->
@@ -511,10 +512,10 @@
 
     <!-- CONTROLS UNIFICATS -->
     <div class="controls">
-        <button class="btn btn-mode" id="btn-mode-ia" onclick="setMode('ia')" style="font-size:clamp(.6rem,2vw,.8rem)">🤖 IA</button>
-        <button class="btn btn-mode" id="btn-mode-2j" onclick="setMode('2j')" style="font-size:clamp(.6rem,2vw,.8rem)">👥 2J</button>
-        <button class="btn btn-nova" onclick="novaPartida()" style="flex:2">▶ Nova</button>
-        <button class="btn btn-reset" onclick="confirmarReset()" style="font-size:clamp(.6rem,2vw,.8rem)">↺</button>
+        <button type="button" class="btn btn-mode" id="btn-mode-ia" onclick="setMode('ia')" style="font-size:clamp(.6rem,2vw,.8rem)">🤖 IA</button>
+        <button type="button" class="btn btn-mode" id="btn-mode-2j" onclick="setMode('2j')" style="font-size:clamp(.6rem,2vw,.8rem)">👥 2J</button>
+        <button type="button" class="btn btn-nova" onclick="novaPartida()" style="flex:2">▶ Nova</button>
+        <button type="button" class="btn btn-reset" onclick="confirmarReset()" style="font-size:clamp(.6rem,2vw,.8rem)">↺</button>
     </div>
 
 </main>
@@ -569,7 +570,7 @@
             <strong style="display:inline; font-size:inherit; text-transform:none; letter-spacing:0; color:var(--text)">Partides</strong> compta totes les jugades. <strong style="display:inline; font-size:inherit; text-transform:none; letter-spacing:0; color:var(--text)">Nivells</strong> compta quantes vegades has ascendit. Es guarden automàticament.
         </div>
 
-        <button class="btn-tancar" onclick="tancarAjuda()">Entesos, juguem! 🚀</button>
+        <button type="button" class="btn-tancar" onclick="tancarAjuda()">Entesos, juguem! 🚀</button>
     </div>
 </div>
 

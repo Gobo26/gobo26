@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mercatus · Gobo26</title>
 <meta name="description" content="Mercatus: eina senzilla per gestionar una llista de la compra intel·ligent i pràctica.">
+<meta name="theme-color" content="#1e293b">
 <style>
 :root{
     --bg:#f1f5f9;--s200:#e2e8f0;--s300:#cbd5e1;--s400:#94a3b8;
@@ -135,25 +136,25 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
     <div class="card" id="p-inici">
         <h3 style="font-size:.75rem;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;text-align:center;">Tria el nivell de dificultat</h3>
         <div class="niv-llista">
-            <button class="btn-niv" onclick="iniciar(1)">
+            <button type="button" class="btn-niv" onclick="iniciar(1)">
                 <div class="niv-left">
                     <span class="niv-nom">🛒 Nivell 1 — Mercat fàcil</span>
                     <span class="niv-desc">4 productes · Preus d'1 a 7 €</span>
                 </div>
             </button>
-            <button class="btn-niv" onclick="iniciar(2)">
+            <button type="button" class="btn-niv" onclick="iniciar(2)">
                 <div class="niv-left">
                     <span class="niv-nom">🧺 Nivell 2 — Compra setmanal</span>
                     <span class="niv-desc">5 productes · Preus de 7 a 12 €</span>
                 </div>
             </button>
-            <button class="btn-niv" onclick="iniciar(3)">
+            <button type="button" class="btn-niv" onclick="iniciar(3)">
                 <div class="niv-left">
                     <span class="niv-nom">🏪 Nivell 3 — Supermercat</span>
                     <span class="niv-desc">6 productes · Preus de 12 a 76 €</span>
                 </div>
             </button>
-            <button class="btn-niv" onclick="iniciar(4)">
+            <button type="button" class="btn-niv" onclick="iniciar(4)">
                 <div class="niv-left">
                     <span class="niv-nom">🏬 Nivell 4 — Gran compra</span>
                     <span class="niv-desc">7 productes · Preus de 32 a 127 €</span>
@@ -187,11 +188,11 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
             <div class="zona-opcions" id="opcions"></div>
 
             <!-- Botó Següent -->
-            <button id="btn-next" onclick="novaRonda()">Següent tiquet ➔</button>
+            <button type="button" id="btn-next" onclick="novaRonda()">Següent tiquet ➔</button>
         </div>
 
         <div style="text-align:center;margin-top:8px;">
-            <button onclick="tornar()" style="font-family:system-ui, -apple-system, sans-serif;font-size:.82rem;font-weight:700;color:var(--s400);background:none;border:none;cursor:pointer;text-decoration:underline;">↩ Menú principal</button>
+            <button type="button" onclick="tornar()" style="font-family:system-ui, -apple-system, sans-serif;font-size:.82rem;font-weight:700;color:var(--s400);background:none;border:none;cursor:pointer;text-decoration:underline;">↩ Menú principal</button>
         </div>
     </div>
 
@@ -211,7 +212,7 @@ footer{font-size:.72rem;color:var(--s400);font-weight:600;text-align:center;padd
             <strong>🏪 Niv. 3</strong> — 6 productes, preus més alts (12–76 €)<br>
             <strong>🏬 Niv. 4</strong> — 7 productes, preus grans (32–127 €)
         </div>
-        <button id="btn-tancar-ajuda" onclick="tancarAjuda()">Entès!</button>
+        <button type="button" id="btn-tancar-ajuda" onclick="tancarAjuda()">Entès!</button>
     </div>
 </div>
 

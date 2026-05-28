@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Morse Fàcil · Gobo26</title>
 <meta name="description" content="Morse Fàcil: aprèn el codi Morse pas a pas amb una eina interactiva i gratuïta.">
+<meta name="theme-color" content="#1e293b">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -248,19 +249,19 @@
   <div class="card">
     <div class="etiq">Tria el nivell</div>
     <div class="grid-niv" id="grid-niv">
-      <button class="btn-niv sel" onclick="sel(0,this)"><span class="na">🌱</span><span class="ni">Nivell 1 — E T A O I N</span><span class="nd">Les 6 lletres més freqüents · 40s</span></button>
-      <button class="btn-niv" onclick="sel(1,this)"><span class="na">🌿</span><span class="ni">Nivell 2 — + S H R D L U</span><span class="nd">12 lletres · 35s</span></button>
-      <button class="btn-niv" onclick="sel(2,this)"><span class="na">🌳</span><span class="ni">Nivell 3 — Alfabet sencer</span><span class="nd">Totes les lletres · 28s</span></button>
-      <button class="btn-niv" onclick="sel(3,this)"><span class="na">💬</span><span class="ni">Nivell 4 — Paraules curtes</span><span class="nd">2–3 lletres · 30s</span></button>
-      <button class="btn-niv" onclick="sel(4,this)"><span class="na">📝</span><span class="ni">Nivell 5 — Paraules</span><span class="nd">3–5 lletres · 25s</span></button>
-      <button class="btn-niv" onclick="sel(5,this)"><span class="na">🔥</span><span class="ni">Nivell 6 — Frases senzilles</span><span class="nd">3–4 paraules · 40s</span></button>
+      <button type="button" class="btn-niv sel" onclick="sel(0,this)"><span class="na">🌱</span><span class="ni">Nivell 1 — E T A O I N</span><span class="nd">Les 6 lletres més freqüents · 40s</span></button>
+      <button type="button" class="btn-niv" onclick="sel(1,this)"><span class="na">🌿</span><span class="ni">Nivell 2 — + S H R D L U</span><span class="nd">12 lletres · 35s</span></button>
+      <button type="button" class="btn-niv" onclick="sel(2,this)"><span class="na">🌳</span><span class="ni">Nivell 3 — Alfabet sencer</span><span class="nd">Totes les lletres · 28s</span></button>
+      <button type="button" class="btn-niv" onclick="sel(3,this)"><span class="na">💬</span><span class="ni">Nivell 4 — Paraules curtes</span><span class="nd">2–3 lletres · 30s</span></button>
+      <button type="button" class="btn-niv" onclick="sel(4,this)"><span class="na">📝</span><span class="ni">Nivell 5 — Paraules</span><span class="nd">3–5 lletres · 25s</span></button>
+      <button type="button" class="btn-niv" onclick="sel(5,this)"><span class="na">🔥</span><span class="ni">Nivell 6 — Frases senzilles</span><span class="nd">3–4 paraules · 40s</span></button>
     </div>
   </div>
   <div class="card" id="rec-inici" style="display:none">
     <div class="rec-badge"><span class="ri">🏆</span><div class="rt"><strong>Millor rècord: <span id="rec-val">0</span> pts</strong>El teu millor resultat</div></div>
   </div>
-  <button class="btn-gran" onclick="iniciar()">▶ Jugar!</button>
-  <button class="btn-gran sec" onclick="go('s-taula-sola')">📋 Veure la taula Morse completa</button>
+  <button type="button" class="btn-gran" onclick="iniciar()">▶ Jugar!</button>
+  <button type="button" class="btn-gran sec" onclick="go('s-taula-sola')">📋 Veure la taula Morse completa</button>
 </div>
 
 <!-- ══ JOC ══ -->
@@ -290,12 +291,12 @@
       <div class="input-row" id="input-row">
         <!-- desktop: input real -->
         <div class="resp-display" id="resp-display"><span class="cursor"></span></div>
-        <button class="btn-ok" onclick="comprovar()">✓</button>
+        <button type="button" class="btn-ok" onclick="comprovar()">✓</button>
       </div>
       <div class="btns-petits">
-        <button class="btn-p pista-btn" id="btn-pista" onclick="pista()">💡 Pista (−3)</button>
-        <button class="btn-p" onclick="saltar()">⏭ Saltar (−5)</button>
-        <button class="btn-p" onclick="sortir()">✕ Sortir</button>
+        <button type="button" class="btn-p pista-btn" id="btn-pista" onclick="pista()">💡 Pista (−3)</button>
+        <button type="button" class="btn-p" onclick="saltar()">⏭ Saltar (−5)</button>
+        <button type="button" class="btn-p" onclick="sortir()">✕ Sortir</button>
       </div>
     </div>
 
@@ -320,7 +321,7 @@
 <div class="screen" id="s-taula-sola">
   <div class="card" style="max-width:640px;width:100%;margin:10px auto 0;"><h2 style="font-size:1.1rem;font-weight:900;color:var(--header);margin-bottom:4px">📋 Taula del Codi Morse</h2><p style="font-size:.78rem;color:#64748b">Tots els símbols del codi internacional</p></div>
   <div class="card" style="max-width:640px;width:100%;margin:8px auto;"><div id="taula-gran" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px;"></div></div>
-  <button class="btn-gran sec" style="max-width:640px;margin:0 auto 10px;" onclick="go('s-inici')">← Tornar</button>
+  <button type="button" class="btn-gran sec" style="max-width:640px;margin:0 auto 10px;" onclick="go('s-inici')">← Tornar</button>
 </div>
 
 <!-- ══ RESULTAT ══ -->
@@ -338,9 +339,9 @@
   <div class="card" id="rec-res" style="display:none;max-width:500px;width:100%;margin:8px auto 0;">
     <div class="rec-badge"><span class="ri">🏆</span><div class="rt"><strong>Nou rècord!</strong>Has superat la teva millor puntuació</div></div>
   </div>
-  <button class="btn-gran" onclick="iniciar()" style="max-width:500px;margin:8px auto 0;">🔄 Tornar a jugar</button>
-  <button class="btn-gran sec" onclick="go('s-inici')" style="max-width:500px;margin:6px auto 0;">← Menú</button>
-  <button class="btn-gran sec" onclick="esborrarRec()" style="max-width:500px;margin:6px auto 10px;font-size:.8rem;color:#94a3b8;border-color:var(--border);">🗑 Esborrar rècord</button>
+  <button type="button" class="btn-gran" onclick="iniciar()" style="max-width:500px;margin:8px auto 0;">🔄 Tornar a jugar</button>
+  <button type="button" class="btn-gran sec" onclick="go('s-inici')" style="max-width:500px;margin:6px auto 0;">← Menú</button>
+  <button type="button" class="btn-gran sec" onclick="esborrarRec()" style="max-width:500px;margin:6px auto 10px;font-size:.8rem;color:#94a3b8;border-color:var(--border);">🗑 Esborrar rècord</button>
 </div>
 
 <footer style="font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:16px;flex-shrink:0;border-top:1px solid #1e2d45;">

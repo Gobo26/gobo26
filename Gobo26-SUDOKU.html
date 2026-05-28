@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Gobo26 - Sudoku</title>
 <meta name="description" content="Sudoku gratuït de Gobo26 amb diversos nivells de dificultat per entrenar lògica i concentració.">
+<meta name="theme-color" content="#1e293b">
     <style>
         :root {
             --bg:         #f1f5f9;
@@ -327,16 +328,16 @@
     <!-- MAIN -->
     <main>
         <div class="controls">
-            <button id="btn-facil"  onclick="newGame('easy')">Fàcil</button>
-            <button id="btn-mitja"  onclick="newGame('medium')">Mitjà</button>
-            <button id="btn-dificil" onclick="newGame('hard')">Difícil</button>
-            <button class="primary" onclick="checkSolution()">Comprovar</button>
+            <button type="button" id="btn-facil"  onclick="newGame('easy')">Fàcil</button>
+            <button type="button" id="btn-mitja"  onclick="newGame('medium')">Mitjà</button>
+            <button type="button" id="btn-dificil" onclick="newGame('hard')">Difícil</button>
+            <button type="button" class="primary" onclick="checkSolution()">Comprovar</button>
         </div>
 
         <div class="toolbar">
-            <button class="tool-btn" id="btn-desfer" onclick="desfer()" title="Desfer">↩ Desfer</button>
-            <button class="tool-btn" id="btn-notes" onclick="toggleNotes()" title="Mode notes">✏️ Notes</button>
-            <button class="tool-btn" id="btn-pista" onclick="donarPista()" title="Pista">💡 Pista</button>
+            <button type="button" class="tool-btn" id="btn-desfer" onclick="desfer()" title="Desfer">↩ Desfer</button>
+            <button type="button" class="tool-btn" id="btn-notes" onclick="toggleNotes()" title="Mode notes">✏️ Notes</button>
+            <button type="button" class="tool-btn" id="btn-pista" onclick="donarPista()" title="Pista">💡 Pista</button>
         </div>
 
         <div id="board" class="game-board"></div>
@@ -344,16 +345,16 @@
         <div class="status" id="message"></div>
 
         <div class="numpad" id="numpad">
-            <button class="num-btn" onclick="inputNumber(1)">1</button>
-            <button class="num-btn" onclick="inputNumber(2)">2</button>
-            <button class="num-btn" onclick="inputNumber(3)">3</button>
-            <button class="num-btn" onclick="inputNumber(4)">4</button>
-            <button class="num-btn" onclick="inputNumber(5)">5</button>
-            <button class="num-btn" onclick="inputNumber(6)">6</button>
-            <button class="num-btn" onclick="inputNumber(7)">7</button>
-            <button class="num-btn" onclick="inputNumber(8)">8</button>
-            <button class="num-btn" onclick="inputNumber(9)">9</button>
-            <button class="num-btn del" onclick="inputNumber('delete')">✕</button>
+            <button type="button" class="num-btn" onclick="inputNumber(1)">1</button>
+            <button type="button" class="num-btn" onclick="inputNumber(2)">2</button>
+            <button type="button" class="num-btn" onclick="inputNumber(3)">3</button>
+            <button type="button" class="num-btn" onclick="inputNumber(4)">4</button>
+            <button type="button" class="num-btn" onclick="inputNumber(5)">5</button>
+            <button type="button" class="num-btn" onclick="inputNumber(6)">6</button>
+            <button type="button" class="num-btn" onclick="inputNumber(7)">7</button>
+            <button type="button" class="num-btn" onclick="inputNumber(8)">8</button>
+            <button type="button" class="num-btn" onclick="inputNumber(9)">9</button>
+            <button type="button" class="num-btn del" onclick="inputNumber('delete')">✕</button>
         </div>
     </main>
 
@@ -374,7 +375,7 @@
             <div class="modal-titol">Sudoku completat!</div>
             <div class="modal-temps" id="modal-temps-text"></div>
             <div class="modal-text" id="modal-body"></div>
-            <button class="btn-modal" onclick="document.getElementById('modal-victora').classList.remove('actiu')">Tanca</button>
+            <button type="button" class="btn-modal" onclick="document.getElementById('modal-victora').classList.remove('actiu')">Tanca</button>
         </div>
     </div>
 

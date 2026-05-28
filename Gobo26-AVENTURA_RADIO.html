@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>La Darrera Emissió – Gobo26</title>
 <meta name="description" content="La Darrera Emissió: aventura interactiva de misteri radiofònic amb decisions, pistes i diversos camins narratius.">
+<meta name="theme-color" content="#1e293b">
 <style>
 :root {
   --bg: #0c0909;
@@ -368,7 +369,7 @@ footer { text-align: center; padding: 12px; font-size: 11px; color: rgba(240,230
   <div class="clues-panel">
     <div class="clues-panel-header">
       <span class="clues-panel-title">DEDUCCIONS</span>
-      <button class="clues-panel-close" onclick="toggleCluesPanel()">×</button>
+      <button type="button" class="clues-panel-close" onclick="toggleCluesPanel()">×</button>
     </div>
     <div class="clues-panel-body" id="clues-list"></div>
   </div>
@@ -400,7 +401,7 @@ footer { text-align: center; padding: 12px; font-size: 11px; color: rgba(240,230
     Però mentre el llegeixes, t'adones que no és ficció.<br>
     <em>Fa quinze anys que algú espera aquesta nit.</em>
   </p>
-  <button class="btn-begin" onclick="startAdventure()">● Comença l'emissió</button>
+  <button type="button" class="btn-begin" onclick="startAdventure()">● Comença l'emissió</button>
   <div class="runs-count" id="runs-count"></div>
   <div class="endings-gallery-title" id="gallery-title" style="display:none">FINALS DESCOBERTS</div>
   <div class="endings-gallery" id="endings-gallery"></div>
@@ -1217,7 +1218,7 @@ function renderScene(node, newClue, meta) {
   if (node.choices && node.choices.length > 0) {
     const items = node.choices.map((c, i) => {
       const vis = meta.visited.includes(c.next);
-      return `<button class="choice-btn${vis ? ' visited' : ''}"
+      return `<button type="button" class="choice-btn${vis ? ' visited' : ''}"
                       onclick="soClick();goTo('${c.next}')"
                       style="animation-delay:${i * 85}ms">
         <span class="choice-arrow">▶</span>
@@ -1235,8 +1236,8 @@ function renderScene(node, newClue, meta) {
           <span>↪ ${G.decisions} decisions</span><span>·</span>
           <span>🎙 ${G.clues.size} pistes</span>
         </div>
-        <button class="btn-restart" onclick="startAdventure()">↺ Torna a començar</button>
-        <button class="btn-restart" style="opacity:.55;margin-top:4px" onclick="toCover()">← Portada</button>
+        <button type="button" class="btn-restart" onclick="startAdventure()">↺ Torna a començar</button>
+        <button type="button" class="btn-restart" style="opacity:.55;margin-top:4px" onclick="toCover()">← Portada</button>
       </div>`;
   }
 
