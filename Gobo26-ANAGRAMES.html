@@ -136,8 +136,80 @@ main{width:100%;max-width:560px;padding:10px 12px 6px;display:flex;flex-directio
 footer{flex-shrink:0;text-align:center;font-size:.65rem;color:var(--s400);padding:6px;font-weight:600;border-top:1px solid var(--s200);width:100%;}
 footer a{color:var(--s400);text-decoration:none;}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+
+<!-- Gobo26 global menu -->
+<style>
+.gobo-global-menu,
+.gobo-global-menu *{box-sizing:border-box;}
+.gobo-global-menu{
+  width:100%;
+  min-height:48px;
+  background:rgba(37,32,27,.94);
+  border-bottom:1px solid rgba(255,250,240,.18);
+  padding:.55rem clamp(.85rem,2vw,1.35rem);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.8rem;
+  position:sticky;
+  top:0;
+  z-index:9999;
+  color:#fff4dd;
+  flex-shrink:0;
+}
+.gobo-global-menu__brand{
+  font-family:'Caveat',cursive;
+  font-size:clamp(1.75rem,4vw,2.15rem);
+  font-weight:700;
+  line-height:1;
+  color:#fff4dd;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.gobo-global-menu__nav{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:.45rem;
+  flex-wrap:wrap;
+}
+.gobo-global-menu__nav a{
+  font-family:'Barlow Condensed',system-ui,sans-serif;
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.12em;
+  line-height:1;
+  text-transform:uppercase;
+  color:rgba(255,244,221,.76);
+  text-decoration:none;
+  padding:.43rem .78rem;
+  border:1px solid rgba(255,244,221,.26);
+  background:transparent;
+}
+.gobo-global-menu__nav a:hover,
+.gobo-global-menu__nav a[aria-current="page"]{
+  background:rgba(255,244,221,.14);
+  color:#fff4dd;
+}
+@media(max-width:520px){
+  .gobo-global-menu{align-items:flex-start;flex-direction:column;}
+  .gobo-global-menu__nav{justify-content:flex-start;width:100%;}
+  .gobo-global-menu__nav a{font-size:.72rem;padding:.4rem .62rem;}
+}
+</style>
 </head>
 <body>
+
+<header class="gobo-global-menu" aria-label="Espais Gobo26">
+  <a class="gobo-global-menu__brand" href="https://gobo26.github.io/gobo26/">Gobo26</a>
+  <nav class="gobo-global-menu__nav" aria-label="Navegació entre espais">
+    <a href="https://gobo26.github.io/gobo26/" aria-current="page">Col·lecció</a>
+    <a href="https://gobo26.github.io/Taller_de_lletres/">Taller</a>
+    <a href="https://gobo26.github.io/Textos26/">Textos26</a>
+  </nav>
+</header>
+
 
 <header>
     <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
