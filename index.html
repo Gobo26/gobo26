@@ -24,6 +24,7 @@
 
 :root {
   --rosa:       #c4556a;
+  --vi:         #7f3f44;
   --rosa-clar:  #f8e8eb;
   --oliva:      #7a8040;
   --oliva-clar: #eaecda;
@@ -40,7 +41,11 @@
 
 html { scroll-behavior: smooth; }
 body {
-  background: var(--blanc);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(196,85,106,.12), transparent 28%),
+    radial-gradient(circle at 86% 18%, rgba(74,122,138,.12), transparent 30%),
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(91,65,41,.035) 32px),
+    linear-gradient(135deg, #fffaf0, #efe4d6);
   color: var(--text);
   font-family: 'Lora', Georgia, serif;
   min-height: 100vh;
@@ -49,8 +54,9 @@ body {
 
 /* ── HEADER ── */
 header {
-  background: var(--rosa);
-  padding: .8rem 1.4rem;
+  background: rgba(37,32,27,.9);
+  border-bottom: 1px solid rgba(255,250,240,.18);
+  padding: .95rem 1.4rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -71,7 +77,7 @@ header {
   font-size: 2.2rem;
   font-weight: 700;
   line-height: 1;
-  color: white;
+  color: #fff4dd;
 }
 .hd-tagline {
   font-family: 'Barlow Condensed', sans-serif;
@@ -83,10 +89,34 @@ header {
   display: none;
 }
 @media (min-width: 480px) { .hd-tagline { display: block; } }
+.hd-nav {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.hd-nav a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,244,221,.76);
+  text-decoration: none;
+  padding: .36rem .78rem;
+  border: 1px solid rgba(255,244,221,.26);
+}
+.hd-nav a:hover,
+.hd-nav a.actiu {
+  background: rgba(255,244,221,.14);
+  color: #fff4dd;
+}
 
 /* ── HERO ── */
 .hero {
-  background: var(--fosc);
+  background:
+    linear-gradient(110deg, rgba(37,32,27,.96), rgba(75,54,42,.78) 52%, rgba(74,122,138,.52)),
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(255,244,221,.04) 32px);
   color: white;
   padding: 4rem 1.5rem 4rem;
   position: relative;
@@ -94,7 +124,7 @@ header {
   text-align: center;
 }
 .hero::after {
-  content: '"';
+  content: "✦";
   position: absolute;
   right: -1rem;
   top: 50%;
@@ -114,8 +144,9 @@ header {
   font-size: .72rem;
   letter-spacing: .22em;
   text-transform: uppercase;
-  background: var(--rosa);
-  color: white;
+  background: rgba(255,244,221,.13);
+  border: 1px solid rgba(255,244,221,.3);
+  color: #f7dec6;
   padding: .3rem .8rem;
   margin-bottom: 1.2rem;
 }
@@ -124,7 +155,7 @@ header {
   font-weight: 700;
   font-size: clamp(3.5rem, 10vw, 6.2rem);
   line-height: 1;
-  color: white;
+  color: #fff4dd;
   margin-bottom: .4rem;
 }
 .hero-tit em { color: var(--rosa); font-style: normal; }
@@ -418,7 +449,11 @@ footer a:hover { border-bottom-color: white; }
   <a class="hd-logo" href="https://gobo26.github.io/gobo26/" target="_self">
     <span class="hd-logo-text">Gobo26</span>
   </a>
-  <span class="hd-tagline">Jocs i eines gratuïtes</span>
+  <nav class="hd-nav" aria-label="Espais Gobo26">
+    <a href="#" class="actiu" aria-current="page">Col·lecció</a>
+    <a href="https://gobo26.github.io/Taller_de_lletres/">Taller</a>
+    <a href="https://gobo26.github.io/Textos26/">Textos26</a>
+  </nav>
 </header>
 
 <!-- HERO -->
@@ -430,6 +465,7 @@ footer a:hover { border-bottom-color: white; }
     <div class="hero-pills">
       <span class="pill">100% gratuït</span>
       <span class="pill">Mòbil i ordinador</span>
+      <span class="pill">Textos i creació</span>
     </div>
   </div>
 </section>
@@ -667,10 +703,10 @@ footer a:hover { border-bottom-color: white; }
       <div class="sec-icona rosa">✒️</div>
       <div class="sec-titols">
         <div class="sec-title">Creació</div>
-        <div class="sec-sub">Poemes que es fan cançons — havaneres, boleros, rumbes i valsets</div>
+        <div class="sec-sub">Lletres, cançons i textos personals per llegir sense pressa</div>
       </div>
       <div class="sec-dreta">
-        <span class="sec-badge rosa">Taller de Lletres</span>
+        <span class="sec-badge rosa">2 espais</span>
         <span class="sec-chevron">▾</span>
       </div>
     </button>
@@ -681,9 +717,17 @@ footer a:hover { border-bottom-color: white; }
             <div class="app-icon-wrap">✒️</div>
             <div class="app-cos">
               <div class="app-name">Taller de Lletres</div>
-              <div class="app-desc">Col·lecció de poemes i cançons originals de Gobo26: havaneres, boleros, rumbes i valsets. Lletra de Juan Martínez Díaz (JRLP), producció musical amb Suno AI. Pots llegir-los i escoltar-los directament al web.</div>
+              <div class="app-desc">Col·lecció de poemes i cançons originals: havaneres, boleros, rumbes i valsets. Pots llegir-los i escoltar-los directament al web.</div>
             </div>
             <span class="app-cta">Entra al Taller →</span>
+          </a>
+          <a class="app-card c-rosa destacada" href="https://gobo26.github.io/Textos26/" target="_blank" rel="noopener">
+            <div class="app-icon-wrap">❦</div>
+            <div class="app-cos">
+              <div class="app-name">Textos26</div>
+              <div class="app-desc">Textos personals, emocions i fragments de vida. Un quadern de lectura tranquil·la, amb relats i peces escrites per llegir sense pressa.</div>
+            </div>
+            <span class="app-cta">Llegir Textos26 →</span>
           </a>
         </div>
       </div>
@@ -881,7 +925,11 @@ footer a:hover { border-bottom-color: white; }
 
 </main>
 
-<footer>Una aplicació de <a href="https://gobo26.github.io/gobo26/" target="_self">Gobo26</a></footer>
+<footer>
+  Una aplicació de <a href="https://gobo26.github.io/gobo26/" target="_self">Gobo26</a>
+  · <a href="https://gobo26.github.io/Taller_de_lletres/">Taller de Lletres</a>
+  · <a href="https://gobo26.github.io/Textos26/">Textos26</a>
+</footer>
 
 <script>
 function toggle(id) {
