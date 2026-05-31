@@ -156,28 +156,28 @@ header {
   font-size: clamp(3.5rem, 10vw, 6.2rem);
   line-height: 1;
   color: #fff4dd;
-  margin-bottom: .4rem;
+  margin-bottom: 1.4rem;
 }
 .hero-tit em { color: var(--rosa); font-style: normal; }
-.hero-sub {
-  font-style: italic;
-  font-size: 1.05rem;
-  color: rgba(255,255,255,.65);
-  line-height: 1.6;
-  max-width: 480px;
-  margin: 0 auto 1.6rem;
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  justify-content: center;
+  align-items: center;
 }
-.hero-pills { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
 .pill {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: .72rem;
-  letter-spacing: .12em;
+  font-size: .76rem;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  padding: .4rem .9rem;
-  border: 1px solid rgba(255,255,255,.3);
-  color: rgba(255,255,255,.85);
+  padding: .15rem 0;
+  border-top: 1px solid rgba(255,244,221,.36);
+  border-bottom: 1px solid rgba(255,244,221,.22);
+  color: rgba(255,244,221,.82);
   background: transparent;
+  pointer-events: none;
 }
 
 /* ── MAIN ── */
@@ -461,11 +461,9 @@ footer a:hover { border-bottom-color: white; }
   <div class="hero-inner">
     <div class="hero-eyebrow">Col·lecció Gobo26</div>
     <h1 class="hero-tit">Gobo26</h1>
-    <p class="hero-sub">Juga. Aprèn. Gaudeix. — jocs i eines gratuïts per a totes les edats.</p>
     <div class="hero-pills">
       <span class="pill">100% gratuït</span>
-      <span class="pill">Mòbil i ordinador</span>
-      <span class="pill">Textos i creació</span>
+      <span class="pill">Aplicacions, textos, poemes</span>
     </div>
   </div>
 </section>
