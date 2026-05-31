@@ -30,7 +30,7 @@ Repo: https://github.com/Gobo26/Textos26
 
 ### Fustaventura
 
-Espai reservat per a una nova línia creativa: aventures, narració, música, fusta, camins i imaginació artesanal. El logo de fusta amb ploma i nota musical queda com a primera peça d'identitat visual del projecte.
+Taller de peces artesanals de fusta: capses de música i àudio, bijuteria, capses decorades, productes de temporada i encàrrecs personalitzats. Una web pròpia per substituir l'antiga pàgina de Wix.
 
 Repo: https://github.com/Gobo26/fustaventura
 
