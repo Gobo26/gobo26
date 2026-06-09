@@ -4,7 +4,7 @@
   <img src="assets/fustaventura-logo.png" alt="Logo Fustaventura: fusta, ploma, música i camins" width="260">
 </p>
 
-Gobo26 és un petit taller digital en català: jocs, eines, aventures interactives i aplicacions personals fetes amb cura, pensades per servir sense presses.
+Gobo26 és un petit taller digital: jocs, eines, aventures interactives i aplicacions personals fetes amb cura, pensades per servir sense presses.
 
 Web: https://gobo26.github.io/gobo26/
 
