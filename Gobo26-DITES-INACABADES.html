@@ -37,13 +37,15 @@ header{
 .logo-txt{font-size:1rem;font-weight:900;color:white;}
 .logo-txt span{color:var(--blue2);}
 .hdr-title{font-family:'Lora',serif;font-size:1rem;font-weight:600;color:#f5e6c8;letter-spacing:.5px;}
-#btn-ajuda{
+.hdr-btns{display:flex;gap:8px;flex-shrink:0;}
+#btn-ajuda,#btn-so{
   font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;
   width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);
   background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;
   flex-shrink:0;
 }
-#btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
+#btn-so{font-size:.95rem;}
+#btn-ajuda:hover,#btn-so:hover{background:var(--blue2);transform:scale(1.1);}
 
 /* MAIN AREA — scroll intern */
 main{
@@ -88,6 +90,14 @@ main{
   box-shadow:1px 1px 0 var(--s300);
 }
 .badge.bo{background:var(--okl);color:var(--ok);border-color:#86efac;}
+.badge.gold{background:var(--goldl);color:var(--gold);border-color:var(--sepia2);}
+
+/* RÈCORDS A LA PANTALLA D'INICI */
+.niv-rec{font-size:.7rem;font-weight:700;color:var(--gold);margin-top:3px;}
+.inici-stats{
+  margin-top:16px;padding-top:12px;border-top:1px dashed var(--s300);
+  font-size:.74rem;font-weight:700;color:var(--ink3);text-align:center;line-height:1.8;
+}
 
 /* PERGAMÍ */
 .pergami{
@@ -293,7 +303,10 @@ footer{
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">Dites Inacabades</span>
-    <div style="width:38px"></div>
+    <div class="hdr-btns">
+        <button type="button" id="btn-so" onclick="toggleSo()" title="Activar o silenciar el so">🔊</button>
+        <button type="button" id="btn-ajuda" onclick="mostrarAjuda()" title="Com es juga">?</button>
+    </div>
 </header>
 
 <main id="main-area">
@@ -307,6 +320,7 @@ footer{
       <div>
         <div class="btn-niv-nom">🌿 Nivell 1 · Populars</div>
         <div class="btn-niv-desc">Dites que tothom hauria de conèixer</div>
+        <div class="niv-rec" id="niv-rec-1"></div>
       </div>
       <span class="btn-niv-fletxa">▶</span>
     </button>
@@ -314,6 +328,7 @@ footer{
       <div>
         <div class="btn-niv-nom">🦉 Nivell 2 · Per pensar-hi</div>
         <div class="btn-niv-desc">Menys habituals, cal reflexionar</div>
+        <div class="niv-rec" id="niv-rec-2"></div>
       </div>
       <span class="btn-niv-fletxa">▶</span>
     </button>
@@ -321,10 +336,12 @@ footer{
       <div>
         <div class="btn-niv-nom">🧓 Nivell 3 · Dels avis</div>
         <div class="btn-niv-desc">Les dites més antigues i picants</div>
+        <div class="niv-rec" id="niv-rec-3"></div>
       </div>
       <span class="btn-niv-fletxa">▶</span>
     </button>
   </div>
+  <div class="inici-stats" id="inici-stats" style="display:none"></div>
 </div>
 
 <!-- PANTALLA JOC -->
@@ -332,6 +349,7 @@ footer{
   <div class="info-bar">
     <span class="badge" id="badge-niv">Nivell 1</span>
     <span class="badge bo" id="badge-ratxa">🎯 Ratxa: 0</span>
+    <span class="badge gold" id="badge-millor">🏆 Millor: 0</span>
   </div>
   <div class="pergami">
     <div class="pergami-deco">❧</div>
@@ -382,8 +400,52 @@ footer{
 var app = {
   niv: 1,
   ratxa: 0,
-  usats: {1:[],2:[],3:[]},
+  usats: (function(){
+    try {
+      var u = JSON.parse(localStorage.getItem('dites_usats'));
+      if (u && u[1] && u[2] && u[3]) return u;
+    } catch(e) {}
+    return {1:[],2:[],3:[]};
+  })(),
 };
+
+// Estadístiques persistents: millor ratxa per nivell + comptadors globals
+var stats = (function(){
+  var base = { millor: {1:0,2:0,3:0}, encerts: 0, errades: 0, bromes: 0 };
+  try {
+    var s = JSON.parse(localStorage.getItem('dites_stats'));
+    if (s) { base.millor = s.millor || base.millor; base.encerts = s.encerts||0; base.errades = s.errades||0; base.bromes = s.bromes||0; }
+  } catch(e) {}
+  return base;
+})();
+function guardarStats(){ localStorage.setItem('dites_stats', JSON.stringify(stats)); }
+function guardarUsats(){ localStorage.setItem('dites_usats', JSON.stringify(app.usats)); }
+
+var soActiu = localStorage.getItem('dites_so') !== 'off';
+function toggleSo(){
+  soActiu = !soActiu;
+  localStorage.setItem('dites_so', soActiu ? 'on' : 'off');
+  actualitzarSoUI();
+}
+function actualitzarSoUI(){
+  document.getElementById('btn-so').textContent = soActiu ? '🔊' : '🔇';
+}
+
+function actualitzarInici(){
+  for (var n = 1; n <= 3; n++) {
+    var el = document.getElementById('niv-rec-' + n);
+    el.textContent = stats.millor[n] > 0 ? '🏆 Millor ratxa: ' + stats.millor[n] : '';
+  }
+  var tot = stats.encerts + stats.errades;
+  var box = document.getElementById('inici-stats');
+  if (tot > 0) {
+    box.style.display = '';
+    box.innerHTML = '✅ ' + stats.encerts + ' encerts · ❌ ' + stats.errades + ' errades' +
+      (stats.bromes > 0 ? ' · 🃏 ' + stats.bromes + (stats.bromes === 1 ? ' broma picada' : ' bromes picades') : '');
+  } else {
+    box.style.display = 'none';
+  }
+}
 
 var DITES = {
 1:[
@@ -476,7 +538,6 @@ var MSGS_BROMA = [
 function iniciar(n) {
   app.niv = n;
   app.ratxa = 0;
-  app.usats = {1:[],2:[],3:[]};
   document.getElementById('p-inici').style.display = 'none';
   document.getElementById('p-joc').style.display = 'block';
   var noms = ['','🌿 Populars','🦉 Per pensar','🧓 Dels avis'];
@@ -488,6 +549,7 @@ function iniciar(n) {
 function tornar() {
   document.getElementById('p-joc').style.display = 'none';
   document.getElementById('p-inici').style.display = 'block';
+  actualitzarInici();
 }
 
 function novaRonda() {
@@ -498,6 +560,7 @@ function novaRonda() {
   var idx = Math.floor(Math.random() * disp.length);
   var ref = disp[idx];
   app.usats[app.niv].push(pool.indexOf(ref));
+  guardarUsats();
 
   document.getElementById('inici-dita').innerHTML = ref.i + ' <span class="punts-susp"> ···</span>';
 
@@ -529,11 +592,19 @@ function processarResposta(btn, op, ref, totes) {
     btn.classList.add('encert');
     sonarWin(); llençarConfeti(); vibrar([60,30,100]);
     app.ratxa++;
-    document.getElementById('fb-ico').textContent = app.ratxa >= 5 ? '🔥' : app.ratxa >= 3 ? '⭐' : '✅';
-    document.getElementById('fb-titol').textContent = app.ratxa >= 5 ? 'RATXA x'+app.ratxa+'! Ets dels avis!' : app.ratxa >= 3 ? 'Molt bé! Ratxa de '+app.ratxa+'!' : '✅ Correcte!';
+    stats.encerts++;
+    var nouRecord = app.ratxa > stats.millor[app.niv];
+    if (nouRecord) stats.millor[app.niv] = app.ratxa;
+    document.getElementById('fb-ico').textContent = (nouRecord && app.ratxa > 1) ? '🏆' : app.ratxa >= 5 ? '🔥' : app.ratxa >= 3 ? '⭐' : '✅';
+    document.getElementById('fb-titol').textContent =
+      (nouRecord && app.ratxa > 1) ? '🏆 Nou rècord! Ratxa de ' + app.ratxa + '!' :
+      app.ratxa >= 5 ? 'RATXA x'+app.ratxa+'! Ets dels avis!' :
+      app.ratxa >= 3 ? 'Molt bé! Ratxa de '+app.ratxa+'!' : '✅ Correcte!';
     document.getElementById('fb-titol').style.color = 'var(--ok)';
     document.getElementById('fb-refrany').textContent = '"' + ref.i + ' ' + ref.c + '"';
-    document.getElementById('fb-desc').textContent = app.ratxa >= 3 ? '🔥 Ratxa de '+app.ratxa+'! Continua així!' : 'Ben trobat!';
+    document.getElementById('fb-desc').textContent =
+      (nouRecord && app.ratxa > 1) ? 'La teva millor ratxa de sempre en aquest nivell!' :
+      app.ratxa >= 3 ? '🔥 Ratxa de '+app.ratxa+'! Continua així!' : 'Ben trobat!';
   } else {
     btn.classList.add('error');
     sonarErr(); vibrar([100,50,150]);
@@ -542,14 +613,19 @@ function processarResposta(btn, op, ref, totes) {
       if (totes[i] && totes[i].tipus === 'correcte') b.classList.add('revelat');
       if (totes[i] && totes[i].tipus === 'broma' && b !== btn) b.classList.add('broma-rev');
     });
+    var ratxaPerduda = app.ratxa;
     app.ratxa = 0;
+    stats.errades++;
+    if (esBroma) stats.bromes++;
     document.getElementById('fb-ico').textContent = esBroma ? '🃏' : '❌';
     document.getElementById('fb-titol').textContent = esBroma ? MSGS_BROMA[Math.floor(Math.random()*MSGS_BROMA.length)] : '❌ No era aquesta!';
     document.getElementById('fb-titol').style.color = 'var(--err)';
     document.getElementById('fb-refrany').textContent = '"' + ref.i + ' ' + ref.c + '"';
-    document.getElementById('fb-desc').textContent = esBroma ? 'La continuació de broma t\'ha convençut!' : 'Era el final d\'un altre refrany real.';
+    document.getElementById('fb-desc').textContent = (esBroma ? 'La continuació de broma t\'ha convençut!' : 'Era el final d\'un altre refrany real.') +
+      (ratxaPerduda >= 3 ? ' Has perdut una ratxa de ' + ratxaPerduda + '.' : '');
   }
 
+  guardarStats();
   actualitzarBadge();
   document.getElementById('feedback-card').style.display = 'block';
   setTimeout(function(){ document.getElementById('btn-seg').focus(); }, 100);
@@ -559,6 +635,7 @@ function actualitzarBadge() {
   var br = document.getElementById('badge-ratxa');
   br.textContent = '🎯 Ratxa: ' + app.ratxa;
   br.className = 'badge ' + (app.ratxa >= 5 ? 'gold' : app.ratxa > 0 ? 'bo' : '');
+  document.getElementById('badge-millor').textContent = '🏆 Millor: ' + stats.millor[app.niv];
 }
 
 function mostrarAjuda(){ document.getElementById('modal-ajuda').classList.add('show'); }
@@ -576,9 +653,9 @@ function barrejar(a) {
 // --- SONS ---
 var actx;
 function ga(){ if(!actx) actx = new(window.AudioContext||window.webkitAudioContext)(); return actx; }
-function sonarClic(){try{var c=ga();if(c.state==='suspended')c.resume();var o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=400;g.gain.setValueAtTime(.03,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.07);o.start();o.stop(c.currentTime+.07);}catch(e){}}
-function sonarErr(){try{var c=ga();if(c.state==='suspended')c.resume();var o=c.createOscillator(),g=c.createGain();o.type='sawtooth';o.connect(g);g.connect(c.destination);o.frequency.setValueAtTime(160,c.currentTime);o.frequency.linearRampToValueAtTime(80,c.currentTime+.22);g.gain.setValueAtTime(.07,c.currentTime);g.gain.linearRampToValueAtTime(0,c.currentTime+.22);o.start();o.stop(c.currentTime+.22);}catch(e){}}
-function sonarWin(){try{var c=ga();if(c.state==='suspended')c.resume();[[440,.1],[554,.1],[659,.1],[880,.32]].forEach(function(fd,i){var o=c.createOscillator(),g=c.createGain();o.type='triangle';o.connect(g);g.connect(c.destination);o.frequency.value=fd[0];var t=c.currentTime+i*.13;g.gain.setValueAtTime(.07,t);g.gain.exponentialRampToValueAtTime(.001,t+fd[1]);o.start(t);o.stop(t+fd[1]);});}catch(e){}}
+function sonarClic(){if(!soActiu)return;try{var c=ga();if(c.state==='suspended')c.resume();var o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=400;g.gain.setValueAtTime(.03,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.07);o.start();o.stop(c.currentTime+.07);}catch(e){}}
+function sonarErr(){if(!soActiu)return;try{var c=ga();if(c.state==='suspended')c.resume();var o=c.createOscillator(),g=c.createGain();o.type='sawtooth';o.connect(g);g.connect(c.destination);o.frequency.setValueAtTime(160,c.currentTime);o.frequency.linearRampToValueAtTime(80,c.currentTime+.22);g.gain.setValueAtTime(.07,c.currentTime);g.gain.linearRampToValueAtTime(0,c.currentTime+.22);o.start();o.stop(c.currentTime+.22);}catch(e){}}
+function sonarWin(){if(!soActiu)return;try{var c=ga();if(c.state==='suspended')c.resume();[[440,.1],[554,.1],[659,.1],[880,.32]].forEach(function(fd,i){var o=c.createOscillator(),g=c.createGain();o.type='triangle';o.connect(g);g.connect(c.destination);o.frequency.value=fd[0];var t=c.currentTime+i*.13;g.gain.setValueAtTime(.07,t);g.gain.exponentialRampToValueAtTime(.001,t+fd[1]);o.start(t);o.stop(t+fd[1]);});}catch(e){}}
 
 // --- CONFETI ---
 function llençarConfeti(){
@@ -602,6 +679,10 @@ function llençarConfeti(){
   }
 }
 function vibrar(p){ if(navigator.vibrate) navigator.vibrate(p); }
+
+// ---- ARRENCADA ----
+actualitzarSoUI();
+actualitzarInici();
 </script>
 </body>
 </html>

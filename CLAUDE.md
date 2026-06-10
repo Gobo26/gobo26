@@ -58,6 +58,7 @@ Quan es facin canvis significatius al projecte (nova app, canvi d'arquitectura, 
 | 2026-06-10 | Auditoria de jugabilitat de les 30 apps (AUDITORIA.md) amb pla de millora per fases |
 | 2026-06-10 | Dominó refet (Fase 1): pou per robar fitxes, 3 nivells de dificultat de la màquina, rècords i ratxes, partida desada automàticament (localStorage `domino_*`), so WebAudio + vibració amb botó de silenci, confeti i modal de resultat, inici aleatori |
 | 2026-06-10 | Sudoku millorat (Fase 1): partida desada automàticament i recuperada en obrir (localStorage `sudoku_*`), millors temps per nivell amb "nou rècord" al modal, victòria automàtica en completar (sense prémer Comprovar), so WebAudio + botó de silenci, vibració, confirmació abans de descartar partida, cronòmetre pausat quan la pestanya s'amaga |
+| 2026-06-10 | Dites Inacabades millorat (Fase 1): persistència total (localStorage `dites_*`) — millor ratxa per nivell, comptadors d'encerts/errades/bromes picades, dites vistes no es repeteixen entre sessions; rècords visibles a l'inici i durant el joc amb celebració de nou rècord; corregit el botó d'ajuda que no existia (modal inaccessible) i el CSS de la insígnia daurada; botó de silenci |
 
 ---
 
