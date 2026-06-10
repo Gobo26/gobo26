@@ -89,6 +89,7 @@
             font-family: system-ui, -apple-system, sans-serif; font-size: .78rem; font-weight: 700;
             padding: 7px 14px; border-radius: 99px; border: 2px solid #e2e8f0;
             background: white; color: var(--text); cursor: pointer; transition: all .15s;
+            touch-action: manipulation;
         }
         .sel-niv:hover { border-color: var(--primari); color: var(--primari); }
         .sel-niv.actiu { background: var(--s800); color: white; border-color: var(--s800); }
@@ -313,8 +314,12 @@
             width: 58px;
             height: 116px;
             display: block;
+            padding: 0;
+            font: inherit;
             overflow: hidden;
             cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
             box-shadow: 3px 4px 0 rgba(0,0,0,.22);
             transition: transform .15s, box-shadow .15s, border-color .15s, opacity .2s;
             user-select: none;
@@ -329,9 +334,15 @@
             box-shadow: 3px 3px 0 rgba(22,163,74,.35), 0 0 10px rgba(22,163,74,.25);
             cursor: pointer;
         }
-        .fitxa.jugable:hover {
-            transform: translateY(-10px);
-            box-shadow: 3px 10px 0 rgba(22,163,74,.3), 0 0 16px rgba(22,163,74,.3);
+        /* :hover només on hi ha ratolí: a les pantalles tàctils interfereix amb el toc */
+        @media (hover: hover) {
+            .fitxa.jugable:hover {
+                transform: translateY(-10px);
+                box-shadow: 3px 10px 0 rgba(22,163,74,.3), 0 0 16px rgba(22,163,74,.3);
+            }
+        }
+        .fitxa.jugable:active {
+            transform: translateY(-6px);
         }
         .fitxa.no-jugable {
             opacity: 0.35;
@@ -358,7 +369,7 @@
         /* Indicadors de can play a quin extrem */
         .fitxa-indicadors {
             position: absolute;
-            bottom: -22px;
+            bottom: 3px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -393,6 +404,7 @@
             border: none;
             border-radius: 12px;
             cursor: pointer;
+            touch-action: manipulation;
             box-shadow: 0 4px 0 var(--primari-fosc);
             transition: transform .1s, box-shadow .1s, opacity .2s;
             letter-spacing: -.2px;
@@ -768,8 +780,14 @@
     var taulerVisible = true;
     var tornActual = 'jugador';  // 'jugador' | 'maquina'
     var timerMaquina = null;     // temporitzador del torn de la màquina
-    var nivell = localStorage.getItem('domino_nivell') || 'mitja';
-    var soActiu = localStorage.getItem('domino_so') !== 'off';
+    // localStorage segur: si el navegador el bloqueja (p. ex. Safari amb cookies
+    // bloquejades), una excepció aquí deixaria el torn penjat per sempre
+    function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+
+    var nivell = lsGet('domino_nivell') || 'mitja';
+    var soActiu = lsGet('domino_so') !== 'off';
 
     // ===== SO =====
     var audioCtx = null;
@@ -804,7 +822,7 @@
 
     function toggleSo() {
         soActiu = !soActiu;
-        localStorage.setItem('domino_so', soActiu ? 'on' : 'off');
+        lsSet('domino_so', soActiu ? 'on' : 'off');
         actualitzarSoUI();
     }
     function actualitzarSoUI() {
@@ -814,7 +832,7 @@
     // ===== NIVELL =====
     function setNivell(n) {
         nivell = n;
-        localStorage.setItem('domino_nivell', n);
+        lsSet('domino_nivell', n);
         pintarNivell();
     }
     function pintarNivell() {
@@ -828,7 +846,7 @@
         try { return Object.assign({ v: 0, d: 0, e: 0, ratxa: 0, millor: 0 }, JSON.parse(localStorage.getItem('domino_stats')) || {}); }
         catch (e) { return { v: 0, d: 0, e: 0, ratxa: 0, millor: 0 }; }
     })();
-    function guardarStats() { localStorage.setItem('domino_stats', JSON.stringify(stats)); }
+    function guardarStats() { lsSet('domino_stats', JSON.stringify(stats)); }
     function actualitzarStatsUI() {
         document.getElementById('st-v').textContent = stats.v;
         document.getElementById('st-d').textContent = stats.d;
@@ -838,8 +856,8 @@
 
     // ===== PERSISTÈNCIA DE PARTIDA =====
     function guardarPartida() {
-        if (!jocActiu) { localStorage.removeItem('domino_partida'); return; }
-        localStorage.setItem('domino_partida', JSON.stringify({
+        if (!jocActiu) { lsDel('domino_partida'); return; }
+        lsSet('domino_partida', JSON.stringify({
             jugador: jugador, maquina: maquina, pou: pou,
             extrems: extrems, tauler: taulerFitxes, torn: tornActual
         }));
@@ -972,16 +990,19 @@
             var pDret = potJugarA(v, 'dret');
             var jugable = pEsq || pDret;
 
-            var el = document.createElement('div');
+            // Botó natiu: els tocs al mòbil hi responen sempre (els div fallaven)
+            var el = document.createElement('button');
+            el.type = 'button';
             el.className = 'fitxa' + (jugable ? ' jugable' : ' no-jugable');
+            el.disabled = !jugable;
             el.innerHTML = svgFitxaV(v[0], v[1]);
 
             // Indicadors (← →) si és jugable
             if (jugable && extrems[0] !== null) {
-                var indHTML = '<div class="fitxa-indicadors">';
-                if (pEsq) indHTML += '<div class="fitxa-ind esq">←</div>';
-                if (pDret) indHTML += '<div class="fitxa-ind dret">→</div>';
-                indHTML += '</div>';
+                var indHTML = '<span class="fitxa-indicadors">';
+                if (pEsq) indHTML += '<span class="fitxa-ind esq">←</span>';
+                if (pDret) indHTML += '<span class="fitxa-ind dret">→</span>';
+                indHTML += '</span>';
                 el.innerHTML += indHTML;
             }
 
@@ -1300,7 +1321,7 @@
 
     function fiDePartida(tipus, titol, sub) {
         jocActiu = false;
-        localStorage.removeItem('domino_partida');
+        lsDel('domino_partida');
 
         if (tipus === 'guanya') {
             stats.v++;
