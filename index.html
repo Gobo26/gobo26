@@ -377,69 +377,6 @@ main { max-width: 1040px; margin: 0 auto; padding: 2.5rem 1rem 4rem; }
   padding: .22rem .55rem;
 }
 
-/* ── EL TEU RACÓ ── */
-.raco {
-  background: white;
-  border: 1px solid rgba(0,0,0,.1);
-  border-top: 3px solid var(--rosa);
-  padding: 1.2rem;
-  margin-bottom: 1.6rem;
-  animation: slideUp .4s ease both;
-}
-.raco-titol {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: .78rem;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--rosa);
-  margin-bottom: .9rem;
-}
-.raco-reptes { display: flex; gap: .6rem; flex-wrap: wrap; }
-.raco-repte {
-  flex: 1;
-  min-width: 230px;
-  display: flex;
-  align-items: center;
-  gap: .7rem;
-  padding: .8rem .9rem;
-  text-decoration: none;
-  color: inherit;
-  border: 1px solid rgba(0,0,0,.08);
-  transition: border-color .15s;
-}
-.raco-repte:hover { border-color: var(--cel); }
-.raco-repte.fet { background: var(--oliva-clar); }
-.raco-repte.pendent { background: var(--cel-clar); }
-.raco-repte-ico { font-size: 1.6rem; line-height: 1; }
-.raco-repte-nom {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: .85rem;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: var(--fosc);
-}
-.raco-repte-estat {
-  font-family: 'Lora', serif;
-  font-style: italic;
-  font-size: .75rem;
-  color: var(--text2);
-}
-.raco-recs { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .9rem; }
-.raco-rec {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  padding: .35rem .7rem;
-  background: var(--gris);
-  border: 1px solid rgba(0,0,0,.08);
-  color: var(--text);
-}
-.raco-rec b { color: var(--rosa); }
-
 /* ── BIO ── */
 .bio-card {
   background: white;
@@ -533,13 +470,6 @@ footer a:hover { border-bottom-color: white; }
 </section>
 
 <main>
-
-  <!-- ── EL TEU RACÓ (es construeix amb JS llegint el localStorage dels jocs) ── -->
-  <div class="raco" id="raco" style="display:none">
-    <div class="raco-titol">✦ El teu racó</div>
-    <div class="raco-reptes" id="raco-reptes"></div>
-    <div class="raco-recs" id="raco-recs" style="display:none"></div>
-  </div>
 
   <!-- ── JOCS I MEMÒRIA ── -->
   <div class="seccio" id="s-jocs">
@@ -1017,91 +947,6 @@ function toggle(id) {
   if (btn) btn.setAttribute('aria-expanded', el.classList.contains('obert') ? 'true' : 'false');
 }
 
-// ── EL TEU RACÓ ──────────────────────────────────────────────────────────────
-// Llegeix el localStorage compartit amb els jocs (mateix origen) per mostrar
-// els reptes del dia, les partides a mig fer i els rècords personals.
-(function() {
-  function llegir(k) {
-    try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; }
-  }
-  function avui() {
-    var d = new Date();
-    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-  }
-  function targeta(href, ico, nom, estat, fet) {
-    return '<a class="raco-repte ' + (fet ? 'fet' : 'pendent') + '" href="' + href + '" target="_self">' +
-      '<span class="raco-repte-ico">' + ico + '</span><span><span class="raco-repte-nom">' + nom + '</span><br>' +
-      '<span class="raco-repte-estat">' + estat + '</span></span></a>';
-  }
-  function tempsCurt(s) {
-    var m = Math.floor(s / 60);
-    return m > 0 ? m + ' min ' + (s % 60) + ' s' : s + ' s';
-  }
-
-  var html = '';
-
-  // Reptes del dia
-  var ps = llegir('ps_repte');
-  var psAvui = ps && ps.data === avui();
-  var psFet = psAvui && ps.acabat;
-  var psMig = psAvui && !ps.acabat && ps.intents && ps.intents.length > 0;
-  html += targeta('Gobo26-PARAULA-SECRETA.html', '🔐', 'La paraula del dia',
-    psFet ? (ps.guanyat ? '✅ Superada avui! Demà més' : '✔ Feta avui — demà més')
-          : (psMig ? '🕗 A mig fer — continua!' : 'Per jugar — t\'espera'), psFet);
-
-  var sd = llegir('sudoku_diari');
-  var sdFet = sd && sd.ultimaData === avui();
-  html += targeta('Gobo26-SUDOKU.html', '🔢', 'El sudoku del dia',
-    sdFet ? '✅ Completat — ratxa de ' + sd.ratxa + ' ' + (sd.ratxa === 1 ? 'dia' : 'dies')
-          : 'Per resoldre — t\'espera', sdFet);
-
-  // Partides a mig fer
-  if (llegir('domino_partida'))
-    html += targeta('Gobo26-DOMINO.html', '🁣', 'Dominó', '🕗 Partida a mig fer — continua-la!', false);
-  var sp = llegir('sudoku_partida');
-  if (sp && sp.dif !== 'daily')
-    html += targeta('Gobo26-SUDOKU.html', '🔲', 'Sudoku', '🕗 Partida a mig fer — continua-la!', false);
-
-  document.getElementById('raco-reptes').innerHTML = html;
-
-  // Rècords personals (només els jocs amb dades)
-  var recs = [];
-  var dom = llegir('domino_stats');
-  if (dom && (dom.v || dom.d)) recs.push('🁣 Dominó: <b>' + dom.v + '</b> victòries · ratxa màx. <b>' + (dom.millor || 0) + '</b>');
-  var sr = llegir('sudoku_records');
-  if (sr) {
-    var parts = [];
-    if (sr.easy) parts.push('fàcil ' + tempsCurt(sr.easy));
-    if (sr.medium) parts.push('mitjà ' + tempsCurt(sr.medium));
-    if (sr.hard) parts.push('difícil ' + tempsCurt(sr.hard));
-    if (parts.length) recs.push('🔲 Sudoku: millor temps <b>' + parts.join(' · ') + '</b>');
-  }
-  var dit = llegir('dites_stats');
-  if (dit && dit.millor) {
-    var mx = Math.max(dit.millor[1] || 0, dit.millor[2] || 0, dit.millor[3] || 0);
-    if (mx > 0) recs.push('💬 Dites: ratxa màx. <b>' + mx + '</b>');
-  }
-  var psv = 0;
-  ['facil', 'mitja', 'dificil', 'repte'].forEach(function(n) {
-    var s = llegir('ps_stats_' + n);
-    if (s) psv += s.victories || 0;
-  });
-  if (psv > 0) recs.push('🔐 Paraula Secreta: <b>' + psv + '</b> victòries');
-  var pr = llegir('gobo26_pinta_recs');
-  if (pr && pr[0]) recs.push('🎨 Pinta Paraules: pantalla <b>' + pr[0].pantalla + '</b>');
-  var an = llegir('gobo26_ana_podium');
-  if (an && an[0]) recs.push('🔀 Anagrames: <b>' + an[0].punts + '</b> punts');
-  var v3 = parseInt(localStorage.getItem('3r_vict_j') || '0', 10);
-  if (v3 > 0) recs.push('⭕ 3 en Ratlla: <b>' + v3 + '</b> victòries');
-
-  if (recs.length) {
-    var z = document.getElementById('raco-recs');
-    z.innerHTML = recs.map(function(r) { return '<span class="raco-rec">' + r + '</span>'; }).join('');
-    z.style.display = '';
-  }
-
-  document.getElementById('raco').style.display = '';
-})();
 </script>
 
 </body>
