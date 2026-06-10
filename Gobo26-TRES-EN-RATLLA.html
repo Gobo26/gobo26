@@ -77,7 +77,8 @@
 
         
 
-        #btn-ajuda{
+        .hdr-btns { display: flex; gap: 8px; flex-shrink: 0; }
+        #btn-ajuda, #btn-so {
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -94,7 +95,8 @@
             flex-shrink: 0;
             font-family: system-ui, -apple-system, sans-serif;
         }
-        #btn-ajuda:hover { background: rgba(255,255,255,0.28); }
+        #btn-so { font-size: .9rem; }
+        #btn-ajuda:hover, #btn-so:hover { background: rgba(255,255,255,0.28); }
 
         /* ===== MAIN ===== */
         main {
@@ -546,7 +548,10 @@
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">3 en Ratlla</span>
-    <button type="button" id="btn-ajuda" onclick="obrirAjuda()" aria-label="Instruccions">?</button>
+    <div class="hdr-btns">
+        <button type="button" id="btn-so" onclick="toggleSo()" aria-label="Activar o silenciar el so">🔊</button>
+        <button type="button" id="btn-ajuda" onclick="obrirAjuda()" aria-label="Instruccions">?</button>
+    </div>
 </header>
 
 <!-- MAIN -->
@@ -720,29 +725,39 @@
     const cel_les    = document.querySelectorAll('.cella');
     const missatgeEl = document.getElementById('missatge');
 
-    // ===== SO FINAL DE PARTIDA =====
+    // ===== SO I VIBRACIÓ =====
     let audioCtx = null;
+    let soActiu = localStorage.getItem('3r_so') !== 'off';
 
-    function soFiPartida() {
+    function ctxAudio() {
+        if (!soActiu) return null;
         try {
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const ctx = audioCtx;
-            // Dos clics suaus molt breus, en sèrie
-            [0, 0.12].forEach(delay => {
-                const osc  = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(880, ctx.currentTime + delay);
-                osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + delay + 0.06);
-                gain.gain.setValueAtTime(0.0, ctx.currentTime + delay);
-                gain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + delay + 0.008);
-                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + 0.08);
-                osc.start(ctx.currentTime + delay);
-                osc.stop(ctx.currentTime + delay + 0.1);
-            });
-        } catch(e) { /* silenci si no hi ha AudioContext */ }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            return audioCtx;
+        } catch(e) { return null; }
+    }
+    function nota(freq, t, dur, tipus, vol) {
+        const c = ctxAudio(); if (!c) return;
+        const o = c.createOscillator(), g = c.createGain();
+        o.type = tipus || 'sine';
+        o.frequency.value = freq;
+        g.gain.setValueAtTime(0.0001, c.currentTime + t);
+        g.gain.exponentialRampToValueAtTime(vol || 0.2, c.currentTime + t + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + t + dur);
+        o.connect(g); g.connect(c.destination);
+        o.start(c.currentTime + t);
+        o.stop(c.currentTime + t + dur + 0.05);
+    }
+    function soToc()    { nota(440, 0, .05, 'triangle', .18); }
+    function soGuanya() { [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => nota(f, i * .12, .25, 'triangle', .28)); }
+    function soPerd()   { [392, 311, 262].forEach((f, i) => nota(f, i * .15, .28, 'sawtooth', .1)); }
+    function soEmpat()  { nota(440, 0, .12, 'sine', .2); nota(440, .18, .18, 'sine', .2); }
+    function vibra(p)   { if (navigator.vibrate) try { navigator.vibrate(p); } catch(e) {} }
+    function toggleSo() {
+        soActiu = !soActiu;
+        localStorage.setItem('3r_so', soActiu ? 'on' : 'off');
+        document.getElementById('btn-so').textContent = soActiu ? '🔊' : '🔇';
     }
 
     function getNivellActual() {
@@ -815,6 +830,8 @@
         c.textContent = jugador === 'J' ? icona_jugador : icona_maquina;
         c.classList.add('ocupada', jugador === 'J' ? 'jugador' : 'maquina');
         actualitzarAccessibilitatCasella(c, index, jugador);
+        soToc();
+        if (jugador === 'J' || mode === '2j') vibra(15);
     }
 
     function clickCella(e) {
@@ -902,7 +919,9 @@
         // Alterna qui comença la propera partida
         torn_inicial = !torn_inicial;
 
-        soFiPartida();
+        if (resultat === 'empat') { soEmpat(); }
+        else if (resultat === 'jugador' || mode === '2j') { soGuanya(); vibra([100, 60, 100, 60, 180]); }
+        else { soPerd(); vibra(220); }
 
         if (resultat === 'jugador') {
             punts_jugador++;
@@ -979,6 +998,7 @@
     });
 
     // Arrencada
+    document.getElementById('btn-so').textContent = soActiu ? '🔊' : '🔇';
     setMode('ia');
     actualitzarUI();
 </script>

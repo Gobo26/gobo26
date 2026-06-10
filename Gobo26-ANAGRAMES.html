@@ -26,8 +26,10 @@ header{width:100%;background:var(--s800);border-bottom:1px solid #334155;padding
 .logo-txt{font-size:1rem;font-weight:900;color:white;letter-spacing:-.5px;}
 .logo-txt span{color:var(--blue2);}
 .hdr-title{font-size:.95rem;font-weight:700;color:white;letter-spacing:.5px;}
-#btn-ajuda{font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);flex-shrink:0;}
-#btn-ajuda:hover{background:var(--blue2);transform:scale(1.1);}
+.hdr-btns{display:flex;gap:8px;flex-shrink:0;}
+#btn-ajuda,#btn-so{font-family:system-ui, -apple-system, sans-serif;font-size:1.1rem;font-weight:900;width:38px;height:38px;border-radius:50%;border:2px solid var(--blue2);background:var(--blue);color:white;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 2px 8px rgba(37,99,235,.5);flex-shrink:0;}
+#btn-so{font-size:.95rem;}
+#btn-ajuda:hover,#btn-so:hover{background:var(--blue2);transform:scale(1.1);}
 
 /* ── MAIN ── */
 main{width:100%;max-width:560px;padding:10px 12px 6px;display:flex;flex-direction:column;gap:9px;flex:1;overflow-y:auto;}
@@ -221,7 +223,10 @@ footer a{color:var(--s400);text-decoration:none;}
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">🔤 Anagrames</span>
-    <button type="button" id="btn-ajuda" onclick="obrirAjuda()">?</button>
+    <div class="hdr-btns">
+        <button type="button" id="btn-so" onclick="toggleSo()" title="Activar o silenciar el so">🔊</button>
+        <button type="button" id="btn-ajuda" onclick="obrirAjuda()" title="Com es juga">?</button>
+    </div>
 </header>
 
 <main>
@@ -233,7 +238,7 @@ footer a{color:var(--s400);text-decoration:none;}
       <div class="marc-val blau" id="m-punts">0</div>
     </div>
     <div class="marc-card">
-      <div class="marc-lbl">Grup</div>
+      <div class="marc-lbl">🏆 Rècord</div>
       <div class="marc-val" id="m-ronda">—</div>
     </div>
     <div class="marc-card">
@@ -473,7 +478,9 @@ function barrejarArr(a) {
 }
 
 // Agrupar el diccionari per conjunt de lletres → cada grup = un anagrama
-// Filtra els grups amb menys de 2 solucions
+// Filtra els grups amb menys de 2 solucions.
+// Progressió de dificultat: primer els grups de 4 lletres, després 5, després 6
+// (barrejats dins de cada longitud).
 function construirGrups(dicc) {
   const mapa = {};
   dicc.forEach(e => {
@@ -483,7 +490,10 @@ function construirGrups(dicc) {
   const grups = Object.entries(mapa)
     .filter(([, sols]) => sols.length >= 2)
     .map(([l, solucions]) => ({ l, solucions }));
-  return barrejarArr(grups);
+  const per4 = barrejarArr(grups.filter(g => g.l.length === 4));
+  const per5 = barrejarArr(grups.filter(g => g.l.length === 5));
+  const per6 = barrejarArr(grups.filter(g => g.l.length >= 6));
+  return per4.concat(per5, per6);
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -512,7 +522,14 @@ function feedback(msg, color='var(--s700)') {
   window._ft = setTimeout(() => { el.style.opacity='0'; }, 4500);
 }
 
+let soActiu = localStorage.getItem('ana_so') !== 'off';
+function toggleSo() {
+  soActiu = !soActiu;
+  localStorage.setItem('ana_so', soActiu ? 'on' : 'off');
+  document.getElementById('btn-so').textContent = soActiu ? '🔊' : '🔇';
+}
 function so(defs) {
+  if (!soActiu) return;
   try {
     const ctx = new (window.AudioContext||window.webkitAudioContext)();
     defs.forEach(([f,d,delay=0]) => {
@@ -600,7 +617,7 @@ function iniciarGrup() {
 // ══════════════════════════════════════════════════════════════════════════════
 function refrescaMarcadors() {
   document.getElementById('m-punts').textContent  = punts;
-  document.getElementById('m-ronda').textContent  = '—';
+  document.getElementById('m-ronda').textContent  = podium.length ? podium[0].punts : '—';
   const ronda = RONDES ? RONDES[rondaActual] : null;
   const total = ronda ? ronda.grups.length : '?';
   document.getElementById('m-paraula').textContent =
@@ -1009,6 +1026,7 @@ document.addEventListener('keydown', e => {
 // ══════════════════════════════════════════════════════════════════════════════
 // ARRENCADA
 // ══════════════════════════════════════════════════════════════════════════════
+document.getElementById('btn-so').textContent = soActiu ? '🔊' : '🔇';
 iniciarPartida();
 </script>
 </body>

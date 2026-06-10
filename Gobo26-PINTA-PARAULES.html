@@ -240,7 +240,10 @@ header{width:100%;background:#1e293b;border-bottom:1px solid #334155;padding:10p
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">Pinta Paraules</span>
-    <div style="width:38px"></div>
+    <div style="display:flex;gap:8px;flex-shrink:0;">
+        <button type="button" class="btn-hdr" id="btn-so" onclick="toggleSo()" title="Activar o silenciar el so">🔊</button>
+        <button type="button" class="btn-hdr" onclick="obrirAjuda()" title="Com es juga">?</button>
+    </div>
 </header>
 
 <div id="pantalla-inici">
@@ -350,11 +353,11 @@ const SEQUENCIES_TEMPS = {
     facil:  [40,37,34,31,28,25,22,20,18,16,14],
 };
 const MAX_FALLOS_PER_MODE = { normal: 2, facil: 3 };
+const MAX_INTENTS_PER_MODE = { normal: 3, facil: 4 };
 let modeJoc = 'normal';
 let SEQUENCIA_TEMPS = SEQUENCIES_TEMPS.normal;
 let TEMPS_INICI = SEQUENCIA_TEMPS[0];
 const TEMPS_MINIM = 8;
-const MAX_INTENTS = 3;
 let MAX_FALLOS = 2;
 
 // ── ESTAT ──────────────────────────────────────────────────────────────────
@@ -380,8 +383,14 @@ function hexFosc(hex){
 
 // ── ÀUDIO ──────────────────────────────────────────────────────────────────
 let actx;
+let soActiu = localStorage.getItem('pinta_so') !== 'off';
 function ga(){ if(!actx) actx=new(window.AudioContext||window.webkitAudioContext)(); return actx; }
-function so(f,t,d,vol=0.018){ try{ const c=ga(),o=c.createOscillator(),g=c.createGain(); o.connect(g);g.connect(c.destination); o.type=t;o.frequency.value=f; g.gain.setValueAtTime(vol,c.currentTime); g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d); o.start();o.stop(c.currentTime+d); }catch(e){} }
+function so(f,t,d,vol=0.018){ if(!soActiu) return; try{ const c=ga(),o=c.createOscillator(),g=c.createGain(); o.connect(g);g.connect(c.destination); o.type=t;o.frequency.value=f; g.gain.setValueAtTime(vol,c.currentTime); g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d); o.start();o.stop(c.currentTime+d); }catch(e){} }
+function toggleSo(){
+    soActiu = !soActiu;
+    localStorage.setItem('pinta_so', soActiu ? 'on' : 'off');
+    document.getElementById('btn-so').textContent = soActiu ? '🔊' : '🔇';
+}
 const soClick  = ()=>so(500,'sine',.1,.05);
 const soOk     = ()=>{ so(523,'sine',.12); setTimeout(()=>so(659,'sine',.12),100); setTimeout(()=>so(784,'sine',.2),200); };
 const soErr    = ()=>{ so(220,'sawtooth',.25); setTimeout(()=>so(180,'sawtooth',.3),130); };
@@ -483,9 +492,30 @@ function actualitzarBarra(){
 function tempsEsgotat(){
     soKo(); vibrar([200,100,200]);
     ratxa=0;
+    intents++;
+    const max = MAX_INTENTS_PER_MODE[modeJoc];
     actualitzarMarcadors();
-    setFeedback('⏱️ Temps esgotat! Tornem a l\'inici...','#dc2626');
-    setTimeout(()=>iniciar(), 1800);
+    if(intents >= max){
+        setFeedback('⏱️ Temps esgotat!','#dc2626');
+        fiDePartida('⏱️ S\'han acabat els intents!');
+    } else {
+        setFeedback('⏱️ Temps esgotat! Intent '+(intents+1)+' de '+max+' — es barreja de nou...','#dc2626');
+        setTimeout(()=>novaPartida(), 1600);
+    }
+}
+
+// ── FI DE PARTIDA (modal de resultat) ─────────────────────────────────────
+function fiDePartida(titol){
+    clearInterval(intervalRonda);
+    document.getElementById('m-emoji').textContent = pantalla > 1 ? '🎨' : '💔';
+    document.getElementById('m-titol').textContent = titol;
+    document.getElementById('m-text').innerHTML =
+        'Has arribat a la <b>pantalla '+pantalla+'</b> amb <b>'+punts+' punts</b>' +
+        (modeJoc==='facil' ? ' (mode fàcil).' : '.');
+    const r = recs[0];
+    document.getElementById('m-rec').textContent =
+        r ? '🏆 La teva millor marca: pantalla '+r.pantalla+' · '+r.punts+' punts' : '';
+    document.getElementById('overlay').classList.add('vis');
 }
 
 // ── GENERAR JOC ───────────────────────────────────────────────────────────
@@ -595,11 +625,12 @@ function comprovar(colorPot){
         setTimeout(()=>{ if(seleccionada) seleccionada.btn.classList.remove('error-flash'); },500);
         actualitzarMarcadors();
         if(fallos>MAX_FALLOS){
-            clearInterval(intervalRonda);
-            setFeedback('💔 Massa errors! Tornem a l\'inici...','#dc2626');
-            setTimeout(()=>iniciar(), 1800);
+            setFeedback('💔 Massa errors!','#dc2626');
+            fiDePartida('💔 Massa errors!');
         } else {
-            const msg2 = fallos>=MAX_FALLOS ? '⚠️ Segon error! El proper acaba la jugada.' : '❌ Error 1/2! Tens un altre intent.';
+            const msg2 = fallos===MAX_FALLOS
+                ? '⚠️ Error '+fallos+'/'+(MAX_FALLOS+1)+'! El proper acaba la jugada.'
+                : '❌ Error '+fallos+'/'+(MAX_FALLOS+1)+'! Continua.';
             setFeedback(msg2,'#dc2626');
         }
     }
@@ -679,6 +710,7 @@ function obrirAjuda(){ document.getElementById('overlay-ajuda').classList.add('v
 function tancarAjuda(){ document.getElementById('overlay-ajuda').classList.remove('vis'); }
 
 // ── INIT ───────────────────────────────────────────────────────────────────
+document.getElementById('btn-so').textContent = soActiu ? '🔊' : '🔇';
 mostrarRecs();
 actualitzarMarcadors();
 iniciar();
