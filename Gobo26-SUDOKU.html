@@ -403,6 +403,7 @@
             <button type="button" id="btn-facil"  onclick="newGame('easy')">Fàcil</button>
             <button type="button" id="btn-mitja"  onclick="newGame('medium')">Mitjà</button>
             <button type="button" id="btn-dificil" onclick="newGame('hard')">Difícil</button>
+            <button type="button" id="btn-diari" onclick="newGame('daily')">📅 Diari</button>
             <button type="button" class="primary" onclick="checkSolution()">Comprovar</button>
         </div>
 
@@ -466,7 +467,43 @@
         let pistes = 3;
         let jocAcabat = true;         // true fins que comença la primera partida
 
-        const DIF_NOM = { easy: 'Fàcil', medium: 'Mitjà', hard: 'Difícil' };
+        const DIF_NOM = { easy: 'Fàcil', medium: 'Mitjà', hard: 'Difícil', daily: 'Repte del dia' };
+        const DIF_BTN = { easy: 'btn-facil', medium: 'btn-mitja', hard: 'btn-dificil', daily: 'btn-diari' };
+        const TOTS_BTN = ['btn-facil', 'btn-mitja', 'btn-dificil', 'btn-diari'];
+
+        // ── REPTE DEL DIA ────────────────────────────────────────────────────
+        // Generador determinista: el mateix sudoku per a tothom cada dia
+        let rng = Math.random;
+        function mulberry32(a) {
+            return function() {
+                let t = a += 0x6D2B79F5;
+                t = Math.imul(t ^ t >>> 15, t | 1);
+                t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            };
+        }
+        function dataAvui() {
+            const d = new Date();
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        }
+        function llavorDelDia() {
+            const d = new Date();
+            return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+        }
+        // Ratxa de dies consecutius amb el repte completat
+        function actualitzarRatxaDiaria() {
+            const avui = dataAvui();
+            let d;
+            try { d = JSON.parse(localStorage.getItem('sudoku_diari')) || {}; } catch (e) { d = {}; }
+            if (d.ultimaData === avui) return d; // ja completat avui
+            const ahir = new Date(Date.now() - 86400000);
+            const ahirStr = ahir.getFullYear() + '-' + String(ahir.getMonth() + 1).padStart(2, '0') + '-' + String(ahir.getDate()).padStart(2, '0');
+            d.ratxa = (d.ultimaData === ahirStr) ? (d.ratxa || 0) + 1 : 1;
+            if (!d.millor || d.ratxa > d.millor) d.millor = d.ratxa;
+            d.ultimaData = avui;
+            localStorage.setItem('sudoku_diari', JSON.stringify(d));
+            return d;
+        }
 
         // ── SO ───────────────────────────────────────────────────────────────
         let soActiu = localStorage.getItem('sudoku_so') !== 'off';
@@ -546,10 +583,9 @@
             jocAcabat = false;
             selectedCell = null;
 
-            ['btn-facil','btn-mitja','btn-dificil'].forEach(id =>
+            TOTS_BTN.forEach(id =>
                 document.getElementById(id).classList.remove('active-diff'));
-            const map = { easy:'btn-facil', medium:'btn-mitja', hard:'btn-dificil' };
-            document.getElementById(map[currentDifficulty]).classList.add('active-diff');
+            document.getElementById(DIF_BTN[currentDifficulty] || 'btn-facil').classList.add('active-diff');
             document.getElementById('btn-pista').textContent = `💡 Pista (${pistes})`;
             document.getElementById('btn-pista').disabled = pistes === 0;
 
@@ -628,10 +664,12 @@
             document.getElementById('btn-pista').disabled = false;
 
             // Destacar dificultat activa
-            ['btn-facil','btn-mitja','btn-dificil'].forEach(id =>
+            TOTS_BTN.forEach(id =>
                 document.getElementById(id).classList.remove('active-diff'));
-            const map = { easy:'btn-facil', medium:'btn-mitja', hard:'btn-dificil' };
-            document.getElementById(map[difficulty]).classList.add('active-diff');
+            document.getElementById(DIF_BTN[difficulty]).classList.add('active-diff');
+
+            // Repte del dia: generació determinista a partir de la data
+            rng = difficulty === 'daily' ? mulberry32(llavorDelDia()) : Math.random;
 
             generateSudoku();
             removeNumbers(difficulty);
@@ -644,7 +682,9 @@
             renderBoard();
             const msg = document.getElementById('message');
             const rec = records[difficulty];
-            msg.textContent = rec ? `El teu millor temps (${DIF_NOM[difficulty]}): ${formatTime(rec)}` : '';
+            msg.textContent = difficulty === 'daily'
+                ? '📅 El sudoku d\'avui — el mateix per a tothom!'
+                : (rec ? `El teu millor temps (${DIF_NOM[difficulty]}): ${formatTime(rec)}` : '');
             msg.style.color = '#475569';
             selectedCell = null;
             startTimer(0);
@@ -666,7 +706,7 @@
             let num;
             for (let i = 0; i < 3; i++) {
                 for (let j = 0; j < 3; j++) {
-                    do { num = Math.floor(Math.random() * 9) + 1; }
+                    do { num = Math.floor(rng() * 9) + 1; }
                     while (!isSafeInBox(row, col, num));
                     solution[row + i][col + j] = num;
                 }
@@ -707,9 +747,9 @@
         }
 
         function removeNumbers(difficulty) {
-            let count = difficulty === 'easy' ? 30 : difficulty === 'medium' ? 45 : 55;
+            let count = difficulty === 'easy' ? 30 : difficulty === 'medium' ? 45 : difficulty === 'daily' ? 45 : 55;
             while (count > 0) {
-                let r = Math.floor(Math.random()*9), c = Math.floor(Math.random()*9);
+                let r = Math.floor(rng()*9), c = Math.floor(rng()*9);
                 if (board[r][c] !== 0) { board[r][c] = 0; count--; }
             }
         }
@@ -990,13 +1030,19 @@
                 records[currentDifficulty] = timerSeconds;
                 localStorage.setItem('sudoku_records', JSON.stringify(records));
             }
+            let extra = '';
+            if (currentDifficulty === 'daily') {
+                const d = actualitzarRatxaDiaria();
+                extra = `<br>📅 Ratxa diària: <b>${d.ratxa} ${d.ratxa === 1 ? 'dia' : 'dies'}</b>` +
+                    (d.ratxa === d.millor && d.ratxa > 1 ? ' — la teva millor!' : (d.millor > d.ratxa ? ` · Millor: ${d.millor}` : ''));
+            }
             document.getElementById('modal-temps-text').textContent =
                 `Temps: ${formatTime(timerSeconds)}`;
             document.getElementById('modal-body').innerHTML =
                 `Dificultat: ${DIF_NOM[currentDifficulty]} · Pistes usades: ${3 - pistes}/3<br>` +
                 (nouRecord
                     ? '🏆 <b style="color:#16a34a">Nou rècord personal!</b>'
-                    : `El teu millor temps: ${formatTime(anterior)}`);
+                    : `El teu millor temps: ${formatTime(anterior)}`) + extra;
             document.getElementById('modal-victora').classList.add('actiu');
             llençarConfeti();
         }
