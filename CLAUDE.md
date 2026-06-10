@@ -57,6 +57,7 @@ Quan es facin canvis significatius al projecte (nova app, canvi d'arquitectura, 
 | 2026-03-18 | Nova app: Gobo26-Tarot.html — Santuari de Tarot, tirades d'1 i 3 cartes dels Arcans Majors, diari de lectures (localStorage), diccionari de les 22 cartes |
 | 2026-06-10 | Auditoria de jugabilitat de les 30 apps (AUDITORIA.md) amb pla de millora per fases |
 | 2026-06-10 | Dominó refet (Fase 1): pou per robar fitxes, 3 nivells de dificultat de la màquina, rècords i ratxes, partida desada automàticament (localStorage `domino_*`), so WebAudio + vibració amb botó de silenci, confeti i modal de resultat, inici aleatori |
+| 2026-06-10 | Sudoku millorat (Fase 1): partida desada automàticament i recuperada en obrir (localStorage `sudoku_*`), millors temps per nivell amb "nou rècord" al modal, victòria automàtica en completar (sense prémer Comprovar), so WebAudio + botó de silenci, vibració, confirmació abans de descartar partida, cronòmetre pausat quan la pestanya s'amaga |
 
 ---
 
