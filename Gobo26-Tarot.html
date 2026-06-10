@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Santuari de Tarot – Gobo26</title>
-<meta name="description" content="Santuari de Tarot: tirades dels Arcans Majors i diari personal de lectures.">
+<meta name="description" content="Santuari de Tarot: tirades temàtiques dels Arcans Majors, pregunta de Sí o No, carta del dia i diari personal de lectures.">
 <meta name="theme-color" content="#1e293b">
 <style>
     :root {
@@ -57,7 +57,19 @@
         letter-spacing: .05em;
     }
 
-    .header-spacer { width: 36px; flex-shrink: 0; }
+    #btn-so {
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: .95rem;
+        width: 38px; height: 38px;
+        border-radius: 50%;
+        border: 2px solid var(--color-or);
+        background: transparent;
+        color: var(--color-or);
+        cursor: pointer;
+        flex-shrink: 0;
+        touch-action: manipulation;
+    }
+    #btn-so:hover { background: rgba(255,183,3,.15); }
 
     /* ===== NAV PRINCIPAL ===== */
     .nav-principal {
@@ -81,6 +93,7 @@
         border-radius: 99px;
         cursor: pointer;
         transition: all 0.2s ease;
+        touch-action: manipulation;
     }
 
     .nav-btn:hover, .nav-btn:focus {
@@ -136,6 +149,13 @@
         perspective: 1000px;
         margin: 15px auto;
         cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        display: block;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
     }
 
     .carta-inner {
@@ -182,11 +202,22 @@
     .carta-back {
         background: linear-gradient(135deg, #2d243e 0%, #1a1525 100%);
         transform: rotateY(180deg);
+        color: var(--text-principal);
     }
 
     .carta-emoji { font-size: 4.5rem; margin-bottom: 12px; }
     .carta-titol { font-size: 1.2rem; font-weight: 800; color: var(--color-or); margin: 0; }
     .carta-numero { font-size: 1rem; color: var(--text-secundari); margin-bottom: 8px; font-weight: 600; }
+    .carta-posicio {
+        text-align: center;
+        font-size: .78rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        color: var(--color-or);
+        margin-bottom: -8px;
+    }
+    .pila-carta { display: flex; flex-direction: column; }
 
     /* ===== INFO CARTA ===== */
     .info-carta {
@@ -199,9 +230,32 @@
         line-height: 1.7;
         color: var(--text-secundari);
         text-align: left;
+        animation: fadeIn .4s ease;
     }
 
     .info-carta strong { color: var(--color-or); }
+
+    /* ===== RESPOSTA SÍ / NO ===== */
+    .sino-resposta {
+        text-align: center;
+        font-size: 2.2rem;
+        font-weight: 900;
+        margin-top: 20px;
+        padding: 18px;
+        border-radius: 16px;
+        animation: popIn .45s ease;
+    }
+    .sino-resposta.si    { background: rgba(22,163,74,.18);  color: #4ade80; border: 2px solid rgba(74,222,128,.5); }
+    .sino-resposta.no    { background: rgba(220,38,38,.15);  color: #f87171; border: 2px solid rgba(248,113,113,.5); }
+    .sino-resposta.matis { background: rgba(255,183,3,.12);  color: var(--color-or); border: 2px solid rgba(255,183,3,.5); }
+    .sino-resposta small {
+        display: block;
+        font-size: .95rem;
+        font-weight: 600;
+        color: var(--text-secundari);
+        margin-top: 8px;
+        line-height: 1.5;
+    }
 
     /* ===== BOTONS D'ACCIÓ ===== */
     .btn {
@@ -216,6 +270,7 @@
         border-radius: 12px;
         cursor: pointer;
         transition: all 0.2s ease;
+        touch-action: manipulation;
     }
 
     .btn:hover, .btn:focus {
@@ -240,6 +295,36 @@
 
     .text-centre { text-align: center; }
 
+    /* ===== TEMES ===== */
+    .temes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+        margin-top: 10px;
+    }
+    .btn-tema {
+        background: var(--fons-clar);
+        color: var(--text-principal);
+        border: 2px solid rgba(255, 183, 3, 0.4);
+        border-radius: 14px;
+        padding: 20px 12px;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: .95rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all .2s ease;
+        text-align: center;
+        touch-action: manipulation;
+    }
+    .btn-tema .tema-ico { display: block; font-size: 2rem; margin-bottom: 8px; }
+    .btn-tema small { display: block; font-size: .72rem; font-weight: 500; color: var(--text-secundari); margin-top: 5px; }
+    .btn-tema:hover, .btn-tema:focus {
+        border-color: var(--color-or);
+        background: #3a2f50;
+        box-shadow: 0 4px 20px rgba(255, 183, 3, 0.2);
+        outline: none;
+    }
+
     /* ===== OPCIONS TIRADA ===== */
     .opcions-tirada {
         display: flex;
@@ -262,6 +347,7 @@
         cursor: pointer;
         transition: all 0.2s ease;
         text-align: left;
+        touch-action: manipulation;
     }
 
     .btn-tirada:hover, .btn-tirada:focus {
@@ -279,6 +365,19 @@
         margin-top: 4px;
     }
 
+    .tema-actual {
+        text-align: center;
+        font-size: .8rem;
+        font-weight: 700;
+        color: var(--color-or);
+        background: rgba(255,183,3,.1);
+        border: 1px solid rgba(255,183,3,.35);
+        border-radius: 99px;
+        padding: 6px 16px;
+        display: inline-block;
+        margin-bottom: 14px;
+    }
+
     /* ===== ZONA BARREJAR ===== */
     .zona-barrejar {
         width: 100%;
@@ -287,14 +386,75 @@
         border: 3px dashed rgba(255, 183, 3, 0.5);
         border-radius: 14px;
         display: flex;
+        flex-direction: column;
+        gap: 10px;
         align-items: center;
         justify-content: center;
-        margin: 20px 0;
+        margin: 20px 0 12px;
         font-size: 1.1rem;
         font-weight: 600;
         color: var(--color-or);
         touch-action: none;
         user-select: none;
+        -webkit-user-select: none;
+    }
+    .barreja-progres {
+        width: 70%;
+        max-width: 320px;
+        height: 10px;
+        background: rgba(255,255,255,.12);
+        border-radius: 99px;
+        overflow: hidden;
+    }
+    .barreja-progres div {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #ffb703, #ffd34d);
+        border-radius: 99px;
+        transition: width .15s linear;
+    }
+
+    /* ===== VENTALL PER ESCOLLIR ===== */
+    .ventall {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+        gap: 9px;
+        margin: 18px 0;
+    }
+    .carta-mini {
+        aspect-ratio: 5 / 8;
+        border-radius: 8px;
+        border: 2px solid rgba(255, 183, 3, 0.55);
+        background: repeating-linear-gradient(45deg, #2d243e, #2d243e 6px, #1a1525 6px, #1a1525 12px);
+        color: var(--color-or);
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform .15s, box-shadow .15s, border-color .15s, opacity .2s;
+        padding: 0;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+    @media (hover: hover) {
+        .carta-mini:hover { transform: translateY(-6px); border-color: var(--color-or); }
+    }
+    .carta-mini.triada {
+        border-color: var(--color-or);
+        background: linear-gradient(135deg, #4a3a10, #2d243e);
+        box-shadow: 0 0 14px rgba(255, 183, 3, 0.6);
+        transform: translateY(-6px);
+    }
+    .carta-mini:disabled { opacity: .35; cursor: default; }
+    .carta-mini.triada:disabled { opacity: 1; }
+
+    .comptador-tria {
+        text-align: center;
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--color-or);
+        margin-top: 4px;
     }
 
     /* ===== CONTENIDOR CARTES ===== */
@@ -309,6 +469,15 @@
     /* ===== RESULTAT LECTURA ===== */
     #resultat-lectura { margin-top: 24px; }
 
+    .toast-ok {
+        text-align: center;
+        color: #4ade80;
+        font-weight: 800;
+        font-size: .95rem;
+        margin-top: 12px;
+        animation: popIn .3s ease;
+    }
+
     /* ===== DIARI ===== */
     .diari-item {
         background-color: var(--fons-clar);
@@ -316,6 +485,7 @@
         border-radius: 12px;
         margin-bottom: 16px;
         border: 1px solid rgba(255, 183, 3, 0.3);
+        position: relative;
     }
 
     .diari-item h3 {
@@ -324,6 +494,7 @@
         font-size: 1rem;
         margin-bottom: 10px;
         text-align: left;
+        padding-right: 40px;
     }
 
     .diari-item p {
@@ -333,6 +504,22 @@
         text-align: left;
         margin-bottom: 4px;
     }
+
+    .diari-esborrar {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(239,68,68,.12);
+        border: 1px solid rgba(239,68,68,.4);
+        color: #f87171;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: .85rem;
+        touch-action: manipulation;
+    }
+    .diari-esborrar:hover { background: rgba(239,68,68,.3); }
 
     /* ===== DICCIONARI ===== */
     .grid-diccionari {
@@ -356,6 +543,14 @@
     .item-diccionari .carta-emoji { font-size: 3rem; margin-bottom: 8px; }
     .item-diccionari .carta-titol { margin-bottom: 6px; }
     .item-diccionari strong { color: var(--color-or); }
+    .dicc-linies {
+        text-align: left;
+        margin-top: 12px;
+        border-top: 1px solid rgba(255,183,3,.2);
+        padding-top: 10px;
+        font-size: .82rem;
+    }
+    .dicc-linies p { margin-bottom: 6px; }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
 
@@ -443,37 +638,68 @@
         <span class="logo-txt">Gobo<span>26</span></span>
     </a>
     <span class="hdr-title">✦ Santuari de Tarot</span>
-    <div style="width:38px"></div>
+    <button type="button" id="btn-so" onclick="toggleSo()" title="Activar o silenciar el so">🔊</button>
 </header>
 
 <!-- NAV PRINCIPAL -->
 <nav class="nav-principal">
     <button type="button" class="nav-btn" onclick="canviarPantalla('inici')">Inici</button>
-    <button type="button" class="nav-btn" onclick="iniciarTiradaPantalla()">Tirar Cartes</button>
+    <button type="button" class="nav-btn" onclick="canviarPantalla('seleccio-tema')">Tirar Cartes</button>
     <button type="button" class="nav-btn" onclick="mostrarDiari()">El meu Diari</button>
-    <button type="button" class="nav-btn" onclick="mostrarDiccionari()">Diccionari</button>
+    <button type="button" class="nav-btn" onclick="canviarPantalla('diccionari')">Diccionari</button>
 </nav>
 
 <main>
     <!-- INICI -->
     <section id="inici" class="activa">
         <h2>El teu espai de calma</h2>
-        <p class="text-gran">Consell de les cartes per al dia d'avui:</p>
+        <p class="text-gran" id="inici-text">Toca la carta per descobrir el consell d'avui:</p>
         <div id="carta-diaria-contenidor"></div>
+        <div class="text-centre" style="margin-top: 28px;">
+            <button type="button" class="btn" onclick="canviarPantalla('seleccio-tema')">🔮 Fer una tirada completa</button>
+        </div>
+    </section>
+
+    <!-- SELECCIÓ TEMA -->
+    <section id="seleccio-tema">
+        <h2>Sobre què vols preguntar?</h2>
+        <p class="text-gran">Les cartes parlaran del tema que triïs:</p>
+        <div class="temes-grid">
+            <button type="button" class="btn-tema" onclick="triarTema('general')">
+                <span class="tema-ico">💫</span>General
+                <small>Una mirada àmplia al moment que vius</small>
+            </button>
+            <button type="button" class="btn-tema" onclick="triarTema('amor')">
+                <span class="tema-ico">❤️</span>Amor
+                <small>Relacions, família i persones estimades</small>
+            </button>
+            <button type="button" class="btn-tema" onclick="triarTema('feina')">
+                <span class="tema-ico">💼</span>Feina i diners
+                <small>Projectes, decisions i prosperitat</small>
+            </button>
+            <button type="button" class="btn-tema" onclick="triarTema('benestar')">
+                <span class="tema-ico">🌿</span>Benestar
+                <small>Estat d'ànim, energia i pau interior</small>
+            </button>
+        </div>
     </section>
 
     <!-- SELECCIÓ TIRADA -->
     <section id="seleccio-tirada">
-        <h2>Què necessites saber avui?</h2>
-        <p class="text-gran">Tria el tipus de lectura que prefereixes:</p>
+        <h2>Quina lectura prefereixes?</h2>
+        <div class="text-centre"><span class="tema-actual" id="chip-tema-1"></span></div>
         <div class="opcions-tirada">
-            <button type="button" class="btn-tirada" onclick="prepararTirada(1)">
+            <button type="button" class="btn-tirada" onclick="prepararTirada('una')">
                 🃏 Tirada d'1 Carta
                 <small>Consell ràpid o resposta directa</small>
             </button>
-            <button type="button" class="btn-tirada" onclick="prepararTirada(3)">
+            <button type="button" class="btn-tirada" onclick="prepararTirada('tres')">
                 🃏🃏🃏 Tirada de 3 Cartes
                 <small>Passat, Present i Futur</small>
+            </button>
+            <button type="button" class="btn-tirada" onclick="prepararTirada('sino')">
+                ☯️ Pregunta de Sí o No
+                <small>Pensa una pregunta concreta i les cartes respondran</small>
             </button>
         </div>
     </section>
@@ -481,21 +707,39 @@
     <!-- BARREJAR -->
     <section id="barrejar">
         <h2>Connecta amb les cartes</h2>
-        <p class="text-gran">Passa el dit per dins del requadre mentre penses en allò que et preocupa.</p>
-        <div class="zona-barrejar" id="zona-touch">Frega aquí per barrejar...</div>
+        <p class="text-gran" id="barrejar-text">Passa el dit per dins del requadre mentre penses en allò que et preocupa.</p>
+        <div class="zona-barrejar" id="zona-touch">
+            <span id="barrejar-label">Frega aquí per barrejar...</span>
+            <div class="barreja-progres"><div id="barreja-fill"></div></div>
+        </div>
         <div class="text-centre">
-            <button type="button" class="btn" id="btn-continuar-tirada" onclick="mostrarCartes()" disabled>Continuar a la Tirada</button>
+            <button type="button" class="btn" id="btn-continuar-tirada" onclick="mostrarVentall()" disabled>Escollir les cartes</button>
+        </div>
+    </section>
+
+    <!-- ESCOLLIR CARTES -->
+    <section id="escollir">
+        <h2>Escull amb la mà esquerra…</h2>
+        <p class="text-gran" id="escollir-text">Deixa't guiar per la intuïció i tria les teves cartes.</p>
+        <div class="ventall" id="ventall"></div>
+        <div class="comptador-tria" id="comptador-tria"></div>
+        <div class="text-centre" style="margin-top:16px;">
+            <button type="button" class="btn" id="btn-veure-lectura" onclick="mostrarCartes()" style="display:none;">✨ Veure la lectura</button>
         </div>
     </section>
 
     <!-- LECTURA -->
     <section id="lectura">
         <h2 id="titol-lectura">La teva Tirada</h2>
+        <div class="text-centre"><span class="tema-actual" id="chip-tema-2"></span></div>
         <p class="text-gran">Toca les cartes per girar-les i descobrir el seu missatge.</p>
         <div class="contenidor-cartes" id="taula-cartes"></div>
+        <div id="resposta-sino"></div>
         <div id="resultat-lectura"></div>
         <div class="text-centre" style="margin-top: 24px;">
-            <button type="button" class="btn" id="btn-guardar" style="display: none;" onclick="guardarAlDiari()">Guardar al Diari</button>
+            <button type="button" class="btn" id="btn-guardar" style="display: none;" onclick="guardarAlDiari()">💾 Guardar al Diari</button>
+            <button type="button" class="btn" id="btn-altra" style="display: none; margin-left:8px;" onclick="canviarPantalla('seleccio-tema')">🔮 Una altra tirada</button>
+            <div id="toast-guardat"></div>
         </div>
     </section>
 
@@ -505,61 +749,164 @@
         <p class="text-gran">Les teves tirades guardades per repassar-les.</p>
         <div id="llista-diari"></div>
         <div class="text-centre" style="margin-top: 32px;">
-            <button type="button" class="btn btn-perill" onclick="esborrarDiari()">Esborrar tot el Diari</button>
+            <button type="button" class="btn btn-perill" id="btn-esborrar-tot" onclick="esborrarDiari()">Esborrar tot el Diari</button>
         </div>
     </section>
 
     <!-- DICCIONARI -->
     <section id="diccionari">
         <h2>Arcans Majors</h2>
-        <p class="text-gran">Les 22 cartes principals del Tarot i el seu significat.</p>
+        <p class="text-gran">Les 22 cartes principals del Tarot i el seu significat per a cada tema.</p>
         <div class="grid-diccionari" id="grid-diccionari"></div>
     </section>
 </main>
 
 <script>
+    // Cada arcà té significat general (clau/desc), per tema (amor/feina/benestar)
+    // i una resposta de Sí o No (r: 'si' | 'no' | 'matis')
     const arcans = [
-        { id: 0,  num: "0",    nom: "El Foll",              emoji: "🃏", clau: "Nous inicis, llibertat, espontaneïtat.",    desc: "Representa un salt de fe. Bon moment per començar de nou sense por, confiant en l'univers." },
-        { id: 1,  num: "I",    nom: "El Mag",               emoji: "🪄", clau: "Poder, habilitat, acció.",                  desc: "Tens totes les eines necessàries per aconseguir el que et proposes. És el moment d'actuar." },
-        { id: 2,  num: "II",   nom: "La Sacerdotessa",      emoji: "🌙", clau: "Intuïció, misteri, veu interior.",          desc: "Escolta la teva intuïció i els teus pressentiments. Les respostes estan dins teu, no a fora." },
-        { id: 3,  num: "III",  nom: "L'Emperadriu",         emoji: "👑", clau: "Abundància, fertilitat, natura.",           desc: "Una energia de creixement i cura. Connecta amb la bellesa, la família i les coses bones de la vida." },
-        { id: 4,  num: "IV",   nom: "L'Emperador",          emoji: "🪑", clau: "Estructura, ordre, estabilitat.",           desc: "Cal posar ordre i establir regles clares. Representa el suport ferm i l'autoritat." },
-        { id: 5,  num: "V",    nom: "El Hierofanta",        emoji: "🏛️", clau: "Tradició, creences, guia.",                desc: "És moment de seguir els mètodes tradicionals o buscar el consell d'un expert o mestre espiritual." },
-        { id: 6,  num: "VI",   nom: "Els Enamorats",        emoji: "💞", clau: "Amor, decisions, harmonia.",               desc: "Parla de relacions profundes, però també d'una tria important que has de fer des del cor." },
-        { id: 7,  num: "VII",  nom: "El Carro",             emoji: "🐎", clau: "Determinació, control, victòria.",          desc: "Avança amb força de voluntat. Superaràs els obstacles si mantens el control de les teves emocions." },
-        { id: 8,  num: "VIII", nom: "La Força",             emoji: "🦁", clau: "Coratge, paciència, control suau.",        desc: "La veritable força no és la violència, sinó la paciència, l'amor i la comprensió per dominar les pors." },
-        { id: 9,  num: "IX",   nom: "L'Ermità",             emoji: "🏮", clau: "Introspecció, solitud, saviesa.",           desc: "Necessites un moment de pausa i solitud per reflexionar. La resposta la trobaràs en el silenci." },
-        { id: 10, num: "X",    nom: "La Roda de la Fortuna",emoji: "🎡", clau: "Canvis, cicles, destí.",                    desc: "La vida dóna voltes. Arriben canvis positius o cops de sort que canvien el rumb de la situació." },
-        { id: 11, num: "XI",   nom: "La Justícia",          emoji: "⚖️", clau: "Equitat, veritat, causa i efecte.",        desc: "El que sembres, reculls. Es farà justícia. Pren decisions basades en la lògica i la veritat." },
-        { id: 12, num: "XII",  nom: "El Penjat",            emoji: "🤸", clau: "Pausa, canvi de perspectiva.",              desc: "De vegades cal aturar-se i mirar les coses des d'un altre angle. Accepta l'espera sense forçar." },
-        { id: 13, num: "XIII", nom: "La Mort",              emoji: "💀", clau: "Finals, transformació, transició.",         desc: "No cal tenir por. És el final d'una etapa per deixar lloc a una cosa nova i millor. Tanca cicles." },
-        { id: 14, num: "XIV",  nom: "La Temprança",         emoji: "🍷", clau: "Equilibri, moderació, calma.",             desc: "Busca el punt mitjà. Cal paciència i barrejar els elements de la teva vida amb harmonia." },
-        { id: 15, num: "XV",   nom: "El Diable",            emoji: "👿", clau: "Lligams, materialisme, mals hàbits.",       desc: "Vigila amb les dependències, les obsessions o sentir-te atrapat per coses materials. Pots alliberar-te." },
-        { id: 16, num: "XVI",  nom: "La Torre",             emoji: "⚡", clau: "Canvi brusc, revelació, caiguda.",          desc: "Una estructura falsa cau de cop. Sembla dur, però neteja el camí per construir alguna cosa real." },
-        { id: 17, num: "XVII", nom: "L'Estrella",           emoji: "⭐", clau: "Esperança, fe, inspiració.",               desc: "Després de la tempesta arriba la calma. Moment de molta llum, protecció i fe en el futur." },
-        { id: 18, num: "XVIII",nom: "La Lluna",             emoji: "🐺", clau: "Il·lusions, pors ocultes, confusió.",       desc: "Les coses no són el que semblen. Compte amb les pors infundades i els enganys. Deixa que la boira s'esvaeixi." },
-        { id: 19, num: "XIX",  nom: "El Sol",               emoji: "☀️", clau: "Alegria, èxit, vitalitat.",                desc: "La millor carta! Promet èxit, salut, energia positiva i resolució feliç de qualsevol problema." },
-        { id: 20, num: "XX",   nom: "El Judici",            emoji: "📯", clau: "Renaixement, perdó, despertar.",           desc: "És moment de despertar, perdonar el passat i avançar cap a una nova vida amb consciència." },
-        { id: 21, num: "XXI",  nom: "El Món",               emoji: "🌍", clau: "Plenitud, èxit final, finalització.",       desc: "Has completat un cicle amb èxit. Sensació d'harmonia total, celebració i sentir-se al lloc adequat." }
+        { id: 0,  num: "0",    nom: "El Foll",              emoji: "🃏", clau: "Nous inicis, llibertat, espontaneïtat.",    desc: "Representa un salt de fe. Bon moment per començar de nou sense por, confiant en l'univers.",
+          amor: "Una relació o una etapa nova pot començar quan menys t'ho esperes. Deixa't sorprendre.", feina: "Bon moment per provar camins nous o aprendre alguna cosa des de zero.", benestar: "Allibera't de càrregues: avui toca lleugeresa i aire fresc.",
+          sino: { r: "si", t: "Sí — llança-t'hi, però amb els ulls ben oberts." } },
+        { id: 1,  num: "I",    nom: "El Mag",               emoji: "🪄", clau: "Poder, habilitat, acció.",                  desc: "Tens totes les eines necessàries per aconseguir el que et proposes. És el moment d'actuar.",
+          amor: "Tens a les mans tot el que cal per fer el primer pas. Fes-lo.", feina: "Les teves habilitats brillen: presenta aquella idea, fes aquella trucada.", benestar: "Energia alta i ment clara. Aprofita el dia per fer allò que posposaves.",
+          sino: { r: "si", t: "Sí — tens tot el que cal per aconseguir-ho." } },
+        { id: 2,  num: "II",   nom: "La Sacerdotessa",      emoji: "🌙", clau: "Intuïció, misteri, veu interior.",          desc: "Escolta la teva intuïció i els teus pressentiments. Les respostes estan dins teu, no a fora.",
+          amor: "No tot està dit encara: escolta el que no es diu amb paraules.", feina: "Observa i recull informació abans de moure fitxa. La paciència et donarà avantatge.", benestar: "El silenci i la calma et donaran les respostes que el soroll amaga.",
+          sino: { r: "matis", t: "Encara no es pot saber — espera una mica i ho veuràs clar." } },
+        { id: 3,  num: "III",  nom: "L'Emperadriu",         emoji: "👑", clau: "Abundància, fertilitat, natura.",           desc: "Una energia de creixement i cura. Connecta amb la bellesa, la família i les coses bones de la vida.",
+          amor: "Etapa fèrtil per a la relació: cuida i deixa't cuidar.", feina: "Els projectes creixen sols si els nodreixes amb constància. Bona època per fer-los florir.", benestar: "Envolta't de natura, de bellesa i de gent que t'estima. Et farà reviure.",
+          sino: { r: "si", t: "Sí — i a més creixerà més del que esperes." } },
+        { id: 4,  num: "IV",   nom: "L'Emperador",          emoji: "🪑", clau: "Estructura, ordre, estabilitat.",           desc: "Cal posar ordre i establir regles clares. Representa el suport ferm i l'autoritat.",
+          amor: "L'estabilitat es construeix amb compromisos clars i paraules complertes.", feina: "Posa ordre, estructura i límits: és el que ara donarà fruit.", benestar: "Una mica de rutina i disciplina et farà sentir més segur i tranquil.",
+          sino: { r: "si", t: "Sí, si actues amb cap, ordre i fermesa." } },
+        { id: 5,  num: "V",    nom: "El Hierofanta",        emoji: "🏛️", clau: "Tradició, creences, guia.",                desc: "És moment de seguir els mètodes tradicionals o buscar el consell d'un expert o mestre espiritual.",
+          amor: "Els valors compartits són el ciment de tota relació duradora.", feina: "Demana consell a algú amb més experiència: t'estalviarà camí.", benestar: "Les rutines i tradicions de sempre també són refugi. Torna-hi.",
+          sino: { r: "matis", t: "Sí, però seguint el camí provat, sense dreceres." } },
+        { id: 6,  num: "VI",   nom: "Els Enamorats",        emoji: "💞", clau: "Amor, decisions, harmonia.",               desc: "Parla de relacions profundes, però també d'una tria important que has de fer des del cor.",
+          amor: "Una tria del cor demana honestedat total, amb l'altre i amb tu.", feina: "Hauràs de triar entre dues opcions: escolta el cap, però decideix amb el cor.", benestar: "L'harmonia interior arriba quan ets fidel a tu mateix.",
+          sino: { r: "si", t: "Sí — si ho tries de tot cor." } },
+        { id: 7,  num: "VII",  nom: "El Carro",             emoji: "🐎", clau: "Determinació, control, victòria.",          desc: "Avança amb força de voluntat. Superaràs els obstacles si mantens el control de les teves emocions.",
+          amor: "Si vols que avanci, pren tu la iniciativa. No esperis assegut.", feina: "Amb determinació superaràs l'obstacle actual. Endavant, sense distreure't.", benestar: "Canalitza l'energia cap a un objectiu: tu portes les regnes.",
+          sino: { r: "si", t: "Sí — amb empenta i decisió, la victòria és teva." } },
+        { id: 8,  num: "VIII", nom: "La Força",             emoji: "🦁", clau: "Coratge, paciència, control suau.",        desc: "La veritable força no és la violència, sinó la paciència, l'amor i la comprensió per dominar les pors.",
+          amor: "La tendresa pot més que la raó. Guanya amb suavitat.", feina: "Persisteix amb calma: el problema cedirà abans que tu.", benestar: "Domina els nervis amb paciència i amor propi. Ets més fort del que et penses.",
+          sino: { r: "si", t: "Sí, amb paciència i mà esquerra." } },
+        { id: 9,  num: "IX",   nom: "L'Ermità",             emoji: "🏮", clau: "Introspecció, solitud, saviesa.",           desc: "Necessites un moment de pausa i solitud per reflexionar. La resposta la trobaràs en el silenci.",
+          amor: "Necessites temps per a tu abans de decidir res sobre els altres.", feina: "Treballa en silenci i poleix els detalls; encara no és hora de mostrar res.", benestar: "Una estona de soledat tranquil·la et farà més bé que mil consells.",
+          sino: { r: "matis", t: "Ara no — reflexiona-ho una mica més abans de respondre." } },
+        { id: 10, num: "X",    nom: "La Roda de la Fortuna",emoji: "🎡", clau: "Canvis, cicles, destí.",                    desc: "La vida dóna voltes. Arriben canvis positius o cops de sort que canvien el rumb de la situació.",
+          amor: "Els daus tornen a rodar: s'acosta un canvi d'etapa que us pot anar molt bé.", feina: "Un gir inesperat pot obrir-te portes que donaves per tancades.", benestar: "Accepta que tot canvia. Flueix amb la roda en lloc de frenar-la.",
+          sino: { r: "si", t: "Sí — la sort està girant a favor teu." } },
+        { id: 11, num: "XI",   nom: "La Justícia",          emoji: "⚖️", clau: "Equitat, veritat, causa i efecte.",        desc: "El que sembres, reculls. Es farà justícia. Pren decisions basades en la lògica i la veritat.",
+          amor: "Equilibri: dona el que reps i demana el que dones.", feina: "Papers, tractes i acords: llegeix-ho tot bé i seràs tractat amb justícia.", benestar: "Sigues honest amb tu mateix sobre el que sents. La veritat allibera.",
+          sino: { r: "matis", t: "Tindràs exactament el que sigui just que tinguis." } },
+        { id: 12, num: "XII",  nom: "El Penjat",            emoji: "🤸", clau: "Pausa, canvi de perspectiva.",              desc: "De vegades cal aturar-se i mirar les coses des d'un altre angle. Accepta l'espera sense forçar.",
+          amor: "Mira la situació des del lloc de l'altra persona: ho entendràs tot millor.", feina: "Una pausa forçada pot ser una benedicció disfressada. No forcis res ara.", benestar: "Deixa de lluitar contra el corrent: accepta, respira i espera.",
+          sino: { r: "no", t: "Ara no — espera o canvia d'enfocament." } },
+        { id: 13, num: "XIII", nom: "La Mort",              emoji: "💀", clau: "Finals, transformació, transició.",         desc: "No cal tenir por. És el final d'una etapa per deixar lloc a una cosa nova i millor. Tanca cicles.",
+          amor: "Tanca el que ja s'ha acabat per fer lloc al que ha de venir.", feina: "Un cicle es tanca; el següent serà millor si deixes anar aquest del tot.", benestar: "Deixar anar també és cuidar-se. Acomiada't del que ja no et serveix.",
+          sino: { r: "no", t: "No per aquest camí — tanca'l i comença'n un de nou." } },
+        { id: 14, num: "XIV",  nom: "La Temprança",         emoji: "🍷", clau: "Equilibri, moderació, calma.",             desc: "Busca el punt mitjà. Cal paciència i barrejar els elements de la teva vida amb harmonia.",
+          amor: "El terme mitjà és el lloc on us trobareu. Cediu una mica tots dos.", feina: "Combina prudència i acció a parts iguals. Ni córrer ni aturar-se.", benestar: "Modera els excessos i recuperaràs l'equilibri de seguida.",
+          sino: { r: "matis", t: "Sí, però a poc a poc i sense presses." } },
+        { id: 15, num: "XV",   nom: "El Diable",            emoji: "👿", clau: "Lligams, materialisme, mals hàbits.",       desc: "Vigila amb les dependències, les obsessions o sentir-te atrapat per coses materials. Pots alliberar-te.",
+          amor: "Vigila la gelosia i les dependències: estimar no és posseir.", feina: "No et deixis lligar per promeses daurades. Llegeix la lletra petita.", benestar: "Identifica l'hàbit que et té pres i afluixa'l avui un punt.",
+          sino: { r: "no", t: "No — hi ha lligams en aquest assumpte que no et convenen." } },
+        { id: 16, num: "XVI",  nom: "La Torre",             emoji: "⚡", clau: "Canvi brusc, revelació, caiguda.",          desc: "Una estructura falsa cau de cop. Sembla dur, però neteja el camí per construir alguna cosa real.",
+          amor: "Una veritat pot sacsejar-ho tot. Després, el que es reconstrueixi serà autèntic.", feina: "Si una cosa cau, és que no s'aguantava. Aprofita per construir de nou amb bons fonaments.", benestar: "Després del tro, l'aire queda més net. Deixa que passi la tempesta.",
+          sino: { r: "no", t: "No — això trontolla; millor no recolzar-s'hi." } },
+        { id: 17, num: "XVII", nom: "L'Estrella",           emoji: "⭐", clau: "Esperança, fe, inspiració.",               desc: "Després de la tempesta arriba la calma. Moment de molta llum, protecció i fe en el futur.",
+          amor: "Torna la confiança: el cel s'aclareix per a vosaltres.", feina: "Una oportunitat il·lusionant apareix a l'horitzó. Segueix-la.", benestar: "L'esperança torna. Aixeca el cap i segueix la teva estrella.",
+          sino: { r: "si", t: "Sí — confia, els astres acompanyen." } },
+        { id: 18, num: "XVIII",nom: "La Lluna",             emoji: "🐺", clau: "Il·lusions, pors ocultes, confusió.",       desc: "Les coses no són el que semblen. Compte amb les pors infundades i els enganys. Deixa que la boira s'esvaeixi.",
+          amor: "No tot és com sembla: aclareix els malentesos abans que creixin.", feina: "Hi ha informació que encara no veus. No signis ni decideixis a cegues.", benestar: "Les pors creixen de nit. Espera la llum del dia per decidir.",
+          sino: { r: "no", t: "Millor no — hi ha coses que encara no veus clares." } },
+        { id: 19, num: "XIX",  nom: "El Sol",               emoji: "☀️", clau: "Alegria, èxit, vitalitat.",                desc: "La millor carta! Promet èxit, salut, energia positiva i resolució feliç de qualsevol problema.",
+          amor: "Alegria compartida, moments lluminosos i rialles. Gaudiu-ne.", feina: "Èxit i reconeixement: brilla sense por, t'ho has guanyat.", benestar: "Vitalitat alta. Surt, mou-te i deixa que et toqui el sol.",
+          sino: { r: "si", t: "Sí, rotundament. La millor resposta possible." } },
+        { id: 20, num: "XX",   nom: "El Judici",            emoji: "📯", clau: "Renaixement, perdó, despertar.",           desc: "És moment de despertar, perdonar el passat i avançar cap a una nova vida amb consciència.",
+          amor: "Perdonar — o perdonar-se — obre la porta a una segona oportunitat.", feina: "Aquella resposta o trucada que esperaves arriba per remoure-ho tot. Per a bé.", benestar: "Fes balanç sense jutjar-te. Avui pots renéixer una mica.",
+          sino: { r: "si", t: "Sí — és una segona oportunitat de debò." } },
+        { id: 21, num: "XXI",  nom: "El Món",               emoji: "🌍", clau: "Plenitud, èxit final, finalització.",       desc: "Has completat un cicle amb èxit. Sensació d'harmonia total, celebració i sentir-se al lloc adequat.",
+          amor: "Plenitud: gaudiu del que heu construït junts. És un bon port.", feina: "Culmines una etapa amb èxit. Celebra-ho abans de començar la següent.", benestar: "Et sents al lloc on toca. Atura't un moment i gaudeix-ho.",
+          sino: { r: "si", t: "Sí — i amb final feliç." } }
     ];
 
+    const TEMES = {
+        general:  { ico: "💫", nom: "General" },
+        amor:     { ico: "❤️", nom: "Amor" },
+        feina:    { ico: "💼", nom: "Feina i diners" },
+        benestar: { ico: "🌿", nom: "Benestar" }
+    };
+
+    const TIRADES = {
+        una:  { n: 1, nom: "Tirada d'1 Carta" },
+        tres: { n: 3, nom: "Tirada de 3 Cartes" },
+        sino: { n: 1, nom: "Pregunta de Sí o No" }
+    };
+
+    let temaActual = 'general';
+    let tiradaActual = 'una';
+    let deck = [];
     let cartesSeleccionades = [];
     let cartesGirades = 0;
-    let quantitatCartes = 1;
     let nivellBarrejat = 0;
 
-    function generarHTMLCarta(carta, amagada) {
+    // ===== SO (WebAudio, amb botó de silenci persistent) =====
+    let soActiu = lsGet('tarot_so') !== 'off';
+    let audioCtx = null;
+    function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+    function ctxAudio() {
+        if (!soActiu) return null;
+        if (!audioCtx) {
+            try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch (e) { return null; }
+        }
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        return audioCtx;
+    }
+    function nota(freq, t, dur, tipus, vol) {
+        const c = ctxAudio(); if (!c) return;
+        const o = c.createOscillator(), g = c.createGain();
+        o.type = tipus || 'sine';
+        o.frequency.value = freq;
+        g.gain.setValueAtTime(0.0001, c.currentTime + t);
+        g.gain.exponentialRampToValueAtTime(vol || 0.25, c.currentTime + t + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + t + dur);
+        o.connect(g); g.connect(c.destination);
+        o.start(c.currentTime + t);
+        o.stop(c.currentTime + t + dur + 0.05);
+    }
+    function soTria()   { nota(660, 0, .08, 'triangle', .15); }
+    function soGir()    { nota(523.25, 0, .25, 'sine', .2); nota(783.99, .08, .3, 'sine', .15); }
+    function soMistic() { [392, 523.25, 659.25, 880].forEach((f, i) => nota(f, i * .14, .4, 'sine', .18)); }
+    function soBarreja(){ nota(200 + Math.random() * 120, 0, .05, 'triangle', .06); }
+    function vibra(p)   { if (navigator.vibrate) try { navigator.vibrate(p); } catch (e) {} }
+    function toggleSo() {
+        soActiu = !soActiu;
+        lsSet('tarot_so', soActiu ? 'on' : 'off');
+        document.getElementById('btn-so').textContent = soActiu ? '🔊' : '🔇';
+    }
+
+    // ===== UTILITATS =====
+    function generarHTMLCarta(carta, amagada, posicio) {
         return `
-            <div class="carta ${amagada ? '' : 'girada'}"
-                 ${amagada ? `onclick="girarCarta(this, ${carta.id})"` : ''}>
-                <div class="carta-inner">
-                    <div class="carta-front"></div>
-                    <div class="carta-back">
-                        <div class="carta-numero">${carta.num}</div>
-                        <div class="carta-emoji">${carta.emoji}</div>
-                        <h3 class="carta-titol">${carta.nom}</h3>
+            <div class="pila-carta">
+                ${posicio ? `<div class="carta-posicio">${posicio}</div>` : ''}
+                <button type="button" class="carta ${amagada ? '' : 'girada'}"
+                     ${amagada ? `onclick="girarCarta(this, ${carta.id})"` : 'disabled'}>
+                    <div class="carta-inner">
+                        <div class="carta-front"></div>
+                        <div class="carta-back">
+                            <div class="carta-numero">${carta.num}</div>
+                            <div class="carta-emoji">${carta.emoji}</div>
+                            <h3 class="carta-titol">${carta.nom}</h3>
+                        </div>
                     </div>
-                </div>
+                </button>
             </div>
         `;
     }
@@ -570,32 +917,81 @@
         window.scrollTo(0, 0);
     }
 
-    function inicialitzarDiaria() {
-        const avui = new Date();
-        // Llavor basada en any + dia de l'any per evitar col·lisions
-        const diaAny = Math.floor((avui - new Date(avui.getFullYear(), 0, 0)) / 86400000);
-        const llavor = avui.getFullYear() * 1000 + diaAny;
-        const carta = arcans[llavor % arcans.length];
-
-        document.getElementById('carta-diaria-contenidor').innerHTML = `
-            ${generarHTMLCarta(carta, false)}
-            <div class="info-carta">
-                <strong>${carta.nom}:</strong> ${carta.desc}
-            </div>
-        `;
+    function dataAvui() {
+        const d = new Date();
+        return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
     }
 
-    function iniciarTiradaPantalla() {
+    // ===== CARTA DEL DIA (es gira amb un toc i queda girada tot el dia) =====
+    function cartaDelDia() {
+        const avui = new Date();
+        const diaAny = Math.floor((avui - new Date(avui.getFullYear(), 0, 0)) / 86400000);
+        const llavor = avui.getFullYear() * 1000 + diaAny;
+        return arcans[llavor % arcans.length];
+    }
+
+    function inicialitzarDiaria() {
+        const carta = cartaDelDia();
+        let girada = false;
+        try { girada = JSON.parse(lsGet('tarot_dia') || 'null')?.data === dataAvui(); } catch (e) {}
+
+        const cont = document.getElementById('carta-diaria-contenidor');
+        if (girada) {
+            document.getElementById('inici-text').textContent = "El consell de les cartes per al dia d'avui:";
+            cont.innerHTML = generarHTMLCarta(carta, false) +
+                `<div class="info-carta"><strong>${carta.nom}:</strong> ${carta.desc}</div>`;
+        } else {
+            cont.innerHTML = `
+                <div class="pila-carta">
+                    <button type="button" class="carta" onclick="girarDiaria(this)">
+                        <div class="carta-inner">
+                            <div class="carta-front"></div>
+                            <div class="carta-back">
+                                <div class="carta-numero">${carta.num}</div>
+                                <div class="carta-emoji">${carta.emoji}</div>
+                                <h3 class="carta-titol">${carta.nom}</h3>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+                <div id="info-diaria"></div>`;
+        }
+    }
+
+    function girarDiaria(el) {
+        if (el.classList.contains('girada')) return;
+        const carta = cartaDelDia();
+        el.classList.add('girada');
+        soGir();
+        vibra(25);
+        lsSet('tarot_dia', JSON.stringify({ data: dataAvui() }));
+        document.getElementById('inici-text').textContent = "El consell de les cartes per al dia d'avui:";
+        setTimeout(() => {
+            document.getElementById('info-diaria').innerHTML =
+                `<div class="info-carta"><strong>${carta.nom}:</strong> ${carta.desc}</div>`;
+        }, 500);
+    }
+
+    // ===== FLUX DE TIRADA =====
+    function triarTema(t) {
+        temaActual = t;
+        soTria();
+        const chip = TEMES[t].ico + ' Tema: ' + TEMES[t].nom;
+        document.getElementById('chip-tema-1').textContent = chip;
+        document.getElementById('chip-tema-2').textContent = chip;
         canviarPantalla('seleccio-tirada');
     }
 
-    function prepararTirada(quantitat) {
-        quantitatCartes = quantitat;
+    function prepararTirada(tipus) {
+        tiradaActual = tipus;
         nivellBarrejat = 0;
-        const zona = document.getElementById('zona-touch');
-        zona.innerHTML = "Frega aquí per barrejar...";
-        zona.style.backgroundColor = "var(--fons-clar)";
+        soTria();
+        document.getElementById('barrejar-label').textContent = "Frega aquí per barrejar...";
+        document.getElementById('barreja-fill').style.width = '0%';
         document.getElementById('btn-continuar-tirada').disabled = true;
+        document.getElementById('barrejar-text').textContent = tipus === 'sino'
+            ? "Pensa una pregunta que es respongui amb sí o no, i frega el requadre mentre la tens al cap."
+            : "Passa el dit per dins del requadre mentre penses en allò que et preocupa.";
         canviarPantalla('barrejar');
     }
 
@@ -606,99 +1002,183 @@
     function processarBarrejat() {
         if (nivellBarrejat >= 100) return;
         nivellBarrejat = Math.min(nivellBarrejat + 2, 100);
-
-        const intensitat = Math.floor((nivellBarrejat / 100) * 200);
-        zonaTouch.style.backgroundColor = `rgb(${intensitat >> 2}, ${intensitat >> 2}, ${intensitat >> 1})`;
+        document.getElementById('barreja-fill').style.width = nivellBarrejat + '%';
+        if (nivellBarrejat % 14 === 0) soBarreja();
 
         if (nivellBarrejat >= 100) {
-            zonaTouch.innerHTML = "✨ Cartes Barrejades ✨";
+            document.getElementById('barrejar-label').textContent = "✨ Cartes Barrejades ✨";
             document.getElementById('btn-continuar-tirada').disabled = false;
+            soMistic();
+            vibra([40, 40, 80]);
         }
     }
 
+    // ===== ESCOLLIR LES CARTES D'UN VENTALL =====
+    function mostrarVentall() {
+        deck = [...arcans].sort(() => Math.random() - 0.5);
+        cartesSeleccionades = [];
+
+        const n = TIRADES[tiradaActual].n;
+        document.getElementById('escollir-text').textContent = n === 1
+            ? "Deixa't guiar per la intuïció i tria una carta."
+            : `Deixa't guiar per la intuïció i tria ${n} cartes, d'una en una.`;
+
+        document.getElementById('ventall').innerHTML = deck.map((c, i) =>
+            `<button type="button" class="carta-mini" id="mini-${i}" onclick="triarMini(${i})">✦</button>`
+        ).join('');
+        actualitzarComptador();
+        document.getElementById('btn-veure-lectura').style.display = 'none';
+        canviarPantalla('escollir');
+    }
+
+    function actualitzarComptador() {
+        const n = TIRADES[tiradaActual].n;
+        document.getElementById('comptador-tria').textContent =
+            cartesSeleccionades.length < n
+                ? `${cartesSeleccionades.length} de ${n} ${n === 1 ? 'carta triada' : 'cartes triades'}`
+                : '✨ Ja tens les teves cartes ✨';
+    }
+
+    function triarMini(i) {
+        const n = TIRADES[tiradaActual].n;
+        if (cartesSeleccionades.length >= n) return;
+        const el = document.getElementById('mini-' + i);
+        if (el.classList.contains('triada')) return;
+
+        el.classList.add('triada');
+        cartesSeleccionades.push(deck[i]);
+        soTria();
+        vibra(15);
+        actualitzarComptador();
+
+        if (cartesSeleccionades.length >= n) {
+            document.querySelectorAll('.carta-mini:not(.triada)').forEach(b => b.disabled = true);
+            document.getElementById('btn-veure-lectura').style.display = 'inline-block';
+            soMistic();
+        }
+    }
+
+    // ===== LECTURA =====
     function mostrarCartes() {
-        const deck = [...arcans].sort(() => Math.random() - 0.5);
-        cartesSeleccionades = deck.slice(0, quantitatCartes);
         cartesGirades = 0;
+        const n = TIRADES[tiradaActual].n;
+        const posicions = n === 3 ? ["El Passat", "El Present", "El Futur"] : [null];
 
         document.getElementById('taula-cartes').innerHTML =
-            cartesSeleccionades.map(c => generarHTMLCarta(c, true)).join('');
+            cartesSeleccionades.map((c, i) => generarHTMLCarta(c, true, posicions[i] || null)).join('');
         document.getElementById('resultat-lectura').innerHTML = '';
+        document.getElementById('resposta-sino').innerHTML = '';
         document.getElementById('btn-guardar').style.display = 'none';
-        document.getElementById('titol-lectura').textContent =
-            quantitatCartes === 1 ? "Tirada d'1 Carta" : "Tirada de 3 Cartes (Passat · Present · Futur)";
+        document.getElementById('btn-altra').style.display = 'none';
+        document.getElementById('toast-guardat').innerHTML = '';
+        document.getElementById('titol-lectura').textContent = TIRADES[tiradaActual].nom;
 
         canviarPantalla('lectura');
+    }
+
+    function textTema(carta) {
+        if (temaActual === 'general') return carta.desc;
+        return carta[temaActual];
     }
 
     function girarCarta(el, idCarta) {
         if (el.classList.contains('girada')) return;
         el.classList.add('girada');
         cartesGirades++;
+        soGir();
+        vibra(25);
 
         const carta = arcans.find(c => c.id === idCarta);
+        const n = TIRADES[tiradaActual].n;
         const posicions = ["El Passat", "El Present", "El Futur"];
-        const posText = quantitatCartes === 3
+        const posText = n === 3
             ? `<strong style="color:var(--color-or)">${posicions[cartesGirades - 1]}:</strong> ` : '';
+
+        if (tiradaActual === 'sino') {
+            const r = carta.sino;
+            const etiqueta = r.r === 'si' ? '✨ SÍ' : (r.r === 'no' ? '🌑 NO' : '🌗 DEPÈN');
+            document.getElementById('resposta-sino').innerHTML =
+                `<div class="sino-resposta ${r.r}">${etiqueta}<small>${r.t}</small></div>`;
+        }
 
         document.getElementById('resultat-lectura').innerHTML += `
             <div class="info-carta">
                 ${posText}<strong>${carta.nom}</strong><br>
                 <em style="color:#c4b5fd">${carta.clau}</em><br>
-                <span style="margin-top:6px;display:block">${carta.desc}</span>
+                <span style="margin-top:6px;display:block">${textTema(carta)}</span>
             </div>
         `;
 
-        if (cartesGirades === quantitatCartes) {
+        if (cartesGirades === TIRADES[tiradaActual].n) {
+            soMistic();
             document.getElementById('btn-guardar').style.display = 'inline-block';
+            document.getElementById('btn-altra').style.display = 'inline-block';
         }
     }
 
+    // ===== DIARI =====
+    function llegirDiari() {
+        try { return JSON.parse(lsGet('tarot_diari')) || []; } catch (e) { return []; }
+    }
+
     function guardarAlDiari() {
-        const historial = JSON.parse(localStorage.getItem('tarot_diari')) || [];
+        const historial = llegirDiari();
         historial.unshift({
             data: new Date().toLocaleDateString('ca-ES', {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
                 hour: '2-digit', minute: '2-digit'
             }),
-            tipus: quantitatCartes === 1 ? "1 Carta" : "3 Cartes",
-            cartes: cartesSeleccionades.map(c => c.nom)
+            tipus: TIRADES[tiradaActual].nom,
+            tema: TEMES[temaActual].ico + ' ' + TEMES[temaActual].nom,
+            resposta: tiradaActual === 'sino' ? cartesSeleccionades[0].sino.t : null,
+            cartes: cartesSeleccionades.map(c => ({ nom: c.nom, emoji: c.emoji, text: textTema(c) }))
         });
-        localStorage.setItem('tarot_diari', JSON.stringify(historial));
-        alert("Lectura guardada al Diari.");
+        lsSet('tarot_diari', JSON.stringify(historial));
         document.getElementById('btn-guardar').style.display = 'none';
+        document.getElementById('toast-guardat').innerHTML = '<div class="toast-ok">✓ Lectura guardada al diari</div>';
+        soTria();
     }
 
     function mostrarDiari() {
-        const historial = JSON.parse(localStorage.getItem('tarot_diari')) || [];
+        const historial = llegirDiari();
         const llista = document.getElementById('llista-diari');
 
         llista.innerHTML = historial.length === 0
             ? '<p class="text-gran">Encara no tens cap lectura guardada.</p>'
-            : historial.map(l => `
+            : historial.map((l, idx) => `
                 <div class="diari-item">
+                    <button type="button" class="diari-esborrar" onclick="esborrarEntrada(${idx})" title="Esborrar aquesta lectura">✕</button>
                     <h3>${l.data}</h3>
-                    <p><strong>Tirada de:</strong> ${l.tipus}</p>
-                    <p><strong>Cartes:</strong> ${l.cartes.join(' · ')}</p>
+                    <p><strong>${l.tipus}</strong> · ${l.tema || ''}</p>
+                    ${l.resposta ? `<p><strong>Resposta:</strong> ${l.resposta}</p>` : ''}
+                    ${(l.cartes || []).map(c =>
+                        typeof c === 'string'
+                            ? `<p>· ${c}</p>`
+                            : `<p>${c.emoji} <strong>${c.nom}</strong> — ${c.text}</p>`
+                    ).join('')}
                 </div>
             `).join('');
 
+        document.getElementById('btn-esborrar-tot').style.display = historial.length ? 'inline-block' : 'none';
         canviarPantalla('diari');
+    }
+
+    function esborrarEntrada(idx) {
+        const historial = llegirDiari();
+        historial.splice(idx, 1);
+        lsSet('tarot_diari', JSON.stringify(historial));
+        mostrarDiari();
     }
 
     function esborrarDiari() {
         if (confirm("Estàs segur que vols esborrar tot l'historial? Aquesta acció no es pot desfer.")) {
-            localStorage.removeItem('tarot_diari');
+            lsDel('tarot_diari');
             mostrarDiari();
         }
     }
 
-    function mostrarDiccionari() {
-        canviarPantalla('diccionari');
-    }
-
-    window.onload = () => {
-        inicialitzarDiaria();
+    // ===== DICCIONARI =====
+    function pintarDiccionari() {
         document.getElementById('grid-diccionari').innerHTML = arcans.map(carta => `
             <div class="item-diccionari">
                 <div class="carta-emoji">${carta.emoji}</div>
@@ -706,8 +1186,20 @@
                 <h3 class="carta-titol">${carta.nom}</h3>
                 <p style="margin-top:10px"><strong>Paraules clau:</strong><br>${carta.clau}</p>
                 <p style="margin-top:8px">${carta.desc}</p>
+                <div class="dicc-linies">
+                    <p>❤️ ${carta.amor}</p>
+                    <p>💼 ${carta.feina}</p>
+                    <p>🌿 ${carta.benestar}</p>
+                </div>
             </div>
         `).join('');
+    }
+
+    // ===== INICI =====
+    window.onload = () => {
+        document.getElementById('btn-so').textContent = soActiu ? '🔊' : '🔇';
+        inicialitzarDiaria();
+        pintarDiccionari();
     };
 </script>
 <footer style="font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:16px;flex-shrink:0;border-top:1px solid #1e2d45;">

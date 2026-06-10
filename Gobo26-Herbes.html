@@ -221,6 +221,27 @@
       color: white;
     }
 
+    .cercador {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 2px solid var(--s200);
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: .95rem;
+      color: var(--s800);
+      background: white;
+      outline: none;
+      margin-bottom: 8px;
+    }
+    .cercador:focus { border-color: var(--blue); }
+
+    .plant-count {
+      font-size: .78rem;
+      color: var(--s400);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
     .plant-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
@@ -597,6 +618,8 @@
       <button type="button" class="ftab" onclick="filtrar('especia', this)">Espècies</button>
     </div>
   </div>
+  <input type="search" id="cercador" class="cercador" placeholder="🔍 Cerca una planta: farigola, safrà, te de roca..." oninput="renderPlants()">
+  <p class="plant-count" id="plantCount"></p>
   <div class="plant-grid" id="plantGrid"></div>
 </section>
 
@@ -857,6 +880,206 @@ var PLANTES = [
     ritual: ['Posa unes llavors de comí a la mà i tanca el puny.', 'Pensa en alguna cosa o persona que vols "retenir" o cuidar.', 'Obre la mà i observa les llavors: el que és teu romandrà.'],
     oracleMsg: 'Allò que realment importa no s\'escapa: roman si el cuides.',
     oracleSug: 'Pensa en una relació o valor important que potser no estàs cuidant prou. Avui és un bon dia per dedicar-hi una mica d\'atenció.'
+  },
+  {
+    id: 'sajolida', nom: 'Sajolida', nomCientific: 'Satureja montana',
+    familia: 'Lamiaceae', categoria: 'aromatica', emoji: '🌿',
+    on: 'Mates baixes en pedregars, marges i garrigues assolellades de tota la Mediterrània. Molt resistent a la secada i fàcil de tenir en un test al sol.',
+    info: 'Aroma picant, entre la farigola i la menta. Conté carvacrol i timol. Tradicionalment s\'ha usat com a digestiva i estimulant suau. És l\'herba clàssica per amanir les olives trencades i acompanya molt bé els llegums i la carn a la brasa.',
+    tradicio: 'Coneguda popularment com l\'herba de les olives. Els romans la dedicaven als sàtirs i la consideraven una herba que despertava l\'alegria de viure. A pagès es deia que un brot de sajolida a taula animava la conversa i feia venir gana.',
+    ritual: ['Posa unes fulles de sajolida al palmell de la mà.', 'Frega-les suaument i olora l\'aroma picant.', 'Pensa en una cosa que et faci venir ganes de començar el dia.'],
+    oracleMsg: 'Una mica de pebre fa la vida més saborosa.',
+    oracleSug: 'Trenca avui la rutina amb un petit detall diferent: un camí nou, un plat nou, una salutació inesperada.'
+  },
+  {
+    id: 'hisop', nom: 'Hisop', nomCientific: 'Hyssopus officinalis',
+    familia: 'Lamiaceae', categoria: 'aromatica', emoji: '💠',
+    on: 'Mata aromàtica de flors blaves que creix en terrenys calcaris i assolellats de les muntanyes mediterrànies. També es cultiva en jardins de plantes remeieres.',
+    info: 'Herba amarga i aromàtica amb cineol i pinocamfona. Tradicionalment s\'ha associat al benestar respiratori i digestiu. S\'usa amb moderació en infusions, licors d\'herbes i per aromatitzar rostits. Forma part de la recepta de molts licors monàstics.',
+    tradicio: 'Una de les herbes sagrades de l\'Antiguitat: apareix a la Bíblia com a planta purificadora ("Purifica\'m amb hisop i quedaré net"). A l\'Edat Mitjana s\'escampava pel terra de les esglésies i les cases per perfumar-les i protegir-les.',
+    ritual: ['Observa unes flors blaves d\'hisop, o imagina-les.', 'Respira fondo tres vegades, com si netegessis l\'aire de dins.', 'Deixa marxar un pensament que ja no et serveix.'],
+    oracleMsg: 'Avui és bon dia per fer neteja, per dins i per fora.',
+    oracleSug: 'Tria un racó petit — un calaix, la taula, la ment — i deixa\'l clar i endreçat. La lleugeresa vindrà sola.'
+  },
+  {
+    id: 'donzell', nom: 'Donzell', nomCientific: 'Artemisia absinthium',
+    familia: 'Asteraceae', categoria: 'aromatica', emoji: '🌫️',
+    on: 'Mata de fulles platejades i aroma intensa que creix en marges, runams i terres seques. Es reconeix pel color gris verdós i el tacte sedós de les fulles.',
+    info: 'Una de les herbes amargues per excel·lència. Conté absintina i tujona. Tradicionalment s\'ha usat en quantitats molt petites com a aperitiu i digestiu, i és la base del vermut (de l\'alemany "Wermut", donzell). Cal usar-lo amb molta moderació: a dosis altes la tujona és tòxica.',
+    tradicio: 'Els egipcis i els grecs ja el consideraven remei i amulet. A Catalunya es penjava un brot de donzell a la porta per Sant Joan per allunyar el mal. La dita popular "amarg com el donzell" recorda el mal glop que després et deixa millor.',
+    ritual: ['Pensa en una cosa amarga que t\'hagi passat darrerament.', 'Imagina que es fa petita, com una gota dins d\'un licor d\'herbes.', 'Recorda: del més amarg, sovint, en surt remei.'],
+    oracleMsg: 'No tot el que és amarg és dolent: de vegades és medicina.',
+    oracleSug: 'Aquella conversa difícil o tasca incòmoda que evites pot ser justament el que et farà sentir millor. Fes-la avui.'
+  },
+  {
+    id: 'eucaliptus', nom: 'Eucaliptus', nomCientific: 'Eucalyptus globulus',
+    familia: 'Myrtaceae', categoria: 'aromatica', emoji: '🌳',
+    on: 'Arbre originari d\'Austràlia plantat arreu de la Mediterrània des del segle XIX. Es troba en boscos de repoblació i parcs. Les fulles seques es venen a herbolaris i farmàcies.',
+    info: 'Les fulles són riques en cineol (eucaliptol), molt estudiat per al benestar respiratori. Els bafs d\'eucaliptus són un dels remeis casolans més coneguts per al refredat. També s\'usa en caramels, ungüents i olis per a friccions.',
+    tradicio: 'Els aborígens australians l\'anomenaven "l\'arbre de la febre" i l\'usaven per a tota mena de mals. A Europa es va plantar massivament per assecar aiguamolls. A moltes cases, fer bafs d\'eucaliptus és un ritual d\'hivern que passa de generació en generació.',
+    ritual: ['Si tens fulles d\'eucaliptus, posa-les en aigua ben calenta.', 'Respira el vapor a poc a poc, amb una tovallola al cap.', 'Amb cada respiració, imagina que l\'aire t\'omple d\'energia neta.'],
+    oracleMsg: 'Respira fondo: l\'aire net ho arregla gairebé tot.',
+    oracleSug: 'Surt una estona a respirar aire fresc, encara que faci fred. Deu minuts de passeig poden canviar el to de tot el dia.'
+  },
+  {
+    id: 'tederoca', nom: 'Te de roca', nomCientific: 'Jasonia glutinosa',
+    familia: 'Asteraceae', categoria: 'calmant', emoji: '🪨',
+    on: 'Petita mata de flors grogues que creix a les escletxes de les roques calcàries, als cingles i parets de mitja muntanya. Molt apreciada a Catalunya, l\'Aragó i el País Valencià.',
+    info: 'Una de les infusions més estimades de la tradició dels Països Catalans. Tradicionalment s\'ha usat per a les digestions pesades i el mal de panxa, i com a tònic suau. Té un aroma càlid i balsàmic inconfusible. Avui se\'n recomana una collita moderada: en alguns llocs és una espècie protegida.',
+    tradicio: 'El "te" de casa nostra: a moltes famílies de muntanya era la infusió de després de dinar, collida pel pare o l\'àvia en sortides al cingle. Regalar un pomet de te de roca era un gest d\'estima. Es deia que qui prenia te de roca "no necessitava metge per a la panxa".',
+    ritual: ['Prepara una infusió calenta, si pot ser de te de roca.', 'Beu-la a glops petits, sense pressa, com es feia abans.', 'Pensa en una persona gran que t\'hagi ensenyat alguna cosa.'],
+    oracleMsg: 'La saviesa de la terra és a tocar: només cal collir-la.',
+    oracleSug: 'Truca o visita avui una persona gran de la teva vida. Les seves històries són un tresor que no es pot comprar.'
+  },
+  {
+    id: 'marialluisa', nom: 'Marialluïsa', nomCientific: 'Aloysia citrodora',
+    familia: 'Verbenaceae', categoria: 'calmant', emoji: '🍋',
+    on: 'Arbust originari de Sud-amèrica molt cultivat als horts i jardins mediterranis. Les fulles allargades desprenen una intensa olor de llimona quan es freguen.',
+    info: 'La reina de les infusions de sobretaula a Catalunya. Conté citral i limonè. Tradicionalment s\'associa a la digestió tranquil·la i al benestar després dels àpats. La infusió és deliciosa sola o amb una mica de mel, i les fulles seques conserven l\'aroma molt de temps.',
+    tradicio: 'Va arribar d\'Amèrica al segle XVIII i es va batejar en honor de Maria Lluïsa de Parma. No hi havia hort d\'àvia sense la seva marialluïsa: se\'n collien fulles per a la infusió de després de dinar i per perfumar els armaris. És l\'olor de les sobretaules llargues d\'estiu.',
+    ritual: ['Frega una fulla de marialluïsa (o una pell de llimona) entre els dits.', 'Tanca els ulls i respira l\'aroma cítrica.', 'Recorda una sobretaula feliç amb gent estimada.'],
+    oracleMsg: 'Les millors converses arriben quan ningú té pressa.',
+    oracleSug: 'Avui, allarga una sobretaula o un cafè amb algú. No miris el rellotge: mira la persona.'
+  },
+  {
+    id: 'valeriana', nom: 'Valeriana', nomCientific: 'Valeriana officinalis',
+    familia: 'Caprifoliaceae', categoria: 'calmant', emoji: '💤',
+    on: 'Herba alta de flors rosades que creix en llocs humits i frescos d\'Europa. L\'arrel, que és la part que s\'usa, té una olor forta i característica. Es ven a herbolaris i farmàcies.',
+    info: 'Una de les plantes més usades del món per afavorir el son i la relaxació. Conté àcids valerènics, estudiats pel seu efecte sobre el descans. Sol prendre\'s en infusió o extracte al vespre. Curiositat: l\'olor de l\'arrel atrau els gats com si fos herba gatera.',
+    tradicio: 'Els metges grecs ja la receptaven per "calmar els ànims". A l\'Edat Mitjana se l\'anomenava "guareix-ho-tot". Durant les guerres mundials es va usar per calmar els nervis dels bombardejos. La saviesa popular diu que la valeriana "adorm fins i tot les penes".',
+    ritual: ['Prepara\'t per anar a dormir una mica abans que de costum.', 'Apaga les pantalles i fes tres respiracions lentes.', 'Digues mentalment: "El dia ja està fet; ara toca descansar."'],
+    oracleMsg: 'Dormir bé és la primera medicina.',
+    oracleSug: 'Avui ves a dormir mitja hora abans. Deixa el mòbil lluny del llit i deixa que el cos faci la seva feina.'
+  },
+  {
+    id: 'passiflora', nom: 'Passiflora', nomCientific: 'Passiflora incarnata',
+    familia: 'Passifloraceae', categoria: 'calmant', emoji: '🪷',
+    on: 'Enfiladissa de flors espectaculars originària d\'Amèrica, molt cultivada en tanques i pèrgoles mediterrànies. Les parts aèries s\'usen seques en infusió.',
+    info: 'Coneguda com a flor de la passió. Conté flavonoides com la vitexina, estudiats pels seus efectes relaxants suaus. En fitoteràpia tradicional s\'usa per a la inquietud lleu i per afavorir el son, sovint combinada amb valeriana o melissa.',
+    tradicio: 'Els missioners van veure en la seva flor els símbols de la passió de Crist: la corona d\'espines, els claus, les ferides — d\'aquí el nom. A Amèrica era planta de remei dels pobles indígenes molt abans. Es diu que només mirar fixament una flor de passiflora ja calma.',
+    ritual: ['Busca la imatge d\'una flor de passiflora.', 'Observa-la una estona: el cercle, els filaments, els colors.', 'Deixa que la mirada reposi i la ment s\'aturi un moment.'],
+    oracleMsg: 'La calma també es cultiva, com una enfiladissa: a poc a poc.',
+    oracleSug: 'Dedica cinc minuts a no fer absolutament res. Mirar per la finestra també és cuidar-se.'
+  },
+  {
+    id: 'rosella', nom: 'Rosella', nomCientific: 'Papaver rhoeas',
+    familia: 'Papaveraceae', categoria: 'calmant', emoji: '🌺',
+    on: 'La flor vermella dels camps de cereals i dels marges de tota la Mediterrània, anunciadora de la primavera. Els pètals s\'assequen per a infusions suaus.',
+    info: 'Els pètals de rosella contenen mucílags i pigments suaus. La tradició herbolària els ha usat per a la tos lleu i per afavorir el son dels nens i la gent gran, en infusions molt suaus. No s\'ha de confondre amb el cascall: la rosella és una flor humil, usada amb seny des de sempre.',
+    tradicio: 'Als països anglosaxons és la flor de la memòria, que recorda els caiguts de les guerres. A pagès, els nens jugaven a endevinar si el poncell seria vermell o blanc abans d\'obrir-lo. Es deia que somiar roselles anunciava bones notícies senzilles.',
+    ritual: ['Recorda un camp de roselles que hagis vist alguna vegada.', 'Imagina el vermell viu sobre el verd del blat.', 'Pensa: les coses més boniques sovint són les més senzilles.'],
+    oracleMsg: 'La bellesa senzilla és la que dura més.',
+    oracleSug: 'Fixa\'t avui en una cosa bonica i gratuïta: un núvol, una flor de vorera, una llum de tarda. Atura-t\'hi un moment.'
+  },
+  {
+    id: 'sauc', nom: 'Saüc', nomCientific: 'Sambucus nigra',
+    familia: 'Adoxaceae', categoria: 'calmant', emoji: '🤍',
+    on: 'Arbust gran de flors blanques en plats i baies negres, molt comú a les vores de rius, torrents i camins frescos. Floreix pel maig i el juny.',
+    info: 'Les flors de saüc s\'usen tradicionalment en infusió per als refredats i per fer suar, i també per fer xarops i l\'"aigua de saüc". Contenen flavonoides i mucílags. Les baies, sempre ben cuites, donen melmelades i xarops foscos rics en antocianines.',
+    tradicio: 'L\'arbre més màgic de la tradició europea: es deia que el protegia una "Mare Saüquera" i que calia demanar-li permís abans de tallar-ne una branca. A Catalunya les flors es collien per Sant Joan i es guardaven per a tot l\'any. "On hi ha un saüc, hi ha la farmàcia del pagès."',
+    ritual: ['Si trobes un saüc florit, atura-t\'hi un moment.', 'Olora els plats de flors blanques sense collir-les totes.', 'Dona les gràcies en veu baixa, com feien els antics.'],
+    oracleMsg: 'Qui té cura dels altres, sempre té algú que en té d\'ell.',
+    oracleSug: 'Ofereix avui una ajuda petita a algú sense que te la demani. El saüc dona ombra, flors i fruit sense demanar res.'
+  },
+  {
+    id: 'roser', nom: 'Roser silvestre', nomCientific: 'Rosa canina',
+    familia: 'Rosaceae', categoria: 'cuina', emoji: '🌹',
+    on: 'Bardissa espinosa de roses senzilles rosades, molt comuna als marges i boscos clars. A la tardor fa els cinorròdons o "tapaculs", els fruits vermells.',
+    info: 'Els fruits del roser silvestre són una de les fonts naturals més riques en vitamina C. Tradicionalment se n\'han fet melmelades, xarops i infusions per a l\'hivern. La confitura de tapaculs és una recepta antiga de muntanya que encara es fa al Pirineu.',
+    tradicio: 'El nom popular "tapaculs" ve de l\'efecte astringent dels fruits, i els nens de pagès feien "pica-pica" amb els pèls de dins. Es deia que un roser silvestre prop de casa protegia la llar. La rosa de cinc pètals era símbol de discreció: parlar "sub rosa" volia dir en secret.',
+    ritual: ['Pensa en un petit secret bonic que guardes.', 'Somriu per dins: és teu i de ningú més.', 'Els secrets dolços també alimenten.'],
+    oracleMsg: 'Sota les espines hi sol haver el fruit més valuós.',
+    oracleSug: 'Aquella persona o situació espinosa potser amaga alguna cosa bona. Mira-la avui amb uns altres ulls.'
+  },
+  {
+    id: 'estrago', nom: 'Estragó', nomCientific: 'Artemisia dracunculus',
+    familia: 'Asteraceae', categoria: 'cuina', emoji: '🌿',
+    on: 'Herba de cuina originària de l\'Àsia central, cultivada als horts europeus. Les fulles fines i allargades tenen un aroma anisat i delicat.',
+    info: 'L\'herba reina de la cuina francesa: imprescindible a la salsa bearnesa i amb el pollastre. Conté estragol, d\'aroma anisada. Tradicionalment s\'ha considerat digestiu i obre-gana. Macerat amb vinagre fa el famós vinagre d\'estragó.',
+    tradicio: 'El nom científic "dracunculus" vol dir "dragonet": a l\'Edat Mitjana es creia que curava les mossegades de serps i bèsties verinoses, per la forma serpentina de les arrels. Els cuiners francesos en diuen "l\'herba dels reis".',
+    ritual: ['Olora estragó o una altra herba anisada.', 'Pensa en un plat que et faci especial il·lusió.', 'Proposa\'t cuinar-lo aviat per a algú que estimes.'],
+    oracleMsg: 'Cuinar per a algú és una manera de dir t\'estimo.',
+    oracleSug: 'Prepara avui (o planifica) un plat especial per compartir. La cuina feta amb calma alimenta dues vegades.'
+  },
+  {
+    id: 'cibulet', nom: 'Cibulet', nomCientific: 'Allium schoenoprasum',
+    familia: 'Amaryllidaceae', categoria: 'cuina', emoji: '🧅',
+    on: 'El més fi de la família de les cebes. Creix silvestre a les muntanyes humides d\'Europa i es cultiva facilíssimament en un test: es talla i torna a créixer.',
+    info: 'Les fulles tubulars picades donen un toc suau de ceba a truites, amanides, formatges i salses, sempre en cru. Ric en vitamina K i compostos sofrats suaus com tots els alls. És de les herbes més agraïdes per tenir a la cuina: sempre rebrota.',
+    tradicio: 'Els romans creien que menjar cibulet curava les cremades del sol. A l\'Europa central es penjaven manats de cibulet a les bigues per allunyar el mal d\'ull. Diuen que regalar un test de cibulet porta amistat duradora, perquè sempre torna a créixer.',
+    ritual: ['Si tens cibulet o una planta de cuina, talla\'n una mica.', 'Observa com la planta seguirà creixent després del tall.', 'Pensa: les coses bones, compartides, no s\'acaben.'],
+    oracleMsg: 'El que es comparteix amb mesura, sempre rebrota.',
+    oracleSug: 'Comparteix avui alguna cosa teva: temps, un consell, mitja xocolata. No minva: multiplica.'
+  },
+  {
+    id: 'all', nom: 'All', nomCientific: 'Allium sativum',
+    familia: 'Amaryllidaceae', categoria: 'cuina', emoji: '🧄',
+    on: 'Cultivat des de fa més de 5.000 anys, és a totes les cuines i horts del món. A la Mediterrània és la base de la picada, l\'allioli i mil sofregits.',
+    info: 'Conté al·licina, un dels compostos vegetals més estudiats, relacionat tradicionalment amb la salut del cor i les defenses. Cru és més potent; cuit, més suau i dolç. L\'allioli — all i oli — és una de les salses més antigues de la Mediterrània.',
+    tradicio: 'Els egipcis donaven all als constructors de piràmides perquè tinguessin força. Penjar alls a la cuina protegia la casa del mal (i dels vampirs, segons la llegenda). La dita catalana ho resumeix: "All i bon vi, i deixa\'t de metges pel camí."',
+    ritual: ['Pela un gra d\'all a poc a poc, capa a capa.', 'Observa com el que és valuós ve ben embolcallat.', 'Pensa en una qualitat teva que no es veu a primera vista.'],
+    oracleMsg: 'La força de debò sovint no fa olor de perfum.',
+    oracleSug: 'Valora avui una cosa teva poc vistosa però essencial: la constància, la paciència, la memòria. És el teu all de cada dia.'
+  },
+  {
+    id: 'safra', nom: 'Safrà', nomCientific: 'Crocus sativus',
+    familia: 'Iridaceae', categoria: 'especia', emoji: '🌷',
+    on: 'Espècia obtinguda dels tres estigmes vermells d\'una flor lila que s\'obre a la tardor. Es cultiva des d\'antic a la Manxa i l\'Aragó, i antigament també a Catalunya.',
+    info: 'L\'espècia més cara del món: calen unes 150.000 flors collides a mà per fer-ne un quilo. Conté crocina i safranal, que donen el color daurat i l\'aroma. Imprescindible a la paella i els arrossos. Amb uns quants brins n\'hi ha prou per perfumar tot el plat.',
+    tradicio: 'A l\'Edat Mitjana el safrà era moneda de canvi i falsificar-lo es castigava duríssimament; els mercaders catalans en van fer un gran comerç. Es deia que el safrà alegrava el cor: "qui menja safrà, riu sense voler".',
+    ritual: ['Imagina el color daurat del safrà tenyint l\'aigua.', 'Pensa en una cosa petita que dona color a la teva vida.', 'Recorda: una mica n\'hi ha prou; no calen grans quantitats de res.'],
+    oracleMsg: 'Poca cosa, ben triada, val més que molta de qualsevol.',
+    oracleSug: 'Avui tria qualitat i no quantitat: en el menjar, en les converses, en el que mires. Pocs brins, però bons.'
+  },
+  {
+    id: 'pebrenegre', nom: 'Pebre negre', nomCientific: 'Piper nigrum',
+    familia: 'Piperaceae', categoria: 'especia', emoji: '⚫',
+    on: 'Baia d\'una liana tropical de l\'Índia, assecada al sol. És l\'espècia més comerciada del món i és a tots els molinets de totes les cuines.',
+    info: 'Conté piperina, responsable de la picantor i estudiada perquè millora l\'absorció d\'altres compostos (com la curcumina de la cúrcuma). Acabat de moldre té molt més aroma. Negre, blanc o verd: són la mateixa baia en moments i preparacions diferents.',
+    tradicio: 'Durant segles va valer literalment el seu pes en or: amb pebre es pagaven rendes, dots i rescats, i els romans en guardaven tones als magatzems. La recerca del pebre i les espècies va empènyer els grans viatges marítims que van canviar el món.',
+    ritual: ['Mol una mica de pebre i olora\'l de seguida.', 'Nota com desperta el nas i els sentits.', 'Pensa en una cosa que t\'hagi encuriosit aquesta setmana.'],
+    oracleMsg: 'La curiositat és l\'espècia que ho desperta tot.',
+    oracleSug: 'Segueix avui una curiositat petita: busca aquella paraula, mira aquell documental, pregunta-ho a qui en sap.'
+  },
+  {
+    id: 'gingebre', nom: 'Gingebre', nomCientific: 'Zingiber officinale',
+    familia: 'Zingiberaceae', categoria: 'especia', emoji: '🫚',
+    on: 'Rizoma d\'una planta tropical asiàtica. Es troba fresc a totes les fruiteries i sec en pols als supermercats. Es conserva setmanes a la nevera.',
+    info: 'Conté gingerols, molt estudiats per al confort digestiu i contra el mareig i les nàusees. La infusió de gingebre amb llimona i mel és un clàssic de l\'hivern. Fresc és cítric i picant; sec, més càlid i dolç, perfecte per a galetes i pa de pessic.',
+    tradicio: 'Confuci ja no menjava cap àpat sense gingebre. A l\'Anglaterra medieval un pa de gingebre era un regal de fira preuat com una joia. Els mariners en mastegaven per no marejar-se: la tradició tenia raó segles abans que la ciència ho comprovés.',
+    ritual: ['Prepara una infusió de gingebre fresc amb mel, si en tens.', 'Nota l\'escalfor que puja des de la panxa.', 'Pensa: una mica de foc intern ajuda a posar-se en marxa.'],
+    oracleMsg: 'Una espurna de coratge escalfa tot el dia.',
+    oracleSug: 'Fes avui aquella cosa que demana una empenta: la trucada, el pas, la pregunta. Després et sentiràs més lleuger.'
+  },
+  {
+    id: 'curcuma', nom: 'Cúrcuma', nomCientific: 'Curcuma longa',
+    familia: 'Zingiberaceae', categoria: 'especia', emoji: '🟡',
+    on: 'Rizoma cosí del gingebre, de color taronja intens, originari de l\'Índia. Es ven en pols a tots els supermercats i és la base del curri i de l\'arròs groc.',
+    info: 'Conté curcumina, un dels compostos vegetals més investigats pel seu paper antioxidant. S\'absorbeix millor amb una mica de pebre negre i greix. Tenyeix de groc daurat arrossos, sopes i la "llet daurada" — i també la roba, així que compte!',
+    tradicio: 'A l\'Índia és sagrada: tenyeix les túniques dels monjos i s\'usa en cerimònies de boda, on es pinta la pell dels nuvis per atraure la prosperitat. La llet daurada amb cúrcuma és el remei de les àvies índies, ara famós a tot el món.',
+    ritual: ['Imagina el color daurat de la cúrcuma.', 'Pensa en tres coses "d\'or" que ja tens: salut, gent, sostre...', 'El daurat de la vida sovint ja és a la cuina de casa.'],
+    oracleMsg: 'Ja tens més or del que et penses.',
+    oracleSug: 'Fes inventari mental del que tens i funciona, en lloc del que falta. La riquesa també és una manera de mirar.'
+  },
+  {
+    id: 'noumoscada', nom: 'Nou moscada', nomCientific: 'Myristica fragrans',
+    familia: 'Myristicaceae', categoria: 'especia', emoji: '🌰',
+    on: 'Llavor d\'un arbre tropical de les illes Banda (Indonèsia). Es compra sencera i es ratlla al moment sobre el plat: beixamel, croquetes, canelons i purés.',
+    info: 'Conté miristicina i aromes càlides. És el toc secret de la beixamel dels canelons de festa major. Amb molt poca n\'hi ha prou, i ratllada al moment perfuma molt més que en pols. A grans dosis no és segura: a la cuina, sempre un polsim i prou.',
+    tradicio: 'Per controlar les illes de la nou moscada es van lliurar guerres: els holandesos van cedir Manhattan als anglesos a canvi, entre altres coses, de l\'illa de Run, plena de nou moscada. Els antics deien que dur una nou moscada a la butxaca portava sort.',
+    ritual: ['Ratlla (o imagina) una mica de nou moscada.', 'Olora l\'aroma càlida que recorda els dies de festa.', 'Pensa en un plat de festa familiar que t\'estimes.'],
+    oracleMsg: 'Els tocs petits fan les grans ocasions.',
+    oracleSug: 'Converteix un moment normal d\'avui en una mica de festa: para bé la taula, posa música, encén una espelma.'
+  },
+  {
+    id: 'ginebro', nom: 'Ginebró', nomCientific: 'Juniperus communis',
+    familia: 'Cupressaceae', categoria: 'especia', emoji: '🔵',
+    on: 'Arbust punxós de muntanya i garriga. Els gàlbuls ("baies") triguen dos anys a madurar i passen de verds a blau fosc. Es venen secs com a espècia.',
+    info: 'Les baies de ginebró aromatitzen la ginebra (que en pren el nom), el xucrut, els rostits de caça i els escabetxos. Contenen pinens i terpens balsàmics. La tradició herbolària les ha usat com a digestives i depuratives, sempre amb moderació.',
+    tradicio: 'Arbre protector per excel·lència: es cremava ginebró per fumigar les cases en temps de pesta i es penjava una branca a la porta dels estables. Al Pirineu es deia que sota un ginebró no hi cau mai un llamp, i el seu fum acompanyava els pernils al fumador.',
+    ritual: ['Imagina l\'olor balsàmica d\'un bosc de muntanya.', 'Respira fondo tres vegades, com si hi fossis.', 'Sent que tens un lloc segur dins teu, com sota el ginebró.'],
+    oracleMsg: 'El teu refugi el portes a dins: cap llamp no hi arriba.',
+    oracleSug: 'Identifica què et fa sentir segur — un lloc, una persona, un costum — i fes-li una visita avui, ni que sigui mental.'
   }
 ];
 
@@ -880,7 +1103,15 @@ var SAVIESES = [
   '"La camamilla de les àvies val més que moltes medicines."',
   '"La calèndula és el sol del jardí."',
   '"Un ramet de lavanda sota el coixí, i el malestar queda fora."',
-  '"Qui té menta a casa no li manquen les forces."'
+  '"Qui té menta a casa no li manquen les forces."',
+  '"Te de roca després de dinar, i el metge pot esperar."',
+  '"La marialluïsa fa olor de sobretaula feliç."',
+  '"On hi ha un saüc, hi ha la farmàcia del pagès."',
+  '"All i bon vi, i deixa\'t de metges pel camí."',
+  '"Valeriana al vespre, son de pedra."',
+  '"Qui menja safrà, riu sense voler."',
+  '"La sajolida fa ballar les olives."',
+  '"Sota el ginebró no hi cau el llamp."'
 ];
 
 // ─────────────────────────────────────────────
@@ -938,23 +1169,41 @@ function moveSaviesa(dir) {
 // ─────────────────────────────────────────────
 // CATÀLEG
 // ─────────────────────────────────────────────
-function renderPlants(filter) {
-  var llista = filter === 'all' ? PLANTES : PLANTES.filter(function(p) { return p.categoria === filter; });
+var catActual = 'all';
 
-  document.getElementById('plantGrid').innerHTML = llista.map(function(p) {
-    return '<div class="plant-card cat-' + p.categoria + '" onclick="obrirModal(\'' + p.id + '\')">' +
-      '<div class="pc-icon"><span>' + p.emoji + '</span></div>' +
-      '<div class="plant-name">' + p.nom + '</div>' +
-      '<div class="plant-sci">' + p.nomCientific + '</div>' +
-      '<span class="cat-badge">' + (CAT_LABELS[p.categoria] || p.categoria) + '</span>' +
-      '</div>';
-  }).join('');
+function normalitzar(s) {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+function renderPlants() {
+  var text = normalitzar(document.getElementById('cercador').value || '');
+  var llista = PLANTES.filter(function(p) {
+    var okCat = catActual === 'all' || p.categoria === catActual;
+    var okText = !text || normalitzar(p.nom + ' ' + p.nomCientific).indexOf(text) !== -1;
+    return okCat && okText;
+  });
+
+  document.getElementById('plantCount').textContent = llista.length === PLANTES.length
+    ? PLANTES.length + ' plantes a la guia'
+    : llista.length + ' de ' + PLANTES.length + ' plantes';
+
+  document.getElementById('plantGrid').innerHTML = llista.length === 0
+    ? '<p style="grid-column:1/-1;color:var(--s400);font-size:.9rem;">Cap planta no coincideix amb la cerca.</p>'
+    : llista.map(function(p) {
+        return '<div class="plant-card cat-' + p.categoria + '" onclick="obrirModal(\'' + p.id + '\')">' +
+          '<div class="pc-icon"><span>' + p.emoji + '</span></div>' +
+          '<div class="plant-name">' + p.nom + '</div>' +
+          '<div class="plant-sci">' + p.nomCientific + '</div>' +
+          '<span class="cat-badge">' + (CAT_LABELS[p.categoria] || p.categoria) + '</span>' +
+          '</div>';
+      }).join('');
 }
 
 function filtrar(cat, btn) {
   document.querySelectorAll('.ftab').forEach(function(t) { t.classList.remove('active'); });
   btn.classList.add('active');
-  renderPlants(cat);
+  catActual = cat;
+  renderPlants();
 }
 
 // ─────────────────────────────────────────────
@@ -1017,7 +1266,7 @@ function tancarModal(event) {
 // ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   initSaviesa();
-  renderPlants('all');
+  renderPlants();
 });
 </script>
 </body>
