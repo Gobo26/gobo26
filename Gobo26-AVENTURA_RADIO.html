@@ -360,8 +360,42 @@ header h1 {
 .btn-restart:hover { background: rgba(139,0,16,0.12); }
 
 footer { text-align: center; padding: 12px; font-size: 11px; color: rgba(240,230,208,0.15); font-family: 'Playfair Display', serif; letter-spacing: 1px; }
+
+/* ── Millores visuals (jun 2026) ── */
+.scene-art { position: relative; }
+.scene-art::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 44px 10px rgba(0,0,0,.42);
+}
+.scene-art svg { animation: artIn 1.1s ease both; }
+@keyframes artIn { from { opacity: 0; transform: scale(1.045); } to { opacity: 1; transform: scale(1); } }
+.scene-text > p:first-of-type::first-letter {
+  font-family: 'Playfair Display', serif;
+  float: left; font-size: 44px; line-height: .88;
+  padding: 3px 8px 0 0; font-weight: 700;
+  color: #dfa030;
+}
+.scene-title { position: relative; padding-bottom: 10px; }
+.scene-title::after {
+  content: ''; position: absolute; left: 0; bottom: 0;
+  width: 68px; height: 2px;
+  background: linear-gradient(90deg, #dfa030, transparent);
+}
+.choice-btn { position: relative; overflow: hidden; }
+.choice-btn::after {
+  content: ''; position: absolute; top: 0; left: -80%;
+  width: 50%; height: 100%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.07), transparent);
+  transition: left .5s ease;
+}
+.choice-btn:hover::after { left: 135%; }
+.scene-wrap:has(.ending-badge.good) { box-shadow: 0 0 60px -14px rgba(223,160,48,.30); }
+.scene-wrap:has(.ending-badge.bad) { box-shadow: 0 0 60px -14px rgba(192,24,40,.35); }
+.scene-wrap:has(.ending-badge.neutral) { box-shadow: 0 0 50px -16px rgba(255,255,255,.14); }
+
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -563,7 +597,7 @@ const CLUES = {
   joan_primer: {
     icon: '🎚️',
     title: 'El tècnic que sap',
-    body: 'En Joan Casals porta 22 anys a l\'estudi. Era aquí aquella nit. Quan pronuncies el nom de la Neus Roca, les seves mans s\'aturen.',
+    body: 'En Joan Casals porta 22 anys a l\'estudi. Era aquí la nit que la Neus Roca va caure de la terrassa. Quan li preguntes pel guió, les mans se li aturen.',
   },
   joan_testimoni: {
     icon: '👥',
@@ -603,7 +637,7 @@ const NODES = {
     title: 'La llum vermella',
     art: 'estudi',
     text: `<p>L'estudi de ràdio té l'olor de sempre: cigarrets freds, pols de micròfon i el lleuger coure de l'electricitat a l'aire. La llum vermella d'<em>EN DIRECTE</em> és apagada. Per quinze minuts més.</p>
-    <p>El guió de la nit — <strong>"El Cas de la Finestra Oberta"</strong> — ha arribat aquest migdia, molt tard per als estàndards d'en Ricard Falguera. Li fulleges les pàgines de peu davant el tauler de so. Coses habituals: un detectiu, una víctima, una nit tempestuosa.</p>
+    <p>El guió de la nit — <strong>"El Cas de la Finestra Oberta"</strong> — ha arribat aquesta tarda, molt tard per als estàndards d'en Ricard Falguera. En fulleges les pàgines de peu davant el tauler de so. Coses habituals: un detectiu, una víctima, una nit tempestuosa.</p>
     <p>Fins que arribes a l'Acte 2, escena 7. T'atures.</p>
     <p>Hi ha alguna cosa en la manera com descriu la caiguda. Massa detallada. Massa precisa. Com si l'autor <em>ho hagués vist</em>.</p>`,
     choices: [
@@ -666,7 +700,7 @@ const NODES = {
     text: `<p>En Joan Casals és al control, enrotllant un cable amb la precisió automàtica de qui ho ha fet milers de vegades. Quan li preguntes pel guió d'avui, les mans s'aturen.</p>
     <p>"En Ricard me'n va donar una còpia aquest matí." Posa el cable a terra. "Li vaig dir que era una bogeria. Que no podia emetre això." Pausa. "M'ha dit: 'Joan, tu i jo sabem que no és ficció.'"</p>
     <p>Vint-i-dos anys al mateix lloc. Les espatlles d'en Joan porten el pes d'aquests vint-i-dos anys de manera visible.</p>
-    <p>"Jo era aquí aquella nit," diu finalment. Amb la veu d'algú que porta molt de temps sense dir-ho en veu alta.</p>`,
+    <p>"Jo era aquí aquella nit," diu finalment. "La nit que la <strong>Neus Roca</strong> va caure de la terrassa. Fa quinze anys." Ho diu amb la veu d'algú que porta molt de temps sense pronunciar aquell nom en veu alta. I tu recordes la Neus: vint-i-tres anys, una veu que hauria pogut omplir teatres, i un funeral on ningú no va fer preguntes.</p>`,
     choices: [
       { label: 'Li demanes que t\'expliqui tot el que va veure aquella nit.', next: 'joan_testimoni' },
       { label: 'Li preguntes si hi ha alguna prova física. Enregistraments, documents, qualsevol cosa.', next: 'prova_gravacio' },
@@ -678,7 +712,8 @@ const NODES = {
     timestamp: '21:18 h · 3 minuts d\'emissió',
     title: 'El que va veure en Joan',
     art: 'control',
-    text: `<p>"Van pujar juntes. La Dolors i la Neus." Ho diu mirant el tauler, no a tu. "Jo estava aquí. Sentia les veus però no les paraules. Després vaig sentir el crit. Breu. Com quan algú s'espanta."</p>
+    text: `<p>L'emissió ha començat amb la sintonia i el primer bloc del locutor — la teva primera escena no entra fins d'aquí a deu minuts. Els aprofites al control, amb en Joan. No et cal ni acabar la pregunta.</p>
+    <p>"Van pujar juntes. La Dolors i la Neus." Ho diu mirant el tauler, no a tu. "Jo estava aquí. Sentia les veus però no les paraules. Després vaig sentir el crit. Breu. Com quan algú s'espanta."</p>
     <p>"La Dolors va baixar sola. Em va mirar. Em va dir: 'Ha estat un accident, Joan. La nena ha perdut l'equilibri.' I després: 'Tens una filla petita. Pensa-hi bé.'"</p>
     <p>Silenci al control. El tic de l'agulla del VU-metre.</p>
     <p>"Fa quinze anys que me'n penedeixo cada dia. Cada dia." La veu és plana. "Però tenia por. I la filla. I..." S'atura. No cal acabar la frase.</p>`,
@@ -693,7 +728,8 @@ const NODES = {
     timestamp: '21:22 h · 7 minuts d\'emissió',
     title: 'La cinta oberta',
     art: 'arxiu',
-    text: `<p>"El micròfon del control sempre queda obert durant les pauses," diu en Joan. "Sempre. És un costum vell." Una pausa molt llarga. "Aquella nit també estava obert."</p>
+    text: `<p>El segon bloc del drama és un interludi musical de vuit minuts: el temps just. Baixeu a l'arxiu mentre la música sona per l'antena.</p>
+    <p>"El micròfon del control sempre queda obert durant les pauses," diu en Joan. "Sempre. És un costum vell." Una pausa molt llarga. "Aquella nit també estava obert."</p>
     <p>A l'arxiu, entre centenars de caixes etiquetades, en Joan en localitza una de grisa, escrita amb llapis vermell. La data coincideix. La bobina gira al reproductor vell amb un soroll de cinta tensa.</p>
     <p>Dues veus. Una discussió. Les paraules s'entenen nítidament: <em>documents, diners, la direcció general, demà al matí.</em> Después la veu de la Dolors, tallant: <em>"Això no passarà."</em> Un soroll de passos ràpids. Un crit curt. El silenci.</p>
     <p>Quinze anys en una capsa de metall.</p>`,
@@ -767,8 +803,8 @@ const NODES = {
     timestamp: '21:30 h · 15 minuts d\'emissió',
     title: 'Cara a cara',
     art: 'despatx',
-    text: `<p>La Dolors no es mou de la cadira quan entres. Però quan veu qui t'acompanya — en Joan, o en Ricard, o sents la cinta girant al reproductor portàtil — el color de la seva cara canvia.</p>
-    <p>Li expliques el que saps. Sense entonació. Com si fossin fets meteorològics.</p>
+    text: `<p>Aprofites l'interludi musical del programa: vuit minuts en què l'antena no et necessita. La Dolors no es mou de la cadira quan entres al despatx. Però et llegeix la cara — la determinació de qui ja no ve a preguntar, sinó a confirmar — i el color de la seva pell canvia.</p>
+    <p>Li exposes el que saps i d'on ho has tret. Sense entonació. Com si fossin fets meteorològics. Cada detall que afegeixes li tanca una porta més.</p>
     <p>Un silenci molt llarg. Després: "Va ser un segon. Un sol segon que no vaig poder aturar." La veu és petita. "Jo no volia..." S'atura. "No hi ha cap 'jo no volia' que valgui, oi?"</p>
     <p>Per primera vegada en quinze anys, algú ha dit en veu alta el que tothom sabia. La Dolors ho sap. Tu ho saps. Ara cal decidir on va d'aquí.</p>`,
     choices: [
@@ -785,8 +821,8 @@ const NODES = {
     timestamp: 'La nit de l\'emissió',
     title: 'La veritat en directe',
     art: 'final_bo',
-    text: `<p>La llum vermella no és només un avís de directe: és una ferida oberta a la foscor de l'estudi. Quan la cinta d'en Joan comença a girar — o quan tu obres la boca i la veu de la Núria surt amb una cruesa que no estava a cap indicació — el silenci de l'emissora es trenca amb la veu de la Neus, recuperada de l'oblit després de quinze anys.</p>
-    <p>La Dolors colpeja el vidre del control, cridant sense so. Però el país sencer ja escolta el crit que ella va intentar silenciar a la terrassa. El telèfon de l'emissora comença a sonar als trenta segons. Als dos minuts, hi ha periodistes trucant des del carrer.</p>
+    text: `<p>La llum vermella no és només un avís de directe: és una ferida oberta a la foscor de l'estudi. El que surt per l'antena aquesta nit no estava en cap programació: és la història de la <strong>Neus Roca</strong>, sense disfresses ni noms canviats, dita en veu alta després de quinze anys de silenci. La veritat, quan finalment sona, no s'assembla a cap drama: és més lenta, més seca, i no té música de fons.</p>
+    <p>Ja és massa tard per aturar res: el país sencer escolta el crit que algú va intentar silenciar en aquella terrassa. El telèfon de l'emissora comença a sonar als trenta segons. Als dos minuts, hi ha periodistes trucant des del carrer.</p>
     <p>En Ricard, des del fons del passadís, tanca els ulls. No és dolor: és la cara d'algú que esperava exactament aquest moment des de fa quinze anys i finalment ha vist arribar. Quan la llum vermella s'apaga, es posa dempeus molt a poc a poc, s'acosta, i et dóna la mà sense dir res.</p>
     <p>La Dolors no intenta fugir. Seu a la seva cadira i espera, amb una expressió que no és derrota. Potser és alleujament. La ficció ha deixat de ser una màscara per convertir-se en un mirall.</p>
     <p><em>La Neus Roca tenia vint-i-tres anys. Ara tothom ho sap.</em></p>`,

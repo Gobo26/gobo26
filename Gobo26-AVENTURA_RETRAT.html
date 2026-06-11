@@ -551,8 +551,42 @@ footer {
   font-family: 'Cinzel', serif;
   letter-spacing: 1px;
 }
+
+/* ── Millores visuals (jun 2026) ── */
+.scene-art { position: relative; }
+.scene-art::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 44px 10px rgba(0,0,0,.42);
+}
+.scene-art svg { animation: artIn 1.1s ease both; }
+@keyframes artIn { from { opacity: 0; transform: scale(1.045); } to { opacity: 1; transform: scale(1); } }
+.scene-text > p:first-of-type::first-letter {
+  font-family: 'Cinzel', serif;
+  float: left; font-size: 44px; line-height: .88;
+  padding: 3px 8px 0 0; font-weight: 700;
+  color: #e8b84b;
+}
+.scene-title { position: relative; padding-bottom: 10px; }
+.scene-title::after {
+  content: ''; position: absolute; left: 0; bottom: 0;
+  width: 68px; height: 2px;
+  background: linear-gradient(90deg, #e8b84b, transparent);
+}
+.choice-btn { position: relative; overflow: hidden; }
+.choice-btn::after {
+  content: ''; position: absolute; top: 0; left: -80%;
+  width: 50%; height: 100%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.07), transparent);
+  transition: left .5s ease;
+}
+.choice-btn:hover::after { left: 135%; }
+.scene-wrap:has(.ending-badge.good) { box-shadow: 0 0 60px -14px rgba(232,184,75,.30); }
+.scene-wrap:has(.ending-badge.bad) { box-shadow: 0 0 60px -14px rgba(176,32,32,.35); }
+.scene-wrap:has(.ending-badge.neutral) { box-shadow: 0 0 50px -16px rgba(255,255,255,.14); }
+
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -986,7 +1020,7 @@ const NODES = {
     timestamp: 'Hora de vespres · 19:00 h',
     title: 'El jardí dels murmuris',
     art: 'jardí',
-    text: `<p>Al vespre, el jardí és un lloc de converses que no haurien d'existir. T'amagues entre els rosers quan veus Lord Hug parlant amb el Capità de la Guàrdia en veu molt baixa. N'escoltes prou:</p>
+    text: `<p>Al vespre, el jardí és un lloc de converses que no haurien d'existir. T'amagues entre els rosers quan veus un noble alt, de capa blava i amb un anell de serp al dit — <strong>Lord Hug de Miralpeix</strong>, el nou Tresorer Reial — parlant amb el Capità de la Guàrdia en veu molt baixa. N'escoltes prou:</p>
     <p><em>"El pintor sap massa. Fes que l'acusin formalment d'haver preparat el verí. Amb ell entre reixes, ningú no l'escoltarà."</em></p>
     <p>Fas un moviment involuntari i trepitges una branca seca. <strong>S'aturen.</strong> Giren el cap lentament cap a les ombres on t'has amagat.</p>`,
     choices: [
@@ -1005,7 +1039,7 @@ const NODES = {
     <p>Mentre les reculls, sents passes que baixen lentament les escales del celler.</p>`,
     choices: [
       { label: 'T\'amagues ràpidament entre les estanteries amb els documents i esperes l\'ocasió per fugir.', next: 'celler_escapada' },
-      { label: 'Surts amb els documents a la mà i t\'enfrontes a qui sigui: les proves et protegeixen.', next: 'final_rei' },
+      { label: 'Puges les escales amb els documents ben a la vista, travesses el palau i exigeixes audiència pública amb el Rei.', next: 'final_rei' },
     ],
   },
 
@@ -1029,7 +1063,7 @@ const NODES = {
     title: 'El caçador caçat',
     art: 'nit',
     text: `<p>El pla és senzill i brutal. Feu córrer la veu — a través del patge més xerraire del palau — que el pintor ha trobat una carta definitiva i que la portarà al rei a l'alba.</p>
-    <p>A mitjanit, la porta de la teva cambra s'obre sense trucar. Lord Hug entra amb dos homes armats. No sap que el Senescal i tres testimonis de confiança esperen amagats a la cambra del costat, tal com heu acordat.</p>
+    <p>A mitjanit, la porta de la teva cambra s'obre sense trucar. Hi entra un noble alt amb dos homes armats. El reconeixes a l'instant per tot el que ja saps: la capa blava, l'anell de la serp al dit. És <strong>Lord Hug de Miralpeix</strong>, el Tresorer Reial — l'home que ha mogut tots els fils. No sap que el Senescal i tres testimonis de confiança esperen amagats a la cambra del costat, tal com heu acordat.</p>
     <p><em>"Dona'm la carta, pintor,"</em> diu Lord Hug amb una calma glaçada, <em>"i et prometo que sortiràs viu d'aquest palau."</em></p>
     <p>La porta del costat s'obre. El Senescal entra amb els testimonis. Lord Hug de Miralpeix paral·litza. Deixa caure la mà que duia a l'espasa. <em>"No podeu…"</em> comença. Però és el Senescal qui el talla: <em>"Sí que podem, Lord Hug. I ho acabem de fer."</em></p>`,
     choices: [
@@ -1042,7 +1076,7 @@ const NODES = {
     timestamp: 'Hora de vespres · 19:30 h',
     title: 'Cara a cara',
     art: 'palau',
-    text: `<p>Lord Hug et mira amb un somriure fred quan surts de les ombres. Quan li repeteixes el que has sentit, aixeca una cella: <em>"Proves circumstancials, pintor. A qui creuran a la cort — a un noble de sang o a un artesà amb les mans tacades de pintura?"</em></p>
+    text: `<p>Lord Hug et mira amb un somriure fred quan et plantes davant seu. Quan li exposes el que has descobert, aixeca una cella: <em>"Proves circumstancials, pintor. A qui creuran a la cort — a un noble de sang o a un artesà amb les mans tacades de pintura?"</em></p>
     <p>Té raó: sense documents, és la seva paraula contra la teva. Però aleshores veus, sobre l'escriptori a la seva esquena, un document amb el segell del rei… i la tinta encara brilla. <em>Acabat de segellar.</em> Una nova falsificació, en curs.</p>
     <p>És l'única oportunitat que tindràs.</p>`,
     choices: [
@@ -1060,7 +1094,7 @@ const NODES = {
     text: `<p>Expliques al Capità de la Guàrdia el que el secretari t'ha dit: un noble alt, capa blava, anell de serp al dit, va encarregar el paper anònim per a en Guillem. Li dones el nom del secretari com a testimoni.</p>
     <p>El Capità t'escolta amb el rostre immòbil. Massa immòbil. Quan acabes, es lleva lentament i diu: <em>"Investigaré la denúncia, pintor. Mentre tant, us recomano prudència."</em></p>
     <p>La manera com pronuncia <em>prudència</em> et fa la pell de gallina.</p>
-    <p>Aquella nit, un missatge anònim llisca per sota la porta de la teva cambra: <strong>"Pintor, saps massa. Retira't ara o seràs el proper."</strong> Les mateixes paraules que si mostressis l'anell. El Capità és al bàndol de Lord Hug des del principi.</p>`,
+    <p>Aquella nit, un missatge anònim llisca per sota la porta de la teva cambra: <strong>"Pintor, saps massa. Retira't ara o seràs el proper."</strong> Ja no et queda cap dubte: el Capità és al bàndol del noble de la capa blava des del principi.</p>`,
     choices: [
       { label: 'Demanes protecció urgent a la Reina Elisenda — és l\'única autoritat en qui pots confiar.', next: 'reina_proteccio' },
       { label: 'Decideixes girar la situació al teu favor: contactes el Senescal Bertran i prepareu una trampa.', next: 'trampa' },
@@ -1090,7 +1124,7 @@ const NODES = {
     art: 'reina',
     text: `<p>La sessió de retrat comença en silenci. La Reina posa immòbil mentre parleu en veu molt baixa, com si les paraules fossin pinzellades que ningú més pot veure. Cada confessió arriba amb la naturalitat d'algú que porta massa temps carregant un pes sol.</p>
     <p>En Guillem havia anat a ella primer, fa tres setmanes. Li havia portat les proves. Ella li havia promès que actuaria quan fos el moment adequat. Però el moment mai no va arribar, i en Guillem va perdre la paciència i va continuar investigant pel seu compte fins que algú el va trobar.</p>
-    <p><em>"La seva mort és responsabilitat meva, Bernat. He viscut cada dia d'ençà sabent-ho. Conservo còpies de tot el que ell em va portar. Ara t'afegeixo el que tu has portat avui. Junts, les proves són irrefutables. Però necessito que venguis al meu costat quan les presenti al Rei."</em></p>`,
+    <p><em>"La seva mort és responsabilitat meva, Bernat. He viscut cada dia d'ençà sabent-ho. Conservo còpies de tot el que ell em va portar."</em> S'aixeca, obre un cofre petit i t'allarga un plec de documents lligat amb una cinta. <em>"Preneu-les. Amb el que vós sabeu i el que ell va reunir, són irrefutables. Decidiu vós què en fem — només us demano de ser al vostre costat quan arribin al Rei."</em></p>`,
     choices: [
       { label: 'Li doneu el vostre suport. Aneu junts al Rei amb les proves i la seva testimoni.', next: 'final_bo' },
       { label: 'No podeu perdonar la seva inacció. Porteu les proves al Rei sol, exposant també el seu silenci.', next: 'final_rei' },
@@ -1103,9 +1137,9 @@ const NODES = {
     timestamp: 'El dia del judici',
     title: 'El pintor i la veritat',
     art: 'final_bo',
-    text: `<p>La trampa a mitjanit a la cambra del pintor és senzilla i irrefutable. En Bernat ha construït el cas amb el Senescal Bertran durant tres dies: el llibre de les falsificacions — robat de l'arxiu i copiat pàgina a pàgina —, el testimoni d'en Rael l'alquimista sobre el verí, i les declaracions de les famílies camperoles que han perdut les terres. No és una acusació: és un monument documental.</p>
-    <p>Quan Lord Hug de Miralpeix entra a la cambra esperant trobar un pintor sol amb les proves compromeses, s'hi troba el Senescal Bertran, dos escribans reials i el retrat de la Reina penjat a la paret, mirant-ho tot. El poder dels diners ha quedat desemmascarat pel poder de l'art — i del testimoni.</p>
-    <p>El Capità de la Guàrdia fuig però és capturat a la frontera tres dies després. Les terres falsament adquirides tornen als seus propietaris per decret reial. El príncep és apartat de la successió i enviat a un monestir llunyà. El Rei, quan llegeix les proves, no plora. Tan sols diu, en veu molt baixa: <em>"Gràcies, Bernat. Hauríeu pogut callar. I heu triat no fer-ho."</em></p>
+    text: `<p>Tres dies després, el Gran Saló s'omple com no s'omplia des de la coronació. Davant del Rei, de la cort sencera i dels escribans que ho anoten tot, la veritat que has perseguit surt finalment a la llum: les escriptures falsificades amb el segell reial, el verí demanat amb un paper sense signatura, i el nom de l'home que ho ha ordit tot des de l'ombra — <strong>Lord Hug de Miralpeix</strong>.</p>
+    <p>Lord Hug ho nega amb la fredor de qui sempre n'ha sortit indemne. Però aquesta vegada no és la teva paraula contra la seva: són els fets que has anat reunint, pas a pas, des del matí que vas trobar en Guillem estès al taller. Cada peça encaixa amb la següent. Quan el Senescal Bertran llegeix la darrera, el silenci del saló pesa com una llosa. Ningú no surt en defensa del Tresorer.</p>
+    <p>El Capità de la Guàrdia fuig aquella mateixa nit, però és capturat a la frontera tres dies després. Les terres falsament adquirides tornen als seus propietaris per decret reial. El Rei, quan tot acaba, et busca amb la mirada i diu, en veu molt baixa: <em>"Gràcies, Bernat. Hauríeu pogut callar. I heu triat no fer-ho."</em></p>
     <p>En Guillem és enterrat amb honors a la capella del palau. Per ordre reial, el seu nom figura al peu del retrat oficial de la Reina Elisenda — acabat per tu, naturalment, amb mà ferma i cor tranquil.</p>
     <p><em>És el millor quadre que has pintat mai.</em></p>`,
     ending: 'good',
@@ -1118,9 +1152,9 @@ const NODES = {
     timestamp: 'El dia de la justícia',
     title: 'La justícia del Rei',
     art: 'final_rei',
-    text: `<p>Presents les proves al Rei davant de tota la cort. No és una audiència privada: és un acte públic, deliberadament triat perquè ningú no pugui fer desaparèixer res. El Rei escolta dret, sense canviar l'expressió. Cada full que llegeixes és una elecció que ell ha de fer entre la seva esposa i la llei.</p>
-    <p>Perquè el veritable secret no és Lord Hug — és el Príncep, que ha malbaratat la fortuna reial i s'ha deixat subornar per tapar els seus deutes. I la Reina Elisenda ho sabia. Ho sabia i havia callat durant setmanes, construint un mur de silenci per protegir el seu fill. En Bernat ha decidit que la mort d'en Guillem val més que la pau d'una família reial corrupta.</p>
-    <p>Lord Hug és empresonat. El Príncep, apartat de la successió. La Reina — que sabia la veritat — queda humiliada davant la cort. No per malícia d'en Bernat: per la lògica inexorable de les proves. El matrimoni reial mai no se'n recupera del tot.</p>
+    text: `<p>Presents les proves al Rei davant de tota la cort. No és una audiència privada: és un acte públic, deliberadament triat perquè ningú no pugui fer desaparèixer res. El Rei escolta dret, sense canviar l'expressió, mentre els escribans estenen els documents sobre la taula del consell.</p>
+    <p>I aleshores la investigació oficial estira el fil fins al final, més enllà d'on tu mateix havies arribat: el veritable secret no és Lord Hug — és el Príncep, que ha malbaratat la fortuna reial i s'ha deixat subornar per tapar els seus deutes. I la Reina Elisenda ho sabia des de feia setmanes. Ho sabia i havia callat, construint un mur de silenci per protegir el seu fill. Cada full que es llegeix en veu alta és una elecció que el Rei ha de fer entre la seva família i la llei.</p>
+    <p>Lord Hug és empresonat. El Príncep, apartat de la successió. La Reina — que sabia la veritat — queda humiliada davant la cort. No per malícia teva: per la lògica inexorable de les proves. El matrimoni reial mai no se'n recupera del tot.</p>
     <p>El retrat oficial no s'acaba. Surts del palau amb la reputació intacta, la consciència neta i la bossa buida. A les setmanes trobes feina a la cort d'un ducat veí. Les famílies camperoles recuperen les terres. En Guillem té justícia.</p>
     <p><em>A vegades la veritat i la gratitud no arriben juntes. Però la veritat arriba.</em></p>`,
     ending: 'neutral',
@@ -1133,8 +1167,8 @@ const NODES = {
     timestamp: 'El dia del pacte',
     title: 'El pacte de les ombres',
     art: 'final_mig',
-    text: `<p>La Reina Elisenda et rep al jardí, sola, sense dames de companyia. La seva argumentació és freda i precisa: si el Príncep és detingut públicament, tres nobles ja esperen el moment de disputar-se el tron. La justícia d'en Guillem val la mort de centenars?</p>
-    <p>En Bernat accepta el mal menor. Lord Hug abandona la cort "per raons de salut" i es retira a les seves terres. El Capità és traslladat a una guarnició fronterera. Les finques falsament adquirides tornen als seus propietaris, sense decrets públics ni explicacions. La mort d'en Guillem queda registrada com un accident. Ningú no ho creu. Ningú no ho discuteix.</p>
+    text: `<p>El palau resol les coses a la seva manera: en silenci. No hi ha judici, ni saló ple, ni escribans. Hi ha una conversa darrere una porta tancada entre la Reina i el Senescal, i una decisió que ningú no signa però que tothom compleix. Quan t'ho comuniquen, ho fan amb la cortesia amb què s'anuncien les coses irrevocables.</p>
+    <p>Acceptes el mal menor — o potser el mal menor t'accepta a tu. Lord Hug abandona la cort "per raons de salut" i es retira a les seves terres. El Capità és traslladat a una guarnició fronterera. Les finques falsament adquirides tornen als seus propietaris, sense decrets públics ni explicacions. La mort d'en Guillem queda registrada com un accident. Ningú no ho creu. Ningú no ho discuteix.</p>
     <p>Acabes el retrat de la Reina. És un bon retrat — tècnicament impecable, lluminós, digne. Però hi has pintat un detall que no estava a cap encàrrec: en la penombra darrere la seva figura, una mirada desviada cap a la dreta, com si esperés algú que no arribarà mai. Tan sols la Reina sap el que representa. Quan el descobreixes davant del Rei, et busca els ulls durant un segon massa llarg.</p>
     <p>No diu res. Tu tampoc.</p>
     <p><em>El pacte sosté la pau del regne. I la culpa compartida sosté el pacte.</em></p>`,
@@ -1148,8 +1182,8 @@ const NODES = {
     timestamp: 'El dia del silenci',
     title: 'El silenci del pintor',
     art: 'final_mal',
-    text: `<p>El Capità de la Guàrdia t'ha estat observant des de fa dies. Un matí, un dels seus homes passa davant del taller sense entrar i deixa caure una frase al vol: <em>"El tresorer aprecia la discreció en un artista."</em> El missatge és clar.</p>
-    <p>Cremes les proves aquella nit, una a una, davant la flama del llum de cera. El fum que puja fa olor de pergamí i culpa. El cas es tanca poc després: un servent de la cuina és acusat d'haver preparat el verí per gelosia professional. Tothom al palau sap que és mentida. Ningú no diu res.</p>
+    text: `<p>Et repeteixes que has fet el que podies. Que no era cosa teva. Que un pintor pinta, i prou. Els primers dies, la frase encara sona convincent.</p>
+    <p>Les proves no arriben mai al Rei. Potser es perden, potser algú les fa perdre — al palau, les coses que molesten tenen tendència a desaparèixer. El cas es tanca poc després: un servent de la cuina és acusat d'haver preparat el verí per gelosia professional. Tothom al palau sap que és mentida. Ningú no diu res. Tu tampoc.</p>
     <p>Et dediques a pintar el retrat més bell i fals de la història del Regne. La llum cau sobre el rostre de la Reina Elisenda d'una manera que amaga el cansament i revela una dignitat que potser no mereix del tot. El Rei l'elogia davant de tota la cort. La Reina t'entrega personalment una bossa d'or. La prens. Pesa com el plom.</p>
     <p>El taller ara és ric i gran. Tens nous encàrrecs i prestigi. Però cada matí, quan entres i mires la cadira buida on en Guillem seia a preparar la paleta, el fàstic de tu mateix t'arriba abans de poder agafar el pinzell. No és dolor, exactament. És quelcom més petit i permanent: la certesa que has pintat el millor quadre de la teva vida per les raons més baixes.</p>
     <p><em>El silenci no absol. Només s'acumula.</em></p>`,

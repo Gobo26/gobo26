@@ -375,8 +375,42 @@ footer{
   font-size:10px; color:rgba(232,224,240,.18);
   font-family:'Playfair Display',serif; letter-spacing:1px;
 }
+
+/* ── Millores visuals (jun 2026) ── */
+.scene-art { position: relative; }
+.scene-art::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 44px 10px rgba(0,0,0,.42);
+}
+.scene-art svg { animation: artIn 1.1s ease both; }
+@keyframes artIn { from { opacity: 0; transform: scale(1.045); } to { opacity: 1; transform: scale(1); } }
+.scene-text > p:first-of-type::first-letter {
+  font-family: 'Playfair Display', serif;
+  float: left; font-size: 44px; line-height: .88;
+  padding: 3px 8px 0 0; font-weight: 700;
+  color: #f0cc55;
+}
+.scene-title { position: relative; padding-bottom: 10px; }
+.scene-title::after {
+  content: ''; position: absolute; left: 0; bottom: 0;
+  width: 68px; height: 2px;
+  background: linear-gradient(90deg, #f0cc55, transparent);
+}
+.choice-btn { position: relative; overflow: hidden; }
+.choice-btn::after {
+  content: ''; position: absolute; top: 0; left: -80%;
+  width: 50%; height: 100%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.07), transparent);
+  transition: left .5s ease;
+}
+.choice-btn:hover::after { left: 135%; }
+.scene-wrap:has(.ending-badge.good) { box-shadow: 0 0 60px -14px rgba(212,175,55,.30); }
+.scene-wrap:has(.ending-badge.bad) { box-shadow: 0 0 60px -14px rgba(196,86,106,.35); }
+.scene-wrap:has(.ending-badge.neutral) { box-shadow: 0 0 50px -16px rgba(255,255,255,.14); }
+
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -496,7 +530,7 @@ const CLUES = {
   faristols:         {icon:'📄', text:'Al faristol del director: partitures de la Cristina Mas. Al revers: "El director sabia que avui tot sortiria a la llum."'},
   convocar_cantaires:{icon:'🎤', text:'La Núria va sentir una veu de dona la nit anterior: "Avui és l\'últim dia." En Ferran responia: "Publiques res i t\'arruïno."'},
   nuria_testimoni:   {icon:'👁️', text:'La Dolors va entrar sola al camerí al vespre. La Cristina havia sortit del passadís "amb el rostre encès."'},
-  cantaires_plagi:   {icon:'⚖️', text:'Cristina Mas: denúncia de plagi fa 3 mesos, judici la setmana vinent. Portava beina de cuir en entrar — quan ha sortit, ja no la portava.'},
+  cantaires_plagi:   {icon:'⚖️', text:'Cristina Mas: denúncia de plagi fa 3 mesos, judici la setmana vinent. En sortir del camerí, s\'ha aturat mirant algú al fons del corredor.'},
   buscar_pau:        {icon:'📋', text:'Entrada al teatre per la porta dels artistes (fora de llista): Cristina Mas i Ricard Valls, l\'advocat del cas de plagi.'},
   pau_cameres:       {icon:'📹', text:'Càmeres: Cristina (22:10–22:22, en Ferran viu). Dolors torna a les 22:23 → la càmera es desconnecta 6 minuts. A les 22:29, corredor buit. En Ferran és mort.'},
   acces_cameri:      {icon:'🗝️', text:'Registre: Dolors al camerí a les 21:48, 9 minuts (en Ferran no hi era). Deute: 40.000€. Clau mestra pròpia.'},
@@ -504,7 +538,7 @@ const CLUES = {
   confrontar_cristina:{icon:'🎼', text:'Cristina: "No l\'he matat. Va cedir. He sortit i la Dolors m\'esperava al corredor, mirant la porta del camerí."'},
   cristina_detalls:  {icon:'⏱️', text:'Dotze minuts: en Ferran va cedir i va dir "La Dolors acaba de venir a saludar-me" — amb expressió estranya.'},
   ricard_valls:      {icon:'📁', text:'Ricard Valls: en Ferran tenia papers per fugir al matí i evitar el judici. La Dolors l\'esperava furiosa al corredor quan ell sortia.'},
-  confrontar_dolors: {icon:'🔐', text:'Confessió: la Dolors va entrar dues vegades. Va amagar la navalla al calaix a les 21:48. A les 22:23, en Ferran va riure de l\'amenaça. Ella va actuar.'},
+  confrontar_dolors: {icon:'🔐', text:'Confessió: la Dolors va entrar dues vegades. A les 21:48 va amagar la navalla al calaix (la beina li va caure sota la cadira). A les 22:23, en Ferran va riure de l\'amenaça. Ella va actuar.'},
 };
 
 // ════════════════════════════════════════════════════════
@@ -533,8 +567,8 @@ const NODES = {
     art: "camerí",
     clue: CLUES.examinar_cameri,
     text: `<p>Demanes a tothom que surti i tances la porta. Les bombetes del mirall segueixen enceses. T'il·luminen mentre observes l'escena amb cura, intentant no mirar massa el cos.</p>
-    <p>Dues coses criden la teva atenció: una nota manuscrita esparracada prop de la paperera — s'hi llegeix clarament <em>"si ensenyes les partitures, ja ho saps tot"</em> — i, sota la cadira del maquillatge, una <strong>beina de cuir buida</strong>. No és un descuit de principiant: és exactament el tipus d'error que comet algú que ha planificat fins al darrer detall però que, en el moment decisiu, ha perdut el control per una fracció de segon. La navalla ha sortit de la beina de pressa, i no hi ha hagut temps de recuperar-la. En trobaràs la navalla al calaix del maquillatge, però el metge ja te l'ha pres com a evidència.</p>
-    <p>Algú havia amenaçat en Ferran. I algú havia portat aquella navalla al teatre aquesta nit — i l'havia collocada estratègicament, amb antelació. Necessites saber qui.</p>`,
+    <p>Dues coses criden la teva atenció: una nota manuscrita esparracada prop de la paperera — s'hi llegeix clarament <em>"si ensenyes les partitures, ja ho saps tot"</em> — i, sota la cadira del maquillatge, una <strong>beina de cuir buida</strong>. La mides amb els ulls: la navalla que hi encaixa és exactament la que ara és clavada al pit d'en Ferran. Qui l'ha deixada caure no és cap principiant: és algú que ho havia planificat tot fins al darrer detall, però que en el moment decisiu ha perdut el control una fracció de segon i no ha tingut temps de recollir-la.</p>
+    <p>Algú havia amenaçat en Ferran. I algú havia portat aquella navalla al teatre — i l'havia col·locada amb antelació, esperant el moment. Necessites saber qui.</p>`,
     choices: [
       {label:"Busques en Pau, el tècnic: les càmeres de seguretat ho hauran gravat tot.", next:"pau_cameres"},
       {label:"La nota esmenta partitures. Vas a la sala d'assaig a examinar els faristols.", next:"faristols"},
@@ -590,8 +624,8 @@ const NODES = {
     art: "sala_assaig",
     clue: CLUES.cantaires_plagi,
     text: `<p>De mica en mica, amb la prudència de qui porta molt de temps callant, els cantaires parlen. La història es va construint a retalls: en Ferran Salvi portava anys signant obres d'altri com a pròpies. La darrera víctima, la <strong>Cristina Mas</strong>, havia presentat una denúncia formal tres mesos enrere. El judici havia de celebrar-se la setmana vinent.</p>
-    <p>Un baix de la tercera fila afegeix: <em>"Avui al vespre vaig veure la Cristina entrar al teatre per la porta dels artistes. Tenia una carpeta gran sota el braç. I una cosa més: portava a la cintura una beina de cuir — de les de navalla. Quan ha sortit de parlar amb el director, ja no la portava."</em></p>
-    <p>Un silenci incòmode cau sobre la sala. La beina que el metge ha trobat sota la cadira del maquillatge no pot ser de la Cristina si ella ja l'havia perdut — o potser no era la mateixa beina. Dues navalles, dos camins.</p>`,
+    <p>Un baix de la tercera fila afegeix: <em>"Avui al vespre he vist la Cristina entrar al teatre per la porta dels artistes. Duia una carpeta gran sota el braç. I una cosa més: quan ha sortit de parlar amb el director, s'ha aturat al final del corredor i ha mirat enrere una bona estona — com si hagués vist algú que no esperava."</em></p>
+    <p>Un silenci incòmode cau sobre la sala. La Cristina tenia el motiu més evident de tot el teatre. Però si en sortir va veure algú al corredor… potser no era l'única que tenia comptes pendents amb en Ferran.</p>`,
     choices: [
       {label:"Busques la Cristina pel teatre: si és aquí, no s'haurà allunyat gaire.", next:"confrontar_cristina"},
       {label:"Parles primer amb en Pau, el tècnic: les càmeres de seguretat del teatre ho han de tenir tot gravat.", next:"pau_cameres"},
@@ -620,8 +654,8 @@ const NODES = {
     clue: CLUES.pau_cameres,
     text: `<p>En Pau fa retrocedir les imatges en blanc i negre. A les 22:10, la <strong>Cristina Mas</strong> entra al corredor i truca a la porta del camerí. Hi entra. A les 22:22, en surt. Camina normal, sense córrer. Porta la mateixa carpeta que duia en entrar.</p>
     <p>A les 22:31, entra l'<strong>advocat Ricard Valls</strong>. A les 22:35 en surt corrent, visiblement alterat. És ell qui ha donat l'avís al metge del teatre.</p>
-    <p>En Pau para el vídeo: <em>"La Cristina hi ha estat dotze minuts. Però mira-ho bé — quan ella entra, en Ferran és dret davant del mirall. Quan ella en surt, ell continua dret. No l'havia tocat."</em></p>
-    <p>Avança el vídeo: a les 21:48, una figura entra al corredor amb clau pròpia. <strong>És la Dolors.</strong> A les 22:23 — un minut just després que la Cristina marxi — la Dolors hi torna. A les 22:23:47, <em>la càmera es desconnecta.</em> En Pau murmura: <em>"Algú la ha coberta manualment."</em> La imatge torna a les 22:29. El corredor és buit. En Ferran és mort entre les 22:23 i les 22:31.</p>`,
+    <p>En Pau para el vídeo: <em>"La Cristina hi ha estat dotze minuts. Però mira-ho bé — cada cop que la porta s'obre, la càmera enxampa un tros de l'interior. Quan ella entra, es veu en Ferran dret davant del mirall. Quan ella surt, torna a veure's: continua dret, viu. No l'havia tocat."</em></p>
+    <p>Avança el vídeo: a les 21:48, una figura entra al corredor amb clau pròpia. <strong>És la Dolors.</strong> A les 22:23 — un minut just després que la Cristina marxi — la Dolors hi torna. A les 22:23:47, <em>la càmera es desconnecta.</em> En Pau murmura: <em>"Algú l'ha tapada amb la mà."</em> La imatge torna a les 22:29. El corredor és buit. En Ferran és mort entre les 22:23 i les 22:31.</p>`,
     choices: [
       {label:"Busques la Cristina per saber exactament el que va veure quan era al camerí.", next:"confrontar_cristina"},
       {label:"Preguntes a en Pau quant de temps va estar la Dolors al camerí la primera vegada i si tenia motius.", next:"acces_cameri"},
@@ -650,7 +684,7 @@ const NODES = {
     art: "corredor",
     clue: CLUES.dolors_testimoni,
     text: `<p>La <strong>Dolors Ferré</strong> és una dona de cinquanta anys, eficient i freda, que porta quinze anys gestionant el teatre. La trobes al corredor, parlant per walkie-talkie amb els tramoyistes per mantenir la situació controlada.</p>
-    <p>Quan li preguntes per la Cristina Mas, s'atura. <em>"La Cristina va venir avui. Tenia cita amb en Ferran a les vuit. No sé de què van parlar."</em> Pausa curta. <em>"Però sé que en Ferran estava molt nerviós des d'ahir. Em va demanar que no deixés entrar ningú al camerí fins que ell ho digués."</em></p>
+    <p>Quan li preguntes per la Cristina Mas, s'atura. <em>"La Cristina va venir avui. Havia quedat amb en Ferran després de l'assaig, cap a les deu. No sé de què van parlar."</em> Pausa curta. <em>"Però sé que en Ferran estava molt nerviós des d'ahir. Em va demanar que no deixés entrar ningú al camerí fins que ell ho digués."</em></p>
     <p>I llavors afegeix alguna cosa que no esperaves: <em>"En Ferran em devia quaranta mil euros d'una producció de fa dos anys. Avui m'ha trucat per dir-me que tenia 'una solució generosa' per al nostre problema."</em> Fa una pausa llarga. <em>"Cinc-cents euros. M'oferia cinc-cents euros com a 'liquidació definitiva'. Rient."</em> La seva veu no puja. No es torna a moure. <em>"Li havia dit que avui era l'últim dia."</em></p>`,
     choices: [
       {label:"La Dolors tenia un motiu fort. Preguntes a en Pau si va tenir accés al camerí durant la tarda.", next:"acces_cameri"},
@@ -680,7 +714,7 @@ const NODES = {
     clue: CLUES.confrontar_cristina,
     text: `<p>La trobes al foyer, asseguda en un racó amb la carpeta de partitures sobre els genolls, mirant el terra. Quan l'anomenes, aixeca el cap sense sorpresa — com si t'estigués esperant.</p>
     <p><em>"Ja sé el que penseu. Tenia motius, hi era, i l'havia amenaçat."</em> La seva veu és ferma. <em>"Però no l'he matat. Quan hi vaig entrar, ell estava bé. Vam parlar. Li vaig lliurar els documents del judici. Va dir que cedria. Vaig marxar."</em></p>
-    <p>T'ensenya la carpeta: partitures originals amb dates, esborranys, correccions a mà — proves irrefutables del plagi. <em>"Havia vingut a recuperar el que és meu. Amb documents, no amb una navalla."</em></p>
+    <p>T'ensenya la carpeta: partitures originals amb dates, esborranys, correccions a mà — proves irrefutables del plagi. <em>"Havia vingut a recuperar el que és meu. Amb documents, no amb una navalla. Fins i tot he deixat una còpia segellada al seu faristol, abans de veure'l: volia que aquesta nit, passés el que passés, tothom sabés de qui era la música."</em></p>
     <p>I afegeix, mirant-te als ulls: <em>"Però quan he sortit del camerí, he vist la Dolors al final del corredor. Esperava. Em mirava. Tenia una expressió que no he sabut interpretar fins ara."</em></p>`,
     choices: [
       {label:"Confrontes la Dolors ara, amb tot el que saps.", next:"confrontar_dolors"},
@@ -709,7 +743,7 @@ const NODES = {
     text: `<p>La Dolors et mira quan t'acostes. Llegeix la teva expressió i sap que la investigació ha acabat. No intenta fugir ni fingir. S'asseu en una cadira del corredor amb una calma que fa fred.</p>
     <p><em>"M'havia robat quaranta mil euros. I ara, amb el judici del plagi, anava a marxar del país sense pagar. Ho havia decidit la setmana passada — tenia els papers preparats per demà al matí."</em></p>
     <p>Fa una pausa. Quan continua, la veu li tremola per primera vegada. <em>"Aquesta tarda m'ha trucat. M'ha dit que tenia una 'solució generosa' per al nostre problema. Cinc-cents euros. Quaranta mil de deute, i m'oferia cinc-cents com a 'liquidació definitiva.' Rient."</em></p>
-    <p>Confessa que la primera vegada al camerí havia amagat la navalla al calaix del maquillatge. Tenia la intenció d'amenaçar-lo, de forçar-lo a signar un document. Però quan hi havia tornat per segona vegada, a les 22:23, en Ferran l'havia rebuda amb el mateix somriure de sempre. <em>"Em va dir: 'Dolors, els cinc-cents eren una broma. Ets massa seriosa.' I es va girar d'esquena."</em></p>
+    <p>Confessa que la primera vegada al camerí havia amagat la navalla al calaix del maquillatge — amb les presses, la beina li va relliscar sota la cadira i no va gosar tornar a buscar-la. Tenia la intenció d'amenaçar-lo, de forçar-lo a signar un document. Però quan hi havia tornat per segona vegada, a les 22:23, en Ferran l'havia rebuda amb el mateix somriure de sempre. <em>"Em va dir: 'Dolors, els cinc-cents eren una broma. Ets massa seriosa.' I es va girar d'esquena."</em></p>
     <p><em>"Ara decideixes tu, Maragda. Pots esperar la policia i dir-los tot. O pots deixar que el concert comenci i que jo marxi. Tinc un cotxe a fora."</em></p>`,
     choices: [
       {label:"Espereu la policia. La Dolors queda retinguda al teatre fins que arribin.", next:"final_justicia"},
