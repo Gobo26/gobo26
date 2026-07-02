@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Gobo26 - Horòscop</title>
+<meta name="description" content="Horòscop de Gobo26: els 12 signes del zodíac, horòscop d'avui i de la setmana en positiu, prediccions de bon rotllo i notes divertides per a cantaires.">
+<meta name="theme-color" content="#1e293b">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<style>
+:root{
+  --bg:#f1f5f9; --panel:#ffffff; --ink:#1e293b; --ink2:#475569; --ink3:#94a3b8;
+  --line:#e2e8f0; --line2:#cbd5e1;
+  --blau:#2563eb; --blau-fosc:#1d4ed8;
+  --verd:#16a34a; --ambre:#d97706; --lila:#7c3aed;
+  --foc:#ef4444; --terra:#16a34a; --aire:#0ea5e9; --aigua:#8b5cf6;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg); color:var(--ink2);
+  display:flex; flex-direction:column; min-height:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* HEADER */
+header{background:var(--ink); border-bottom:1px solid #334155; padding:10px 14px;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  position:sticky; top:0; z-index:40; flex-shrink:0;}
+.logo{display:flex; align-items:center; gap:8px; text-decoration:none;}
+.logo-txt{font-size:.95rem; font-weight:900; color:#fff; letter-spacing:-.5px;}
+.logo-txt span{color:#fbbf24;}
+.hdr-title{font-size:.95rem; font-weight:800; color:#fff; letter-spacing:.5px;}
+.icon-btn{background:transparent; border:0; color:#cbd5e1; font-size:1.15rem; cursor:pointer; padding:2px 4px; line-height:1;}
+.icon-btn:hover{color:#fff;}
+
+/* LAYOUT */
+main{flex:1; width:100%; max-width:880px; margin:0 auto; padding:12px 12px 34px;}
+.controls{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;}
+.controls button{flex:1 1 auto; min-width:100px; padding:10px 6px; border:2px solid var(--line2);
+  border-radius:10px; background:#fff; color:var(--ink2); cursor:pointer;
+  font:inherit; font-size:.82rem; font-weight:700; transition:all .15s;}
+.controls button:hover{background:#eef2f7;}
+.controls button.actiu{background:var(--ink); border-color:var(--ink); color:#fff;}
+
+.panel{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px 18px;
+  box-shadow:0 1px 3px rgba(0,0,0,.05); margin-bottom:14px; animation:puja .35s ease both;}
+@keyframes puja{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
+.panel h2{font-size:1.05rem; color:var(--ink); margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+.panel p{font-size:.92rem; line-height:1.6;}
+.subtit{font-size:.7rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--ink3); margin-bottom:6px;}
+
+/* ELEMENTS */
+.elements{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px;}
+.elem{border-radius:11px; padding:11px 12px; color:#fff;}
+.elem .e-nom{font-weight:900; font-size:.9rem; display:flex; gap:6px; align-items:center; margin-bottom:4px;}
+.elem .e-desc{font-size:.78rem; line-height:1.45; opacity:.95;}
+
+/* GRAELLA DE SIGNES */
+.signes-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(105px,1fr)); gap:8px;}
+.signe-btn{border:2px solid var(--line2); border-radius:12px; background:#fff; cursor:pointer;
+  padding:12px 6px 10px; text-align:center; font:inherit; transition:all .15s; position:relative;}
+.signe-btn:hover{border-color:var(--blau); transform:translateY(-2px); box-shadow:0 6px 16px rgba(37,99,235,.12);}
+.signe-btn.sel{border-color:var(--blau); background:#eff6ff; box-shadow:0 0 0 3px rgba(37,99,235,.15);}
+.signe-btn .s-sim{font-size:1.7rem; line-height:1; font-weight:700;}
+.signe-btn .s-nom{font-size:.82rem; font-weight:800; color:var(--ink); margin-top:5px;}
+.signe-btn .s-dates{font-size:.62rem; color:var(--ink3); margin-top:2px; line-height:1.3;}
+
+/* FITXA DE SIGNE */
+.fitxa-cap{display:flex; align-items:center; gap:14px; margin-bottom:12px;}
+.fitxa-sim{width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:2rem; color:#fff; flex-shrink:0; box-shadow:0 4px 12px rgba(0,0,0,.18);}
+.fitxa-cap h2{margin:0; font-size:1.3rem;}
+.fitxa-cap .f-dates{font-size:.82rem; color:var(--ink3); font-weight:600;}
+.f-chips{display:flex; gap:6px; flex-wrap:wrap; margin-top:5px;}
+.f-chip{font-size:.7rem; font-weight:800; padding:3px 10px; border-radius:20px; color:#fff;}
+.fitxa-camps{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px; margin-top:6px;}
+.f-camp{background:#f8fafc; border:1px solid var(--line); border-radius:10px; padding:10px 12px;}
+.f-camp .fc-tit{font-size:.68rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--ink3); margin-bottom:4px;}
+.f-camp .fc-txt{font-size:.86rem; line-height:1.5; color:var(--ink);}
+
+/* SELECTOR COMPACTE DE SIGNES */
+.tria{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;}
+.tria button{border:2px solid var(--line2); border-radius:30px; background:#fff; cursor:pointer;
+  padding:7px 12px; font:inherit; font-size:.8rem; font-weight:700; color:var(--ink2);
+  display:flex; align-items:center; gap:5px; transition:all .12s;}
+.tria button:hover{border-color:var(--ink2);}
+.tria button.sel{border-color:var(--blau); background:#eff6ff; color:var(--blau-fosc); box-shadow:0 0 0 3px rgba(37,99,235,.13);}
+.tria .t-sim{font-size:1rem;}
+
+/* HORÒSCOP */
+.h-data{font-size:.82rem; font-weight:700; color:var(--ink3); margin-bottom:10px;}
+.h-bloc{display:flex; gap:11px; padding:11px 0; border-bottom:1px dashed var(--line);}
+.h-bloc:last-child{border-bottom:0; padding-bottom:2px;}
+.h-bloc .hb-ic{font-size:1.3rem; flex-shrink:0; line-height:1.3;}
+.h-bloc .hb-tit{font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--ink3); margin-bottom:3px;}
+.h-bloc .hb-txt{font-size:.92rem; line-height:1.55; color:var(--ink);}
+.sort{display:flex; gap:10px; flex-wrap:wrap; margin-top:4px;}
+.sort .s-item{background:#f8fafc; border:1px solid var(--line); border-radius:10px; padding:8px 14px;
+  font-size:.85rem; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:8px;}
+.s-color-dot{width:16px; height:16px; border-radius:50%; box-shadow:inset 0 0 0 2px rgba(255,255,255,.5), 0 1px 3px rgba(0,0,0,.2);}
+.cantaires{background:linear-gradient(135deg,#faf5ff,#eff6ff); border:1px solid #ddd6fe; border-radius:11px;
+  padding:12px 14px; margin-top:12px;}
+.cantaires .hb-tit{color:var(--lila);}
+
+/* PREDICCIONS */
+.pred-carta{background:linear-gradient(150deg,#1e293b,#312e81); color:#fff; border-radius:16px;
+  padding:26px 22px; text-align:center; margin:12px 0; box-shadow:0 10px 28px rgba(30,41,59,.3);
+  animation:puja .4s ease both; position:relative; overflow:hidden;}
+.pred-carta::before{content:'✦'; position:absolute; top:8px; left:14px; opacity:.3;}
+.pred-carta::after{content:'✦'; position:absolute; bottom:8px; right:14px; opacity:.3;}
+.pred-carta .p-est{font-size:1.6rem; margin-bottom:10px;}
+.pred-carta .p-txt{font-size:1.05rem; line-height:1.65; font-weight:600;}
+.btn-gran{display:block; width:100%; padding:14px; border:0; border-radius:12px; background:var(--blau);
+  color:#fff; font:inherit; font-size:1rem; font-weight:800; cursor:pointer; transition:background .15s;}
+.btn-gran:hover{background:var(--blau-fosc);}
+
+/* MODAL */
+.modal-bg{position:fixed; inset:0; background:rgba(15,23,42,.72); display:none; align-items:center;
+  justify-content:center; z-index:70; padding:18px; backdrop-filter:blur(2px);}
+.modal-bg.show{display:flex;}
+.modal{background:#fff; border-radius:16px; max-width:420px; width:100%; padding:26px 22px;
+  box-shadow:0 20px 50px rgba(0,0,0,.4); animation:pop .3s ease; max-height:85vh; overflow:auto;}
+@keyframes pop{from{opacity:0; transform:scale(.9) translateY(10px);} to{opacity:1; transform:scale(1);}}
+.modal h3{font-size:1.25rem; color:var(--ink); margin-bottom:10px; text-align:center;}
+.modal .big{font-size:2.4rem; text-align:center; margin-bottom:6px;}
+.modal p, .modal li{font-size:.9rem; line-height:1.6;}
+.modal li{margin:6px 0 6px 18px;}
+.modal button{width:100%; padding:12px; border:0; border-radius:10px; background:var(--blau); color:#fff;
+  font:inherit; font-size:.95rem; font-weight:800; cursor:pointer; margin-top:14px;}
+
+footer{background:var(--ink); color:rgba(255,255,255,.55); text-align:center; padding:12px;
+  font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-top:auto;}
+footer a{color:#fff; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.3);}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="https://gobo26.github.io/gobo26/" target="_self">
+    <span class="logo-txt">Gobo<span>26</span></span>
+  </a>
+  <div class="hdr-title">🌟 Horòscop</div>
+  <button class="icon-btn" title="Què és això?" onclick="obreAjuda()">❓</button>
+</header>
+
+<main>
+  <div class="controls">
+    <button data-tab="signes" class="actiu" onclick="triaTab('signes')">♈ Els signes</button>
+    <button data-tab="avui" onclick="triaTab('avui')">☀️ Avui</button>
+    <button data-tab="setmana" onclick="triaTab('setmana')">📆 La setmana</button>
+    <button data-tab="prediccions" onclick="triaTab('prediccions')">✨ Prediccions</button>
+  </div>
+
+  <!-- ══ ELS SIGNES ══ -->
+  <section id="tab-signes">
+    <div class="panel">
+      <h2>🌍 Els quatre elements</h2>
+      <p style="margin-bottom:10px">Cada signe pertany a un element, que li dona el seu caràcter de fons. Tots quatre són necessaris, com a la natura: no n'hi ha cap de millor que un altre.</p>
+      <div class="elements" id="elements"></div>
+    </div>
+    <div class="panel">
+      <h2>✨ Els dotze signes</h2>
+      <p style="margin-bottom:10px">Toca un signe per veure'n la fitxa completa: personalitat, capacitats, afinitats, gustos i com cuidar-se.</p>
+      <div class="signes-grid" id="signes-grid"></div>
+    </div>
+    <div class="panel" id="fitxa" style="display:none"></div>
+  </section>
+
+  <!-- ══ AVUI ══ -->
+  <section id="tab-avui" style="display:none">
+    <div class="panel">
+      <div class="subtit">Tria el teu signe</div>
+      <div class="tria" id="tria-avui"></div>
+      <div id="horoscop-avui"></div>
+    </div>
+  </section>
+
+  <!-- ══ SETMANA ══ -->
+  <section id="tab-setmana" style="display:none">
+    <div class="panel">
+      <div class="subtit">Tria el teu signe</div>
+      <div class="tria" id="tria-setmana"></div>
+      <div id="horoscop-setmana"></div>
+    </div>
+  </section>
+
+  <!-- ══ PREDICCIONS ══ -->
+  <section id="tab-prediccions" style="display:none">
+    <div class="panel">
+      <h2>✨ La predicció del dia</h2>
+      <p>Una per a tothom, cada dia: petita, positiva i de bon complir.</p>
+      <div class="pred-carta"><div class="p-est">🌠</div><div class="p-txt" id="pred-dia"></div></div>
+    </div>
+    <div class="panel">
+      <h2>🎁 Vols una predicció per a tu?</h2>
+      <p style="margin-bottom:12px">Els nostres astres només saben dir coses boniques. Demana'n una i queda-te-la, o demana'n una altra: totes porten bona sort.</p>
+      <div class="pred-carta" id="pred-extra" style="display:none"><div class="p-est">💫</div><div class="p-txt" id="pred-extra-txt"></div></div>
+      <button class="btn-gran" onclick="novaPrediccio()">✨ Dona'm una predicció</button>
+    </div>
+  </section>
+</main>
+
+<div class="modal-bg" id="modal-bg">
+  <div class="modal" id="modal"></div>
+</div>
+
+<footer>
+  Una aplicació de <a href="https://gobo26.github.io/gobo26/" target="_self">Gobo26</a>
+</footer>
+
+<script>
+/* ============================================================
+   HORÒSCOP — Gobo26
+   Tot en positiu: vitalitat, esperança i bon rotllo.
+   Els textos d'avui i de la setmana són deterministes per data
+   i signe: tothom que consulti el mateix signe el mateix dia
+   veurà el mateix horòscop (patró mulberry32 de Gobo26).
+   ============================================================ */
+
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function lsGet(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+
+/* ---------- Elements ---------- */
+const ELEMENTS={
+  foc:  {nom:'Foc',   emoji:'🔥', color:'var(--foc)',
+         desc:'Energia, entusiasme i coratge. Els signes de foc encenen les idees i escalfen els cors.'},
+  terra:{nom:'Terra', emoji:'🌱', color:'var(--terra)',
+         desc:'Fermesa, paciència i sentit pràctic. Els signes de terra fan que les coses bones durin.'},
+  aire: {nom:'Aire',  emoji:'🌬️', color:'var(--aire)',
+         desc:'Idees, paraula i lleugeresa. Els signes d\'aire connecten les persones i airegen la vida.'},
+  aigua:{nom:'Aigua', emoji:'💧', color:'var(--aigua)',
+         desc:'Sensibilitat, intuïció i tendresa. Els signes d\'aigua cuiden, consolen i senten fondo.'}
+};
+
+/* ---------- Els 12 signes ---------- */
+const SIGNES=[
+ {nom:'Àries', sim:'♈', dates:'21 de març – 19 d\'abril', elem:'foc', color:'vermell coral', colorHex:'#ef4444',
+  personalitat:'Valents, espontanis i plens de vida. Són els primers a apuntar-se a tot i la seva energia s\'encomana: al seu costat, la mandra no té res a fer.',
+  capacitats:'Iniciativa, decisió i un talent natural per engrescar els altres i obrir camins nous.',
+  afinitats:'Leo, Sagitari i Gèminis: amb ells, l\'espurna es converteix en festa.',
+  gustos:'El moviment, l\'aire lliure, els reptes nous i l\'emoció d\'estrenar coses.',
+  cura:'El seu punt fort i delicat és el cap: els va d\'allò més bé descansar la vista, passejar per esbargir-se i dormir les hores que toquen.'},
+ {nom:'Taure', sim:'♉', dates:'20 d\'abril – 20 de maig', elem:'terra', color:'verd natura', colorHex:'#16a34a',
+  personalitat:'Serens, constants i de tracte dolç. Saben gaudir dels plaers senzills com ningú i fan sentir tothom com a casa.',
+  capacitats:'Paciència d\'or, perseverança i l\'art de crear ambients acollidors on tothom vol quedar-se.',
+  afinitats:'Verge, Capricorn i Càncer: seguretat, tendresa i sobretaules llargues.',
+  gustos:'La bona taula, la música, el jardí i les converses sense pressa.',
+  cura:'El coll i la gola són el seu tresor: bufandes a l\'hivern, infusions amb mel i escalfar la veu abans de cantar (els cantaires Taure ja ho saben!).'},
+ {nom:'Gèminis', sim:'♊', dates:'21 de maig – 20 de juny', elem:'aire', color:'groc lluminós', colorHex:'#eab308',
+  personalitat:'Curiosos, xerraires i àgils de ment. Tenen una joventut eterna i sempre porten una notícia, un acudit o una idea a la butxaca.',
+  capacitats:'Comunicar, aprendre de pressa i posar bon humor a qualsevol reunió.',
+  afinitats:'Balança, Aquari i Àries: conversa brillant i plans improvisats.',
+  gustos:'Les converses, els llibres, els viatges curts i tot allò que sigui nou.',
+  cura:'La seva força és la respiració: respirar fondo, caminar mentre xerren amb els amics i cantar (que és respirar amb música) els fa un bé enorme.'},
+ {nom:'Càncer', sim:'♋', dates:'21 de juny – 22 de juliol', elem:'aigua', color:'blanc perla', colorHex:'#cbd5e1',
+  personalitat:'Tendres, protectors i amb una memòria del cor prodigiosa. Fan de casa seva un refugi i dels seus, una família ben avinguda.',
+  capacitats:'Cuidar, intuir el que els altres necessiten i fer pinya en els moments importants.',
+  afinitats:'Escorpí, Peixos i Taure: complicitat silenciosa i afecte de debò.',
+  gustos:'La família, cuinar per als altres, els records, les fotografies i el mar.',
+  cura:'El seu centre és l\'estómac: menjar amb calma, sopars lleugers i deixar els neguits fora de la taula els asseguren digestions i somnis feliços.'},
+ {nom:'Leo', sim:'♌', dates:'23 de juliol – 22 d\'agost', elem:'foc', color:'daurat', colorHex:'#f59e0b',
+  personalitat:'Generosos, càlids i amb un cor tan gran com el seu somriure. On hi ha un Leo, hi ha llum, celebració i aplaudiments per a tothom.',
+  capacitats:'Liderar amb alegria, animar els desanimats i fer que cada persona se senti especial.',
+  afinitats:'Àries, Sagitari i Balança: brillantor compartida i festes memorables.',
+  gustos:'Les celebracions, el teatre, fer regals i els dies de sol.',
+  cura:'El seu motor és el cor: caminades alegres, riure cada dia (la millor medicina cardíaca) i envoltar-se de gent que els estimi.'},
+ {nom:'Verge', sim:'♍', dates:'23 d\'agost – 22 de setembre', elem:'terra', color:'verd oliva suau', colorHex:'#84cc16',
+  personalitat:'Detallistes, servicials i pràctics. Són aquelles persones que milloren tot el que toquen, sovint sense fer gens de soroll.',
+  capacitats:'Organitzar, polir els detalls i ajudar amb discreció i eficàcia.',
+  afinitats:'Taure, Capricorn i Escorpí: confiança, feina ben feta i lleialtat.',
+  gustos:'L\'ordre acollidor, la natura, les llistes ben ratllades i les feines ben acabades.',
+  cura:'El seu benestar passa per la digestió: rutines tranquil·les, verdura de temporada i pauses de tant en tant els mantenen fins i rialles.'},
+ {nom:'Balança', sim:'♎', dates:'23 de setembre – 22 d\'octubre', elem:'aire', color:'blau cel', colorHex:'#38bdf8',
+  personalitat:'Amables, diplomàtics i amb un sentit innat de la bellesa i la justícia. Al seu voltant, les coses tendeixen a posar-se al seu lloc.',
+  capacitats:'Fer les paus, crear harmonia i escoltar totes les campanes abans de decidir.',
+  afinitats:'Gèminis, Aquari i Leo: bellesa, conversa i companyia deliciosa.',
+  gustos:'L\'art, la música, la companyia agradable i els espais bonics i equilibrats.',
+  cura:'El seu secret és l\'equilibri, també a l\'esquena: estiraments suaus, bona postura i balancejar la feina amb el descans com fan amb tota la resta.'},
+ {nom:'Escorpí', sim:'♏', dates:'23 d\'octubre – 21 de novembre', elem:'aigua', color:'granat', colorHex:'#be123c',
+  personalitat:'Intensos en el millor sentit: lleials fins al moll de l\'os, profunds i apassionats. Qui té un Escorpí, té un tresor per sempre.',
+  capacitats:'Constància en allò que estimen, veure el fons de les coses i renéixer amb més força després de cada tempesta.',
+  afinitats:'Càncer, Peixos i Verge: converses de debò i lleialtat a prova de bombes.',
+  gustos:'Les novel·les de misteri, les converses profundes, l\'aigua en totes les seves formes: mar, termes i banys llargs.',
+  cura:'El seu do és la renovació: banys relaxants, deixar anar allò que pesa i dormir prou els retornen tota la seva força serena.'},
+ {nom:'Sagitari', sim:'♐', dates:'22 de novembre – 21 de desembre', elem:'foc', color:'porpra ultramar', colorHex:'#7c3aed',
+  personalitat:'Optimistes, aventurers i riallers, amb una punta de filòsof. Sempre veuen l\'ampolla mig plena i, si cal, la reomplen.',
+  capacitats:'Trobar el costat bo de tot, engrescar el grup i explicar històries que fan volar la imaginació.',
+  afinitats:'Àries, Leo i Aquari: aventures, riures i horitzons nous.',
+  gustos:'Viatjar, la natura en gran format, aprendre coses noves i el bon humor.',
+  cura:'Les cames i els malucs són el seu vehicle: caminar molt, fer excursions i estirar bé després els mantenen a punt per a la propera aventura.'},
+ {nom:'Capricorn', sim:'♑', dates:'22 de desembre – 19 de gener', elem:'terra', color:'verd bosc', colorHex:'#166534',
+  personalitat:'Responsables, tenaços i amb un humor fi que sorprèn qui no els coneix. La seva paraula val més que mil contractes.',
+  capacitats:'Constància de roca, fer costat sense fer-se veure i arribar sempre allà on es proposen.',
+  afinitats:'Taure, Verge i Peixos: confiança sòlida i afecte que no cal dir cada dia però hi és.',
+  gustos:'La muntanya, les tradicions, la feina ben acabada i els silencis còmodes amb la gent estimada.',
+  cura:'La seva estructura són els ossos i els genolls: moviment suau cada dia, una mica de sol amb mesura i recordar que no cal carregar-ho tot a la seva esquena.'},
+ {nom:'Aquari', sim:'♒', dates:'20 de gener – 18 de febrer', elem:'aire', color:'turquesa', colorHex:'#06b6d4',
+  personalitat:'Originals, solidaris i lliures com el vent. Van dos passos per davant i sempre pensant en com fer el món una mica millor.',
+  capacitats:'Tenir idees que ningú havia tingut, una amistat generosa i mirar el futur sense por.',
+  afinitats:'Gèminis, Balança i Sagitari: idees brillants, causes compartides i molta llibertat.',
+  gustos:'Les causes col·lectives, els invents, la tecnologia i tenir amics de tota mena i condició.',
+  cura:'La seva vitalitat viatja per la circulació: moure les cames sovint, ballar (encara que sigui a la cuina) i hidratar-se bé els manté lleugers i lluminosos.'},
+ {nom:'Peixos', sim:'♓', dates:'19 de febrer – 20 de març', elem:'aigua', color:'lila marí', colorHex:'#8b5cf6',
+  personalitat:'Somiadors, empàtics i amb ànima d\'artista. Senten la música, la pluja i les emocions dels altres com si fossin pròpies.',
+  capacitats:'Imaginació sense límits, consolar amb una mirada i convertir en art tot el que estimen.',
+  afinitats:'Càncer, Escorpí i Capricorn: tendresa, profunditat i una àncora amorosa.',
+  gustos:'La música, el mar, la poesia, les migdiades i els finals feliços.',
+  cura:'Els seus fonaments són els peus: caminar per la sorra, banys de peus calents al vespre i descansar sense mala consciència els retornen al seu núvol favorit.'}
+];
+
+/* ---------- Frases (totes positives, cap de tètrica) ---------- */
+const P_ENERGIA=[
+ 'Avui l\'univers et somriu: comença el dia amb el cap ben alt.',
+ 'Tens una energia lluminosa que s\'encomana. Reparteix-la sense por, que no s\'acaba.',
+ 'Dia rodó per començar allò que anaves ajornant: el primer pas és més petit del que sembla.',
+ 'Els petits detalls d\'avui són llavors de coses grans. Sembra\'n uns quants.',
+ 'La teva bona cara obrirà més portes que qualsevol clau.',
+ 'Jornada tranquil·la i fèrtil: aprofita-la per posar ordre al que estimes.',
+ 'Avui toca brillar sense demanar permís.',
+ 'El vent bufa a favor: desplega les veles i deixa\'t portar una mica.',
+ 'Un somriure teu pot canviar el dia d\'algú. Comprova-ho i m\'ho expliques.',
+ 'La sort d\'avui es fixa en els agraïts: dona les gràcies i observa què passa.',
+ 'Tens més força de la que et penses, i avui ho notaràs.',
+ 'Dia perfecte per fer una cosa senzilla i fer-la molt ben feta.',
+ 'La curiositat serà la teva brúixola: segueix-la i et portarà a un lloc bonic.',
+ 'Res no et pot aturar si camines amb calma i bon humor.'
+];
+const P_COR=[
+ 'Truca aquella persona que fa dies que et balla pel cap: li faràs el dia.',
+ 'Una conversa pausada valdrà més que cent missatges. Busca-la.',
+ 'Algú del teu entorn necessita un cop de mà discret, i tu tens l\'ull fi per veure-ho.',
+ 'Els amics són el teu tresor aquesta temporada: rega\'ls com les plantes.',
+ 'Digues en veu alta allò bo que penses d\'algú. No t\'ho guardis, que es fa malbé.',
+ 'Escolta el doble i parla la meitat: veuràs quina màgia.',
+ 'Un detall petit —una nota, un cafè, una abraçada— tindrà efectes enormes.',
+ 'Si hi ha paus per fer, fes-les: pesa molt menys el perdó que el rancor.',
+ 'Comparteix el que saps amb algú: ensenyar és una manera d\'estimar.',
+ 'Avui és bon dia per dir «gràcies» i «t\'estimo» sense estalviar-ne.',
+ 'La gent que t\'estima et veu més fort del que et penses. Deixa que t\'ho diguin.',
+ 'Riu amb algú fins que us facin mal les galtes: és gratis i cura.'
+];
+const P_COS=[
+ 'Una passejada de vint minuts et posarà les idees i el cos a lloc.',
+ 'Beu una mica més d\'aigua del que et sembla necessari: el cos t\'ho agrairà en silenci.',
+ 'Estira l\'esquena en llevar-te, a poc a poc i amb estil, com els gats.',
+ 'Fruita de temporada a mig matí: gest petit, efecte gran.',
+ 'Tria les escales en comptes de l\'ascensor, si els genolls hi estan d\'acord.',
+ 'Deu minuts de sol amb seny: vitamina D i alegria en un sol gest.',
+ 'Sopar lleuger i dormir bé: la recepta de bellesa més antiga i eficaç del món.',
+ 'Balla una cançó sencera a la cuina. Compta com a gimnàstica, paraula.',
+ 'Respira fondo tres cops abans de cada àpat: digestió millor i cap més clar.',
+ 'Cuida els peus, que ho aguanten tot: bany calent i mitjons còmodes.',
+ 'Una becaina curta no és mandra: és manteniment de primera qualitat.',
+ 'Mou les espatlles i el coll de tant en tant, sobretot si mires pantalles.'
+];
+const P_MENT=[
+ 'Escriu tres coses bones del dia abans de dormir: entrenaràs la mirada per veure-les.',
+ 'No et creguis tots els pensaments que passen: alguns només fan soroll.',
+ 'Cinc minuts de silenci amb els ulls tancats valen per una hora de neguit.',
+ 'Posa la música que t\'agrada mentre fas feines: la ment balla i descansa alhora.',
+ 'Parla\'t a tu mateix com parlaries a un bon amic. T\'ho mereixes igual.',
+ 'Deixa per demà les preocupacions de demà: avui ja té prou feina amb ser bonic.',
+ 'Aprèn una cosa petita cada dia: la curiositat és la joventut de la ment.',
+ 'Si el cap va massa de pressa, peus a terra i una respiració ben llarga.',
+ 'Recorda un moment feliç amb tots els detalls: el cervell hi torna encantat.',
+ 'Digues «no» a una cosa que et pesi: cada «no» assenyat és un «sí» a tu.',
+ 'Endreça un calaix petit: l\'ordre de fora endreça una mica el de dins.',
+ 'Mira el cel un minut sencer. Funciona des de fa mil·lennis.'
+];
+const P_CANTAIRES=[
+ 'Avui el teu do de pit sortirà rodó: no el malgastis renyant ningú.',
+ 'Hidrata la veu: l\'aigua és l\'afinador més barat del mercat.',
+ 'Si el director et mira fixament, no pateixis: és que brilles (gairebé segur).',
+ 'Bon dia per repassar la partitura... però primer cuida la veu, que és l\'instrument.',
+ 'Els astres recomanen vocalitzar a la dutxa: acústica d\'auditori i públic fidel.',
+ 'Compte amb els gelats just abans de l\'assaig: la gola juga a l\'equip titular.',
+ 'Avui encertaràs l\'entrada a la primera. Gaudeix del miracle i dissimula.',
+ 'Un cantaire content afina millor: riu una mica abans de començar.',
+ 'Si et perds a la partitura, cara de concentració i endavant: funciona des de Bach.',
+ 'Mercuri afavoreix els que porten llapis a l\'assaig per apuntar-ho tot.',
+ 'Canta mentre cuines: el sofregit surt més bo en la teva tonalitat.',
+ 'Aquesta setmana, respira amb el diafragma fins i tot per badallar.',
+ 'La teva corda —soprano, contralt, tenor o baix— serà l\'enveja de l\'assaig.',
+ 'Recorda: el silenci també és música. Sobretot quan ho diu el director.'
+];
+const P_SET_INICI=[
+ 'Comença la setmana a poc a poc però sense aturar-te: pas de processó, constància de campanar.',
+ 'Els primers dies porten una idea nova: apunta-la abans no s\'envoli.',
+ 'Estrena la setmana endreçant una cosa petita: donarà to a tota la resta.',
+ 'Inici de setmana amable amb tothom: el que sembris dilluns, ho colliràs divendres.',
+ 'Arrenca amb un bon esmorzar i un propòsit senzill: no cal res més.',
+ 'Fes primer allò que menys et vingui de gust: després tot seran flors.',
+ 'Dilluns i dimarts venen amb energia neta: guarda-la per al que és important.',
+ 'Comença apuntant les tres coses que vols que passin aquesta setmana. Ja en tens una de feta: pensar-hi.'
+];
+const P_SET_MIG=[
+ 'A mitja setmana, una conversa inesperada et farà somriure.',
+ 'Dimecres és un gran dia per trucar algú que trobes a faltar.',
+ 'Si el cansament treu el nas, mitja hora per a tu: música, llibre o sofà.',
+ 'A mig camí, mira enrere només per veure tot el que ja has fet. No està gens malament, oi?',
+ 'Una bona notícia petita es presentarà quan menys t\'ho esperis.',
+ 'Reserva un vespre per no fer res amb algú que estimes: agenda sagrada.',
+ 'El cos et demanarà verdura i passejada: fes-li cas, que hi entén.',
+ 'Meitat de setmana: revisa els propòsits amb tendresa, no pas amb exigència.'
+];
+const P_SET_CAP=[
+ 'El cap de setmana porta taula parada i riures: no hi facis tard.',
+ 'Aire lliure dissabte o diumenge: el sol i tu teniu una cita pendent.',
+ 'Un àpat compartit tancarà la setmana amb nota ben alta.',
+ 'Descansa sense mala consciència: recarregar-se també és avançar.',
+ 'Bon moment per a la música: un concert, un disc antic o cantar amb els amics.',
+ 'Els astres recomanen migdiada i passejada, per aquest ordre o per l\'invers.',
+ 'Dedica una estona a aquella afició que sempre queda per l\'última: t\'ho has guanyat.',
+ 'Diumenge al vespre, prepara la setmana amb calma i una bona infusió.'
+];
+const P_PREDICCIONS=[
+ 'Molt aviat algú et dirà que li vas fer costat en el moment just. No ho oblidarà mai.',
+ 'Aquesta setmana faràs somriure una persona sense ni adonar-te\'n. L\'univers en pren nota.',
+ 'Un petit gest teu de generositat tornarà multiplicat quan menys t\'ho esperis.',
+ 'Estàs a punt de descobrir que ets més capaç del que et pensaves.',
+ 'Vindran dies bons. I tu en seràs una de les causes.',
+ 'Una persona que estimes necessitarà que l\'escoltis aquests dies. Hi seràs, com sempre.',
+ 'El teu bon humor serà contagiós: prepara\'t per a una epidèmia de somriures.',
+ 'Aviat tancaràs un assumpte pendent i dormiràs com un tronc.',
+ 'Algú més jove aprendrà de tu una cosa que recordarà tota la vida.',
+ 'La teva paciència d\'aquests dies donarà fruit abans del que et penses.',
+ 'Se t\'acosta una alegria petita i rodona, de les que no surten al diari però es recorden anys.',
+ 'El teu exemple silenciós està inspirant algú que t\'observa amb admiració.',
+ 'Trobaràs temps per a allò que sempre dius que no tens temps de fer. I t\'encantarà.',
+ 'Una amistat antiga reapareixerà amb la mateixa complicitat de sempre.',
+ 'Els teus esforços per cuidar-te començaran a notar-se: el mirall i l\'ànim ho confirmaran.',
+ 'Faràs una bona acció en secret i serà la millor part del teu dia.',
+ 'El món és una mica millor perquè hi ets. Aviat en tindràs una prova concreta.',
+ 'La sort afavoreix els cors agraïts, i el teu ja fa temps que s\'hi entrena.'
+];
+const COLORS_SORT=[
+ ['vermell coral','#ef4444'],['blau cel','#38bdf8'],['verd esperança','#22c55e'],
+ ['groc sol','#eab308'],['lila lavanda','#a78bfa'],['turquesa','#06b6d4'],
+ ['rosa alba','#f472b6'],['daurat','#f59e0b'],['verd menta','#34d399'],['blau ultramar','#2563eb']
+];
+
+/* ---------- Dates ---------- */
+const DIES=['diumenge','dilluns','dimarts','dimecres','dijous','divendres','dissabte'];
+const MESOS=['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'];
+function deMes(m){ const n=MESOS[m]; return ('aeiou'.includes(n[0])?"d'":"de ")+n; }
+function dataLlargaAny(d){ const dia=DIES[d.getDay()]; return dia.charAt(0).toUpperCase()+dia.slice(1)+', '+d.getDate()+' '+deMes(d.getMonth())+' de '+d.getFullYear(); }
+function seedDia(){ const d=new Date(); return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate(); }
+function setmanaISO(d){
+  const x=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+  const dia=x.getUTCDay()||7; x.setUTCDate(x.getUTCDate()+4-dia);
+  const cap=new Date(Date.UTC(x.getUTCFullYear(),0,1));
+  return Math.ceil(((x-cap)/86400000+1)/7);
+}
+function seedSetmana(){ const d=new Date(); return d.getFullYear()*100+setmanaISO(d); }
+function rangSetmana(){
+  const d=new Date(); const dl=new Date(d); const off=(d.getDay()||7)-1;
+  dl.setDate(d.getDate()-off); const dg=new Date(dl); dg.setDate(dl.getDate()+6);
+  const f=x=>x.getDate()+' '+deMes(x.getMonth());
+  return 'del '+f(dl)+' al '+f(dg);
+}
+
+/* ---------- Tria determinista de frases ---------- */
+function triaFrases(seed, pools){
+  const rng=mulberry32(seed);
+  return pools.map(pool=>pool[Math.floor(rng()*pool.length)]);
+}
+
+/* ---------- Estat ---------- */
+const $=id=>document.getElementById(id);
+let signeSel=lsGet('horoscop_signe',null); // índex del signe triat (persistit)
+
+/* ---------- Render: elements i graella de signes ---------- */
+function renderElements(){
+  $('elements').innerHTML=Object.values(ELEMENTS).map(e=>
+    `<div class="elem" style="background:${e.color}">
+      <div class="e-nom">${e.emoji} ${e.nom}</div>
+      <div class="e-desc">${e.desc}</div>
+    </div>`).join('');
+}
+function renderGrid(){
+  $('signes-grid').innerHTML=SIGNES.map((s,i)=>
+    `<button class="signe-btn" onclick="obreFitxa(${i})">
+      <div class="s-sim" style="color:${ELEMENTS[s.elem].color}">${s.sim}</div>
+      <div class="s-nom">${s.nom}</div>
+      <div class="s-dates">${s.dates}</div>
+    </button>`).join('');
+}
+function obreFitxa(i){
+  const s=SIGNES[i], e=ELEMENTS[s.elem];
+  const f=$('fitxa');
+  f.style.display='block';
+  f.innerHTML=`
+    <div class="fitxa-cap">
+      <div class="fitxa-sim" style="background:${e.color}">${s.sim}</div>
+      <div>
+        <h2>${s.nom}</h2>
+        <div class="f-dates">${s.dates}</div>
+        <div class="f-chips">
+          <span class="f-chip" style="background:${e.color}">${e.emoji} Signe ${s.elem==='aigua'||s.elem==='aire'?"d'":"de "}${e.nom.toLowerCase()}</span>
+          <span class="f-chip" style="background:${s.colorHex}">🎨 ${s.color}</span>
+        </div>
+      </div>
+    </div>
+    <div class="fitxa-camps">
+      <div class="f-camp"><div class="fc-tit">💛 Personalitat</div><div class="fc-txt">${s.personalitat}</div></div>
+      <div class="f-camp"><div class="fc-tit">🌟 Capacitats</div><div class="fc-txt">${s.capacitats}</div></div>
+      <div class="f-camp"><div class="fc-tit">🤝 Afinitats</div><div class="fc-txt">${s.afinitats}</div></div>
+      <div class="f-camp"><div class="fc-tit">🍀 Gustos</div><div class="fc-txt">${s.gustos}</div></div>
+      <div class="f-camp" style="grid-column:1/-1"><div class="fc-tit">💆 Com cuidar-se</div><div class="fc-txt">${s.cura}</div></div>
+    </div>`;
+  f.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* ---------- Selector compacte de signes ---------- */
+function renderTria(contId, cb){
+  $(contId).innerHTML=SIGNES.map((s,i)=>
+    `<button class="${signeSel===i?'sel':''}" onclick="triaSigne(${i},'${cb}')">
+      <span class="t-sim" style="color:${ELEMENTS[s.elem].color}">${s.sim}</span>${s.nom}
+    </button>`).join('');
+}
+function triaSigne(i, cb){
+  signeSel=i; lsSet('horoscop_signe',i);
+  renderTria('tria-avui','avui'); renderTria('tria-setmana','setmana');
+  if(cb==='avui')renderAvui(); else renderSetmana();
+}
+
+/* ---------- Horòscop d'avui ---------- */
+function renderAvui(){
+  const cont=$('horoscop-avui');
+  if(signeSel==null){ cont.innerHTML='<p style="color:var(--ink3)">Tria un signe i et direm com pinta el dia (avancem que pinta bé).</p>'; return; }
+  const s=SIGNES[signeSel];
+  const [energia,cor,cos,ment,cant]=triaFrases(seedDia()+signeSel*131,
+    [P_ENERGIA,P_COR,P_COS,P_MENT,P_CANTAIRES]);
+  const rng=mulberry32(seedDia()+signeSel*977);
+  const num=1+Math.floor(rng()*9);
+  const col=COLORS_SORT[Math.floor(rng()*COLORS_SORT.length)];
+  cont.innerHTML=`
+    <div class="h-data">☀️ ${dataLlargaAny(new Date())} · ${s.sim} ${s.nom}</div>
+    <div class="h-bloc"><div class="hb-ic">🌞</div><div><div class="hb-tit">L'energia del dia</div><div class="hb-txt">${energia}</div></div></div>
+    <div class="h-bloc"><div class="hb-ic">💛</div><div><div class="hb-tit">Cor i companyia</div><div class="hb-txt">${cor}</div></div></div>
+    <div class="h-bloc"><div class="hb-ic">💪</div><div><div class="hb-tit">Cuida el cos</div><div class="hb-txt">${cos}</div></div></div>
+    <div class="h-bloc"><div class="hb-ic">🧘</div><div><div class="hb-tit">Cuida la ment</div><div class="hb-txt">${ment}</div></div></div>
+    <div class="h-bloc"><div class="hb-ic">🍀</div><div><div class="hb-tit">La sort d'avui</div>
+      <div class="sort">
+        <span class="s-item">🔢 Número: <b>${num}</b></span>
+        <span class="s-item"><span class="s-color-dot" style="background:${col[1]}"></span>Color: <b>${col[0]}</b></span>
+      </div></div></div>
+    <div class="cantaires"><div class="hb-tit">🎵 Nota per a cantaires i músics</div><div class="hb-txt">${cant}</div></div>`;
+}
+
+/* ---------- Horòscop de la setmana ---------- */
+function renderSetmana(){
+  const cont=$('horoscop-setmana');
+  if(signeSel==null){ cont.innerHTML='<p style="color:var(--ink3)">Tria un signe i et desplegarem la setmana sencera (tranquil, ve carregada de coses bones).</p>'; return; }
+  const s=SIGNES[signeSel];
+  const [inici,mig,cap,cos,ment,cant]=triaFrases(seedSetmana()*53+signeSel*17,
+    [P_SET_INICI,P_SET_MIG,P_SET_CAP,P_COS,P_MENT,P_CANTAIRES]);
+  cont.innerHTML=`
+    <div class="h-data">📆 Setmana ${rangSetmana()} · ${s.sim} ${s.nom}</div>
+    <div class="h-bloc"><div class="hb-ic">🌅</div><div><div class="hb-tit">Començant la setmana</div><div class="hb-txt">${inici}</div></div></div>
+    <div class="h-bloc"><div class="hb-ic">⛅</div><div><div class="hb-tit">A mig camí</div><div class="hb-txt">${mig}</div></div></div>
+    <div class="h-bloc"><div class="hb-ic">🌇</div><div><div class="hb-tit">Cap de setmana</div><div class="hb-txt">${cap}</div></div></div>
+    <div class="h-bloc"><div class="hb-ic">💪</div><div><div class="hb-tit">Salut de la setmana</div><div class="hb-txt">${cos} I per dins: ${ment.charAt(0).toLowerCase()+ment.slice(1)}</div></div></div>
+    <div class="cantaires"><div class="hb-tit">🎵 Nota per a cantaires i músics</div><div class="hb-txt">${cant}</div></div>`;
+}
+
+/* ---------- Prediccions ---------- */
+function renderPrediccioDia(){
+  const rng=mulberry32(seedDia()*7+3);
+  $('pred-dia').textContent=P_PREDICCIONS[Math.floor(rng()*P_PREDICCIONS.length)];
+}
+let ultimaPred=-1;
+function novaPrediccio(){
+  let i;
+  do{ i=Math.floor(Math.random()*P_PREDICCIONS.length); }while(i===ultimaPred&&P_PREDICCIONS.length>1);
+  ultimaPred=i;
+  const carta=$('pred-extra');
+  carta.style.display='block';
+  carta.style.animation='none'; carta.offsetHeight; carta.style.animation='';
+  $('pred-extra-txt').textContent=P_PREDICCIONS[i];
+}
+
+/* ---------- Pestanyes ---------- */
+function triaTab(tab){
+  ['signes','avui','setmana','prediccions'].forEach(t=>{
+    $('tab-'+t).style.display = t===tab?'block':'none';
+  });
+  document.querySelectorAll('.controls [data-tab]').forEach(b=>b.classList.toggle('actiu', b.dataset.tab===tab));
+  if(tab==='avui')renderAvui();
+  if(tab==='setmana')renderSetmana();
+  if(tab==='prediccions')renderPrediccioDia();
+}
+
+/* ---------- Ajuda ---------- */
+function obreAjuda(){
+  $('modal').innerHTML=`
+    <div class="big">🌟</div>
+    <h3>L'Horòscop de Gobo26</h3>
+    <p style="margin-bottom:8px">Un horòscop fet amb una sola intenció: <b>fer-te somriure i donar-te ànims</b>. Aquí no hi trobaràs mai res de fosc ni de tètric.</p>
+    <ul>
+      <li><b>Els signes</b>: les fitxes dels 12 signes, amb el seu element, personalitat i com cuidar-se.</li>
+      <li><b>Avui i La setmana</b>: l'horòscop canvia cada dia i cada setmana, i és el mateix per a tothom que consulti el mateix signe.</li>
+      <li><b>Prediccions</b>: només en sabem de bones. Demana'n tantes com vulguis.</li>
+      <li>I com que els amics de la casa són cantaires, cada horòscop porta una <b>🎵 nota per a cantaires i músics</b>.</li>
+    </ul>
+    <p style="margin-top:8px; font-size:.8rem; color:var(--ink3)">Els consells de salut són de sentit comú i bon humor: per a res seriós, el metge de capçalera sempre té l'última paraula. ✨</p>
+    <button onclick="tancaModal()">Entesos!</button>`;
+  $('modal-bg').classList.add('show');
+}
+function tancaModal(){ $('modal-bg').classList.remove('show'); }
+$('modal-bg').addEventListener('click',e=>{ if(e.target===$('modal-bg'))tancaModal(); });
+
+/* ---------- Arrencada ---------- */
+renderElements();
+renderGrid();
+renderTria('tria-avui','avui');
+renderTria('tria-setmana','setmana');
+renderAvui(); renderSetmana(); renderPrediccioDia();
+</script>
+</body>
+</html>
