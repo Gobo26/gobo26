@@ -378,10 +378,13 @@ function construirPistes(S, rowSol, colSol, N, rooms, victimIdx, difKey){
   const cell=(r,c)=>r*N+c;
   const rn=idx=>rooms[idx][1];
   const add=(t,dep,test,w)=>P.push({t,dep,test,w});
+  // L'assassí és qui ocupa l'habitació de la víctima: cap pista directa
+  // ha de poder pintar-lo allà (la seva columna només es dedueix).
+  const esKiller=i=>cell(rowSol[i],colSol[i])===victimIdx;
   // Absolutes (sempre al pool: garanteixen unicitat assolible)
   for(let i=0;i<N;i++){
     add(`${nomCap(S[i])} és ${filaText(rowSol[i],N)}.`,'row',(ro)=>ro[i]===rowSol[i],1);
-    add(`${nomCap(S[i])} és ${colText(colSol[i],N)}.`,'col',(ro,co)=>co[i]===colSol[i],1);
+    if(!esKiller(i)) add(`${nomCap(S[i])} és ${colText(colSol[i],N)}.`,'col',(ro,co)=>co[i]===colSol[i],1);
   }
   // Relatives simples
   for(let i=0;i<N;i++)for(let j=0;j<N;j++){ if(i===j)continue;
@@ -397,7 +400,7 @@ function construirPistes(S, rowSol, colSol, N, rooms, victimIdx, difKey){
   for(let i=0;i<N;i++){
     for(let c=0;c<N;c++){ if(c===colSol[i])continue; const idx=cell(rowSol[i],c); if(idx===victimIdx)continue;
       add(`${nomCap(S[i])} és a la mateixa fila que «${rn(idx)}».`,'row',(ro)=>ro[i]===rowSol[i],2); break; }
-    for(let r=0;r<N;r++){ if(r===rowSol[i])continue; const idx=cell(r,colSol[i]); if(idx===victimIdx)continue;
+    if(!esKiller(i)) for(let r=0;r<N;r++){ if(r===rowSol[i])continue; const idx=cell(r,colSol[i]); if(idx===victimIdx)continue;
       add(`${nomCap(S[i])} és a la mateixa columna que «${rn(idx)}».`,'col',(ro,co)=>co[i]===colSol[i],2); break; }
   }
   if(difKey!=='facil'){
@@ -455,7 +458,7 @@ function generarCas(difKey, rng, isDaily){
 /* ============================================================
    ESTAT I INTERFÍCIE
    ============================================================ */
-const G={ cas:null, placement:{}, sel:null, elapsed:0, timerId:null, running:false, so:true };
+const G={ cas:null, placement:{}, sel:null, elapsed:0, timerId:null, running:false, so:true, pistes:0 };
 
 const $=id=>document.getElementById(id);
 
@@ -592,15 +595,33 @@ function treuTot(){
 
 function donaPista(){
   const c=G.cas;
-  // busca un sospitós no col·locat correctament
+  const celCorrecta=i=>c.rowSol[i]*c.N+c.colSol[i];
+  // 1) Si hi ha algú mal col·locat, l'assenyala (sense dir on hauria d'anar)
+  const mals=[];
+  for(let i=0;i<c.N;i++){ if(G.placement[i]!=null && G.placement[i]!==celCorrecta(i)) mals.push(i); }
+  if(mals.length>0){
+    const i=mals[Math.floor(Math.random()*mals.length)];
+    const cel=document.querySelector('.cel[data-idx="'+G.placement[i]+'"]');
+    if(cel){ cel.classList.add('conflicte'); setTimeout(updateConflictes,1000); }
+    G.pistes=(G.pistes||0)+1;
+    toast('🧐 '+nomCap(c.suspects[i])+' no és on l\'has posat...');
+    so(330,0.12); guarda();
+    return;
+  }
+  // 2) Revela l'habitació d'un sospitós que MAI és l'assassí:
+  //    així la pista no delata qui comparteix habitació amb la víctima.
   const cands=[];
-  for(let i=0;i<c.N;i++){ const correcte=c.rowSol[i]*c.N+c.colSol[i]; if(G.placement[i]!==correcte)cands.push(i); }
-  if(cands.length===0){ toast('Ja ho tens tot ben col·locat! 🎉'); return; }
+  for(let i=0;i<c.N;i++){ if(i===c.killer)continue; if(G.placement[i]!==celCorrecta(i))cands.push(i); }
+  if(cands.length===0){
+    if(G.placement[c.killer]===celCorrecta(c.killer)){ toast('Ja ho tens tot ben col·locat! 🎉'); }
+    else{ toast('🕵️ L\'últim pas és teu, detectiu: dedueix on és l\'assassí!'); so(330,0.12); }
+    return;
+  }
   const i=cands[Math.floor(Math.random()*cands.length)];
-  const idx=c.rowSol[i]*c.N+c.colSol[i];
+  const idx=celCorrecta(i);
   // treu qui hi hagués
   const prev=Object.keys(G.placement).find(k=>G.placement[k]===idx); if(prev!=null)delete G.placement[prev];
-  G.placement[i]=idx; G.sel=null;
+  G.placement[i]=idx; G.sel=null; G.pistes=(G.pistes||0)+1;
   render(); guarda(); so(880,0.1,'triangle');
   const cel=document.querySelector('.cel[data-idx="'+idx+'"]'); if(cel){cel.classList.add('correcte-flash'); setTimeout(()=>cel.classList.remove('correcte-flash'),700);}
   toast('💡 Pista: '+nomCap(c.suspects[i])+' va a «'+c.rooms[idx][1]+'»');
@@ -616,8 +637,12 @@ function esSolucio(){
 function comprova(){
   const c=G.cas, posats=Object.keys(G.placement).length;
   if(posats<c.N){ toast('Encara et falten '+(c.N-posats)+' sospitós(os) per col·locar.'); so(300,0.12,'sawtooth'); return; }
-  if(esSolucio()) guanyar();
-  else{ toast('Hi ha alguna cosa que no encaixa amb les pistes. 🤔','err'); so(200,0.18,'sawtooth'); vibra([20,40,20]); }
+  if(esSolucio()){ guanyar(); return; }
+  let bons=0;
+  for(let i=0;i<c.N;i++){ if(G.placement[i]===c.rowSol[i]*c.N+c.colSol[i])bons++; }
+  if(bons===0) toast('Cap sospitós és al lloc correcte. Torna a repassar les pistes. 🤔','err');
+  else toast('En tens '+bons+' de '+c.N+' ben col·locats, però alguna cosa no encaixa. 🤔','err');
+  so(200,0.18,'sawtooth'); vibra([20,40,20]);
 }
 function comprovaVictoria(){ if(esSolucio())guanyar(); }
 
@@ -655,6 +680,7 @@ function guanyar(){
     <div class="stats">
       <div><div class="n">${tempsFmt(G.elapsed)}</div><div class="l">Temps</div></div>
       <div><div class="n">${c.clues.length}</div><div class="l">Pistes</div></div>
+      <div><div class="n">${G.pistes||0}</div><div class="l">Ajudes</div></div>
     </div>
     ${extra}
     <button onclick="tancaModal();casNou()">🔄 Un altre cas</button>
@@ -678,6 +704,7 @@ function obreAjuda(){
       <li>Cada sospitós ocupa una habitació: <b>un per cada fila i un per cada columna</b> (com un sudoku).</li>
       <li>Toca un <b>sospitós</b> i després l'<b>habitació</b> on el vols posar. Si dos comparteixen fila o columna, es marquen en <b>vermell</b>.</li>
       <li>Fes servir les <b>pistes</b> per deduir on va cadascú. Sempre hi ha una única solució possible.</li>
+      <li>Si t'encalles, el botó <b>💡 Pista</b> t'ajuda una mica, però <b>mai no et dirà qui és l'assassí</b>: descobrir-lo és cosa teva.</li>
       <li>L'<b>assassí</b> és qui acaba a l'habitació de la víctima. Col·loca'ls tots correctament per resoldre el cas!</li>
     </ul>
     <button onclick="tancaModal()">Entesos</button>
@@ -689,16 +716,16 @@ function dataAvui(){ const d=new Date(); return d.getFullYear()+'-'+(d.getMonth(
 function dataAhir(){ const d=new Date(Date.now()-86400000); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
 function seedData(){ const d=new Date(); return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate(); }
 
-function guarda(){ if(G._guanyat||!G.cas)return; lsSet('murdoku_partida',{cas:G.cas, placement:G.placement, elapsed:G.elapsed}); }
+function guarda(){ if(G._guanyat||!G.cas)return; lsSet('murdoku_partida',{cas:G.cas, placement:G.placement, elapsed:G.elapsed, pistes:G.pistes}); }
 function restaura(){
   const p=lsGet('murdoku_partida',null); if(!p||!p.cas)return false;
-  G.cas=p.cas; G.placement=p.placement||{}; G.elapsed=p.elapsed||0; G._guanyat=false; G.sel=null;
+  G.cas=p.cas; G.placement=p.placement||{}; G.elapsed=p.elapsed||0; G.pistes=p.pistes||0; G._guanyat=false; G.sel=null;
   render(); actualitzaHint(); arrencaTimer(); return true;
 }
 
 /* ---------- Iniciar casos ---------- */
 function novaPartida(cas){
-  paraTimer(); G.cas=cas; G.placement={}; G.sel=null; G.elapsed=0; G._guanyat=false;
+  paraTimer(); G.cas=cas; G.placement={}; G.sel=null; G.elapsed=0; G.pistes=0; G._guanyat=false;
   render(); actualitzaHint(); arrencaTimer(); guarda();
 }
 let difActual='mitja';

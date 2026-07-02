@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>INVASORS – Gobo26</title>
+<meta name="description" content="Invasors: defensa la Terra dels invasors de l'espai, onada rere onada. Joc d'arcade clàssic de la col·lecció Gobo26.">
+<meta name="theme-color" content="#1e293b">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #f1f5f9;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            min-height: 100dvh;
+            overflow: hidden;
+        }
+
+        /* ── HEADER GOBO26 ── */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: #1e293b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            height: 52px;
+            flex-shrink: 0;
+        }
+
+        .logo { display:flex; align-items:center; gap:8px; text-decoration:none; }
+        .logo-txt { font-size:.9rem; font-weight:900; color:white; letter-spacing:-.5px; }
+        .logo-txt span { color:#3b82f6; }
+
+        .hdr-title{
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #4ade80;
+            letter-spacing: 2px;
+        }
+
+        #btn-so {
+            background: transparent;
+            border: 0;
+            color: #cbd5e1;
+            font-size: 1.15rem;
+            cursor: pointer;
+            padding: 2px 4px;
+            line-height: 1;
+            width: 38px;
+        }
+
+        /* ── MARCADOR ── */
+        #hud {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            background: #1e293b;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        .hud-pill {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hud-pill span.val {
+            color: #4ade80;
+            font-size: 1rem;
+        }
+
+        .hud-vides { display: flex; gap: 4px; }
+        .vida { font-size: 1rem; transition: transform 0.2s; }
+        .vida.perduda { opacity: 0.2; transform: scale(0.7); }
+
+        /* ── ÀREA DE JOC ── */
+        #zona-joc {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #pantalla-joc {
+            background: #020617;
+            border: 3px solid #16a34a;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(22,163,74,0.4), inset 0 0 60px rgba(0,0,0,0.5);
+            display: block;
+            touch-action: none;
+        }
+
+        /* ── OVERLAY MISSATGE ── */
+        #overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(2,6,23,0.88);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            border-radius: 6px;
+        }
+
+        #overlay.ocult { display: none; }
+
+        .caixa-missatge {
+            background: #1e293b;
+            border: 3px solid #16a34a;
+            border-radius: 20px;
+            padding: 28px 36px;
+            text-align: center;
+            max-width: 340px;
+            width: 90%;
+            box-shadow: 0 0 40px rgba(22,163,74,0.5);
+        }
+
+        .caixa-missatge h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #4ade80;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .caixa-missatge p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .caixa-missatge .punts-finals {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #22d3ee;
+            margin: 10px 0 18px;
+        }
+
+        #btn-joc {
+            background: #16a34a;
+            color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: background 0.2s, transform 0.1s;
+            min-height: 48px;
+            width: 100%;
+        }
+
+        #btn-joc:hover { background: #15803d; }
+        #btn-joc:active { transform: scale(0.97); }
+
+        /* ── CONFETTI ── */
+        .confetti-piece {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            animation: confetti-fall 1.2s ease-out forwards;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @keyframes confetti-fall {
+            0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(200px) rotate(720deg); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER GOBO26 -->
+<header>
+    <a href="https://gobo26.github.io/gobo26/" target="_self" class="logo">
+        <svg width="32" height="32" viewBox="0 0 40 46" fill="none">
+            <path d="M20 1L38 11V33L20 43L2 33V11L20 1Z" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="20" y="23" text-anchor="middle" fill="white" font-family="system-ui,sans-serif" font-weight="900" font-size="9">GOBO</text>
+            <text x="20" y="33" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-weight="900" font-size="7">26</text>
+        </svg>
+        <span class="logo-txt">Gobo<span>26</span></span>
+    </a>
+    <span class="hdr-title">INVASORS</span>
+    <button type="button" id="btn-so" title="So" onclick="toggleSo()">🔊</button>
+</header>
+
+<!-- HUD -->
+<div id="hud">
+    <div class="hud-pill">Onada <span class="val" id="txt-nivell">1</span></div>
+    <div class="hud-pill">Punts <span class="val" id="txt-punts">0</span></div>
+    <div class="hud-pill">🏆 <span class="val" id="txt-record">0</span></div>
+    <div class="hud-pill hud-vides" id="hud-vides">
+        <span class="vida" id="v1">❤️</span>
+        <span class="vida" id="v2">❤️</span>
+        <span class="vida" id="v3">❤️</span>
+    </div>
+</div>
+
+<!-- ZONA JOC -->
+<div id="zona-joc">
+    <canvas id="pantalla-joc"></canvas>
+
+    <!-- Overlay missatge -->
+    <div id="overlay">
+        <div class="caixa-missatge">
+            <h2 id="titol-overlay">INVASORS 👾</h2>
+            <p id="text-overlay">Defensa la Terra! Mou la nau i dispara als invasors abans no arribin a baix.</p>
+            <div class="punts-finals" id="punts-overlay" style="display:none">0</div>
+            <button type="button" id="btn-joc" onclick="comencarJoc()">JUGAR!</button>
+        </div>
+    </div>
+</div>
+
+<footer style="font-size:.72rem;color:#94a3b8;font-weight:600;text-align:center;padding:16px;flex-shrink:0;border-top:1px solid #1e2d45;background:#1e293b;">
+    <a href="https://gobo26.github.io/gobo26/" target="_self"
+       style="display:inline-flex;align-items:center;gap:6px;opacity:0.4;transition:opacity 0.2s;color:#94a3b8;text-decoration:none;"
+       onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=0.4">
+        <svg width="13" height="13" viewBox="0 0 100 100" fill="none"><polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="#94a3b8"/><text x="50" y="44" text-anchor="middle" fill="white" font-size="26" font-weight="800" font-family="sans-serif">G</text><text x="50" y="68" text-anchor="middle" fill="#1e293b" font-size="22" font-weight="700" font-family="sans-serif">26</text></svg>
+        Una aplicació de Gobo26
+    </a>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════
+//  INVASORS – Gobo26
+//  Arcade clàssic: onades d'invasors, refugis
+//  destructibles, OVNI de bonificació i rècords.
+// ══════════════════════════════════════════════
+
+const canvas = document.getElementById("pantalla-joc");
+const ctx    = canvas.getContext("2d");
+const overlay = document.getElementById("overlay");
+
+// ── Mides canvas adaptatives ──
+let escala = 1;
+function ajustarCanvas() {
+    const zona = document.getElementById("zona-joc");
+    const maxW = Math.min(zona.clientWidth - 12, 420);
+    const maxH = Math.min(zona.clientHeight - 12, 640);
+    const ratio = Math.min(maxW / 420, maxH / 640);
+    canvas.width  = Math.floor(420 * ratio);
+    canvas.height = Math.floor(640 * ratio);
+    escala = ratio;
+    if (!jocEnMarxa) nauX = canvas.width / 2;
+}
+window.addEventListener("resize", ajustarCanvas);
+
+// ── ESTAT ──
+let punts = 0, nivell = 1, vides = 3;
+let record = parseInt(localStorage.getItem("invasorsRecord") || "0");
+let nouRecord = false;
+let jocEnMarxa = false;
+
+// ── NAU ──
+let nauX;
+const NAU_W = 44, NAU_H = 22;
+let nauMouDreta = false, nauMouEsquerra = false;
+const NAU_VEL = 5.2;
+let invulnerable = 0;   // ms restants de flaix després d'un impacte
+
+// ── TRETS ──
+let trets = [];   // trets del jugador {x,y}
+let bombes = [];  // bombes dels invasors {x,y,vy}
+const MAX_TRETS = 2;
+
+// ── INVASORS ──
+const INV_COLS = 8, INV_FILES = 5;
+const INV_EMOJIS = ["👾","👽","👽","🦑","🦑"];
+const INV_PUNTS  = [ 30,  20,  20,  10,  10 ];
+let invasors = [];        // {c,r,viu}
+let invOffX, invOffY;     // desplaçament del ramat
+let invDir = 1;           // 1 dreta, -1 esquerra
+let invPasTimer = 0;      // acumulador fins al pas següent
+let bombaTimer = 0;
+let pasParitat = 0;       // per alternar el so de la marxa
+
+// ── OVNI ──
+let ovni = null;          // {x, dir, punts}
+let ovniTimer = 0;
+
+// ── EXPLOSIONS / PARTÍCULES ──
+let particules = [];
+let textosFlotants = [];  // {x,y,txt,vida}
+
+// ── SONS (AudioContext) ──
+let audioCtx = null;
+let soActiu = localStorage.getItem("invasorsSo") !== "0";
+function toggleSo() {
+    soActiu = !soActiu;
+    try { localStorage.setItem("invasorsSo", soActiu ? "1" : "0"); } catch(e){}
+    document.getElementById("btn-so").textContent = soActiu ? "🔊" : "🔇";
+    if (soActiu) so(660, 0.1);
+}
+function getAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+}
+function so(freq=440, dur=0.06, tipus="square", vol=0.1) {
+    if (!soActiu) return;
+    try {
+        const ac = getAudio();
+        const o = ac.createOscillator();
+        const g = ac.createGain();
+        o.connect(g); g.connect(ac.destination);
+        o.type = tipus;
+        o.frequency.setValueAtTime(freq, ac.currentTime);
+        o.frequency.exponentialRampToValueAtTime(freq*0.7, ac.currentTime+dur);
+        g.gain.setValueAtTime(vol, ac.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime+dur);
+        o.start(); o.stop(ac.currentTime+dur);
+    } catch(e){}
+}
+function soTret()      { so(880, 0.08, "square", 0.06); }
+function soInvasor()   { so(220, 0.12, "sawtooth", 0.1); }
+function soNauTocada() { so(120, 0.4, "sawtooth", 0.15); }
+function soMarxa()     { const notes=[180,160,140,120]; so(notes[pasParitat%4], 0.05, "square", 0.05); }
+function soOvni()      { so(600, 0.15, "sine", 0.08); }
+function soVictoria()  { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>so(f,0.2,"triangle",0.12),i*100)); }
+
+// ── VIBRAR / CONFETTI ──
+function vibrar(ms=30) {
+    try { navigator.vibrate && navigator.vibrate(ms); } catch(e){}
+}
+function llançarConfetti(n=30) {
+    const colors = ["#16a34a","#4ade80","#22d3ee","#fbbf24","#f472b6","#f87171"];
+    for(let i=0;i<n;i++) {
+        const el = document.createElement("div");
+        el.className = "confetti-piece";
+        el.style.left = (Math.random()*100) + "vw";
+        el.style.top  = (Math.random()*30) + "vh";
+        el.style.background = colors[Math.floor(Math.random()*colors.length)];
+        el.style.animationDelay = (Math.random()*0.5)+"s";
+        el.style.animationDuration = (0.8+Math.random()*0.8)+"s";
+        document.body.appendChild(el);
+        setTimeout(()=>el.remove(), 1600);
+    }
+}
+
+// ── PARTÍCULES ──
+function crearExplosio(x, y, color, n=10) {
+    for(let i=0;i<n;i++) {
+        const angle = (Math.PI*2/n)*i + Math.random()*0.5;
+        const speed = 1.5 + Math.random()*2.5;
+        particules.push({
+            x, y,
+            vx: Math.cos(angle)*speed,
+            vy: Math.sin(angle)*speed,
+            vida: 25 + Math.floor(Math.random()*15),
+            color,
+            r: 2+Math.random()*3
+        });
+    }
+}
+function textFlotant(x, y, txt) {
+    textosFlotants.push({x, y, txt, vida: 60});
+}
+
+// ── REFUGIS ──
+// 4 refugis, cadascun una graella de cel·les destructibles
+const REF_N = 4, REF_COLS = 6, REF_FILES = 4;
+let refugis = []; // [ref][r][c] -> punts de vida de la cel·la (0 = destruïda)
+function refugiForma(c, r) {
+    // arc clàssic: sense cantonades superiors i amb porta inferior central
+    if (r === 0 && (c === 0 || c === REF_COLS-1)) return false;
+    if (r === REF_FILES-1 && (c === 2 || c === 3)) return false;
+    return true;
+}
+function crearRefugis() {
+    refugis = [];
+    for(let n=0;n<REF_N;n++) {
+        const g = [];
+        for(let r=0;r<REF_FILES;r++) {
+            g[r] = [];
+            for(let c=0;c<REF_COLS;c++) g[r][c] = refugiForma(c,r) ? 2 : 0;
+        }
+        refugis.push(g);
+    }
+}
+function refugiMides() {
+    const cel = 8 * escala;
+    const w = REF_COLS * cel;
+    const gap = (canvas.width - REF_N * w) / (REF_N + 1);
+    const y = canvas.height - 150 * escala;
+    return { cel, w, gap, y };
+}
+// Torna true si el projectil (px,py) ha impactat una cel·la de refugi
+function impactaRefugi(px, py) {
+    const { cel, w, gap, y } = refugiMides();
+    if (py < y || py > y + REF_FILES*cel) return false;
+    for(let n=0;n<REF_N;n++) {
+        const x0 = gap + n*(w+gap);
+        if (px < x0 || px > x0+w) continue;
+        const c = Math.floor((px-x0)/cel), r = Math.floor((py-y)/cel);
+        if (r>=0 && r<REF_FILES && c>=0 && c<REF_COLS && refugis[n][r][c] > 0) {
+            refugis[n][r][c]--;
+            crearExplosio(px, py, "#16a34a", 5);
+            return true;
+        }
+    }
+    return false;
+}
+
+// ── INVASORS: creació i geometria ──
+const INV_W = 38, INV_H = 30; // pas de graella (unitats base, es multiplica per escala)
+function crearInvasors() {
+    invasors = [];
+    for(let r=0;r<INV_FILES;r++)
+        for(let c=0;c<INV_COLS;c++)
+            invasors.push({c, r, viu:true});
+    invOffX = 30 * escala;
+    invOffY = (40 + Math.min(nivell-1, 4) * 12) * escala; // cada onada comença una mica més avall
+    invDir = 1;
+    invPasTimer = 0;
+    bombaTimer = 0;
+    ovni = null;
+    ovniTimer = 0;
+}
+function invPos(inv) {
+    return {
+        x: invOffX + inv.c * INV_W * escala,
+        y: invOffY + inv.r * INV_H * escala
+    };
+}
+function invasorsVius() { return invasors.filter(i=>i.viu); }
+
+// Interval entre passos del ramat: s'accelera amb l'onada i quan queden pocs
+function invInterval() {
+    const vius = invasorsVius().length;
+    const base = Math.max(200, 620 - (nivell-1)*60);
+    return Math.max(50, base * (0.25 + 0.75 * vius / (INV_COLS*INV_FILES)));
+}
+// Interval entre bombes
+function bombaInterval() {
+    return Math.max(380, 1300 - (nivell-1)*140);
+}
+
+// ── DIBUIX ──
+function dibuixaFons() {
+    ctx.fillStyle = "#020617";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    // Estrelles fixes (posicions deterministes)
+    ctx.fillStyle = "rgba(148,163,184,0.5)";
+    for(let i=0;i<40;i++) {
+        const x = ((i*97)%420)*escala, y = ((i*61)%640)*escala;
+        ctx.fillRect(x, y, 1.5*escala, 1.5*escala);
+    }
+}
+function dibuixaNau() {
+    if (invulnerable > 0 && Math.floor(Date.now()/100)%2===0) return; // parpelleig
+    const w = NAU_W*escala, h = NAU_H*escala;
+    const x = nauX, y = canvas.height - 34*escala;
+    const gr = ctx.createLinearGradient(x, y-h, x, y);
+    gr.addColorStop(0, "#4ade80");
+    gr.addColorStop(1, "#15803d");
+    ctx.fillStyle = gr;
+    ctx.beginPath();
+    // cos
+    ctx.roundRect(x-w/2, y-h*0.45, w, h*0.45, 4*escala);
+    ctx.fill();
+    // torreta
+    ctx.beginPath();
+    ctx.roundRect(x-w*0.16, y-h*0.75, w*0.32, h*0.35, 3*escala);
+    ctx.fill();
+    // canó
+    ctx.fillRect(x-1.6*escala, y-h, 3.2*escala, h*0.3);
+}
+function dibuixaInvasors() {
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = `${Math.floor(24*escala)}px serif`;
+    for(const inv of invasors) {
+        if(!inv.viu) continue;
+        const {x,y} = invPos(inv);
+        ctx.fillText(INV_EMOJIS[inv.r], x, y);
+    }
+    if (ovni) {
+        ctx.font = `${Math.floor(28*escala)}px serif`;
+        ctx.fillText("🛸", ovni.x, 22*escala);
+    }
+}
+function dibuixaRefugis() {
+    const { cel, w, gap, y } = refugiMides();
+    for(let n=0;n<REF_N;n++) {
+        const x0 = gap + n*(w+gap);
+        for(let r=0;r<REF_FILES;r++) {
+            for(let c=0;c<REF_COLS;c++) {
+                const hp = refugis[n][r][c];
+                if (hp <= 0) continue;
+                ctx.fillStyle = hp === 2 ? "#16a34a" : "#166534";
+                ctx.fillRect(x0 + c*cel, y + r*cel, cel-1, cel-1);
+            }
+        }
+    }
+}
+function dibuixaTrets() {
+    ctx.fillStyle = "#f8fafc";
+    for(const t of trets) ctx.fillRect(t.x-1.5*escala, t.y-6*escala, 3*escala, 9*escala);
+    ctx.fillStyle = "#f87171";
+    for(const b of bombes) {
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, 3.2*escala, 0, Math.PI*2);
+        ctx.fill();
+    }
+}
+function dibuixaParticules() {
+    for(const p of particules) {
+        ctx.globalAlpha = p.vida / 40;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r*escala, 0, Math.PI*2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.textAlign = "center";
+    ctx.font = `bold ${Math.floor(13*escala)}px system-ui`;
+    for(const t of textosFlotants) {
+        ctx.globalAlpha = t.vida / 60;
+        ctx.fillStyle = "#fbbf24";
+        ctx.fillText(t.txt, t.x, t.y);
+    }
+    ctx.globalAlpha = 1;
+}
+
+// ── HUD ──
+function actualitzarHUD() {
+    document.getElementById("txt-punts").innerText = punts;
+    document.getElementById("txt-nivell").innerText = nivell;
+    document.getElementById("txt-record").innerText = record;
+    for(let i=1;i<=3;i++) {
+        const v = document.getElementById("v"+i);
+        if(i <= vides) v.classList.remove("perduda");
+        else           v.classList.add("perduda");
+    }
+}
+
+// ── LÒGICA ──
+function dispara() {
+    if (!jocEnMarxa) return;
+    if (trets.length >= MAX_TRETS) return;
+    trets.push({ x: nauX, y: canvas.height - 34*escala - NAU_H*escala });
+    soTret();
+}
+
+function mouInvasors(dt) {
+    invPasTimer += dt;
+    const interval = invInterval();
+    if (invPasTimer < interval) return;
+    invPasTimer -= interval;
+    pasParitat++;
+    soMarxa();
+
+    const vius = invasorsVius();
+    if (vius.length === 0) return;
+    let minX = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for(const inv of vius) {
+        const {x,y} = invPos(inv);
+        minX = Math.min(minX, x); maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+    }
+    const pas = 10 * escala, marge = 20 * escala;
+    if ((invDir > 0 && maxX + pas > canvas.width - marge) ||
+        (invDir < 0 && minX - pas < marge)) {
+        invDir = -invDir;
+        invOffY += 14 * escala; // baixen una fila
+    } else {
+        invOffX += pas * invDir;
+    }
+    // Si arriben a l'altura de la nau: vida perduda i el ramat torna amunt
+    if (maxY > canvas.height - 90*escala) {
+        nauTocada();
+        invOffY = 60 * escala;
+    }
+}
+
+function llançaBomba(dt) {
+    bombaTimer += dt;
+    if (bombaTimer < bombaInterval()) return;
+    bombaTimer = 0;
+    const vius = invasorsVius();
+    if (!vius.length) return;
+    // dispara l'invasor més baix d'una columna aleatòria
+    const cols = [...new Set(vius.map(i=>i.c))];
+    const c = cols[Math.floor(Math.random()*cols.length)];
+    const colInv = vius.filter(i=>i.c===c).sort((a,b)=>b.r-a.r)[0];
+    const {x,y} = invPos(colInv);
+    bombes.push({ x, y: y + 14*escala, vy: (2.2 + nivell*0.25) * escala });
+}
+
+function mouOvni(dt) {
+    ovniTimer += dt;
+    if (!ovni && ovniTimer > 14000 + Math.random()*8000) {
+        ovniTimer = 0;
+        const dir = Math.random() > 0.5 ? 1 : -1;
+        ovni = { x: dir > 0 ? -20*escala : canvas.width + 20*escala, dir,
+                 punts: [50,100,150][Math.floor(Math.random()*3)] };
+    }
+    if (ovni) {
+        ovni.x += ovni.dir * 2.2 * escala;
+        if (!ovni.ultimSo || Date.now() - ovni.ultimSo > 350) { soOvni(); ovni.ultimSo = Date.now(); }
+        if (ovni.x < -30*escala || ovni.x > canvas.width + 30*escala) ovni = null;
+    }
+}
+
+function mouTrets() {
+    // trets del jugador
+    trets = trets.filter(t => {
+        t.y -= 8.5 * escala;
+        if (t.y < -10) return false;
+        if (impactaRefugi(t.x, t.y)) return false;
+        // impacte amb OVNI
+        if (ovni && Math.abs(t.x-ovni.x) < 18*escala && t.y < 34*escala) {
+            punts += ovni.punts;
+            textFlotant(ovni.x, 30*escala, "+"+ovni.punts);
+            crearExplosio(ovni.x, 22*escala, "#22d3ee", 14);
+            so(1000, 0.25, "triangle", 0.12);
+            vibrar(30);
+            ovni = null;
+            comprovaRecord();
+            return false;
+        }
+        // impacte amb invasors
+        for(const inv of invasors) {
+            if(!inv.viu) continue;
+            const {x,y} = invPos(inv);
+            if (Math.abs(t.x-x) < 14*escala && Math.abs(t.y-y) < 12*escala) {
+                inv.viu = false;
+                punts += INV_PUNTS[inv.r];
+                textFlotant(x, y, "+"+INV_PUNTS[inv.r]);
+                crearExplosio(x, y, "#4ade80", 10);
+                soInvasor();
+                vibrar(12);
+                comprovaRecord();
+                return false;
+            }
+        }
+        return true;
+    });
+    // bombes dels invasors
+    const nauY = canvas.height - 34*escala;
+    bombes = bombes.filter(b => {
+        b.y += b.vy;
+        if (b.y > canvas.height + 10) return false;
+        if (impactaRefugi(b.x, b.y)) return false;
+        if (invulnerable <= 0 &&
+            Math.abs(b.x-nauX) < NAU_W/2*escala && b.y > nauY - NAU_H*escala && b.y < nauY) {
+            nauTocada();
+            return false;
+        }
+        return true;
+    });
+}
+
+function comprovaRecord() {
+    if (punts > record) {
+        record = punts;
+        nouRecord = true;
+        try { localStorage.setItem("invasorsRecord", record); } catch(e){}
+    }
+}
+
+function nauTocada() {
+    vides--;
+    invulnerable = 2000;
+    crearExplosio(nauX, canvas.height - 44*escala, "#f87171", 16);
+    soNauTocada();
+    vibrar(200);
+    actualitzarHUD();
+    if (vides <= 0) finalDeJoc();
+}
+
+function comprovarOnadaNeta() {
+    if (invasorsVius().length === 0) {
+        jocEnMarxa = false;
+        soVictoria();
+        llançarConfetti(60);
+        nivell++;
+        mostrarOverlay("ONADA SUPERADA! 🎉", `Prepara't: arriba l'onada ${nivell}, més ràpida i ferotge!`, punts, "CONTINUAR →");
+    }
+}
+
+function finalDeJoc() {
+    jocEnMarxa = false;
+    const msg = nouRecord ? "Nou rècord! 🏆" : "Has resistit " + nivell + " onada(es). Torna-ho a intentar!";
+    if (nouRecord) llançarConfetti(40);
+    mostrarOverlay("LA TERRA HA CAIGUT 💥", msg, punts, "TORNAR A JUGAR");
+    punts = 0; nivell = 1; vides = 3;
+}
+
+// ── OVERLAY ──
+function mostrarOverlay(titol, text, pts, btnText) {
+    document.getElementById("titol-overlay").innerText = titol;
+    document.getElementById("text-overlay").innerText = text;
+    const pe = document.getElementById("punts-overlay");
+    if(pts !== null) { pe.style.display = "block"; pe.innerText = pts + " pts"; }
+    else pe.style.display = "none";
+    document.getElementById("btn-joc").innerText = btnText;
+    overlay.classList.remove("ocult");
+}
+
+// ── LOOP PRINCIPAL ──
+let ultimTemps = 0;
+function loop(ts) {
+    if(!jocEnMarxa) return;
+    const dt = Math.min(ts - ultimTemps || 16, 50); // si la pestanya s'amaga, no hi ha salt
+    ultimTemps = ts;
+
+    dibuixaFons();
+    dibuixaRefugis();
+    dibuixaInvasors();
+    dibuixaTrets();
+    dibuixaParticules();
+    dibuixaNau();
+
+    // Mou nau (teclat)
+    if(nauMouDreta) nauX += NAU_VEL*escala;
+    if(nauMouEsquerra) nauX -= NAU_VEL*escala;
+    nauX = Math.max(NAU_W/2*escala, Math.min(canvas.width - NAU_W/2*escala, nauX));
+
+    mouInvasors(dt);
+    llançaBomba(dt);
+    mouOvni(dt);
+    mouTrets();
+
+    if (invulnerable > 0) invulnerable -= dt;
+
+    particules = particules.filter(p => {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.1; p.vida--;
+        return p.vida > 0;
+    });
+    textosFlotants = textosFlotants.filter(t => {
+        t.y -= 0.6*escala; t.vida--;
+        return t.vida > 0;
+    });
+
+    actualitzarHUD();
+    comprovarOnadaNeta();
+    if (jocEnMarxa) requestAnimationFrame(loop);
+}
+
+// ── COMENÇAR ──
+function comencarJoc() {
+    overlay.classList.add("ocult");
+    if (punts === 0) nouRecord = false; // partida nova
+    ajustarCanvas();
+    crearInvasors();
+    crearRefugis();
+    trets = []; bombes = []; particules = []; textosFlotants = [];
+    nauX = canvas.width / 2;
+    invulnerable = 1000;
+    jocEnMarxa = true;
+    ultimTemps = 0;
+    requestAnimationFrame(loop);
+}
+
+// ── CONTROLS: RATOLÍ ──
+canvas.addEventListener("mousemove", e => {
+    const rect = canvas.getBoundingClientRect();
+    nauX = (e.clientX - rect.left) * (canvas.width / rect.width);
+});
+canvas.addEventListener("click", dispara);
+
+// ── CONTROLS: TÀCTIL (arrossega per moure, el dit manté el foc automàtic) ──
+let focAutomatic = null;
+canvas.addEventListener("touchstart", e => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    nauX = (e.touches[0].clientX - rect.left) * (canvas.width / rect.width);
+    dispara();
+    if (!focAutomatic) focAutomatic = setInterval(dispara, 400);
+}, {passive:false});
+canvas.addEventListener("touchmove", e => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    nauX = (e.touches[0].clientX - rect.left) * (canvas.width / rect.width);
+}, {passive:false});
+["touchend","touchcancel"].forEach(ev => canvas.addEventListener(ev, () => {
+    if (focAutomatic) { clearInterval(focAutomatic); focAutomatic = null; }
+}));
+
+// ── CONTROLS: TECLAT ──
+document.addEventListener("keydown", e => {
+    if(e.key==="ArrowRight") nauMouDreta = true;
+    else if(e.key==="ArrowLeft") nauMouEsquerra = true;
+    else if(e.key===" ") { e.preventDefault(); dispara(); }
+});
+document.addEventListener("keyup", e => {
+    if(e.key==="ArrowRight") nauMouDreta = false;
+    else if(e.key==="ArrowLeft") nauMouEsquerra = false;
+});
+
+// ── INICIAR ──
+ajustarCanvas();
+document.getElementById("btn-so").textContent = soActiu ? "🔊" : "🔇";
+actualitzarHUD();
+</script>
+</body>
+</html>
