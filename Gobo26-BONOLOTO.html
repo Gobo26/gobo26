@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Gobo26 - La Sort</title>
-<meta name="description" content="Generador honest de combinacions per a la Bonoloto i La Primitiva: atzar de veritat i combinacions poc populars per no haver de compartir el pot.">
+<meta name="description" content="Generador honest de combinacions per a la Bonoloto i La Primitiva: atzar criptogràfic pur, sense filtres ni patrons.">
 <meta name="theme-color" content="#1e293b">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -109,8 +109,8 @@ footer a{color:var(--blau); text-decoration:none;}
     <h2>🍀 Generador de combinacions</h2>
     <div class="avis">
       <strong>Sense enganys:</strong> totes les combinacions tenen la mateixa probabilitat
-      (1 entre 13.983.816). El que fa aquesta eina és triar-ne de <em>poc populars</em>:
-      si mai encertes, serà menys probable haver de compartir el pot. Prem ❓ per saber-ne més.
+      (1 entre 13.983.816). Aquesta eina fa <em>atzar pur</em>, sense cap filtre ni patró:
+      com el bombo mateix. Prem ❓ per saber-ne més.
     </div>
 
     <div class="controls">
@@ -155,14 +155,8 @@ footer a{color:var(--blau); text-decoration:none;}
     <p>A la Bonoloto i La Primitiva surten 6 números d'un bombo de 49. <strong>Cada combinació
     té exactament la mateixa probabilitat</strong>: 1 entre 13.983.816. No hi ha números
     «calents» ni «endarrerits»; el bombo no té memòria.</p>
-    <p>Llavors, què hi aporta aquesta eina? Una cosa real: <strong>si mai guanyes, que no
-    hagis de compartir el premi</strong>. Molta gent juga els mateixos patrons, i quan
-    aquests surten, el pot es reparteix entre molts encertants. Per això descartem:</p>
-    <ul>
-      <li>Seqüències de números consecutius (com 1-2-3-4-5-6)</li>
-      <li>Tot parells, tot senars, tot múltiples del mateix número o tot acabats igual</li>
-      <li>Sumes extremes (fora del rang 100–200)</li>
-    </ul>
+    <p>Aquesta eina no aplica cap filtre ni descarta cap patró: <strong>atzar pur</strong>,
+    exactament com el bombo. Qualsevol combinació pot sortir, fins i tot la 1-2-3-4-5-6.</p>
     <p>L'atzar és criptogràfic (el mateix que fa servir el navegador per a la seguretat),
     més ben repartit que el generador estàndard.</p>
     <p style="color:#92400e;"><strong>I el consell de l'avi:</strong> juga-hi només pel que
@@ -213,38 +207,6 @@ function combinacioAleatoria(){
   return Array.from(nums).sort(function(a,b){return a-b;});
 }
 
-// Filtres anti-popularitat: no canvien la probabilitat de guanyar,
-// només redueixen el risc de compartir premi.
-function esPocPopular(c){
-  var consec = 1, maxConsec = 1;
-  for(var i = 1; i < 6; i++){
-    consec = (c[i] === c[i-1] + 1) ? consec + 1 : 1;
-    if(consec > maxConsec) maxConsec = consec;
-  }
-  if(maxConsec >= 3) return false;
-
-  var parells = c.filter(function(n){return n % 2 === 0;}).length;
-  if(parells === 0 || parells === 6) return false;
-
-  for(var m = 2; m <= 7; m++){
-    if(c.every(function(n){return n % m === 0;})) return false;
-  }
-
-  var suma = c.reduce(function(a,b){return a+b;}, 0);
-  if(suma < 100 || suma > 200) return false;
-
-  var finals = new Set(c.map(function(n){return n % 10;}));
-  if(finals.size < 3) return false;
-
-  return true;
-}
-
-function generarUna(){
-  var c;
-  do{ c = combinacioAleatoria(); }while(!esPocPopular(c));
-  return c;
-}
-
 var ultimesCombinacions = [];
 
 function generar(){
@@ -255,16 +217,8 @@ function generar(){
   document.getElementById('msgOk').innerText = '';
   ultimesCombinacions = [];
 
-  // Amb poques combinacions evitem repetir números entre elles per cobrir més bombo
-  var jaUsats = new Set();
-
   for(var i = 0; i < quantes; i++){
-    var c, intents = 0;
-    do{
-      c = generarUna();
-      intents++;
-    }while(quantes <= 6 && intents < 200 && c.some(function(n){return jaUsats.has(n);}));
-    c.forEach(function(n){jaUsats.add(n);});
+    var c = combinacioAleatoria();
 
     var combi = { numeros: c };
     if(joc === 'primitiva') combi.reintegro = atzar(10);
