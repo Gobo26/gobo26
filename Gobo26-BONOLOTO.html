@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Gobo26 - La Sort</title>
-<meta name="description" content="Generador honest de combinacions per a la Bonoloto i La Primitiva: atzar criptogràfic pur, sense filtres ni patrons.">
+<meta name="description" content="Generador honest de combinacions per a la Bonoloto i La Primitiva: atzar criptogràfic ponderat amb els números més sortits el 2025 i el 2026.">
 <meta name="theme-color" content="#1e293b">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -109,8 +109,8 @@ footer a{color:var(--blau); text-decoration:none;}
     <h2>🍀 Generador de combinacions</h2>
     <div class="avis">
       <strong>Sense enganys:</strong> totes les combinacions tenen la mateixa probabilitat
-      (1 entre 13.983.816). Aquesta eina fa <em>atzar pur</em>, sense cap filtre ni patró:
-      com el bombo mateix. Prem ❓ per saber-ne més.
+      (1 entre 13.983.816). Aquesta eina <em>segueix la tendència</em>: els números que més
+      han sortit el 2025 i el 2026 tenen més pes. Prem ❓ per saber-ne més.
     </div>
 
     <div class="controls">
@@ -155,10 +155,13 @@ footer a{color:var(--blau); text-decoration:none;}
     <p>A la Bonoloto i La Primitiva surten 6 números d'un bombo de 49. <strong>Cada combinació
     té exactament la mateixa probabilitat</strong>: 1 entre 13.983.816. No hi ha números
     «calents» ni «endarrerits»; el bombo no té memòria.</p>
-    <p>Aquesta eina no aplica cap filtre ni descarta cap patró: <strong>atzar pur</strong>,
-    exactament com el bombo. Qualsevol combinació pot sortir, fins i tot la 1-2-3-4-5-6.</p>
-    <p>L'atzar és criptogràfic (el mateix que fa servir el navegador per a la seguretat),
-    més ben repartit que el generador estàndard.</p>
+    <p>Aquesta eina fa servir la <strong>taula oficial d'aparicions de La Primitiva</strong>
+    (quantes vegades ha sortit cada número el 2025 i el 2026, consultada el 02-07-2026):
+    com més ha aparegut un número aquests dos anys, més pes té per entrar a les teves
+    combinacions. És una manera de «seguir la ratxa» — recorda, però, que el bombo no té
+    memòria i que això no millora ni empitjora la probabilitat real de guanyar.</p>
+    <p>Dins d'aquests pesos, la tria es fa amb atzar criptogràfic (el mateix que fa servir
+    el navegador per a la seguretat), més ben repartit que el generador estàndard.</p>
     <p style="color:#92400e;"><strong>I el consell de l'avi:</strong> juga-hi només pel que
     et faci il·lusió. La il·lusió és humana i dona joc a la vida — però que sigui sempre
     una quantitat petita que no trobis a faltar.</p>
@@ -200,11 +203,40 @@ function atzar(max){
   crypto.getRandomValues(buf);
   return buf[0] % max;
 }
+function atzarFraccio(){
+  var buf = new Uint32Array(1);
+  crypto.getRandomValues(buf);
+  return buf[0] / 4294967296;
+}
 
+// Aparicions de cada número (1 a 49) a La Primitiva, taula oficial consultada el 02-07-2026
+var APARICIONS_2025 = [15,22,13,20,14,27,17,25,17,19,14,24,20,22,20,23,20,21,23,19,
+                       15,15,21,22,18,16,13,23,18,21,19,17,16,18,18,15,17,22,25,20,
+                       23,12,19,17,23,31,19,13,15];
+var APARICIONS_2026 = [8,11,10,12,11,10,9,7,8,11,7,14,10,8,11,13,10,14,4,10,
+                       6,12,9,8,13,7,7,9,6,13,5,10,13,11,6,16,12,9,12,13,
+                       6,8,12,10,7,6,8,8,8];
+
+// Sorteig ponderat: cada número pesa segons les seves aparicions el 2025 + 2026
 function combinacioAleatoria(){
-  var nums = new Set();
-  while(nums.size < 6) nums.add(atzar(49) + 1);
-  return Array.from(nums).sort(function(a,b){return a-b;});
+  var pesos = [];
+  for(var n = 1; n <= 49; n++){
+    pesos.push({ n: n, pes: APARICIONS_2025[n-1] + APARICIONS_2026[n-1] });
+  }
+  var nums = [];
+  while(nums.length < 6){
+    var total = pesos.reduce(function(a,p){return a + p.pes;}, 0);
+    var r = atzarFraccio() * total;
+    for(var i = 0; i < pesos.length; i++){
+      r -= pesos[i].pes;
+      if(r < 0){
+        nums.push(pesos[i].n);
+        pesos.splice(i, 1);
+        break;
+      }
+    }
+  }
+  return nums.sort(function(a,b){return a-b;});
 }
 
 var ultimesCombinacions = [];
@@ -253,9 +285,13 @@ function generar(){
 
     var suma = c.reduce(function(a,b){return a+b;}, 0);
     var parells = c.filter(function(n){return n % 2 === 0;}).length;
+    var aparicions = c.reduce(function(a,n){
+      return a + APARICIONS_2025[n-1] + APARICIONS_2026[n-1];
+    }, 0);
     var info = document.createElement('div');
     info.className = 'info';
-    info.innerText = 'Suma ' + suma + ' · ' + parells + ' parells / ' + (6 - parells) + ' senars';
+    info.innerText = 'Suma ' + suma + ' · ' + parells + ' parells / ' + (6 - parells) +
+      ' senars · ' + aparicions + ' aparicions el 2025-26';
     bloc.appendChild(info);
 
     resultats.appendChild(bloc);
