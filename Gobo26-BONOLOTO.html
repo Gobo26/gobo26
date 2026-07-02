@@ -159,7 +159,6 @@ footer a{color:var(--blau); text-decoration:none;}
     hagis de compartir el premi</strong>. Molta gent juga els mateixos patrons, i quan
     aquests surten, el pot es reparteix entre molts encertants. Per això descartem:</p>
     <ul>
-      <li>Combinacions plenes de números de l'1 al 31 (dates de naixement, el patró més jugat)</li>
       <li>Seqüències de números consecutius (com 1-2-3-4-5-6)</li>
       <li>Tot parells, tot senars, tot múltiples del mateix número o tot acabats igual</li>
       <li>Sumes extremes (fora del rang 100–200)</li>
@@ -217,9 +216,6 @@ function combinacioAleatoria(){
 // Filtres anti-popularitat: no canvien la probabilitat de guanyar,
 // només redueixen el risc de compartir premi.
 function esPocPopular(c){
-  var baixos = c.filter(function(n){return n <= 31;}).length;
-  if(baixos > 3) return false;
-
   var consec = 1, maxConsec = 1;
   for(var i = 1; i < 6; i++){
     consec = (c[i] === c[i-1] + 1) ? consec + 1 : 1;
@@ -303,11 +299,9 @@ function generar(){
 
     var suma = c.reduce(function(a,b){return a+b;}, 0);
     var parells = c.filter(function(n){return n % 2 === 0;}).length;
-    var alts = c.filter(function(n){return n > 31;}).length;
     var info = document.createElement('div');
     info.className = 'info';
-    info.innerText = 'Suma ' + suma + ' · ' + parells + ' parells / ' + (6 - parells) +
-      ' senars · ' + alts + ' fora del rang de dates';
+    info.innerText = 'Suma ' + suma + ' · ' + parells + ' parells / ' + (6 - parells) + ' senars';
     bloc.appendChild(info);
 
     resultats.appendChild(bloc);
