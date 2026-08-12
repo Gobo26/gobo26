@@ -1,452 +1,116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ca">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cançó del dia — COR GINESTA</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Les 33 cançons i històries compartides pel Cor Ginesta durant l'estiu de 2026.">
+<title>Cançó del dia · Cor Ginesta</title>
 <style>
-  :root{
-    --bg:#f7f7f5;
-    --card:#ffffff;
-    --tx:#20201e;
-    --dim:#68675f;
-    --line:#e4e3dd;
-    --accent:#3a3a34;
-    --shadow: 0 1px 3px rgba(20,20,15,.05);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; padding:0;
-    background:var(--bg);
-    color:var(--tx);
-    font-family:"Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-  .wrap{max-width:760px;margin:0 auto;padding:3rem 1.2rem 4rem}
 
-  header{margin-bottom:2rem; border-bottom:1px solid var(--line); padding-bottom:1.6rem}
-  .eyebrow{
-    display:inline-block;
-    font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
-    font-weight:700; color:var(--dim);
-    margin-bottom:.7rem;
-  }
-  h1{
-    font-size:1.9rem; margin:0 0 .5rem; font-weight:700; letter-spacing:-.01em;
-    color:var(--tx);
-  }
-  .sub{color:var(--dim); font-size:.95rem; max-width:60ch; line-height:1.55; font-weight:500}
+:root{--ink:#153229;--muted:#5b6b66;--forest:#123b30;--deep:#0c2c24;--cream:#f7f3e9;--paper:#fffdf8;--gold:#e9ad2f;--pale:#f6d97b;--coral:#d6684d;--line:rgba(18,59,48,.15);--shadow:0 20px 55px rgba(20,55,45,.1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}button,input{font:inherit}button,a{-webkit-tap-highlight-color:transparent}a{color:inherit}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-  .tools{margin:1.6rem 0 1.6rem}
-  input[type=search]{
-    width:100%; padding:.75rem 1rem; border:1px solid var(--line);
-    border-radius:8px; background:var(--card); color:var(--tx); font-size:.95rem;
-    font-family:inherit; font-weight:500;
-  }
-  input[type=search]:focus{outline:none; border-color:var(--accent)}
-  input[type=search]::placeholder{color:var(--dim)}
+.hero{position:relative;overflow:hidden;color:#fffdf8;background:radial-gradient(circle at 78% 24%,rgba(233,173,47,.12),transparent 23rem),linear-gradient(135deg,var(--forest),var(--deep))}.hero:before{content:"";position:absolute;inset:0;opacity:.18;background-image:radial-gradient(rgba(255,255,255,.25) .7px,transparent .7px);background-size:7px 7px;pointer-events:none}.topbar,.hero-grid,.hero-stats,.archive,footer{width:min(1180px,calc(100% - 40px));margin-inline:auto}
+.topbar{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:24px 0;border-bottom:1px solid rgba(255,255,255,.14)}.brand{display:inline-flex;gap:12px;align-items:center;text-decoration:none}.brand-mark{display:grid;place-items:center;width:42px;height:42px;color:var(--deep);background:var(--gold);border-radius:50%;font-family:Georgia,serif;font-size:23px;font-weight:700;box-shadow:inset 0 0 0 4px rgba(255,255,255,.23)}.brand b{display:block;font-size:14px;letter-spacing:.14em}.brand small{display:block;margin-top:2px;color:rgba(255,255,255,.62);font-size:10px;letter-spacing:.08em}.nav-link{color:rgba(255,255,255,.78);font-size:13px;font-weight:650;text-decoration:none}.nav-link:hover{color:var(--pale)}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;min-height:610px;padding:72px 0 80px}.hero-copy{position:relative;z-index:2}.eyebrow{margin:0 0 18px;color:var(--pale);font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.eyebrow.dark{color:#9b6a06}.hero h1,.section-heading h2{font-family:Iowan Old Style,Baskerville,Georgia,serif;font-weight:500;letter-spacing:-.045em}.hero h1{max-width:760px;margin:0;font-size:clamp(52px,6.6vw,92px);line-height:.93}.hero h1 em{color:var(--pale);font-weight:400}.intro{max-width:610px;margin:30px 0 34px;color:rgba(255,255,255,.73);font-size:17px;line-height:1.7}.hero-actions{display:flex;align-items:center;gap:26px}.primary-button{display:inline-flex;align-items:center;gap:16px;padding:15px 20px 15px 23px;color:var(--deep);background:var(--gold);border-radius:999px;font-size:13px;font-weight:800;text-decoration:none;box-shadow:0 12px 30px rgba(0,0,0,.2);transition:.2s}.primary-button:hover{transform:translateY(-2px);background:var(--pale)}.primary-button span{font-size:10px}.date-range{padding-left:24px;border-left:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.55);font-size:10px;line-height:1.6;letter-spacing:.13em}.date-range b{color:#fff}
+.hero-art{position:relative;height:430px}.vinyl{position:absolute;top:50%;left:52%;width:385px;height:385px;transform:translate(-50%,-50%) rotate(-9deg);border-radius:50%;background:repeating-radial-gradient(circle,#14231f 0,#14231f 4px,#1b2c27 5px,#101e1a 7px);box-shadow:35px 40px 65px rgba(0,0,0,.35),inset 0 0 40px rgba(255,255,255,.04)}.vinyl:after{content:"";position:absolute;inset:3%;border:1px solid rgba(255,255,255,.07);border-radius:50%}.vinyl-ring{position:absolute;border:1px solid rgba(255,255,255,.07);border-radius:50%}.ring-one{inset:16%}.ring-two{inset:31%}.vinyl-label{position:absolute;inset:35%;display:grid;place-items:center;align-content:center;border-radius:50%;color:var(--deep);background:radial-gradient(circle at 35% 30%,#ffe598,var(--gold));text-align:center}.vinyl-label span{font-size:30px;line-height:1}.vinyl-label small{margin-top:5px;font-size:8px;font-weight:900;letter-spacing:.15em}.flower,.music-note{position:absolute;z-index:2;color:var(--gold);text-shadow:0 8px 20px rgba(0,0,0,.25)}.flower-a{top:6%;left:7%;font-size:38px;transform:rotate(19deg)}.flower-b{right:2%;bottom:17%;font-size:25px}.flower-c{right:11%;top:8%;color:var(--coral);font-size:18px}.note-a{left:3%;bottom:20%;font-size:44px;transform:rotate(-16deg)}.note-b{right:0;top:26%;color:var(--pale);font-size:48px;transform:rotate(12deg)}
+.hero-stats{position:relative;z-index:2;display:grid;grid-template-columns:150px 150px 150px 1fr;align-items:center;min-height:96px;border-top:1px solid rgba(255,255,255,.14)}.hero-stats>div{display:flex;align-items:baseline;gap:8px}.hero-stats strong{color:var(--pale);font-family:Georgia,serif;font-size:28px;font-weight:500}.hero-stats span{color:rgba(255,255,255,.62);font-size:11px;text-transform:uppercase;letter-spacing:.1em}.hero-stats p{justify-self:end;margin:0;color:rgba(255,255,255,.45);font-family:Georgia,serif;font-size:14px;font-style:italic}
+.archive{margin-top:72px;padding:84px 64px 96px;border-radius:32px;background:var(--paper);box-shadow:var(--shadow)}.section-heading{display:grid;grid-template-columns:1fr 420px;gap:50px;align-items:end}.section-heading h2{margin:0;color:var(--forest);font-size:clamp(44px,5vw,68px);line-height:.95}.section-heading>p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}.toolbar{display:grid;grid-template-columns:1fr auto;gap:12px;margin-top:46px}.search-box{display:flex;align-items:center;min-height:54px;padding:0 17px;border:1px solid var(--line);border-radius:14px;background:#fff;transition:.2s}.search-box:focus-within{border-color:var(--forest);box-shadow:0 0 0 3px rgba(18,59,48,.08)}.search-box>span{color:var(--muted);font-family:Georgia,serif;font-size:27px;transform:rotate(-15deg)}.search-box input{width:100%;height:52px;padding:0 12px;border:0;outline:0;color:var(--ink);background:transparent;font-size:14px}.search-box input::placeholder{color:#87948f}.search-box button{border:0;color:var(--muted);background:transparent;cursor:pointer;font-size:23px}.sort-button{padding:0 20px;border:1px solid var(--line);border-radius:14px;color:var(--ink);background:#fff;cursor:pointer;font-size:12px;font-weight:700}.sort-button:hover{border-color:var(--forest)}.filters{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}.filters button{padding:8px 13px;border:1px solid transparent;border-radius:999px;color:var(--muted);background:#f3f0e8;cursor:pointer;font-size:11px;font-weight:700}.filters button:hover{color:var(--forest);background:#eae6dc}.filters button.active{color:#fff;background:var(--forest)}.result-line{margin:35px 0 15px;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}.result-line b{color:var(--ink)}
+.song-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.song-card{position:relative;display:flex;flex-direction:column;min-width:0;padding:22px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 4px 20px rgba(22,50,42,.035);transition:.2s}.song-card:hover{transform:translateY(-3px);border-color:rgba(18,59,48,.26);box-shadow:0 18px 38px rgba(22,50,42,.09)}.card-topline{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:10px;font-weight:700}.track-number{display:grid;place-items:center;width:30px;height:30px;color:var(--forest);background:#f1ede2;border-radius:50%;font-family:Georgia,serif;font-size:11px}.contributor{color:var(--forest);text-transform:uppercase;letter-spacing:.08em}.song-date{margin-left:auto}.language{padding:4px 6px;border-radius:5px;color:#8f6108;background:#fff3cf;font-size:9px}.song-title-row{display:flex;gap:15px;justify-content:space-between;min-height:92px;padding:19px 0 14px;border-bottom:1px solid var(--line)}.song-title-row h3{margin:0;color:var(--forest);font-family:Georgia,serif;font-size:24px;font-weight:500;line-height:1.13}.song-title-row p{margin:7px 0 0;color:var(--coral);font-size:11px;font-weight:650;line-height:1.35}.sound-waves{display:flex;flex:0 0 31px;gap:3px;align-items:center;justify-content:center;height:32px;border-radius:50%;background:var(--forest)}.sound-waves i{display:block;width:2px;border-radius:2px;background:var(--pale)}.sound-waves i:nth-child(1){height:7px}.sound-waves i:nth-child(2){height:15px}.sound-waves i:nth-child(3){height:11px}.sound-waves i:nth-child(4){height:5px}.story-text{display:-webkit-box;overflow:hidden;min-height:96px;margin:16px 0 19px;color:#4e5f59;font-family:Georgia,serif;font-size:14px;font-style:italic;line-height:1.7;-webkit-box-orient:vertical;-webkit-line-clamp:4}.story-text.expanded{display:block;overflow:visible;min-height:0}.card-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}.story-toggle{padding:0;border:0;color:var(--muted);background:transparent;cursor:pointer;font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.07em}.story-toggle:hover{color:var(--coral)}.story-toggle span{margin-left:3px;font-size:14px}.video-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}.video-links a{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:999px;color:#fff;background:var(--coral);font-size:10px;font-weight:800;text-decoration:none}.video-links a:hover{background:#b74f39}.video-links a span{font-size:8px}
+.empty-state{padding:80px 20px;border:1px dashed var(--line);border-radius:20px;text-align:center}.empty-state>span{color:var(--gold);font-size:45px}.empty-state h3{margin:12px 0 7px;font-family:Georgia,serif;font-size:26px}.empty-state p{color:var(--muted);font-size:13px}.empty-state button{margin-top:12px;padding:11px 16px;border:0;border-radius:999px;color:#fff;background:var(--forest);cursor:pointer;font-size:11px;font-weight:750}
+footer{display:grid;grid-template-columns:auto 1fr auto;gap:40px;align-items:center;padding:55px 0 65px;color:var(--muted);font-size:11px}.footer-brand{display:flex;align-items:center;gap:10px;color:var(--forest)}.footer-brand>span{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--gold);font-family:Georgia,serif;font-size:20px;font-weight:700}.footer-brand b{display:block;letter-spacing:.12em}.footer-brand small{display:block;margin-top:2px;color:var(--muted)}footer p{max-width:570px;margin:0;line-height:1.6}footer>a{color:var(--forest);font-weight:750;text-decoration:none}
 
-  .count{font-size:.8rem; color:var(--dim); margin:0 0 1.4rem; font-weight:600}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;padding-bottom:25px}.hero-copy{max-width:690px}.hero-art{height:360px;margin-top:-20px}.vinyl{width:320px;height:320px}.hero-stats{grid-template-columns:repeat(3,1fr)}.hero-stats p{display:none}.archive{padding:65px 34px 75px}.section-heading{grid-template-columns:1fr;gap:20px}.section-heading>p{max-width:560px}.song-grid{grid-template-columns:1fr}}
+@media(max-width:680px){.topbar,.hero-grid,.hero-stats,.archive,footer{width:min(100% - 28px,1180px)}.topbar{padding:18px 0}.nav-link{display:none}.brand-mark{width:38px;height:38px}.hero-grid{min-height:auto;padding:55px 0 5px}.hero h1{font-size:clamp(47px,15vw,66px)}.hero h1 br{display:none}.intro{margin-top:24px;font-size:15px}.hero-actions{align-items:flex-start;flex-direction:column;gap:18px}.date-range{padding:0;border:0}.hero-art{height:320px;margin-top:10px}.vinyl{left:50%;width:270px;height:270px}.note-a{left:0}.note-b{right:3%}.hero-stats{min-height:82px}.hero-stats>div{display:grid;gap:1px;justify-items:center}.hero-stats strong{font-size:24px}.hero-stats span{font-size:8px}.archive{width:100%;margin-top:44px;padding:60px 14px 70px;border-radius:26px 26px 0 0}.section-heading{padding-inline:6px}.section-heading h2{font-size:48px}.toolbar{grid-template-columns:1fr;margin-top:32px}.sort-button{min-height:45px}.filters{flex-wrap:nowrap;overflow-x:auto;padding-bottom:5px;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}.filters button{flex:0 0 auto}.song-card{padding:18px}.card-topline{flex-wrap:wrap}.song-date{margin-left:auto}.song-title-row h3{font-size:23px}.card-actions{align-items:flex-start;flex-direction:column}.video-links{justify-content:flex-start}footer{grid-template-columns:1fr;gap:18px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important}}:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 
-  .stack{display:flex; flex-direction:column; gap:.85rem}
-
-  .card{
-    background:var(--card); border:1px solid var(--line); border-radius:10px;
-    padding:1.1rem 1.3rem 1.2rem; box-shadow:var(--shadow);
-  }
-
-  .meta{
-    display:flex; gap:.6rem; align-items:baseline; flex-wrap:wrap;
-    margin-bottom:.5rem;
-  }
-  .who{
-    font-weight:700; font-size:.8rem; color:#fff;
-    background:var(--accent); border-radius:6px; padding:.22rem .6rem;
-  }
-  .day{font-size:.8rem; color:var(--dim); font-weight:500; font-variant-numeric:tabular-nums}
-  .lang{
-    margin-left:auto; font-size:.68rem; font-weight:700; letter-spacing:.04em;
-    color:var(--dim); border:1px solid var(--line); border-radius:5px; padding:.15rem .45rem;
-  }
-
-  .title{
-    font-size:1.08rem; font-weight:700; line-height:1.35; margin:.1rem 0 .6rem;
-  }
-  .title .artist{font-weight:500; color:var(--dim)}
-
-  .msg{
-    font-size:.88rem; line-height:1.55; color:var(--tx); font-weight:500;
-    background:var(--bg); border-left:2px solid var(--line); border-radius:0 6px 6px 0;
-    padding:.6rem .85rem; margin:0 0 .85rem; font-style:italic;
-  }
-
-  .links{display:flex; gap:.5rem; flex-wrap:wrap}
-  .lnk{
-    display:inline-flex; align-items:center; gap:.35rem;
-    font-size:.8rem; font-weight:600; text-decoration:none; color:var(--tx);
-    background:var(--bg); border-radius:6px; padding:.4rem .7rem;
-    border:1px solid var(--line);
-  }
-  .lnk:hover{border-color:var(--accent)}
-
-  h2{
-    font-size:1rem; font-weight:700; margin:2.2rem 0 .2rem; color:var(--tx);
-  }
-  .h2sub{color:var(--dim); font-size:.85rem; margin:0 0 1rem; font-weight:500}
-
-  .add-slot{
-    border:1px dashed var(--line); border-radius:10px; background:var(--card);
-    padding:1.2rem; text-align:center; color:var(--dim); font-size:.88rem; font-weight:600;
-  }
-
-  footer{
-    margin-top:3rem; color:var(--dim); font-size:.8rem;
-    border-top:1px solid var(--line); padding-top:1.2rem; font-weight:500; line-height:1.6;
-  }
-  footer strong{color:var(--tx)}
+.offline-note{display:none}
+@media print{.hero{break-after:page}.toolbar,.filters,.story-toggle,.video-links,.nav-link,.primary-button{display:none!important}.story-text{display:block!important;overflow:visible!important;min-height:0!important}.song-card{break-inside:avoid}.archive{box-shadow:none}.song-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <header>
-    <div class="eyebrow">Cor Ginesta · ús intern</div>
-    <h1>Cançó del dia</h1>
-    <p class="sub">Totes les cançons que vam anar proposant al grup de WhatsApp entre l'11 de juliol i el 12 d'agost de 2026, amb el vídeo de cada una.</p>
+<main>
+  <header class="hero" id="inici">
+    <nav class="topbar" aria-label="Capçalera">
+      <a class="brand" href="#inici" aria-label="Cor Ginesta, inici">
+        <span class="brand-mark" aria-hidden="true">G</span>
+        <span><b>COR GINESTA</b><small>Riudoms · música compartida</small></span>
+      </a>
+      <a class="nav-link" href="#cancons">Explora les cançons <span aria-hidden="true">↓</span></a>
+    </nav>
+    <section class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Un estiu · 33 cançons · 33 històries</p>
+        <h1>La banda sonora<br>que hem fet <em>entre tots!</em></h1>
+        <p class="intro">Durant un mes, cada matí algú del cor ens va regalar una cançó i un trosset de la seva vida. Aquest és el nostre petit arxiu de records compartits.</p>
+        <div class="hero-actions">
+          <a class="primary-button" href="#cancons">Comença a escoltar <span aria-hidden="true">▶</span></a>
+          <span class="date-range">11 JUL — 12 AGO<br><b>ESTIU 2026</b></span>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="vinyl"><div class="vinyl-ring ring-one"></div><div class="vinyl-ring ring-two"></div><div class="vinyl-label"><span>♫</span><small>COR<br>GINESTA</small></div></div>
+        <span class="flower flower-a">✦</span><span class="flower flower-b">✦</span><span class="flower flower-c">✦</span>
+        <span class="music-note note-a">♪</span><span class="music-note note-b">♫</span>
+      </div>
+    </section>
+    <div class="hero-stats" aria-label="Resum del projecte">
+      <div><strong>33</strong><span>cançons</span></div><div><strong>5</strong><span>idiomes</span></div><div><strong>1</strong><span>cor unit</span></div>
+      <p>«Una cançó és un record que ha après a sonar.»</p>
+    </div>
   </header>
 
-  <div class="tools">
-    <input type="search" id="q" placeholder="Cerca un títol, un idioma, un nom…">
-  </div>
-  <p class="count" id="count">33 cançons</p>
-
-  <div class="stack" id="stack">
-
-    <div class="card" data-search="antonieta agost els pets ca">
-      <div class="meta"><span class="who">Antonieta</span><span class="day">11 de juliol</span><span class="lang">CA</span></div>
-      <div class="title">Agost <span class="artist">— Els Pets</span></div>
-      <div class="msg">«Bon dia cantaires! Quins nervis ser la primera de la llista d'aquesta secció dels "Bons dies"… tenia una cançó en ment per compartir amb vosaltres de la meva cantant favorita, Barbra Streisand, però aquesta nit m'ha vingut una melodia al cap que m'ha fet recordar unes vacances a Cantàbria en família, ja fa molts anys.... I aquesta cançó va ser com un himne del nostre viatge, quan la cantàvem a ple pulmó fent ruta. Com et pot transportar la música a vivències tan especials! Desitjo que gaudiu de la meva tria.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/HnpWZ4rvgw4" target="_blank" rel="noopener">Vídeo</a>
-      </div>
+  <section class="archive" id="cancons" aria-labelledby="archive-title">
+    <div class="section-heading">
+      <div><p class="eyebrow dark">L'arxiu musical</p><h2 id="archive-title">Totes les cançons</h2></div>
+      <p>Cerca per títol, artista o cantaire. També pots filtrar per idioma i canviar l'ordre del recorregut.</p>
     </div>
-
-    <div class="card" data-search="antonyita a far l'amore comincia tu raffaella carra it">
-      <div class="meta"><span class="who">Antonyita</span><span class="day">12 de juliol</span><span class="lang">IT</span></div>
-      <div class="title">A far l'amore comincia tu <span class="artist">— Raffaella Carrà</span></div>
-      <div class="msg">«Bon dia musical. Dedicaré la cançó a la meva mare perquè tot just avui fa 4 anys que ens va deixar. El maleït Alzheimer li va esborrar moltes coses i records, però una cosa que no li va poder esborrar mai va ser la música i ballar. Quan li posàvem cançons que li agradaven, les cantava i feia anar els peus. Doncs avui toca la Raffaella Carrà, una de les seves cantants preferides. A cantar, ballar i viure la vida.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/YnBs1MuGSAA" target="_blank" rel="noopener">Vídeo</a>
-      </div>
+    <div class="toolbar" role="search">
+      <label class="search-box"><span aria-hidden="true">⌕</span><span class="sr-only">Cerca una cançó</span><input id="search" type="search" placeholder="Cerca una cançó, un artista o un nom…"><button id="clear" type="button" aria-label="Esborra la cerca" hidden>×</button></label>
+      <button class="sort-button" id="sort" type="button">Ordre original <span aria-hidden="true">⇅</span></button>
     </div>
-
-    <div class="card" data-search="bibiana alone again naturally gilbert o'sullivan en">
-      <div class="meta"><span class="who">Bibiana</span><span class="day">13 de juliol</span><span class="lang">EN</span></div>
-      <div class="title">Alone Again (Naturally) <span class="artist">— Gilbert O'Sullivan</span></div>
-      <div class="msg">«Bon dia. Als 14 anys em van posar a treballar, "l'edat del pavo" es deia llavors, i davant d'aquest trist panorama reconec que em va ajudar aquest artista irlandès que vaig descobrir als 13 anys: Gilbert O'Sullivan. Crec que també n'estava enamorada. L'adolescència es passava sense que et fessin gaire cas.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/3Rc1VaIw3jc" target="_blank" rel="noopener">Vídeo</a>
-      </div>
+    <div class="filters" aria-label="Filtra per idioma">
+      <button type="button" data-lang="TOTS" class="active" aria-pressed="true">Tots els idiomes</button>
+      <button type="button" data-lang="CA" aria-pressed="false">Català</button><button type="button" data-lang="ES" aria-pressed="false">Castellà</button>
+      <button type="button" data-lang="EN" aria-pressed="false">Anglès</button><button type="button" data-lang="IT" aria-pressed="false">Italià</button><button type="button" data-lang="FR" aria-pressed="false">Francès</button>
     </div>
-
-    <div class="card" data-search="carla common people pulp manel la gent normal en ca">
-      <div class="meta"><span class="who">Carla</span><span class="day">14 de juliol</span><span class="lang">EN</span></div>
-      <div class="title">Common People <span class="artist">— Pulp</span></div>
-      <div class="msg">«Bon dia família musical! Avui us comparteixo una cançó que just es va llençar el meu any de naixement, però que jo vaig descobrir arran d'una versió en català dels estimats Manel! Així que per qui en vulgui descobrir la lletra —que és una delícia i parla sobre com una noia pija i de diners de sobte té el caprici de descobrir com viu la "gent normal"— us deixo també la versió traduïda i bastant fidel a l'original dels Manel. És sublim i una imprescindible en les meves llistes de Spotify. Espero que les gaudiu i que comenceu el dia amb moooolt bona energia!»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/yuTMWgOduFM" target="_blank" rel="noopener">Vídeo (original)</a>
-        <a class="lnk" href="https://youtu.be/-DYHwqYVIAA" target="_blank" rel="noopener">Manel, en directe</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="carme woman john lennon en">
-      <div class="meta"><span class="who">Carme</span><span class="day">15 de juliol</span><span class="lang">EN</span></div>
-      <div class="title">Woman <span class="artist">— John Lennon</span></div>
-      <div class="msg">«Bon dia cantaires estimats, us comparteixo aquesta cançó que va formar part del meu primer estiu de vacances sense la supervisió dels pares, descoberta de l'adolescència (14 anys). Un estiu ple de records alegres, emocions i felicitat. Espero que us agradi. Un petó a tots i totes.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/aCuMooBsKVo" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="cori la marina sta morena figa flawas ca">
-      <div class="meta"><span class="who">Cori</span><span class="day">16 de juliol</span><span class="lang">CA</span></div>
-      <div class="title">La Marina sta morena <span class="artist">— Figa Flawas</span></div>
-      <div class="msg">«Bon dia cantaires. Us comparteixo aquesta cançó de Figa Flawas que tant m'agrada a mi, espero que us agradi: fan cançons romàntiques, d'estiu, que tant m'agrada a mi: nadar.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/WakP10DXiD0" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="jaume illes dins un riu tomeu penya ca">
-      <div class="meta"><span class="who">Jaume</span><span class="day">17 de juliol</span><span class="lang">CA</span></div>
-      <div class="title">Illes dins un riu <span class="artist">— Tomeu Penya</span></div>
-      <div class="msg">«Bon dia bona gent. Jo he tirat per la part nostàlgica, anys de vacances a Menorca amb les filles petites i un CD de l'incombustible Tomeu Penya.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/7JQ86pZ_KAQ" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="jep la gent que estimo oques grasses rita payes ca">
-      <div class="meta"><span class="who">Jep</span><span class="day">18 de juliol</span><span class="lang">CA</span></div>
-      <div class="title">La gent que estimo <span class="artist">— Oques Grasses i Rita Payés</span></div>
-      <div class="msg">«Hola, cantaires, bon dia! Els qui som de la meva època i vam viure els anys 70 i 80, vam ser uns autèntics privilegiats. Crec fermament que la música que es va fer en aquell moment no es tornarà a repetir: va ser una etapa senzillament apoteòsica. Per això mateix, m'ha resultat molt difícil triar una sola cançó. N'hi ha tantíssimes que és gairebé impossible decidir quina és la millor! A la fi, m'he decidit per dues propostes. La primera cançó: dedicada a tots vosaltres, a cadascuna de les persones que feu possible aquesta coral tan impressionant.» (missatge transcrit d'una nota de veu)</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/UWLAiW7AWng" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="jep someone like you van morrison en">
-      <div class="meta"><span class="who">Jep</span><span class="day">18 de juliol</span><span class="lang">EN</span></div>
-      <div class="title">Someone Like You <span class="artist">— Van Morrison</span></div>
-      <div class="msg">«La segona cançó: una selecció molt especial. Quan la sentiu, us demano un favor: escolteu-la amb els ulls tancats. I si teniu parella, aprofiteu per ballar-la, perquè és preciosa. Vinga, un petó a tots!» (missatge transcrit d'una nota de veu)</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/xZUdqhsTLjQ" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="joan el vers final bolero original suno ca">
-      <div class="meta"><span class="who">Joan</span><span class="day">19 de juliol</span><span class="lang">CA</span></div>
-      <div class="title">El vers final <span class="artist">— composició original de Joan, bolero (lletra i idea musical seves; producció i veu amb IA Suno)</span></div>
-      <div class="msg">«Bon dia a tothom!! Jo us porto una cançó que no coneix ningú, però que a mi m'agrada molt. Parla de l'amor que arriba a la tardor de la vida. Dues persones troben una nova il·lusió compartida i l'esperança de ser feliços. La cançó reivindica el desig d'estimar i viure intensament, i ens recorda que la vida sempre té l'última paraula. Desitjo que us agradi. Un petó a tothom i els meus millors desitjos.»</div>
-      <div class="links">
-        <a class="lnk" href="https://www.youtube.com/watch?v=j8fxIBkgKyo" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="joan m born to run bruce springsteen en">
-      <div class="meta"><span class="who">Joan M.</span><span class="day">20 de juliol</span><span class="lang">EN</span></div>
-      <div class="title">Born to Run <span class="artist">— Bruce Springsteen</span></div>
-      <div class="msg">«Bon dia a tots. Si no us proposo aquest tema, revento: és imprescindible per mi, ja que jo també crec que hem nascut per córrer, per fer el nostre camí, per ser inconformistes i per buscar la nostra llibertat. Aquest és el missatge d'aquest himne d'un monstre i una banda intergeneracionals que vaig sentir amb divuit anys i que després he tingut la sort de sentir i veure en viu. I com que els gustos musicals de vegades no coincideixen, us deixo també un altre tema perquè de bon matí ens posem en moviment amb aquesta interpretació simfònica i coral d'una cançó amb una lletra plena de potència que ens anima a viure com si no hi hagués un demà. Espero que us agradin.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/IxuThNgl3YA" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="joan m volcans buhos ca">
-      <div class="meta"><span class="who">Joan M.</span><span class="day">20 de juliol</span><span class="lang">CA</span></div>
-      <div class="title">Volcans <span class="artist">— Buhos</span></div>
-      <div class="msg">Cançó proposada al mateix missatge que "Born to Run" — vegeu la cita a la targeta anterior.</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/YcZmDZsaj2E" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="joana i want to break free queen en">
-      <div class="meta"><span class="who">Joana</span><span class="day">21 de juliol</span><span class="lang">EN</span></div>
-      <div class="title">I Want to Break Free <span class="artist">— Queen</span></div>
-      <div class="msg">«Bon dia a tothom!, bé, bon dia per a mi i bona tarda per vosaltres. Tenim unes quantes hores de diferència horària, anem per feina!! Tinc tantes, tantíssimes cançons que no sabia quina triar, però aquesta... avui m'agradaria començar el dia recordant-la: una cançó que vaig cantar i ballar donant-ho tot, amb un públic entregadíssim, això amb el meu anglès i a ple pulmó!!! Vaig pujar a la barra (la barra no s'estava utilitzant) i au.... Va ser al casament d'una neboda al 2021, després de moooolt de temps sense poder reunir-nos ni celebrar, per la ditxosa pandèmia. Tots teníem ganes de gaudir del dia i de retrobar-nos, va ser, buffff.... Després de tant de temps sense poder abraçar-nos ni compartir moments amb les persones que estimem, aquell dia va ser molt més que un casament: va ser una celebració de la vida, del retrobament i de l'alegria de tornar a estar junts. Cada vegada que escolto aquesta cançó, em transporta a aquell moment i em recorda que, fins i tot després dels temps més difícils, sempre hi ha motius per somriure, sobretot cantar i ballar. Espero que aquesta cançó també us transmeti aquesta alegria i us ajudi a començar el dia amb un somriure. Bon dia a tots i que tingueu un dia magnífic!»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/WUOtCLOXgm8" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="jordi carbo our last summer abba mamma mia mare meva en">
-      <div class="meta"><span class="who">Jordi Carbó</span><span class="day">22 de juliol</span><span class="lang">EN</span></div>
-      <div class="title">Our Last Summer <span class="artist">— ABBA (del musical Mamma Mia!)</span></div>
-      <div class="msg">«Bon dia cantaires!!! Em feia il·lusió compartir amb vosaltres aquesta cançó, molt especial per a mi, ja que va ser la primera que vaig cantar com a solista en el musical "Mare Meva", fet a Riudoms i en català. Una peça difícil per a mi, perquè pràcticament la vaig cantar a cappella i només acompanyat d'un piano. Espero que us agradi, tot i que aquesta que adjunto és la del musical Mamma Mia en anglès. Salut a totes i a tots!!!!!»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/g-qF3GuAozw" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="judit els avantpassats historia de catalunya amb cancons ca">
-      <div class="meta"><span class="who">Judit</span><span class="day">24 de juliol</span><span class="lang">CA</span></div>
-      <div class="title">Els Avantpassats <span class="artist">— de "Història de Catalunya amb Cançons"</span></div>
-      <div class="msg">«Bon dia cantaires!!! La música ens emociona, té el poder de fer que ens enamorem… de persones i, a vegades, de moments que fan canviar la nostra vida… Jo us proposo una cançó d'un disc genial que em va descobrir la senyoreta M. Antònia Gasull a 6è d'EGB (1976)… Quan no tenia ni idea de què volia dir ser catalana ni de què era Catalunya, ella ens va ensenyar la nostra història amb les cançons del disc "Història de Catalunya amb cançons". És una obra clàssica publicada el 1971. Amb lletres de Jaume Picas, música d'Antoni Ros-Marbà i les veus de Guillermina Motta i La Trinca, repassa de manera didàctica els fets més destacats del país, des dels ibers i el comte Guifré fins a la Renaixença. També ens va fer llegir llibres tan bonics com El zoo d'en Pitus, Viatge al País dels Lacets, Les presoneres de Tabris… Crec que la música, les lectures i la senyo són culpables que, durant la meva vida, jo hagi estat una apassionada de la història i de Catalunya! Espero que la gaudiu, malgrat que és una proposta pedagògica.»</div>
-      <div class="links">
-        <a class="lnk" href="https://www.youtube.com/watch?v=zsYyDNkARlo" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="laura si no m'ho sents dir joan cuadern ca">
-      <div class="meta"><span class="who">Laura</span><span class="day">25 de juliol</span><span class="lang">CA</span></div>
-      <div class="title">Si no m'ho sents dir <span class="artist">— Joan Cuadern</span></div>
-      <div class="msg">«Bon dia companys! Us porto música carregada d'il·lusió! El tema que us vull proposar avui posa el focus en allò essencial, en el que realment dona sentit a tot: estimar. I ho aborda d'una forma senzilla, modesta i incipient en tots els sentits. Us parlo de la cançó d'algú molt jove, que tot just comença en el món de la música, pel que gairebé és desconegut. Té el vertigen de la vida que esclata davant seu. Tot està per fer. Tot està per viure. I malgrat la seva joventut, ho afronta amb paraules sàvies i d'una forma molt humil. M'agradaria que tingués un camí llarg i fructífer. Us presento en Joan Cuadern i el seu tema. Encara no ha publicat el seu primer disc, però s'ha presentat a un concurs de descoberta de joves talents per aconseguir-ho.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/O6obBhCwxVk" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="lidia fotosintesi la fumiga zoo ca">
-      <div class="meta"><span class="who">Lídia</span><span class="day">26 de juliol</span><span class="lang">CA</span></div>
-      <div class="title">Fotosíntesi <span class="artist">— La Fúmiga amb ZOO</span></div>
-      <div class="msg">«Bon dia! Arriba la banda!! M'encanta La Fúmiga, qualsevol de les seves cançons obliga a moure els peus, saltar i xalar... Aquest divendres fan un dels últims concerts a Vila-seca, per si voleu ballar-ho tot! Que tingueu bon diumengeee!!»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/N50ki2T3gMI" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="magda total eclipse of the heart bonnie tyler en">
-      <div class="meta"><span class="who">Magda</span><span class="day">27 de juliol</span><span class="lang">EN</span></div>
-      <div class="title">Total Eclipse of the Heart <span class="artist">— Bonnie Tyler</span></div>
-      <div class="msg">«Bon dia! Avui us porto una cançó que em desperta molts records i que té un significat molt especial per a mi. Hi ha cançons que, quan tornen a sonar, ens fan viatjar en el temps. La que comparteixo avui és d'una artista que va marcar la meva joventut: Bonnie Tyler. Tenia una veu única que em va captivar des de ben jove i que encara avui m'emociona. Fa pocs dies ens va deixar, però la seva música continua ben viva. Aquest és el meu petit homenatge. Espero que us agradi!»</div>
-      <div class="links">
-        <a class="lnk" href="https://music.youtube.com/watch?v=5yziRK36wTU" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="maria jesus el sonido del silencio alex campos es">
-      <div class="meta"><span class="who">Maria Jesús</span><span class="day">29 de juliol</span><span class="lang">ES</span></div>
-      <div class="title">El sonido del silencio <span class="artist">— Alex Campos</span></div>
-      <div class="msg">«Mis amigos del coro. A lo largo de mi vida he tenido que despedirme de cosas y, sobre todo, de personas queridas, como muchos, pero solo un ser importante me dio la fuerza para superarlo, y ese es Jesús. Esta canción resume el dolor del ser humano ante las pérdidas y cómo hay un refugio importante en Él que no todos conocen.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/cn77seosE9E" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="m teresa mis manos en tu cintura salvatore adamo es">
-      <div class="meta"><span class="who">M.Teresa</span><span class="day">30 de juliol</span><span class="lang">ES</span></div>
-      <div class="title">Mis manos en tu cintura <span class="artist">— Salvatore Adamo</span></div>
-      <div class="msg">«Bon dia cantaires!!! Avui us vull compartir la cançó de l'Adamo: "Mis manos en tu cintura". Aquesta cançó em porta molts bons records de la meva joventut. Era l'època de ballar "agarrados". Que passeu un bon dia.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/TzITcAt9Lw0" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="merce calling you bagdad cafe jevetta steele en">
-      <div class="meta"><span class="who">Mercè</span><span class="day">31 de juliol</span><span class="lang">EN</span></div>
-      <div class="title">Calling You <span class="artist">— Jevetta Steele (Bagdad Café)</span></div>
-      <div class="msg">«Bon dia !! Aquesta que comparteixo és una de les meves preferides. És la banda sonora de la pel·lícula Bagdad Café (1989?). Una pel·lícula àspera i sofocant però... que no perd la confiança. On hi caben les segones (o enèsimes) oportunitats de fer i refer la vida. De com ens comuniquem. M'agrada la música i la veu de la cantant, com es combina la paraula lleugera amb el llarg "crit". Espero que us agradi.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/M8y7BjtxiYA" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="merce la rosa manu guix petit princep ca">
-      <div class="meta"><span class="who">Mercè</span><span class="day">1 d'agost</span><span class="lang">CA</span></div>
-      <div class="title">La Rosa <span class="artist">— Manu Guix (El Petit Príncep)</span></div>
-      <div class="msg">«Bon dia! Un musical de petit format que, amb el pas dels anys, s'ha convertit en tot un clàssic dels meus Nadals. D'aquesta obra mestra en neix un petit tresor musical que ens obre les portes dels mons que habiten dins nostre: espais plens de curiositat i meravella, de tristesa i alegria, de dubtes i esperances. Un recorregut que ens descobreix les contradiccions de la naturalesa humana i ens recorda la importància dels vincles, de l'amor i de la responsabilitat envers allò que estimem. La Rosa, tan bella com fràgil, s'amaga darrere les seves espines que la protegeixen, però que també poden ferir aquells que, encisats per la seva bellesa, encara no han après a mirar més enllà de les aparences... Perquè, al capdavall, l'essencial és invisible als ulls.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/XR0MZCvWmv0" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="monica calma blaumut ca">
-      <div class="meta"><span class="who">Mònica</span><span class="day">2 d'agost</span><span class="lang">CA</span></div>
-      <div class="title">Calma <span class="artist">— Blaumut</span></div>
-      <div class="msg">«Bon dia, cantaires!! Cada dia, quan em sona el despertador, m'acompanya una cançó de Blaumut. Sempre del mateix grup, però cada dia una cançó diferent: l'algoritme d'Spotify me la tria per a mi... Blaumut és la meva petita gran debilitat. La singularitat i l'elegància de la seva música —a mig camí entre el pop i la clàssica— i els jocs de paraules de les lletres del Xavi de la Iglesia m'expliquen històries plenes de tendresa, optimisme i imaginació... Avui, diumenge, ha sonat "Previsions d'acostament". Però, com que l'agost és "feixuc i mandrós" i "ens fa recordar la bellesa del temps que passa a poc a poc" (no ho dic jo, ho diuen els Pets i el seu "Agost", que ens el va regalar l'Antonieta), he pensat que res millor que despertar-vos amb "Calma"... Avui que és diumenge, amb l'ajuda de Blaumut, deixeu que tot passi a poc a poc; deixeu-vos sorprendre i contempleu tot el que teniu al voltant… i, sobretot, contempleu a tothom qui hi tingueu... Una abraçada i bon diumenge, cantaires!!»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/fIHCbc2MMyk" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="monica ni tu ni nadie alaska y dinarama es">
-      <div class="meta"><span class="who">Mònica</span><span class="day">3 d'agost</span><span class="lang">ES</span></div>
-      <div class="title">Ni tú ni nadie <span class="artist">— Alaska y Dinarama</span></div>
-      <div class="msg">«Bon dia cantaires !! Avui vull compartir una cançó que té molt de significat per mi: quan anava amb el meu home a Sant Antoni a ballar, aquesta cançó li agradava molt i em fa recordar vells temps, és d'Alaska i Dinarama!! Ni tú ni nadie. Espero que us agradi i que de bon matí us aixequeu amb alegria!!»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/skyZ_2fvG3g" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="montserrat memory cats musical en">
-      <div class="meta"><span class="who">Montserrat</span><span class="day">4 d'agost</span><span class="lang">EN</span></div>
-      <div class="title">Memory <span class="artist">— del musical Cats</span></div>
-      <div class="msg">«Bon dia família musical! Us proposo escoltar el tema "Memory" del musical Cats. M'agrada molt com la canta la Barbra Streisand, però us poso el musical perquè la interpretació em sembla extraordinària, i el vestuari, els maquillatges, la posada en escena... absolutament genial! Es va estrenar a Londres el 1981 i va estar en cartellera 21 anys! Si bé és una cançó trista i melancòlica, és una de les meves preferides. La trobo preciosa! Donat que a través de la música tots estem fent un exercici nostàlgic d'expressar preferències i, en alguns casos, de recordar part de les nostres vides i cercar en la memòria fets viscuts, aquesta cançó és precisament el reflex de l'enyor pel temps passat. Però, malgrat la nostàlgia i la melangia, per tot allò que ja ha passat i mantenim viu amb il·lusió a la nostra memòria, com diu al final la lletra de la cançó, un nou dia ha començat! Gaudim-lo amb noves il·lusions! Desitjo que us agradi!»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/mdBVJbzkoqo" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="silvia paradise coldplay en">
-      <div class="meta"><span class="who">Sílvia</span><span class="day">5 d'agost</span><span class="lang">EN</span></div>
-      <div class="title">Paradise <span class="artist">— Coldplay</span></div>
-      <div class="msg">«Bon diaaa cantaires!!! Hi ha un grup de música anglès que m'agrada moltíssim: Coldplay. La seva música m'encanta, i la meva il·lusió va ser poder cantar una de les seves cançons, "Viva la Vida", en català, en el concert del mes de juny, amb tots vosaltres (moltes gràcies Joan). Avui us comparteixo la cançó "Paradise". Aquesta cançó parla de no perdre l'esperança davant les dificultats. El paradís simbolitza els somnis i la il·lusió que ens ajuden a continuar endavant. Desitjo que us agradi!!! Una abraçada!!»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/gaqORrPwIT4" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="pepi amor particular lluis llach ca">
-      <div class="meta"><span class="who">Pepi</span><span class="day">6 d'agost</span><span class="lang">CA</span></div>
-      <div class="title">Amor Particular <span class="artist">— Lluís Llach</span></div>
-      <div class="msg">«Bon dia cantaires! Jo us proposo un clàssic, un cantautor que tothom coneix i que cantem molt sovint les seves cançons; a mi m'agraden molt, però de totes n'hi ha una que a mi em toca el cor i és molt especial per a mi.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/bS3MBJnxj_Y" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="pilar vidal somebody to love queen en">
-      <div class="meta"><span class="who">Pilar Vidal</span><span class="day">8 d'agost</span><span class="lang">EN</span></div>
-      <div class="title">Somebody To Love <span class="artist">— Queen</span></div>
-      <div class="msg">«Bon dia! Avui us porto una cançó de Queen, un dels meus grups preferits. Quan el meu germà gran va començar a treballar, el primer que va comprar va ser un tocadiscos, i amb ell un disc que em va impressionar molt, diferent de res que hagués escoltat abans... Quatre nois més aviat lletjos eren capaços de barrejar rock, música clàssica, music hall... i tot amb unes harmonies vocals extraordinàries. Jo tenia 12 o 13 anys, i crec que aquell disc va marcar el meu gust per la música per sempre. Es tractava de "A Day at the Races". Us recomano que l'escolteu sencer. D'aquest àlbum he triat per a vosaltres "Somebody to Love", un gòspel que parla de la necessitat que tenim tots de sentir-nos estimats. Gràcies, Cor Ginesta, per ser un lloc on és fàcil sentir-se estimat.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtube.com/watch?v=kijpcUv-b8M" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="rosa maria voyage voyage desireless fr">
-      <div class="meta"><span class="who">Rosa Maria</span><span class="day">9 d'agost</span><span class="lang">FR</span></div>
-      <div class="title">Voyage Voyage <span class="artist">— Desireless</span></div>
-      <div class="msg">«Bon dia, família Ginesta. La meva joventut va ser bastant grisa. Tenies ganes de volar, viatjar, viure, somiar, i et tallaven les ales. La música ens va ajudar molt. Aquesta cançó que us deixo avui és del 1986, de la cantant francesa Desireless; encara ara, quan la sento, em fa vibrar. Al 91, el grup Magneto en va fer la versió en castellà. Jo us deixo la versió original. Voyage, voyage. Desitjo que us faci somiar, viatjar, viure...»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/NlgmH5q9uNk" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="stella ymca village people en">
-      <div class="meta"><span class="who">Stella</span><span class="day">10 d'agost</span><span class="lang">EN</span></div>
-      <div class="title">Y.M.C.A. <span class="artist">— Village People</span></div>
-      <div class="msg">«Esta es una canción muy divertida y m gustaría cantarla en la coral..me imagino a todos con gorras de policía,obrero militar,indio etc...cantando esta cancion con coreografia jijiji...»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/CS9OO0S5w2k" target="_blank" rel="noopener">Vídeo</a>
-        <a class="lnk" href="https://youtube.com/shorts/8Z3rzQmYkIc" target="_blank" rel="noopener">Coreografia</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="toni before you go johns boys welsh male voice choir lewis capaldi nois del joan monica carme judit en">
-      <div class="meta"><span class="who">Toni</span><span class="day">11 d'agost</span><span class="lang">EN</span></div>
-      <div class="title">Before You Go <span class="artist">— Johns' Boys Welsh Male Voice Choir (versió de la cançó de Lewis Capaldi)</span></div>
-      <div class="msg">«Benvolgut Cor, els "Nois del Joan" portem tot el mes de juliol assajant d'amagatotis aquesta versió de la cançó de Lewis Capaldi. Com observareu, amb l'ajuda de les imprescindibles Mònica, Carme i Judit, hem aconseguit, gràcies a l'afinació conjunta, un so prou homogeni i força ben empastat que desitjo que us captivi. Ens reconeixereu fàcilment en el vídeo. El maquillatge ens ha canviat una mica, però hem quedat força eixerits. Veureu que hem tingut cura de posar-nos la ginesta a la solapa, no sigui que la Pepi ens foti bronca. Més difícil ha estat aconseguir que el Jep es posés el corbatí al coll. Mira que n'és de tossut, no hi havia forma. La peça fa referència a la importància de saber escoltar els altres i ens convida a ser més empàtics i a no donar per fet que tothom està bé només perquè no expressa el contrari. A les nostres mans està que qualsevol trobada pugui ser especialment transcendent. Aquí va Before You Go. Espero que us agradi. Volum ben alt.»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/ThBcxbUERb4" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="victoria era aixo the tyets ca">
-      <div class="meta"><span class="who">Victòria</span><span class="day">12 d'agost</span><span class="lang">CA</span></div>
-      <div class="title">Era això! <span class="artist">— The Tyets</span></div>
-      <div class="msg">«Bon dia companys. Això arriba al final i quina peneta!!! Heu vist que sempre volem massa i necessitem ben poc per ser feliç? Això és el que ha passat durant aquest mes, que amb ben poca cosa, una cançó, hem sigut feliços cada matí, que bonic!!! Doncs una de les cançons que us regalo (perquè us regalo dues, em salto les normes) parla d'això, de lo poc que es necessita per ser feliç. L'altra cançó és un himne a la vida i és d'una cantautora canària que m'encanta. Espero que us agradin tant com a mi i que disfruteu de la vida i si pot ser, alguns ratets tots junts, molt millor. No em vull oblidar de la Pepi que va tenir aquesta gran idea i que ens ha mantingut units tot l'estiu, GRÀCIES. I gràcies també a tots vosaltres que m'heu fet descobrir cançons noves per a mi, ha estat molt divertit quan esmorzava amb els meus fills i em deien, quina cançó han penjat avui?? I buscàvem junts informació sobre la cançó. Què farem a partir de demà?? Ha estat un plaer trobar-vos a tots al camí. Ens veiem aviat. I que VIVA LA VIDA!!!»</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/fKmj6mjzTqQ" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="card" data-search="victoria sonar es de valientes rosana es">
-      <div class="meta"><span class="who">Victòria</span><span class="day">12 d'agost</span><span class="lang">ES</span></div>
-      <div class="title">Soñar es de valientes <span class="artist">— Rosana</span></div>
-      <div class="msg">Segona cançó del mateix missatge de comiat — vegeu la cita a la targeta anterior. Un himne a la vida, d'una cantautora canària.</div>
-      <div class="links">
-        <a class="lnk" href="https://youtu.be/0SshwtryE34" target="_blank" rel="noopener">Vídeo</a>
-      </div>
-    </div>
-
-    <div class="add-slot">El repte es va tancar el 12 d'agost de 2026, amb la Victòria posant el punt final. Gràcies a la Pepi per la idea original.</div>
-
-  </div>
+    <div class="result-line" id="result" aria-live="polite"></div>
+    <div class="song-grid" id="song-grid"></div>
+    <div class="empty-state" id="empty" hidden><span aria-hidden="true">♫</span><h3>No hem trobat aquesta cançó</h3><p>Prova una altra cerca o torna a mostrar tot l'arxiu.</p><button type="button" id="reset">Mostra totes les cançons</button></div>
+  </section>
 
   <footer>
-    Recull fet a partir del xat de WhatsApp del grup <strong>COR GINESTA</strong>, de l'11 de juliol al 12 d'agost de 2026.
-    Llistat tancat: <strong>33 cançons</strong> en total.
+    <div class="footer-brand"><span>G</span><div><b>COR GINESTA</b><small>Riudoms</small></div></div>
+    <p>Un recull fet amb les cançons i les paraules compartides al grup del Cor Ginesta, de l'11 de juliol al 12 d'agost de 2026.</p>
+    <a href="#inici">Torna a l'inici ↑</a>
   </footer>
-
-</div>
+</main>
 <script>
-  const q = document.getElementById('q');
-  const cards = [...document.querySelectorAll('.card')];
-  const count = document.getElementById('count');
-  q.addEventListener('input', () => {
-    const v = q.value.toLowerCase().trim();
-    let shown = 0;
-    cards.forEach(c => {
-      const match = !v || c.dataset.search.includes(v);
-      c.style.display = match ? '' : 'none';
-      if (match) shown++;
-    });
-    count.textContent = shown + (shown === 1 ? ' cançó' : ' cançons') + (v ? ' trobades' : '');
-  });
+const songs=[{"id": 1, "who": "Antonieta", "day": "11 de juliol", "lang": "CA", "title": "Agost", "artist": "Els Pets", "message": "«Bon dia cantaires! Quins nervis ser la primera de la llista d'aquesta secció dels \"Bons dies\"… tenia una cançó en ment per compartir amb vosaltres de la meva cantant favorita, Barbra Streisand, però aquesta nit m'ha vingut una melodia al cap que m'ha fet recordar unes vacances a Cantàbria en família, ja fa molts anys.... I aquesta cançó va ser com un himne del nostre viatge, quan la cantàvem a ple pulmó fent ruta. Com et pot transportar la música a vivències tan especials! Desitjo que gaudiu de la meva tria.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/HnpWZ4rvgw4"}], "search": "antonieta agost els pets ca"}, {"id": 2, "who": "Antonyita", "day": "12 de juliol", "lang": "IT", "title": "A far l'amore comincia tu", "artist": "Raffaella Carrà", "message": "«Bon dia musical. Dedicaré la cançó a la meva mare perquè tot just avui fa 4 anys que ens va deixar. El maleït Alzheimer li va esborrar moltes coses i records, però una cosa que no li va poder esborrar mai va ser la música i ballar. Quan li posàvem cançons que li agradaven, les cantava i feia anar els peus. Doncs avui toca la Raffaella Carrà, una de les seves cantants preferides. A cantar, ballar i viure la vida.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/YnBs1MuGSAA"}], "search": "antonyita a far l'amore comincia tu raffaella carra it"}, {"id": 3, "who": "Bibiana", "day": "13 de juliol", "lang": "EN", "title": "Alone Again (Naturally)", "artist": "Gilbert O'Sullivan", "message": "«Bon dia. Als 14 anys em van posar a treballar, \"l'edat del pavo\" es deia llavors, i davant d'aquest trist panorama reconec que em va ajudar aquest artista irlandès que vaig descobrir als 13 anys: Gilbert O'Sullivan. Crec que també n'estava enamorada. L'adolescència es passava sense que et fessin gaire cas.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/3Rc1VaIw3jc"}], "search": "bibiana alone again naturally gilbert o'sullivan en"}, {"id": 4, "who": "Carla", "day": "14 de juliol", "lang": "EN", "title": "Common People", "artist": "Pulp", "message": "«Bon dia família musical! Avui us comparteixo una cançó que just es va llençar el meu any de naixement, però que jo vaig descobrir arran d'una versió en català dels estimats Manel! Així que per qui en vulgui descobrir la lletra —que és una delícia i parla sobre com una noia pija i de diners de sobte té el caprici de descobrir com viu la \"gent normal\"— us deixo també la versió traduïda i bastant fidel a l'original dels Manel. És sublim i una imprescindible en les meves llistes de Spotify. Espero que les gaudiu i que comenceu el dia amb moooolt bona energia!»", "links": [{"label": "Vídeo (original)", "url": "https://youtu.be/yuTMWgOduFM"}, {"label": "Manel, en directe", "url": "https://youtu.be/-DYHwqYVIAA"}], "search": "carla common people pulp manel la gent normal en ca"}, {"id": 5, "who": "Carme", "day": "15 de juliol", "lang": "EN", "title": "Woman", "artist": "John Lennon", "message": "«Bon dia cantaires estimats, us comparteixo aquesta cançó que va formar part del meu primer estiu de vacances sense la supervisió dels pares, descoberta de l'adolescència (14 anys). Un estiu ple de records alegres, emocions i felicitat. Espero que us agradi. Un petó a tots i totes.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/aCuMooBsKVo"}], "search": "carme woman john lennon en"}, {"id": 6, "who": "Cori", "day": "16 de juliol", "lang": "CA", "title": "La Marina sta morena", "artist": "Figa Flawas", "message": "«Bon dia cantaires. Us comparteixo aquesta cançó de Figa Flawas que tant m'agrada a mi, espero que us agradi: fan cançons romàntiques, d'estiu, que tant m'agrada a mi: nadar.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/WakP10DXiD0"}], "search": "cori la marina sta morena figa flawas ca"}, {"id": 7, "who": "Jaume", "day": "17 de juliol", "lang": "CA", "title": "Illes dins un riu", "artist": "Tomeu Penya", "message": "«Bon dia bona gent. Jo he tirat per la part nostàlgica, anys de vacances a Menorca amb les filles petites i un CD de l'incombustible Tomeu Penya.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/7JQ86pZ_KAQ"}], "search": "jaume illes dins un riu tomeu penya ca"}, {"id": 8, "who": "Jep", "day": "18 de juliol", "lang": "CA", "title": "La gent que estimo", "artist": "Oques Grasses i Rita Payés", "message": "«Hola, cantaires, bon dia! Els qui som de la meva època i vam viure els anys 70 i 80, vam ser uns autèntics privilegiats. Crec fermament que la música que es va fer en aquell moment no es tornarà a repetir: va ser una etapa senzillament apoteòsica. Per això mateix, m'ha resultat molt difícil triar una sola cançó. N'hi ha tantíssimes que és gairebé impossible decidir quina és la millor! A la fi, m'he decidit per dues propostes. La primera cançó: dedicada a tots vosaltres, a cadascuna de les persones que feu possible aquesta coral tan impressionant.» (missatge transcrit d'una nota de veu)", "links": [{"label": "Vídeo", "url": "https://youtu.be/UWLAiW7AWng"}], "search": "jep la gent que estimo oques grasses rita payes ca"}, {"id": 9, "who": "Jep", "day": "18 de juliol", "lang": "EN", "title": "Someone Like You", "artist": "Van Morrison", "message": "«La segona cançó: una selecció molt especial. Quan la sentiu, us demano un favor: escolteu-la amb els ulls tancats. I si teniu parella, aprofiteu per ballar-la, perquè és preciosa. Vinga, un petó a tots!» (missatge transcrit d'una nota de veu)", "links": [{"label": "Vídeo", "url": "https://youtu.be/xZUdqhsTLjQ"}], "search": "jep someone like you van morrison en"}, {"id": 10, "who": "Joan", "day": "19 de juliol", "lang": "CA", "title": "El vers final", "artist": "composició original de Joan, bolero (lletra i idea musical seves; producció i veu amb IA Suno)", "message": "«Bon dia a tothom!! Jo us porto una cançó que no coneix ningú, però que a mi m'agrada molt. Parla de l'amor que arriba a la tardor de la vida. Dues persones troben una nova il·lusió compartida i l'esperança de ser feliços. La cançó reivindica el desig d'estimar i viure intensament, i ens recorda que la vida sempre té l'última paraula. Desitjo que us agradi. Un petó a tothom i els meus millors desitjos.»", "links": [{"label": "Vídeo", "url": "https://www.youtube.com/watch?v=j8fxIBkgKyo"}], "search": "joan el vers final bolero original suno ca"}, {"id": 11, "who": "Joan M.", "day": "20 de juliol", "lang": "EN", "title": "Born to Run", "artist": "Bruce Springsteen", "message": "«Bon dia a tots. Si no us proposo aquest tema, revento: és imprescindible per mi, ja que jo també crec que hem nascut per córrer, per fer el nostre camí, per ser inconformistes i per buscar la nostra llibertat. Aquest és el missatge d'aquest himne d'un monstre i una banda intergeneracionals que vaig sentir amb divuit anys i que després he tingut la sort de sentir i veure en viu. I com que els gustos musicals de vegades no coincideixen, us deixo també un altre tema perquè de bon matí ens posem en moviment amb aquesta interpretació simfònica i coral d'una cançó amb una lletra plena de potència que ens anima a viure com si no hi hagués un demà. Espero que us agradin.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/IxuThNgl3YA"}], "search": "joan m born to run bruce springsteen en"}, {"id": 12, "who": "Joan M.", "day": "20 de juliol", "lang": "CA", "title": "Volcans", "artist": "Buhos", "message": "Cançó proposada al mateix missatge que \"Born to Run\" — vegeu la cita a la targeta anterior.", "links": [{"label": "Vídeo", "url": "https://youtu.be/YcZmDZsaj2E"}], "search": "joan m volcans buhos ca"}, {"id": 13, "who": "Joana", "day": "21 de juliol", "lang": "EN", "title": "I Want to Break Free", "artist": "Queen", "message": "«Bon dia a tothom!, bé, bon dia per a mi i bona tarda per vosaltres. Tenim unes quantes hores de diferència horària, anem per feina!! Tinc tantes, tantíssimes cançons que no sabia quina triar, però aquesta... avui m'agradaria començar el dia recordant-la: una cançó que vaig cantar i ballar donant-ho tot, amb un públic entregadíssim, això amb el meu anglès i a ple pulmó!!! Vaig pujar a la barra (la barra no s'estava utilitzant) i au.... Va ser al casament d'una neboda al 2021, després de moooolt de temps sense poder reunir-nos ni celebrar, per la ditxosa pandèmia. Tots teníem ganes de gaudir del dia i de retrobar-nos, va ser, buffff.... Després de tant de temps sense poder abraçar-nos ni compartir moments amb les persones que estimem, aquell dia va ser molt més que un casament: va ser una celebració de la vida, del retrobament i de l'alegria de tornar a estar junts. Cada vegada que escolto aquesta cançó, em transporta a aquell moment i em recorda que, fins i tot després dels temps més difícils, sempre hi ha motius per somriure, sobretot cantar i ballar. Espero que aquesta cançó també us transmeti aquesta alegria i us ajudi a començar el dia amb un somriure. Bon dia a tots i que tingueu un dia magnífic!»", "links": [{"label": "Vídeo", "url": "https://youtu.be/WUOtCLOXgm8"}], "search": "joana i want to break free queen en"}, {"id": 14, "who": "Jordi Carbó", "day": "22 de juliol", "lang": "EN", "title": "Our Last Summer", "artist": "ABBA (del musical Mamma Mia!)", "message": "«Bon dia cantaires!!! Em feia il·lusió compartir amb vosaltres aquesta cançó, molt especial per a mi, ja que va ser la primera que vaig cantar com a solista en el musical \"Mare Meva\", fet a Riudoms i en català. Una peça difícil per a mi, perquè pràcticament la vaig cantar a cappella i només acompanyat d'un piano. Espero que us agradi, tot i que aquesta que adjunto és la del musical Mamma Mia en anglès. Salut a totes i a tots!!!!!»", "links": [{"label": "Vídeo", "url": "https://youtu.be/g-qF3GuAozw"}], "search": "jordi carbo our last summer abba mamma mia mare meva en"}, {"id": 15, "who": "Judit", "day": "24 de juliol", "lang": "CA", "title": "Els Avantpassats", "artist": "de \"Història de Catalunya amb Cançons\"", "message": "«Bon dia cantaires!!! La música ens emociona, té el poder de fer que ens enamorem… de persones i, a vegades, de moments que fan canviar la nostra vida… Jo us proposo una cançó d'un disc genial que em va descobrir la senyoreta M. Antònia Gasull a 6è d'EGB (1976)… Quan no tenia ni idea de què volia dir ser catalana ni de què era Catalunya, ella ens va ensenyar la nostra història amb les cançons del disc \"Història de Catalunya amb cançons\". És una obra clàssica publicada el 1971. Amb lletres de Jaume Picas, música d'Antoni Ros-Marbà i les veus de Guillermina Motta i La Trinca, repassa de manera didàctica els fets més destacats del país, des dels ibers i el comte Guifré fins a la Renaixença. També ens va fer llegir llibres tan bonics com El zoo d'en Pitus, Viatge al País dels Lacets, Les presoneres de Tabris… Crec que la música, les lectures i la senyo són culpables que, durant la meva vida, jo hagi estat una apassionada de la història i de Catalunya! Espero que la gaudiu, malgrat que és una proposta pedagògica.»", "links": [{"label": "Vídeo", "url": "https://www.youtube.com/watch?v=zsYyDNkARlo"}], "search": "judit els avantpassats historia de catalunya amb cancons ca"}, {"id": 16, "who": "Laura", "day": "25 de juliol", "lang": "CA", "title": "Si no m'ho sents dir", "artist": "Joan Cuadern", "message": "«Bon dia companys! Us porto música carregada d'il·lusió! El tema que us vull proposar avui posa el focus en allò essencial, en el que realment dona sentit a tot: estimar. I ho aborda d'una forma senzilla, modesta i incipient en tots els sentits. Us parlo de la cançó d'algú molt jove, que tot just comença en el món de la música, pel que gairebé és desconegut. Té el vertigen de la vida que esclata davant seu. Tot està per fer. Tot està per viure. I malgrat la seva joventut, ho afronta amb paraules sàvies i d'una forma molt humil. M'agradaria que tingués un camí llarg i fructífer. Us presento en Joan Cuadern i el seu tema. Encara no ha publicat el seu primer disc, però s'ha presentat a un concurs de descoberta de joves talents per aconseguir-ho.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/O6obBhCwxVk"}], "search": "laura si no m'ho sents dir joan cuadern ca"}, {"id": 17, "who": "Lídia", "day": "26 de juliol", "lang": "CA", "title": "Fotosíntesi", "artist": "La Fúmiga amb ZOO", "message": "«Bon dia! Arriba la banda!! M'encanta La Fúmiga, qualsevol de les seves cançons obliga a moure els peus, saltar i xalar... Aquest divendres fan un dels últims concerts a Vila-seca, per si voleu ballar-ho tot! Que tingueu bon diumengeee!!»", "links": [{"label": "Vídeo", "url": "https://youtu.be/N50ki2T3gMI"}], "search": "lidia fotosintesi la fumiga zoo ca"}, {"id": 18, "who": "Magda", "day": "27 de juliol", "lang": "EN", "title": "Total Eclipse of the Heart", "artist": "Bonnie Tyler", "message": "«Bon dia! Avui us porto una cançó que em desperta molts records i que té un significat molt especial per a mi. Hi ha cançons que, quan tornen a sonar, ens fan viatjar en el temps. La que comparteixo avui és d'una artista que va marcar la meva joventut: Bonnie Tyler. Tenia una veu única que em va captivar des de ben jove i que encara avui m'emociona. Fa pocs dies ens va deixar, però la seva música continua ben viva. Aquest és el meu petit homenatge. Espero que us agradi!»", "links": [{"label": "Vídeo", "url": "https://music.youtube.com/watch?v=5yziRK36wTU"}], "search": "magda total eclipse of the heart bonnie tyler en"}, {"id": 19, "who": "Maria Jesús", "day": "29 de juliol", "lang": "ES", "title": "El sonido del silencio", "artist": "Alex Campos", "message": "«Mis amigos del coro. A lo largo de mi vida he tenido que despedirme de cosas y, sobre todo, de personas queridas, como muchos, pero solo un ser importante me dio la fuerza para superarlo, y ese es Jesús. Esta canción resume el dolor del ser humano ante las pérdidas y cómo hay un refugio importante en Él que no todos conocen.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/cn77seosE9E"}], "search": "maria jesus el sonido del silencio alex campos es"}, {"id": 20, "who": "M.Teresa", "day": "30 de juliol", "lang": "ES", "title": "Mis manos en tu cintura", "artist": "Salvatore Adamo", "message": "«Bon dia cantaires!!! Avui us vull compartir la cançó de l'Adamo: \"Mis manos en tu cintura\". Aquesta cançó em porta molts bons records de la meva joventut. Era l'època de ballar \"agarrados\". Que passeu un bon dia.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/TzITcAt9Lw0"}], "search": "m teresa mis manos en tu cintura salvatore adamo es"}, {"id": 21, "who": "Mercè", "day": "31 de juliol", "lang": "EN", "title": "Calling You", "artist": "Jevetta Steele (Bagdad Café)", "message": "«Bon dia !! Aquesta que comparteixo és una de les meves preferides. És la banda sonora de la pel·lícula Bagdad Café (1989?). Una pel·lícula àspera i sofocant però... que no perd la confiança. On hi caben les segones (o enèsimes) oportunitats de fer i refer la vida. De com ens comuniquem. M'agrada la música i la veu de la cantant, com es combina la paraula lleugera amb el llarg \"crit\". Espero que us agradi.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/M8y7BjtxiYA"}], "search": "merce calling you bagdad cafe jevetta steele en"}, {"id": 22, "who": "Mercè", "day": "1 d'agost", "lang": "CA", "title": "La Rosa", "artist": "Manu Guix (El Petit Príncep)", "message": "«Bon dia! Un musical de petit format que, amb el pas dels anys, s'ha convertit en tot un clàssic dels meus Nadals. D'aquesta obra mestra en neix un petit tresor musical que ens obre les portes dels mons que habiten dins nostre: espais plens de curiositat i meravella, de tristesa i alegria, de dubtes i esperances. Un recorregut que ens descobreix les contradiccions de la naturalesa humana i ens recorda la importància dels vincles, de l'amor i de la responsabilitat envers allò que estimem. La Rosa, tan bella com fràgil, s'amaga darrere les seves espines que la protegeixen, però que també poden ferir aquells que, encisats per la seva bellesa, encara no han après a mirar més enllà de les aparences... Perquè, al capdavall, l'essencial és invisible als ulls.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/XR0MZCvWmv0"}], "search": "merce la rosa manu guix petit princep ca"}, {"id": 23, "who": "Mònica", "day": "2 d'agost", "lang": "CA", "title": "Calma", "artist": "Blaumut", "message": "«Bon dia, cantaires!! Cada dia, quan em sona el despertador, m'acompanya una cançó de Blaumut. Sempre del mateix grup, però cada dia una cançó diferent: l'algoritme d'Spotify me la tria per a mi... Blaumut és la meva petita gran debilitat. La singularitat i l'elegància de la seva música —a mig camí entre el pop i la clàssica— i els jocs de paraules de les lletres del Xavi de la Iglesia m'expliquen històries plenes de tendresa, optimisme i imaginació... Avui, diumenge, ha sonat \"Previsions d'acostament\". Però, com que l'agost és \"feixuc i mandrós\" i \"ens fa recordar la bellesa del temps que passa a poc a poc\" (no ho dic jo, ho diuen els Pets i el seu \"Agost\", que ens el va regalar l'Antonieta), he pensat que res millor que despertar-vos amb \"Calma\"... Avui que és diumenge, amb l'ajuda de Blaumut, deixeu que tot passi a poc a poc; deixeu-vos sorprendre i contempleu tot el que teniu al voltant… i, sobretot, contempleu a tothom qui hi tingueu... Una abraçada i bon diumenge, cantaires!!»", "links": [{"label": "Vídeo", "url": "https://youtu.be/fIHCbc2MMyk"}], "search": "monica calma blaumut ca"}, {"id": 24, "who": "Mònica", "day": "3 d'agost", "lang": "ES", "title": "Ni tú ni nadie", "artist": "Alaska y Dinarama", "message": "«Bon dia cantaires !! Avui vull compartir una cançó que té molt de significat per mi: quan anava amb el meu home a Sant Antoni a ballar, aquesta cançó li agradava molt i em fa recordar vells temps, és d'Alaska i Dinarama!! Ni tú ni nadie. Espero que us agradi i que de bon matí us aixequeu amb alegria!!»", "links": [{"label": "Vídeo", "url": "https://youtu.be/skyZ_2fvG3g"}], "search": "monica ni tu ni nadie alaska y dinarama es"}, {"id": 25, "who": "Montserrat", "day": "4 d'agost", "lang": "EN", "title": "Memory", "artist": "del musical Cats", "message": "«Bon dia família musical! Us proposo escoltar el tema \"Memory\" del musical Cats. M'agrada molt com la canta la Barbra Streisand, però us poso el musical perquè la interpretació em sembla extraordinària, i el vestuari, els maquillatges, la posada en escena... absolutament genial! Es va estrenar a Londres el 1981 i va estar en cartellera 21 anys! Si bé és una cançó trista i melancòlica, és una de les meves preferides. La trobo preciosa! Donat que a través de la música tots estem fent un exercici nostàlgic d'expressar preferències i, en alguns casos, de recordar part de les nostres vides i cercar en la memòria fets viscuts, aquesta cançó és precisament el reflex de l'enyor pel temps passat. Però, malgrat la nostàlgia i la melangia, per tot allò que ja ha passat i mantenim viu amb il·lusió a la nostra memòria, com diu al final la lletra de la cançó, un nou dia ha començat! Gaudim-lo amb noves il·lusions! Desitjo que us agradi!»", "links": [{"label": "Vídeo", "url": "https://youtu.be/mdBVJbzkoqo"}], "search": "montserrat memory cats musical en"}, {"id": 26, "who": "Sílvia", "day": "5 d'agost", "lang": "EN", "title": "Paradise", "artist": "Coldplay", "message": "«Bon diaaa cantaires!!! Hi ha un grup de música anglès que m'agrada moltíssim: Coldplay. La seva música m'encanta, i la meva il·lusió va ser poder cantar una de les seves cançons, \"Viva la Vida\", en català, en el concert del mes de juny, amb tots vosaltres (moltes gràcies Joan). Avui us comparteixo la cançó \"Paradise\". Aquesta cançó parla de no perdre l'esperança davant les dificultats. El paradís simbolitza els somnis i la il·lusió que ens ajuden a continuar endavant. Desitjo que us agradi!!! Una abraçada!!»", "links": [{"label": "Vídeo", "url": "https://youtu.be/gaqORrPwIT4"}], "search": "silvia paradise coldplay en"}, {"id": 27, "who": "Pepi", "day": "6 d'agost", "lang": "CA", "title": "Amor Particular", "artist": "Lluís Llach", "message": "«Bon dia cantaires! Jo us proposo un clàssic, un cantautor que tothom coneix i que cantem molt sovint les seves cançons; a mi m'agraden molt, però de totes n'hi ha una que a mi em toca el cor i és molt especial per a mi.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/bS3MBJnxj_Y"}], "search": "pepi amor particular lluis llach ca"}, {"id": 28, "who": "Pilar Vidal", "day": "8 d'agost", "lang": "EN", "title": "Somebody To Love", "artist": "Queen", "message": "«Bon dia! Avui us porto una cançó de Queen, un dels meus grups preferits. Quan el meu germà gran va començar a treballar, el primer que va comprar va ser un tocadiscos, i amb ell un disc que em va impressionar molt, diferent de res que hagués escoltat abans... Quatre nois més aviat lletjos eren capaços de barrejar rock, música clàssica, music hall... i tot amb unes harmonies vocals extraordinàries. Jo tenia 12 o 13 anys, i crec que aquell disc va marcar el meu gust per la música per sempre. Es tractava de \"A Day at the Races\". Us recomano que l'escolteu sencer. D'aquest àlbum he triat per a vosaltres \"Somebody to Love\", un gòspel que parla de la necessitat que tenim tots de sentir-nos estimats. Gràcies, Cor Ginesta, per ser un lloc on és fàcil sentir-se estimat.»", "links": [{"label": "Vídeo", "url": "https://youtube.com/watch?v=kijpcUv-b8M"}], "search": "pilar vidal somebody to love queen en"}, {"id": 29, "who": "Rosa Maria", "day": "9 d'agost", "lang": "FR", "title": "Voyage Voyage", "artist": "Desireless", "message": "«Bon dia, família Ginesta. La meva joventut va ser bastant grisa. Tenies ganes de volar, viatjar, viure, somiar, i et tallaven les ales. La música ens va ajudar molt. Aquesta cançó que us deixo avui és del 1986, de la cantant francesa Desireless; encara ara, quan la sento, em fa vibrar. Al 91, el grup Magneto en va fer la versió en castellà. Jo us deixo la versió original. Voyage, voyage. Desitjo que us faci somiar, viatjar, viure...»", "links": [{"label": "Vídeo", "url": "https://youtu.be/NlgmH5q9uNk"}], "search": "rosa maria voyage voyage desireless fr"}, {"id": 30, "who": "Stella", "day": "10 d'agost", "lang": "EN", "title": "Y.M.C.A.", "artist": "Village People", "message": "«Esta es una canción muy divertida y m gustaría cantarla en la coral..me imagino a todos con gorras de policía,obrero militar,indio etc...cantando esta cancion con coreografia jijiji...»", "links": [{"label": "Vídeo", "url": "https://youtu.be/CS9OO0S5w2k"}, {"label": "Coreografia", "url": "https://youtube.com/shorts/8Z3rzQmYkIc"}], "search": "stella ymca village people en"}, {"id": 31, "who": "Toni", "day": "11 d'agost", "lang": "EN", "title": "Before You Go", "artist": "Johns' Boys Welsh Male Voice Choir (versió de la cançó de Lewis Capaldi)", "message": "«Benvolgut Cor, els \"Nois del Joan\" portem tot el mes de juliol assajant d'amagatotis aquesta versió de la cançó de Lewis Capaldi. Com observareu, amb l'ajuda de les imprescindibles Mònica, Carme i Judit, hem aconseguit, gràcies a l'afinació conjunta, un so prou homogeni i força ben empastat que desitjo que us captivi. Ens reconeixereu fàcilment en el vídeo. El maquillatge ens ha canviat una mica, però hem quedat força eixerits. Veureu que hem tingut cura de posar-nos la ginesta a la solapa, no sigui que la Pepi ens foti bronca. Més difícil ha estat aconseguir que el Jep es posés el corbatí al coll. Mira que n'és de tossut, no hi havia forma. La peça fa referència a la importància de saber escoltar els altres i ens convida a ser més empàtics i a no donar per fet que tothom està bé només perquè no expressa el contrari. A les nostres mans està que qualsevol trobada pugui ser especialment transcendent. Aquí va Before You Go. Espero que us agradi. Volum ben alt.»", "links": [{"label": "Vídeo", "url": "https://youtu.be/ThBcxbUERb4"}], "search": "toni before you go johns boys welsh male voice choir lewis capaldi nois del joan monica carme judit en"}, {"id": 32, "who": "Victòria", "day": "12 d'agost", "lang": "CA", "title": "Era això!", "artist": "The Tyets", "message": "«Bon dia companys. Això arriba al final i quina peneta!!! Heu vist que sempre volem massa i necessitem ben poc per ser feliç? Això és el que ha passat durant aquest mes, que amb ben poca cosa, una cançó, hem sigut feliços cada matí, que bonic!!! Doncs una de les cançons que us regalo (perquè us regalo dues, em salto les normes) parla d'això, de lo poc que es necessita per ser feliç. L'altra cançó és un himne a la vida i és d'una cantautora canària que m'encanta. Espero que us agradin tant com a mi i que disfruteu de la vida i si pot ser, alguns ratets tots junts, molt millor. No em vull oblidar de la Pepi que va tenir aquesta gran idea i que ens ha mantingut units tot l'estiu, GRÀCIES. I gràcies també a tots vosaltres que m'heu fet descobrir cançons noves per a mi, ha estat molt divertit quan esmorzava amb els meus fills i em deien, quina cançó han penjat avui?? I buscàvem junts informació sobre la cançó. Què farem a partir de demà?? Ha estat un plaer trobar-vos a tots al camí. Ens veiem aviat. I que VIVA LA VIDA!!!»", "links": [{"label": "Vídeo", "url": "https://youtu.be/fKmj6mjzTqQ"}], "search": "victoria era aixo the tyets ca"}, {"id": 33, "who": "Victòria", "day": "12 d'agost", "lang": "ES", "title": "Soñar es de valientes", "artist": "Rosana", "message": "Segona cançó del mateix missatge de comiat — vegeu la cita a la targeta anterior. Un himne a la vida, d'una cantautora canària.", "links": [{"label": "Vídeo", "url": "https://youtu.be/0SshwtryE34"}], "search": "victoria sonar es de valientes rosana es"}];
+const languageNames={CA:'Català',ES:'Castellà',EN:'Anglès',IT:'Italià',FR:'Francès'};
+let language='TOTS',newestFirst=false,expanded=new Set();
+const grid=document.getElementById('song-grid'),result=document.getElementById('result'),empty=document.getElementById('empty'),search=document.getElementById('search'),clear=document.getElementById('clear');
+const esc=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));
+const norm=value=>String(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+function card(song){
+  const open=expanded.has(song.id);
+  const links=song.links.map(link=>`<a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">▶</span> ${esc(link.label)}</a>`).join('');
+  return `<article class="song-card"><div class="card-topline"><span class="track-number">${String(song.id).padStart(2,'0')}</span><span class="contributor">${esc(song.who)}</span><span class="song-date">${esc(song.day)}</span><span class="language" title="${languageNames[song.lang]||song.lang}">${esc(song.lang)}</span></div><div class="song-title-row"><div><h3>${esc(song.title)}</h3><p>${esc(song.artist)}</p></div><span class="sound-waves" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div><div class="story-text${open?' expanded':''}">${esc(song.message)}</div><div class="card-actions"><button class="story-toggle" type="button" data-id="${song.id}" aria-expanded="${open}">${open?'Tanca la història':'Llegeix la història'} <span aria-hidden="true">${open?'−':'+'}</span></button><div class="video-links">${links}</div></div></article>`;
+}
+function render(){
+  const needle=norm(search.value.trim());
+  let found=songs.filter(song=>(!needle||norm(`${song.title} ${song.artist} ${song.who} ${song.day} ${song.lang} ${song.search}`).includes(needle))&&(language==='TOTS'||song.lang===language));
+  if(newestFirst)found=[...found].reverse();
+  result.innerHTML=`<b>${found.length}</b> ${found.length===1?'cançó trobada':'cançons trobades'}`;
+  grid.innerHTML=found.map(card).join('');
+  grid.hidden=!found.length;empty.hidden=!!found.length;clear.hidden=!search.value;
+}
+search.addEventListener('input',render);clear.addEventListener('click',()=>{search.value='';render();search.focus()});
+document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>{language=button.dataset.lang;document.querySelectorAll('[data-lang]').forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});render()}));
+document.getElementById('sort').addEventListener('click',event=>{newestFirst=!newestFirst;event.currentTarget.innerHTML=(newestFirst?'Més recents primer':'Ordre original')+' <span aria-hidden="true">⇅</span>';render()});
+document.getElementById('reset').addEventListener('click',()=>{search.value='';language='TOTS';document.querySelectorAll('[data-lang]').forEach(b=>{const active=b.dataset.lang==='TOTS';b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});render()});
+grid.addEventListener('click',event=>{const button=event.target.closest('.story-toggle');if(!button)return;const id=Number(button.dataset.id);expanded.has(id)?expanded.delete(id):expanded.add(id);render();document.querySelector(`[data-id="${id}"]`)?.focus()});
+render();
 </script>
 </body>
 </html>
