@@ -24,13 +24,6 @@ Espai per a poemes, cançons, textos breus i fragments de vida.
 - Web: https://gobo26.github.io/Taller_de_lletres/
 - Repo: https://github.com/Gobo26/Taller_de_lletres
 
-### Textos26
-
-Arxiu personal de textos, emocions i materials literaris.
-
-- Web: https://gobo26.github.io/Textos26/
-- Repo: https://github.com/Gobo26/Textos26
-
 ### Fustaventura
 
 Taller de peces artesanals de fusta: capses de música i àudio, bijuteria, capses decorades, productes de temporada i encàrrecs personalitzats. Una web pròpia per substituir l'antiga pàgina de Wix.
