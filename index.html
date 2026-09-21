@@ -21,22 +21,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Barlow+Condensed:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
 
 :root {
-  --rosa:       #c4556a;
-  --vi:         #7f3f44;
-  --rosa-clar:  #f8e8eb;
-  --oliva:      #7a8040;
-  --oliva-clar: #eaecda;
-  --cel:        #4a7a8a;
-  --cel-clar:   #d8eaee;
-  --sorra:      #b86840;
-  --sorra-clar: #f5e4d8;
-  --fosc:       #1c1a18;
-  --gris:       #f0ede8;
-  --blanc:      #faf8f5;
-  --text:       #2e2c2a;
-  --text2:      #6a6560;
+  --rosa: #c4556a;
+  --cel: #4a7a8a;
+  --oliva: #7a8040;
+  --sorra: #b86840;
+  --fosc: #1c1a18;
+  --text: #2e2c2a;
+  --text2: #6a6560;
 }
 
 html { scroll-behavior: smooth; }
@@ -44,618 +38,363 @@ body {
   background:
     radial-gradient(circle at 12% 8%, rgba(196,85,106,.12), transparent 28%),
     radial-gradient(circle at 86% 18%, rgba(74,122,138,.12), transparent 30%),
-    repeating-linear-gradient(0deg, transparent 0 31px, rgba(91,65,41,.035) 32px),
     linear-gradient(135deg, #fffaf0, #efe4d6);
+  background-attachment: fixed;
   color: var(--text);
   font-family: 'Lora', Georgia, serif;
   min-height: 100vh;
   overflow-x: hidden;
 }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* ── HEADER ── */
+/* ── CAPÇALERA ── */
 header {
-  background: rgba(37,32,27,.9);
+  background: rgba(37,32,27,.92);
+  backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255,250,240,.18);
-  padding: .95rem 1.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  gap: 1rem;
+  padding: .8rem 1.4rem;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100; gap: 1rem;
 }
-.hd-logo {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  text-decoration: none;
-  color: white;
-}
-.hd-logo-text {
-  font-family: 'Caveat', cursive;
-  font-size: 2.2rem;
-  font-weight: 700;
-  line-height: 1;
-  color: #fff4dd;
-}
-.hd-tagline {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .78rem;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.75);
-  display: none;
-}
-@media (min-width: 480px) { .hd-tagline { display: block; } }
-.hd-nav {
-  display: flex;
-  gap: .5rem;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
+.hd-logo { text-decoration: none; }
+.hd-logo-text { font-family: 'Caveat', cursive; font-size: 2.1rem; font-weight: 700; line-height: 1; color: #fff4dd; }
+.hd-nav { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: flex-end; }
 .hd-nav a {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .78rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: rgba(255,244,221,.76);
-  text-decoration: none;
-  padding: .36rem .78rem;
-  border: 1px solid rgba(255,244,221,.26);
+  font-family: 'Barlow Condensed', sans-serif; font-size: .78rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: rgba(255,244,221,.76);
+  text-decoration: none; padding: .36rem .8rem; border: 1px solid rgba(255,244,221,.26); border-radius: 999px;
 }
-.hd-nav a:hover,
-.hd-nav a.actiu {
-  background: rgba(255,244,221,.14);
-  color: #fff4dd;
-}
+.hd-nav a:hover, .hd-nav a.actiu { background: rgba(255,244,221,.14); color: #fff4dd; }
 
 /* ── HERO ── */
 .hero {
   background:
-    linear-gradient(110deg, rgba(37,32,27,.96), rgba(75,54,42,.78) 52%, rgba(74,122,138,.52)),
-    repeating-linear-gradient(0deg, transparent 0 31px, rgba(255,244,221,.04) 32px);
-  color: white;
-  padding: 4rem 1.5rem 4rem;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
+    radial-gradient(circle at 20% 20%, rgba(196,85,106,.55), transparent 45%),
+    radial-gradient(circle at 85% 70%, rgba(74,122,138,.6), transparent 45%),
+    linear-gradient(120deg, #2a211b, #4b362a);
+  color: white; padding: 3.6rem 1.5rem 3.2rem; position: relative; overflow: hidden; text-align: center;
 }
-.hero::after {
-  content: "✦";
-  position: absolute;
-  right: -1rem;
-  top: 50%;
-  transform: translateY(-55%);
-  font-family: 'Caveat', cursive;
-  font-size: clamp(14rem, 30vw, 26rem);
-  line-height: 1;
-  color: rgba(196,85,106,.18);
-  pointer-events: none;
-  user-select: none;
-}
-.hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+.hero-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
 .hero-eyebrow {
-  display: inline-block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: .72rem;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  background: rgba(255,244,221,.13);
-  border: 1px solid rgba(255,244,221,.3);
-  color: #f7dec6;
-  padding: .3rem .8rem;
-  margin-bottom: 1.2rem;
+  display: inline-block; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: .74rem;
+  letter-spacing: .2em; text-transform: uppercase; background: rgba(255,244,221,.13);
+  border: 1px solid rgba(255,244,221,.3); color: #f7dec6; padding: .3rem .9rem; border-radius: 999px; margin-bottom: 1rem;
 }
 .hero-tit {
-  font-family: 'Caveat', cursive;
-  font-weight: 700;
-  font-size: clamp(3.5rem, 10vw, 6.2rem);
-  line-height: 1;
-  color: #fff4dd;
-  margin-bottom: 1.4rem;
+  font-family: 'Caveat', cursive; font-weight: 700; font-size: clamp(4rem, 12vw, 7rem);
+  line-height: .95; color: #fff4dd; margin-bottom: .8rem; text-shadow: 0 4px 24px rgba(0,0,0,.35);
 }
-.hero-tit em { color: var(--rosa); font-style: normal; }
-.hero-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .75rem;
-  justify-content: center;
-  align-items: center;
+.hero-sub { color: rgba(255,244,221,.85); font-size: 1.02rem; line-height: 1.6; margin-bottom: 1.6rem; }
+.cerca { display: block; max-width: 420px; margin: 0 auto; }
+.cerca input {
+  width: 100%; font: inherit; font-size: 1rem; padding: .85rem 1.2rem; border-radius: 999px;
+  border: 2px solid rgba(255,244,221,.35); background: rgba(255,255,255,.95); color: var(--text);
+  outline: none; box-shadow: 0 8px 24px rgba(0,0,0,.25);
 }
-.pill {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: .76rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  padding: .15rem 0;
-  border-top: 1px solid rgba(255,244,221,.36);
-  border-bottom: 1px solid rgba(255,244,221,.22);
-  color: rgba(255,244,221,.82);
-  background: transparent;
-  pointer-events: none;
+.cerca input:focus { border-color: var(--rosa); }
+.flota { position: absolute; font-size: 2.6rem; opacity: .22; animation: flota 7s ease-in-out infinite; pointer-events: none; user-select: none; }
+.f1 { left: 6%; top: 18%; } .f2 { left: 16%; bottom: 10%; animation-delay: -2s; }
+.f3 { right: 8%; top: 14%; animation-delay: -4s; } .f4 { right: 18%; bottom: 12%; animation-delay: -1s; }
+.f5 { left: 46%; top: 6%; animation-delay: -3s; font-size: 2rem; }
+@keyframes flota { 0%,100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-14px) rotate(6deg); } }
+
+/* ── PRINCIPAL ── */
+main { max-width: 1080px; margin: 0 auto; padding: 1.6rem 1rem 4rem; }
+
+/* filtres */
+.filtres {
+  display: flex; gap: .5rem; overflow-x: auto; padding: .3rem 0 1rem; margin-bottom: .6rem;
+  position: sticky; top: 56px; z-index: 50; scrollbar-width: none;
+  background: linear-gradient(#f7eee1 70%, transparent);
+}
+.filtres::-webkit-scrollbar { display: none; }
+.xip {
+  font: inherit; font-family: 'Barlow Condensed', sans-serif; font-size: .95rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; cursor: pointer;
+  padding: .5rem 1rem; border-radius: 999px; border: 2px solid rgba(0,0,0,.1); background: white; color: var(--text);
+  transition: transform .15s, background .15s, color .15s, border-color .15s;
+}
+.xip b { background: var(--rosa); color: white; border-radius: 999px; padding: 0 .45rem; margin-left: .2rem; font-size: .8rem; }
+.xip:hover { transform: translateY(-2px); border-color: var(--rosa); }
+.xip.actiu { background: var(--fosc); color: #fff4dd; border-color: var(--fosc); }
+.xip:focus-visible, .card:focus-visible, .banner:focus-visible { outline: 3px solid rgba(196,85,106,.55); outline-offset: 2px; }
+
+/* banner Fustaventura */
+.banner {
+  display: flex; align-items: center; gap: 1.2rem; text-decoration: none; color: white;
+  background: linear-gradient(115deg, #7f3f44, #c4556a 60%, #d98a6a);
+  border-radius: 22px; padding: 1.4rem 1.6rem; margin-bottom: 1.6rem;
+  box-shadow: 0 10px 28px rgba(156,58,78,.35); transition: transform .2s, box-shadow .2s;
+}
+.banner:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(156,58,78,.42); }
+.banner-ic {
+  flex: 0 0 auto; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(255,255,255,.2); font-size: 2rem;
+}
+.banner-tx { flex: 1; min-width: 0; }
+.banner-nom { font-family: 'Caveat', cursive; font-size: 2.2rem; font-weight: 700; line-height: 1; margin-bottom: .2rem; }
+.banner-dsc { font-size: .9rem; line-height: 1.5; opacity: .92; }
+.banner-cta {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  font-size: .8rem; border: 2px solid rgba(255,255,255,.7); border-radius: 999px; padding: .45rem 1rem; white-space: nowrap;
 }
 
-/* ── MAIN ── */
-main { max-width: 1040px; margin: 0 auto; padding: 2.5rem 1rem 4rem; }
+/* grups */
+.grup { margin-bottom: 2rem; }
+.grup-cap { margin-bottom: .9rem; }
+.grup-cap h2 { font-family: 'Caveat', cursive; font-size: 2.3rem; line-height: 1; color: var(--fosc); }
+.grup-cap p { font-style: italic; font-size: .88rem; color: var(--text2); margin-top: .15rem; }
 
-/* ── SECCIÓ DESPLEGABLE ── */
-.seccio { margin-bottom: 1rem; }
-.sec-cap {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  width: 100%;
-  padding: 1rem 1.2rem;
-  background: white;
-  border: 1px solid rgba(0,0,0,.1);
-  cursor: pointer;
-  user-select: none;
-  transition: background .15s, border-color .15s;
-  -webkit-tap-highlight-color: transparent;
-  font: inherit;
-  text-align: left;
-}
-.sec-cap:focus-visible {
-  outline: 3px solid rgba(196,85,106,.35);
-  outline-offset: 2px;
-}
-.sec-cap:hover { background: var(--gris); }
-.sec-enllac { box-sizing: border-box; text-decoration: none; color: inherit; }
-.sec-fletxa { color: var(--rosa); font-size: 1.1rem; line-height: 1; }
-.seccio.obert .sec-cap { border-bottom-color: transparent; background: var(--gris); }
+.graella { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.g-amics { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
 
-.sec-icona {
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  flex-shrink: 0;
-  color: white;
+/* targetes */
+.card {
+  --c1: #d8eaee; --c2: #b3d3db;
+  position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: .7rem;
+  text-decoration: none; color: inherit; padding: 1rem 1rem 1.1rem; border-radius: 20px;
+  background: linear-gradient(150deg, var(--c1), var(--c2));
+  border: 2px solid rgba(255,255,255,.7);
+  box-shadow: 0 4px 14px rgba(60,40,20,.10);
+  transition: transform .2s cubic-bezier(.3,1.5,.5,1), box-shadow .2s;
+  -webkit-tap-highlight-color: transparent; overflow: hidden;
 }
-.sec-icona.cel    { background: var(--cel); }
-.sec-icona.oliva  { background: var(--oliva); }
-.sec-icona.sorra  { background: var(--sorra); }
-.sec-icona.rosa   { background: var(--rosa); }
-.sec-icona.fosc   { background: var(--fosc); }
+.card::after {
+  content: ""; position: absolute; right: -28px; bottom: -28px; width: 90px; height: 90px; border-radius: 50%;
+  background: rgba(255,255,255,.35); pointer-events: none;
+}
+.card:hover { transform: translateY(-5px) rotate(-.8deg); box-shadow: 0 14px 26px rgba(60,40,20,.2); }
+.card:active { transform: scale(.97); }
+.t-eines { --c1: #eef0da; --c2: #cfd59c; }
+.t-aventures { --c1: #f8e6d9; --c2: #e8b997; }
+.t-amics { --c1: #f4f1ec; --c2: #ddd6cb; flex-direction: row; align-items: center; padding: .8rem 1rem; }
+.t-amics .ic { width: 46px; height: 46px; font-size: 1.5rem; }
+.t-amics .ic svg { width: 32px; height: 32px; }
 
-.sec-titols { flex: 1; min-width: 0; }
-.sec-title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 900;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  color: var(--fosc);
-  line-height: 1.1;
+.ic {
+  width: 58px; height: 58px; flex: 0 0 auto; display: grid; place-items: center; font-size: 2rem; line-height: 1;
+  background: rgba(255,255,255,.75); border-radius: 18px; box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  transition: transform .25s cubic-bezier(.3,1.6,.5,1);
 }
-.sec-sub {
-  font-family: 'Lora', serif;
-  font-style: italic;
-  font-size: .82rem;
-  color: var(--text2);
-  margin-top: .25rem;
-  line-height: 1.4;
+.ic svg { width: 40px; height: 40px; }
+.card:hover .ic { transform: scale(1.12) rotate(-6deg); }
+.tx { position: relative; z-index: 1; min-width: 0; }
+.nom {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 1.08rem; font-weight: 700; letter-spacing: .03em;
+  text-transform: uppercase; color: var(--fosc); line-height: 1.15; margin-bottom: .25rem;
 }
-.sec-dreta { display: flex; align-items: center; gap: .8rem; flex-shrink: 0; }
-.sec-badge {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: .68rem;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  padding: .28rem .7rem;
-  color: white;
-  white-space: nowrap;
-}
-.sec-badge.cel    { background: var(--cel); }
-.sec-badge.oliva  { background: var(--oliva); }
-.sec-badge.sorra  { background: var(--sorra); }
-.sec-badge.rosa   { background: var(--rosa); }
-.sec-badge.fosc   { background: var(--fosc); }
-
-.sec-chevron { color: var(--text2); transition: transform .3s ease; font-size: .9rem; line-height: 1; }
-.seccio.obert .sec-chevron { transform: rotate(180deg); }
-
-/* ── PANELL CONTINGUT ── */
-.sec-cos { overflow: hidden; max-height: 0; transition: max-height .4s ease; }
-.seccio.obert .sec-cos { max-height: 3000px; }
-.sec-cos-inner {
-  background: white;
-  border: 1px solid rgba(0,0,0,.1);
-  border-top: none;
-  padding: 1.2rem;
+.dsc { font-style: italic; font-size: .76rem; color: #4d4843; line-height: 1.4; }
+.nou {
+  position: absolute; top: .7rem; right: .7rem; z-index: 2; background: var(--rosa); color: white;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: .68rem; letter-spacing: .12em;
+  padding: .18rem .55rem; border-radius: 999px; box-shadow: 0 2px 6px rgba(156,58,78,.4);
 }
 
-/* ── GRID APPS ── */
-.app-grid {
-  display: grid;
-  gap: .6rem;
-  grid-template-columns: repeat(2, 1fr);
-}
-@media (min-width: 480px) { .app-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 680px) { .app-grid { grid-template-columns: repeat(4, 1fr); } }
-@media (min-width: 900px) { .app-grid { grid-template-columns: repeat(5, 1fr); } }
+.buit { text-align: center; color: var(--text2); font-style: italic; padding: 2rem 0; }
 
-/* ── TARGETES APP ── */
-.app-card {
-  padding: 1rem .8rem;
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: .5rem;
-  transition: opacity .18s, border-color .18s;
-  border: 1px solid rgba(0,0,0,.08);
-  position: relative;
-  -webkit-tap-highlight-color: transparent;
-}
-.app-card:hover { opacity: .9; }
-
-.app-card.c-cel   { background: var(--cel-clar); }
-.app-card.c-cel:hover   { border-color: var(--cel); }
-.app-card.c-oliva { background: var(--oliva-clar); }
-.app-card.c-oliva:hover { border-color: var(--oliva); }
-.app-card.c-sorra { background: var(--sorra-clar); }
-.app-card.c-sorra:hover { border-color: var(--sorra); }
-.app-card.c-rosa  { background: var(--rosa-clar); }
-.app-card.c-rosa:hover  { border-color: var(--rosa); }
-.app-card.c-fosc  { background: var(--gris); }
-.app-card.c-fosc:hover  { border-color: var(--fosc); }
-
-/* Targeta destacada (featured) */
-.app-card.destacada {
-  grid-column: 1 / -1;
-  flex-direction: row;
-  align-items: center;
-  text-align: left;
-  padding: 1.4rem 1.4rem;
-  gap: 1.2rem;
-}
-.app-card.destacada .app-icon-wrap { width: 64px; height: 64px; font-size: 2.4rem; flex-shrink: 0; }
-.app-card.destacada .app-cos { flex: 1; min-width: 0; }
-.app-card.destacada .app-name { font-size: 1rem; margin-bottom: .25rem; }
-.app-card.destacada .app-desc { font-size: .82rem; line-height: 1.55; }
-.app-card.destacada .app-cta {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: .72rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--rosa);
-  white-space: nowrap;
-  border: 1px solid var(--rosa);
-  padding: .4rem .8rem;
-  flex-shrink: 0;
-}
-
-.app-icon-wrap {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.7rem;
-  line-height: 1;
-  flex-shrink: 0;
-}
-.app-name {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .82rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  color: var(--fosc);
-  line-height: 1.2;
-}
-.app-desc {
-  font-family: 'Lora', serif;
-  font-style: italic;
-  font-size: .72rem;
-  color: var(--text2);
-  line-height: 1.45;
-}
-
-/* Distintiu "NOU" */
-.nou-badge {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: var(--rosa);
-  color: white;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .58rem;
-  font-weight: 900;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  padding: .22rem .55rem;
-}
-
-/* ── BIO ── */
+/* bio */
 .bio-card {
-  background: white;
-  border-top: 3px solid var(--rosa);
-  padding: 1.5rem 1.8rem;
-  display: flex;
-  gap: 1.2rem;
-  align-items: flex-start;
-  margin-top: 1.5rem;
+  background: white; border-radius: 20px; border-left: 5px solid var(--rosa); padding: 1.4rem 1.6rem;
+  display: flex; gap: 1.1rem; align-items: flex-start; margin-top: 1rem; box-shadow: 0 4px 14px rgba(60,40,20,.08);
 }
-.bio-avatar { font-size: 2.4rem; flex-shrink: 0; line-height: 1; }
-.bio-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .68rem;
-  font-weight: 900;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--rosa);
-  margin-bottom: .5rem;
-}
-.bio-text {
-  font-family: 'Lora', serif;
-  font-size: .92rem;
-  color: var(--text2);
-  line-height: 1.75;
-}
+.bio-avatar { font-size: 2.3rem; line-height: 1; }
+.bio-label { font-family: 'Barlow Condensed', sans-serif; font-size: .7rem; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; color: var(--rosa); margin-bottom: .4rem; }
+.bio-text { font-size: .92rem; color: var(--text2); line-height: 1.75; }
 .bio-text strong { color: var(--fosc); font-weight: 600; }
-@media (max-width: 520px) {
-  .bio-card { flex-direction: column; gap: .8rem; padding: 1.2rem; }
-  .bio-avatar { font-size: 2rem; }
-  .app-card.destacada { flex-direction: column; text-align: center; gap: .8rem; }
-  .app-card.destacada .app-cos { text-align: center; }
-}
 
-/* ── FOOTER ── */
 footer {
-  background: var(--fosc);
-  color: rgba(255,255,255,.55);
-  text-align: center;
-  padding: 1.2rem 1rem;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .78rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
+  background: var(--fosc); color: rgba(255,255,255,.55); text-align: center; padding: 1.2rem 1rem;
+  font-family: 'Barlow Condensed', sans-serif; font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
 }
-footer a {
-  color: white;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,.3);
-}
-footer a:hover { border-bottom-color: white; }
+footer a { color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.3); }
 
-/* ── ANIMACIONS ── */
-@keyframes popIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.hero { animation: popIn .5s ease both; }
-.seccio { animation: slideUp .4s ease both; }
-.seccio:nth-child(1) { animation-delay: .08s; }
-.seccio:nth-child(2) { animation-delay: .14s; }
-.seccio:nth-child(3) { animation-delay: .20s; }
-.seccio:nth-child(4) { animation-delay: .26s; }
-.seccio:nth-child(5) { animation-delay: .32s; }
+@media (max-width: 520px) {
+  .hero { padding: 2.6rem 1.2rem 2.4rem; }
+  .graella { grid-template-columns: repeat(2, 1fr); gap: .65rem; }
+  .g-amics { grid-template-columns: 1fr; }
+  .banner { flex-wrap: wrap; padding: 1.2rem; }
+  .banner-cta { margin-left: auto; }
+  .bio-card { flex-direction: column; gap: .7rem; }
+  .filtres { top: 52px; }
+}
+@keyframes entra { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.card, .banner { animation: entra .45s ease both; }
+@media (prefers-reduced-motion: reduce) {
+  .flota, .card, .banner { animation: none; }
+  .card, .xip, .banner, .ic { transition: none; }
+  .card:hover, .banner:hover { transform: none; }
+}
+
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
-  <a class="hd-logo" href="https://gobo26.github.io/gobo26/" target="_self">
-    <span class="hd-logo-text">Gobo26</span>
-  </a>
+  <a class="hd-logo" href="https://gobo26.github.io/gobo26/" target="_self"><span class="hd-logo-text">Gobo26</span></a>
   <nav class="hd-nav" aria-label="Espais Gobo26">
     <a href="https://gobo26.github.io/gobo26/" class="actiu" aria-current="page">Aplicacions</a>
     <a href="https://gobo26.github.io/fustaventura/">Fustaventura</a>
   </nav>
 </header>
 
-<!-- HERO -->
 <section class="hero">
+  <span class="flota f1" aria-hidden="true">🎲</span>
+  <span class="flota f2" aria-hidden="true">🧩</span>
+  <span class="flota f3" aria-hidden="true">🎵</span>
+  <span class="flota f4" aria-hidden="true">🗝️</span>
+  <span class="flota f5" aria-hidden="true">🌿</span>
   <div class="hero-inner">
-    <div class="hero-eyebrow">Aplicacions Gobo26</div>
+    <div class="hero-eyebrow">33 aplicacions · 100% gratuït</div>
     <h1 class="hero-tit">Gobo26</h1>
-    <div class="hero-pills">
-      <span class="pill">100% gratuït</span>
-      <span class="pill">Aplicacions, textos, poemes</span>
-    </div>
+    <p class="hero-sub">Jocs, eines i aventures per mantenir la ment activa.<br>Sense anuncis, sense presses, al teu ritme.</p>
+    <label class="cerca"><span class="sr">Cerca una aplicació</span>
+      <input type="search" id="cerca" placeholder="Cerca un joc o una eina…" autocomplete="off">
+    </label>
   </div>
 </section>
 
 <main>
-
-  <!-- ── JOCS I MEMÒRIA ── -->
-  <div class="seccio" id="s-jocs">
-    <button class="sec-cap" type="button" onclick="toggle('s-jocs')" aria-expanded="false" aria-controls="s-jocs-cos">
-      <div class="sec-icona cel">🎮</div>
-      <div class="sec-titols">
-        <div class="sec-title">Jocs i Memòria</div>
-        <div class="sec-sub">Reptes numèrics, de paraules i memòria per exercitar la ment</div>
-      </div>
-      <div class="sec-dreta">
-        <span class="sec-badge cel">21 apps</span>
-        <span class="sec-chevron">▾</span>
-      </div>
-    </button>
-    <div class="sec-cos" id="s-jocs-cos">
-      <div class="sec-cos-inner">
-        <div class="app-grid">
-          <a class="app-card c-cel" href="Gobo26-DOMINO.html" target="_self">
-            <div class="app-icon-wrap">🁣</div>
-            <div class="app-name">Dominó</div>
-            <div class="app-desc">El clàssic joc de fitxes contra la màquina</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-PARAULA-SECRETA.html" target="_self">
-            <div class="app-icon-wrap">🔐</div>
-            <div class="app-name">Paraula Secreta</div>
-            <div class="app-desc">Endevina la paraula oculta lletra a lletra</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-SUDOKU.html" target="_self">
-            <div class="app-icon-wrap">🔲</div>
-            <div class="app-name">Sudoku</div>
-            <div class="app-desc">El clàssic joc de números amb diverses dificultats</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-MURDOKU.html" target="_self">
-            <span class="nou-badge">NOU</span>
-            <div class="app-icon-wrap">🔪</div>
-            <div class="app-name">Murdoku</div>
-            <div class="app-desc">Misteri deductiu: col·loca els sospitosos i troba l'assassí</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-REPTE-NUMERIC.html" target="_self">
-            <div class="app-icon-wrap">🧮</div>
-            <div class="app-name">Repte Numèric</div>
-            <div class="app-desc">Operacions aritmètiques contra el temps</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-CASCADA-NUMERICA.html" target="_self">
-            <div class="app-icon-wrap">🌊</div>
-            <div class="app-name">Cascada Numèrica</div>
-            <div class="app-desc">Seqüències de números en cascada</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-AMAGADES.html" target="_self">
-            <div class="app-icon-wrap">🔍</div>
-            <div class="app-name">Amagades</div>
-            <div class="app-desc">Troba les paraules amagades en una graella</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-ANAGRAMES.html" target="_self">
-            <div class="app-icon-wrap">🔀</div>
-            <div class="app-name">Anagrames</div>
-            <div class="app-desc">Reordena les lletres per trobar la paraula</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-DITES-INACABADES.html" target="_self">
-            <div class="app-icon-wrap">💬</div>
-            <div class="app-name">Dites Inacabades</div>
-            <div class="app-desc">Completa les dites populars catalanes</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-ENDEVINA.html" target="_self">
-            <div class="app-icon-wrap">🤔</div>
-            <div class="app-name">Endevina</div>
-            <div class="app-desc">Endevinalles i qüestions de vocabulari</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-ENFILALL.html" target="_self">
-            <div class="app-icon-wrap">🧵</div>
-            <div class="app-name">Enfilall de Mots</div>
-            <div class="app-desc">Paraules encadenades lletra a lletra</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-PINTA-PARAULES.html" target="_self">
-            <div class="app-icon-wrap">🎨</div>
-            <div class="app-name">Pinta Paraules</div>
-            <div class="app-desc">Efecte Stroop: color i paraula en conflicte</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-COLECT.html" target="_self">
-            <div class="app-icon-wrap">🗂️</div>
-            <div class="app-name">Col·leccionista</div>
-            <div class="app-desc">Joc de memòria i col·lecció d'objectes</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-MESTRE-JOIER.html" target="_self">
-            <div class="app-icon-wrap">📿</div>
-            <div class="app-name">Mestre Joier</div>
-            <div class="app-desc">Recorda i reprodueix seqüències de colors</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-TRES-EN-RATLLA.html" target="_self">
-            <div class="app-icon-wrap">⭕</div>
-            <div class="app-name">Tres en Ratlla</div>
-            <div class="app-desc">El joc clàssic contra la IA amb emojis</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-MERCATUS.html" target="_self">
-            <div class="app-icon-wrap">🛒</div>
-            <div class="app-name">Mercatus</div>
-            <div class="app-desc">Llista de la compra intel·ligent</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-LA_BOTIGA.html" target="_self">
-            <div class="app-icon-wrap">🏪</div>
-            <div class="app-name">La Botiga</div>
-            <div class="app-desc">Calcula el canvi donant les monedes justes</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-INTRUS.html" target="_self">
-            <div class="app-icon-wrap">🕵️</div>
-            <div class="app-name">L'Intrús</div>
-            <div class="app-desc">Troba l'element que no pertany al grup</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-MAONS.html" target="_self">
-            <div class="app-icon-wrap">🧱</div>
-            <div class="app-name">Maons</div>
-            <div class="app-desc">Joc d'habilitat i reflexos amb blocs de colors</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-INVASORS.html" target="_self">
-            <span class="nou-badge">NOU</span>
-            <div class="app-icon-wrap">👾</div>
-            <div class="app-name">Invasors</div>
-            <div class="app-desc">Defensa la Terra dels invasors de l'espai, onada rere onada</div>
-          </a>
-          <a class="app-card c-cel" href="Gobo26-ONCLE-ALBERT.html" target="_self">
-            <div class="app-icon-wrap">🗝️</div>
-            <div class="app-name">L'Oncle Albert</div>
-            <div class="app-desc">Escape room amb enigmes de xifres i codis</div>
-          </a>
-        </div>
-      </div>
-    </div>
+  <div class="filtres" role="group" aria-label="Filtra per categoria">
+    <button type="button" class="xip actiu" data-f="tot" aria-pressed="true">Tot</button>
+    <button type="button" class="xip" data-f="nou" aria-pressed="false">✨ Novetats <b>6</b></button>
+    <button type="button" class="xip" data-f="jocs" aria-pressed="false">🎮 Jocs</button>
+    <button type="button" class="xip" data-f="eines" aria-pressed="false">🛠️ Eines</button>
+    <button type="button" class="xip" data-f="aventures" aria-pressed="false">📖 Aventures</button>
+    <button type="button" class="xip" data-f="amics" aria-pressed="false">🌐 Amics</button>
   </div>
 
-  <!-- ── EINES I CURIOSITATS ── -->
-  <div class="seccio" id="s-eines">
-    <button class="sec-cap" type="button" onclick="toggle('s-eines')" aria-expanded="false" aria-controls="s-eines-cos">
-      <div class="sec-icona oliva">🛠️</div>
-      <div class="sec-titols">
-        <div class="sec-title">Eines i Curiositats</div>
-        <div class="sec-sub">Utilitats per al cos, la salut i la música</div>
-      </div>
-      <div class="sec-dreta">
-        <span class="sec-badge oliva">9 apps</span>
-        <span class="sec-chevron">▾</span>
-      </div>
-    </button>
-    <div class="sec-cos" id="s-eines-cos">
-      <div class="sec-cos-inner">
-        <div class="app-grid">
-          <a class="app-card c-oliva" href="Gobo26-TENSIO_ARTERIAL.html" target="_self">
-            <div class="app-icon-wrap">❤️</div>
-            <div class="app-name">Tensió Arterial</div>
-            <div class="app-desc">Registre i seguiment de la tensió arterial</div>
-          </a>
-          <a class="app-card c-oliva" href="Gobo26-MORSE-FACIL.html" target="_self">
-            <div class="app-icon-wrap">📡</div>
-            <div class="app-name">Morse Fàcil</div>
-            <div class="app-desc">Aprèn el codi Morse de manera progressiva</div>
-          </a>
-          <a class="app-card c-oliva" href="Gobo26-CANCONER-SDM.html" target="_self">
-            <div class="app-icon-wrap">🎵</div>
-            <div class="app-name">Cançoner SDM</div>
-            <div class="app-desc">Cançoner d'havaneres dels Sons del Mar</div>
-          </a>
-          <a class="app-card c-oliva" href="Gobo26-SUMA_MINUTS.html" target="_self">
-            <div class="app-icon-wrap">⏱️</div>
-            <div class="app-name">Suma Minuts</div>
-            <div class="app-desc">Càlcul mental de temps i minuts</div>
-          </a>
-          <a class="app-card c-oliva" href="Gobo26-Herbes.html" target="_self">
-            <div class="app-icon-wrap">🌿</div>
-            <div class="app-name">Herbes mediterrànies</div>
-            <div class="app-desc">Guia de 43 plantes amb cercador, oracle i tradicions</div>
-          </a>
-          <a class="app-card c-oliva" href="Gobo26-Tarot.html" target="_self">
-            <div class="app-icon-wrap">✦</div>
-            <div class="app-name">Santuari de Tarot</div>
-            <div class="app-desc">Tirades per temes, pregunta de Sí o No i diari de lectures</div>
-          </a>
-          <a class="app-card c-oliva" href="Gobo26-HOROSCOP.html" target="_self">
-            <span class="nou-badge">NOU</span>
-            <div class="app-icon-wrap">🌟</div>
-            <div class="app-name">Horòscop</div>
-            <div class="app-desc">Els 12 signes i horòscop diari i setmanal en positiu, amb notes per a cantaires</div>
-          </a>
+  <a class="banner" href="https://gobo26.github.io/fustaventura/" target="_blank" rel="noopener" data-cat="fustaventura" data-nou="0" data-t="fustaventura peces artesanals de fusta fetes a mà encàrrec">
+    <div class="banner-ic">◆</div>
+    <div class="banner-tx">
+      <div class="banner-nom">Fustaventura</div>
+      <div class="banner-dsc">Peces artesanals de fusta fetes a mà i per encàrrec: capses de música, bijuteria i objectes amb textura pròpia.</div>
+    </div>
+    <span class="banner-cta">Entra →</span>
+  </a>
 
-          <a class="app-card c-oliva" href="Gobo26-HISTORIAL-MEDIC.html" target="_self">
-            <span class="nou-badge">NOU</span>
-            <div class="app-icon-wrap">
-              <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
+  <section class="grup" data-grup="jocs">
+    <div class="grup-cap"><h2>Jocs i memòria</h2><p>Reptes numèrics, de paraules i memòria per exercitar la ment</p></div>
+    <div class="graella g-jocs">
+      <a class="card t-jocs" href="Gobo26-DOMINO.html" data-cat="jocs" data-nou="0" data-t="dominó el clàssic joc de fitxes contra la màquina">
+        <div class="ic">🁣</div>
+        <div class="tx"><div class="nom">Dominó</div><div class="dsc">El clàssic joc de fitxes contra la màquina</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-PARAULA-SECRETA.html" data-cat="jocs" data-nou="0" data-t="paraula secreta endevina la paraula oculta lletra a lletra">
+        <div class="ic">🔐</div>
+        <div class="tx"><div class="nom">Paraula Secreta</div><div class="dsc">Endevina la paraula oculta lletra a lletra</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-SUDOKU.html" data-cat="jocs" data-nou="0" data-t="sudoku el clàssic joc de números amb diverses dificultats">
+        <div class="ic">🔲</div>
+        <div class="tx"><div class="nom">Sudoku</div><div class="dsc">El clàssic joc de números amb diverses dificultats</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-MURDOKU.html" data-cat="jocs" data-nou="1" data-t="murdoku misteri deductiu: col·loca els sospitosos i troba l&#x27;assassí">
+        <span class="nou">NOU</span><div class="ic">🔪</div>
+        <div class="tx"><div class="nom">Murdoku</div><div class="dsc">Misteri deductiu: col·loca els sospitosos i troba l'assassí</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-REPTE-NUMERIC.html" data-cat="jocs" data-nou="0" data-t="repte numèric operacions aritmètiques contra el temps">
+        <div class="ic">🧮</div>
+        <div class="tx"><div class="nom">Repte Numèric</div><div class="dsc">Operacions aritmètiques contra el temps</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-CASCADA-NUMERICA.html" data-cat="jocs" data-nou="0" data-t="cascada numèrica seqüències de números en cascada">
+        <div class="ic">🌊</div>
+        <div class="tx"><div class="nom">Cascada Numèrica</div><div class="dsc">Seqüències de números en cascada</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-AMAGADES.html" data-cat="jocs" data-nou="0" data-t="amagades troba les paraules amagades en una graella">
+        <div class="ic">🔍</div>
+        <div class="tx"><div class="nom">Amagades</div><div class="dsc">Troba les paraules amagades en una graella</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-ANAGRAMES.html" data-cat="jocs" data-nou="0" data-t="anagrames reordena les lletres per trobar la paraula">
+        <div class="ic">🔀</div>
+        <div class="tx"><div class="nom">Anagrames</div><div class="dsc">Reordena les lletres per trobar la paraula</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-DITES-INACABADES.html" data-cat="jocs" data-nou="0" data-t="dites inacabades completa les dites populars catalanes">
+        <div class="ic">💬</div>
+        <div class="tx"><div class="nom">Dites Inacabades</div><div class="dsc">Completa les dites populars catalanes</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-ENDEVINA.html" data-cat="jocs" data-nou="0" data-t="endevina endevinalles i qüestions de vocabulari">
+        <div class="ic">🤔</div>
+        <div class="tx"><div class="nom">Endevina</div><div class="dsc">Endevinalles i qüestions de vocabulari</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-ENFILALL.html" data-cat="jocs" data-nou="0" data-t="enfilall de mots paraules encadenades lletra a lletra">
+        <div class="ic">🧵</div>
+        <div class="tx"><div class="nom">Enfilall de Mots</div><div class="dsc">Paraules encadenades lletra a lletra</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-PINTA-PARAULES.html" data-cat="jocs" data-nou="0" data-t="pinta paraules efecte stroop: color i paraula en conflicte">
+        <div class="ic">🎨</div>
+        <div class="tx"><div class="nom">Pinta Paraules</div><div class="dsc">Efecte Stroop: color i paraula en conflicte</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-COLECT.html" data-cat="jocs" data-nou="0" data-t="col·leccionista joc de memòria i col·lecció d&#x27;objectes">
+        <div class="ic">🗂️</div>
+        <div class="tx"><div class="nom">Col·leccionista</div><div class="dsc">Joc de memòria i col·lecció d'objectes</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-MESTRE-JOIER.html" data-cat="jocs" data-nou="0" data-t="mestre joier recorda i reprodueix seqüències de colors">
+        <div class="ic">📿</div>
+        <div class="tx"><div class="nom">Mestre Joier</div><div class="dsc">Recorda i reprodueix seqüències de colors</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-TRES-EN-RATLLA.html" data-cat="jocs" data-nou="0" data-t="tres en ratlla el joc clàssic contra la ia amb emojis">
+        <div class="ic">⭕</div>
+        <div class="tx"><div class="nom">Tres en Ratlla</div><div class="dsc">El joc clàssic contra la IA amb emojis</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-MERCATUS.html" data-cat="jocs" data-nou="0" data-t="mercatus llista de la compra intel·ligent">
+        <div class="ic">🛒</div>
+        <div class="tx"><div class="nom">Mercatus</div><div class="dsc">Llista de la compra intel·ligent</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-LA_BOTIGA.html" data-cat="jocs" data-nou="0" data-t="la botiga calcula el canvi donant les monedes justes">
+        <div class="ic">🏪</div>
+        <div class="tx"><div class="nom">La Botiga</div><div class="dsc">Calcula el canvi donant les monedes justes</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-INTRUS.html" data-cat="jocs" data-nou="0" data-t="l&#x27;intrús troba l&#x27;element que no pertany al grup">
+        <div class="ic">🕵️</div>
+        <div class="tx"><div class="nom">L'Intrús</div><div class="dsc">Troba l'element que no pertany al grup</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-MAONS.html" data-cat="jocs" data-nou="0" data-t="maons joc d&#x27;habilitat i reflexos amb blocs de colors">
+        <div class="ic">🧱</div>
+        <div class="tx"><div class="nom">Maons</div><div class="dsc">Joc d'habilitat i reflexos amb blocs de colors</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-INVASORS.html" data-cat="jocs" data-nou="1" data-t="invasors defensa la terra dels invasors de l&#x27;espai, onada rere onada">
+        <span class="nou">NOU</span><div class="ic">👾</div>
+        <div class="tx"><div class="nom">Invasors</div><div class="dsc">Defensa la Terra dels invasors de l'espai, onada rere onada</div></div>
+      </a>
+      <a class="card t-jocs" href="Gobo26-ONCLE-ALBERT.html" data-cat="jocs" data-nou="0" data-t="l&#x27;oncle albert escape room amb enigmes de xifres i codis">
+        <div class="ic">🗝️</div>
+        <div class="tx"><div class="nom">L'Oncle Albert</div><div class="dsc">Escape room amb enigmes de xifres i codis</div></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="grup" data-grup="eines">
+    <div class="grup-cap"><h2>Eines i curiositats</h2><p>Utilitats per al cos, la salut i la música</p></div>
+    <div class="graella g-eines">
+      <a class="card t-eines" href="Gobo26-TENSIO_ARTERIAL.html" data-cat="eines" data-nou="0" data-t="tensió arterial registre i seguiment de la tensió arterial">
+        <div class="ic">❤️</div>
+        <div class="tx"><div class="nom">Tensió Arterial</div><div class="dsc">Registre i seguiment de la tensió arterial</div></div>
+      </a>
+      <a class="card t-eines" href="Gobo26-MORSE-FACIL.html" data-cat="eines" data-nou="0" data-t="morse fàcil aprèn el codi morse de manera progressiva">
+        <div class="ic">📡</div>
+        <div class="tx"><div class="nom">Morse Fàcil</div><div class="dsc">Aprèn el codi Morse de manera progressiva</div></div>
+      </a>
+      <a class="card t-eines" href="Gobo26-CANCONER-SDM.html" data-cat="eines" data-nou="0" data-t="cançoner sdm cançoner d&#x27;havaneres dels sons del mar">
+        <div class="ic">🎵</div>
+        <div class="tx"><div class="nom">Cançoner SDM</div><div class="dsc">Cançoner d'havaneres dels Sons del Mar</div></div>
+      </a>
+      <a class="card t-eines" href="Gobo26-SUMA_MINUTS.html" data-cat="eines" data-nou="0" data-t="suma minuts càlcul mental de temps i minuts">
+        <div class="ic">⏱️</div>
+        <div class="tx"><div class="nom">Suma Minuts</div><div class="dsc">Càlcul mental de temps i minuts</div></div>
+      </a>
+      <a class="card t-eines" href="Gobo26-Herbes.html" data-cat="eines" data-nou="0" data-t="herbes mediterrànies guia de 43 plantes amb cercador, oracle i tradicions">
+        <div class="ic">🌿</div>
+        <div class="tx"><div class="nom">Herbes mediterrànies</div><div class="dsc">Guia de 43 plantes amb cercador, oracle i tradicions</div></div>
+      </a>
+      <a class="card t-eines" href="Gobo26-Tarot.html" data-cat="eines" data-nou="0" data-t="santuari de tarot tirades per temes, pregunta de sí o no i diari de lectures">
+        <div class="ic">✦</div>
+        <div class="tx"><div class="nom">Santuari de Tarot</div><div class="dsc">Tirades per temes, pregunta de Sí o No i diari de lectures</div></div>
+      </a>
+      <a class="card t-eines" href="Gobo26-HOROSCOP.html" data-cat="eines" data-nou="1" data-t="horòscop els 12 signes i horòscop diari i setmanal en positiu, amb notes per a cantaires">
+        <span class="nou">NOU</span><div class="ic">🌟</div>
+        <div class="tx"><div class="nom">Horòscop</div><div class="dsc">Els 12 signes i horòscop diari i setmanal en positiu, amb notes per a cantaires</div></div>
+      </a>
+      <a class="card t-eines" href="Gobo26-HISTORIAL-MEDIC.html" data-cat="eines" data-nou="1" data-t="el meu historial mèdic historial mèdic personal i familiar amb bitàcora diària">
+        <span class="nou">NOU</span><div class="ic"><svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
                 <rect x="20" y="13" width="8" height="22" rx="2.5" fill="#16a34a" opacity=".9"/>
                 <rect x="13" y="20" width="22" height="8" rx="2.5" fill="#16a34a" opacity=".9"/>
@@ -663,151 +402,81 @@ footer a:hover { border-bottom-color: white; }
                 <circle cx="24" cy="8" r="3.5" fill="#22c55e"/>
                 <circle cx="35" cy="10" r="3" fill="#4ade80"/>
                 <polyline points="8,40 12,40 14,36 17,43 20,38 22,40 26,40 28,36 31,43 34,38 36,40 40,40" fill="none" stroke="#86efac" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="app-name">El meu historial mèdic</div>
-            <div class="app-desc">Historial mèdic personal i familiar amb bitàcora diària</div>
-          </a>
-
-          <a class="app-card c-oliva" href="Gobo26-BONOLOTO.html" target="_self">
-            <span class="nou-badge">NOU</span>
-            <div class="app-icon-wrap">🍀</div>
-            <div class="app-name">La Sort</div>
-            <div class="app-desc">Combinacions per a la Bonoloto i La Primitiva que segueixen els números més sortits el 2025 i el 2026</div>
-          </a>
-      </div>
+              </svg></div>
+        <div class="tx"><div class="nom">El meu historial mèdic</div><div class="dsc">Historial mèdic personal i familiar amb bitàcora diària</div></div>
+      </a>
+      <a class="card t-eines" href="Gobo26-BONOLOTO.html" data-cat="eines" data-nou="1" data-t="la sort combinacions per a la bonoloto i la primitiva que segueixen els números més sortits el 2025 i el 2026">
+        <span class="nou">NOU</span><div class="ic">🍀</div>
+        <div class="tx"><div class="nom">La Sort</div><div class="dsc">Combinacions per a la Bonoloto i La Primitiva que segueixen els números més sortits el 2025 i el 2026</div></div>
+      </a>
     </div>
-  </div>
+  </section>
 
-  <!-- ── AVENTURES ── -->
-  <div class="seccio" id="s-aventures">
-    <button class="sec-cap" type="button" onclick="toggle('s-aventures')" aria-expanded="false" aria-controls="s-aventures-cos">
-      <div class="sec-icona sorra">📖</div>
-      <div class="sec-titols">
-        <div class="sec-title">Aventures Interactives</div>
-        <div class="sec-sub">Històries de tria pròpia: cada decisió canvia el final</div>
-      </div>
-      <div class="sec-dreta">
-        <span class="sec-badge sorra">3 aventures</span>
-        <span class="sec-chevron">▾</span>
-      </div>
-    </button>
-    <div class="sec-cos" id="s-aventures-cos">
-      <div class="sec-cos-inner">
-        <div class="app-grid">
-          <a class="app-card c-sorra" href="Gobo26-AVENTURA_RETRAT.html" target="_self">
-            <div class="app-icon-wrap">🎨</div>
-            <div class="app-name">El Retrat de la Reina</div>
-            <div class="app-desc">Misteri medieval: un pintor, un crim i una trama de poder</div>
-          </a>
-          <a class="app-card c-sorra" href="Gobo26-AVENTURA_CORAL.html" target="_self">
-            <div class="app-icon-wrap">🎭</div>
-            <div class="app-name">La Nit de la Coral</div>
-            <div class="app-desc">Un director assassinat, una soprano i menys d'una hora per descobrir la veritat</div>
-          </a>
-          <a class="app-card c-sorra" href="Gobo26-AVENTURA_RADIO.html" target="_self">
-            <div class="nou-badge">NOU</div>
-            <div class="app-icon-wrap">🎙</div>
-            <div class="app-name">La Darrera Emissió</div>
-            <div class="app-desc">Un guió de ràdio que no és ficció. Quinze anys de silenci. Una sola nit per dir la veritat.</div>
-          </a>
-        </div>
-      </div>
+  <section class="grup" data-grup="aventures">
+    <div class="grup-cap"><h2>Aventures interactives</h2><p>Històries de tria pròpia: cada decisió canvia el final</p></div>
+    <div class="graella g-aventures">
+      <a class="card t-aventures" href="Gobo26-AVENTURA_RETRAT.html" data-cat="aventures" data-nou="0" data-t="el retrat de la reina misteri medieval: un pintor, un crim i una trama de poder">
+        <div class="ic">🎨</div>
+        <div class="tx"><div class="nom">El Retrat de la Reina</div><div class="dsc">Misteri medieval: un pintor, un crim i una trama de poder</div></div>
+      </a>
+      <a class="card t-aventures" href="Gobo26-AVENTURA_CORAL.html" data-cat="aventures" data-nou="0" data-t="la nit de la coral un director assassinat, una soprano i menys d&#x27;una hora per descobrir la veritat">
+        <div class="ic">🎭</div>
+        <div class="tx"><div class="nom">La Nit de la Coral</div><div class="dsc">Un director assassinat, una soprano i menys d'una hora per descobrir la veritat</div></div>
+      </a>
+      <a class="card t-aventures" href="Gobo26-AVENTURA_RADIO.html" data-cat="aventures" data-nou="1" data-t="la darrera emissió un guió de ràdio que no és ficció. quinze anys de silenci. una sola nit per dir la veritat.">
+        <span class="nou">NOU</span><div class="ic">🎙</div>
+        <div class="tx"><div class="nom">La Darrera Emissió</div><div class="dsc">Un guió de ràdio que no és ficció. Quinze anys de silenci. Una sola nit per dir la veritat.</div></div>
+      </a>
     </div>
-  </div>
+  </section>
 
-  <!-- ── FUSTAVENTURA ── -->
-  <div class="seccio" id="s-fustaventura">
-    <a class="sec-cap sec-enllac" href="https://gobo26.github.io/fustaventura/" target="_blank" rel="noopener">
-      <div class="sec-icona rosa">◆</div>
-      <div class="sec-titols">
-        <div class="sec-title">Fustaventura</div>
-        <div class="sec-sub">Peces artesanals de fusta fetes a mà i per encàrrec</div>
-      </div>
-      <div class="sec-dreta">
-        <span class="sec-fletxa">→</span>
-      </div>
-    </a>
-  </div>
-
-  <!-- ── AMICS DE GOBO26 ── -->
-  <div class="seccio" id="s-amics">
-    <button class="sec-cap" type="button" onclick="toggle('s-amics')" aria-expanded="false" aria-controls="s-amics-cos">
-      <div class="sec-icona fosc">🌐</div>
-      <div class="sec-titols">
-        <div class="sec-title">Amics de Gobo26</div>
-        <div class="sec-sub">Artesania, música coral, havaneres i més</div>
-      </div>
-      <div class="sec-dreta">
-        <span class="sec-badge fosc">8 links</span>
-        <span class="sec-chevron">▾</span>
-      </div>
-    </button>
-    <div class="sec-cos" id="s-amics-cos">
-      <div class="sec-cos-inner">
-        <div class="app-grid">
-
-          <a class="app-card c-fosc" href="https://www.instagram.com/fetdefils/" target="_blank" rel="noopener">
-            <div class="app-icon-wrap">
-              <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
+  <section class="grup" data-grup="amics">
+    <div class="grup-cap"><h2>Amics de Gobo26</h2><p>Artesania, música coral, havaneres i més</p></div>
+    <div class="graella g-amics">
+      <a class="card t-amics" href="https://www.instagram.com/fetdefils/" target="_blank" rel="noopener" data-cat="amics" data-nou="0" data-t="fetdefils amigurumis artesans">
+        <div class="ic"><svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#e0d7f0" stroke="#7c3aed" stroke-width="2"/>
                 <circle cx="24" cy="24" r="10" fill="none" stroke="#7c3aed" stroke-width="2.5"/>
                 <path d="M14 24 Q24 14 34 24 Q24 34 14 24Z" fill="none" stroke="#a78bfa" stroke-width="1.5"/>
                 <path d="M24 14 Q34 24 24 34 Q14 24 24 14Z" fill="none" stroke="#a78bfa" stroke-width="1.5"/>
                 <line x1="30" y1="18" x2="38" y2="10" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
                 <circle cx="38" cy="10" r="2" fill="#7c3aed"/>
-              </svg>
-            </div>
-            <div class="app-name">Fetdefils</div>
-            <div class="app-desc">Amigurumis artesans</div>
-          </a>
-
-          <a class="app-card c-fosc" href="https://www.instagram.com/fustaventura/" target="_blank" rel="noopener">
-            <div class="app-icon-wrap">
-              <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
+              </svg></div>
+        <div class="tx"><div class="nom">Fetdefils</div><div class="dsc">Amigurumis artesans</div></div>
+      </a>
+      <a class="card t-amics" href="https://www.instagram.com/fustaventura/" target="_blank" rel="noopener" data-cat="amics" data-nou="0" data-t="fustaventura artesania en fusta">
+        <div class="ic"><svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
                 <rect x="10" y="28" width="28" height="8" rx="3" fill="#b45309"/>
                 <path d="M10 28 Q24 22 38 28" fill="#92400e" opacity=".4"/>
                 <path d="M16 28 L20 16 L28 16 L32 28Z" fill="#d97706" stroke="#b45309" stroke-width="1.5"/>
                 <line x1="22" y1="16" x2="20" y2="28" stroke="#92400e" stroke-width="1" opacity=".5"/>
                 <line x1="26" y1="16" x2="28" y2="28" stroke="#92400e" stroke-width="1" opacity=".5"/>
-              </svg>
-            </div>
-            <div class="app-name">Fustaventura</div>
-            <div class="app-desc">Artesania en fusta</div>
-          </a>
-
-          <a class="app-card c-fosc" href="https://www.instagram.com/sonsdelmar/" target="_blank" rel="noopener">
-            <div class="app-icon-wrap">
-              <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
+              </svg></div>
+        <div class="tx"><div class="nom">Fustaventura</div><div class="dsc">Artesania en fusta</div></div>
+      </a>
+      <a class="card t-amics" href="https://www.instagram.com/sonsdelmar/" target="_blank" rel="noopener" data-cat="amics" data-nou="0" data-t="sons del mar grup d&#x27;havaneres">
+        <div class="ic"><svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#e0f2fe" stroke="#0369a1" stroke-width="2"/>
                 <path d="M8 30 Q14 25 20 30 Q26 35 32 30 Q38 25 44 30" fill="none" stroke="#0369a1" stroke-width="2" stroke-linecap="round"/>
                 <path d="M8 35 Q14 30 20 35 Q26 40 32 35 Q38 30 44 35" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/>
                 <ellipse cx="20" cy="21" rx="3.5" ry="2.5" fill="#0369a1" transform="rotate(-15 20 21)"/>
                 <line x1="23" y1="20" x2="23" y2="12" stroke="#0369a1" stroke-width="2"/>
                 <path d="M23 12 L30 14 L30 17 L23 15Z" fill="#0369a1"/>
-              </svg>
-            </div>
-            <div class="app-name">Sons del Mar</div>
-            <div class="app-desc">Grup d'havaneres</div>
-          </a>
-
-          <a class="app-card c-fosc" href="https://www.instagram.com/cor_lianna/" target="_blank" rel="noopener">
-            <div class="app-icon-wrap">
-              <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
+              </svg></div>
+        <div class="tx"><div class="nom">Sons del Mar</div><div class="dsc">Grup d'havaneres</div></div>
+      </a>
+      <a class="card t-amics" href="https://www.instagram.com/cor_lianna/" target="_blank" rel="noopener" data-cat="amics" data-nou="0" data-t="cor lianna castellvell del camp">
+        <div class="ic"><svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#fce7f3" stroke="#be185d" stroke-width="2"/>
                 <path d="M24 34 C24 34 12 26 12 19 C12 15 16 13 20 15 C22 16 24 18 24 18 C24 18 26 16 28 15 C32 13 36 15 36 19 C36 26 24 34 24 34Z" fill="#be185d" opacity=".85"/>
                 <ellipse cx="24" cy="18.5" rx="2.5" ry="2" fill="white" opacity=".7" transform="rotate(-20 24 18.5)"/>
                 <line x1="26" y1="17" x2="26" y2="11" stroke="white" stroke-width="1.8" opacity=".7"/>
-              </svg>
-            </div>
-            <div class="app-name">Cor Lianna</div>
-            <div class="app-desc">Castellvell del Camp</div>
-          </a>
-
-          <a class="app-card c-fosc" href="https://www.instagram.com/corluia/" target="_blank" rel="noopener">
-            <div class="app-icon-wrap">
-              <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
+              </svg></div>
+        <div class="tx"><div class="nom">Cor Lianna</div><div class="dsc">Castellvell del Camp</div></div>
+      </a>
+      <a class="card t-amics" href="https://www.instagram.com/corluia/" target="_blank" rel="noopener" data-cat="amics" data-nou="0" data-t="cor luia tarragona">
+        <div class="ic"><svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
                 <circle cx="16" cy="18" r="4" fill="#059669"/>
                 <circle cx="24" cy="16" r="4" fill="#059669"/>
@@ -815,15 +484,11 @@ footer a:hover { border-bottom-color: white; }
                 <path d="M10 32 Q16 26 22 30 Q26 32 30 30 Q36 26 42 32" fill="#059669" opacity=".7"/>
                 <text x="20" y="14" font-size="7" fill="#34d399" opacity=".8">♪</text>
                 <text x="28" y="12" font-size="6" fill="#34d399" opacity=".8">♫</text>
-              </svg>
-            </div>
-            <div class="app-name">Cor LUIA</div>
-            <div class="app-desc">Tarragona</div>
-          </a>
-
-          <a class="app-card c-fosc" href="https://www.instagram.com/corginesta.riudoms/" target="_blank" rel="noopener">
-            <div class="app-icon-wrap">
-              <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
+              </svg></div>
+        <div class="tx"><div class="nom">Cor LUIA</div><div class="dsc">Tarragona</div></div>
+      </a>
+      <a class="card t-amics" href="https://www.instagram.com/corginesta.riudoms/" target="_blank" rel="noopener" data-cat="amics" data-nou="0" data-t="cor ginesta riudoms">
+        <div class="ic"><svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/>
                 <ellipse cx="24" cy="18" rx="4" ry="7" fill="#eab308" transform="rotate(0 24 18)"/>
                 <ellipse cx="24" cy="18" rx="4" ry="7" fill="#ca8a04" opacity=".5" transform="rotate(60 24 24)"/>
@@ -834,30 +499,22 @@ footer a:hover { border-bottom-color: white; }
                 <circle cx="24" cy="24" r="4" fill="#fde047"/>
                 <text x="11" y="40" font-size="7" fill="#ca8a04" opacity=".7">♪</text>
                 <text x="30" y="40" font-size="7" fill="#ca8a04" opacity=".7">♫</text>
-              </svg>
-            </div>
-            <div class="app-name">Cor Ginesta</div>
-            <div class="app-desc">Riudoms</div>
-          </a>
-
-          <a class="app-card c-fosc" href="https://www.instagram.com/corxamusia/" target="_blank" rel="noopener">
-            <div class="app-icon-wrap">
-              <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
+              </svg></div>
+        <div class="tx"><div class="nom">Cor Ginesta</div><div class="dsc">Riudoms</div></div>
+      </a>
+      <a class="card t-amics" href="https://www.instagram.com/corxamusia/" target="_blank" rel="noopener" data-cat="amics" data-nou="0" data-t="cor xamusia vilafranca del penedès">
+        <div class="ic"><svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
                 <path d="M16 34 L16 18 Q16 12 24 12 Q32 12 32 18 L32 34" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round"/>
                 <line x1="16" y1="34" x2="32" y2="34" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round"/>
                 <line x1="20" y1="14" x2="20" y2="34" stroke="#38bdf8" stroke-width="1.5" opacity=".8"/>
                 <line x1="24" y1="13" x2="24" y2="34" stroke="#38bdf8" stroke-width="1.5" opacity=".8"/>
                 <line x1="28" y1="14" x2="28" y2="34" stroke="#38bdf8" stroke-width="1.5" opacity=".8"/>
-              </svg>
-            </div>
-            <div class="app-name">Cor Xamusia</div>
-            <div class="app-desc">Vilafranca del Penedès</div>
-          </a>
-
-          <a class="app-card c-fosc" href="https://www.instagram.com/duosuay/" target="_blank" rel="noopener">
-            <div class="app-icon-wrap">
-              <svg width="38" height="38" viewBox="0 0 48 48" fill="none">
+              </svg></div>
+        <div class="tx"><div class="nom">Cor Xamusia</div><div class="dsc">Vilafranca del Penedès</div></div>
+      </a>
+      <a class="card t-amics" href="https://www.instagram.com/duosuay/" target="_blank" rel="noopener" data-cat="amics" data-nou="0" data-t="duo suay tarragona">
+        <div class="ic"><svg width="38" height="38" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="22" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
                 <circle cx="18" cy="17" r="4.5" fill="#c2410c"/>
                 <circle cx="30" cy="17" r="4.5" fill="#ea580c"/>
@@ -865,18 +522,14 @@ footer a:hover { border-bottom-color: white; }
                 <ellipse cx="24" cy="13" rx="3" ry="2" fill="#fed7aa" transform="rotate(-15 24 13)"/>
                 <line x1="27" y1="12" x2="27" y2="7" stroke="#c2410c" stroke-width="2"/>
                 <line x1="27" y1="7" x2="33" y2="9" stroke="#c2410c" stroke-width="2"/>
-              </svg>
-            </div>
-            <div class="app-name">Duo Suay</div>
-            <div class="app-desc">Tarragona</div>
-          </a>
-
-        </div>
-      </div>
+              </svg></div>
+        <div class="tx"><div class="nom">Duo Suay</div><div class="dsc">Tarragona</div></div>
+      </a>
     </div>
-  </div>
+  </section>
 
-  <!-- BIO -->
+  <p class="buit" id="buit" hidden>No hi ha cap resultat. Prova amb una altra paraula.</p>
+
   <div class="bio-card">
     <div class="bio-avatar">👤</div>
     <div>
@@ -884,7 +537,6 @@ footer a:hover { border-bottom-color: white; }
       <p class="bio-text"><strong>Gobo26 és un projecte molt personal.</strong> Aplicacions fetes amb IA al meu gust: jocs, eines útils i senzilles...</p>
     </div>
   </div>
-
 </main>
 
 <footer>
@@ -893,13 +545,47 @@ footer a:hover { border-bottom-color: white; }
 </footer>
 
 <script>
-function toggle(id) {
-  var el = document.getElementById(id);
-  el.classList.toggle('obert');
-  var btn = el.querySelector('.sec-cap');
-  if (btn) btn.setAttribute('aria-expanded', el.classList.contains('obert') ? 'true' : 'false');
-}
+(function () {
+  var filtre = 'tot', consulta = '';
+  var targetes = document.querySelectorAll('.card, .banner');
+  var grups = document.querySelectorAll('.grup');
+  var xips = document.querySelectorAll('.xip');
+  var buit = document.getElementById('buit');
 
+  function norm(t) {
+    return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+  function aplica() {
+    var q = norm(consulta.trim()), total = 0;
+    targetes.forEach(function (c) {
+      var cat = c.dataset.cat;
+      var okF = filtre === 'tot' || (filtre === 'nou' ? c.dataset.nou === '1' : cat === filtre);
+      var okQ = !q || norm(c.dataset.t).indexOf(q) !== -1;
+      var visible = okF && okQ;
+      c.hidden = !visible;
+      if (visible) total++;
+    });
+    grups.forEach(function (g) {
+      g.hidden = !g.querySelector('.card:not([hidden])');
+    });
+    buit.hidden = total > 0;
+  }
+  xips.forEach(function (x) {
+    x.addEventListener('click', function () {
+      filtre = x.dataset.f;
+      xips.forEach(function (o) {
+        var on = o === x;
+        o.classList.toggle('actiu', on);
+        o.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      aplica();
+    });
+  });
+  document.getElementById('cerca').addEventListener('input', function (e) {
+    consulta = e.target.value;
+    aplica();
+  });
+})();
 </script>
 
 </body>
