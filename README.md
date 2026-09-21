@@ -17,13 +17,6 @@ Col·lecció de jocs i eines web: paraules, números, memòria, lògica, salut, 
 - Web: https://gobo26.github.io/gobo26/
 - Repo: https://github.com/Gobo26/gobo26
 
-### Taller de Lletres
-
-Espai per a poemes, cançons, textos breus i fragments de vida.
-
-- Web: https://gobo26.github.io/Taller_de_lletres/
-- Repo: https://github.com/Gobo26/Taller_de_lletres
-
 ### Fustaventura
 
 Taller de peces artesanals de fusta: capses de música i àudio, bijuteria, capses decorades, productes de temporada i encàrrecs personalitzats. Una web pròpia per substituir l'antiga pàgina de Wix.
