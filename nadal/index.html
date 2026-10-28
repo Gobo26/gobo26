@@ -198,6 +198,18 @@ footer p{margin:6px 0}
 .toast.vist{transform:translate(-50%,0)}
 .toast b{color:var(--or2)}
 
+/* Botó de música */
+.musica{position:fixed;right:16px;bottom:16px;z-index:40;height:48px;min-width:48px;padding:0 16px 0 14px;border-radius:999px;border:1px solid rgba(243,213,140,.45);background:rgba(13,42,34,.88);color:var(--or2);font:600 .88rem var(--sans);display:flex;align-items:center;gap:8px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.3);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform .2s}
+.musica:hover{transform:translateY(-2px)}
+.musica .barres{display:flex;align-items:flex-end;gap:2px;height:14px}
+.musica .barres i{width:3px;height:4px;background:currentColor;border-radius:1px}
+.musica.sona .barres i{animation:barra 1s ease-in-out infinite}
+.musica.sona .barres i:nth-child(2){animation-delay:.25s}
+.musica.sona .barres i:nth-child(3){animation-delay:.5s}
+@keyframes barra{0%,100%{height:4px}50%{height:14px}}
+.musica.sona .txt{display:none}
+.musica.sona{padding:0 15px}
+
 /* Apareixença */
 .revela{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
 .revela.vist{opacity:1;transform:none}
@@ -483,6 +495,7 @@ footer p{margin:6px 0}
 </footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button class="musica" id="musica" type="button" aria-label="Activa la música"><span class="barres" aria-hidden="true"><i></i><i></i><i></i></span><span class="txt">Música</span></button>
 
 <script>
 // Correu de contractació (pendent de definir)
@@ -595,6 +608,125 @@ document.getElementById('form').addEventListener('submit', function(e){
   location.href = 'mailto:' + CONTACTE + '?subject=' + encodeURIComponent('Sol·licitud: El Nadal [manual d\'ús]')
     + '&body=' + encodeURIComponent(cos);
 });
+
+// ---------- Música: capsa de música en vals (WebAudio) ----------
+// Els navegadors no deixen sonar res fins que la persona toca la pàgina:
+// comença al primer toc o clic, amb fos d'entrada, i el botó l'apaga.
+(function(){
+  var boto = document.getElementById('musica'), ctx = null, master, dry, wet, timer = null, sona = false;
+  var VOL = 0.2, BPM = 84, SPB = 60 / BPM;
+  function pref(){ try { return localStorage.getItem('nadal_musica') !== 'off'; } catch(e){ return true; } }
+  function desa(v){ try { localStorage.setItem('nadal_musica', v ? 'on' : 'off'); } catch(e){} }
+
+  // Melodia original en Sol major, 3/4. Cada compàs: [acord, [[nota MIDI, temps], ...]]
+  var AC = {G:[43,[55,59,62]], Em:[40,[55,59,64]], C:[48,[55,60,64]], D:[50,[54,57,62]], D7:[50,[54,57,60]], Am:[45,[57,60,64]]};
+  var A = [
+    ['G',[[71,1],[74,1],[79,1]]], ['Em',[[78,1],[76,2]]], ['C',[[76,1],[74,1],[72,1]]], ['D',[[74,2],[69,1]]],
+    ['G',[[71,1],[74,1],[79,1]]], ['Em',[[79,1],[78,1],[76,1]]], ['D7',[[72,1],[69,1],[66,1]]], ['G',[[67,3]]]
+  ];
+  var B = [
+    ['C',[[76,1],[79,1],[76,1]]], ['G',[[74,2],[71,1]]], ['Am',[[72,1],[76,1],[72,1]]], ['D',[[71,1],[69,2]]],
+    ['Em',[[67,1],[71,1],[76,1]]], ['C',[[76,1],[74,1],[72,1]]], ['D',[[69,1],[74,1],[78,1]]], ['G',[[79,3]]]
+  ];
+  // Primera passada normal; la segona, la melodia una octava amunt i més fluixa
+  var EV = [], beat = 0;
+  [[A,0,.26],[B,0,.26],[A,12,.17],[B,12,.17]].forEach(function(p){
+    p[0].forEach(function(c){
+      var ac = AC[c[0]], t = beat;
+      EV.push({b:beat, m:ac[0], v:.16, baix:true});
+      ac[1].forEach(function(n){ EV.push({b:beat+1, m:n, v:.045}); EV.push({b:beat+2, m:n, v:.035}); });
+      c[1].forEach(function(n){ EV.push({b:t, m:n[0]+p[1], v:p[2]}); t += n[1]; });
+      beat += 3;
+    });
+  });
+  EV.sort(function(a,b){ return a.b - b.b; });
+  var LOOP = beat + 3; // un compàs de respir abans de tornar a començar
+
+  function hz(m){ return 440 * Math.pow(2, (m - 69) / 12); }
+  function caixa(t, m, v){
+    var f = hz(m), g = ctx.createGain();
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .004);
+    g.gain.exponentialRampToValueAtTime(.0001, t + 2.4);
+    g.connect(dry); g.connect(wet);
+    [[1,1],[4.02,.12],[2.01,.22]].forEach(function(h){
+      var o = ctx.createOscillator(), gh = ctx.createGain();
+      o.type = 'sine'; o.frequency.value = f * h[0]; gh.gain.value = h[1];
+      if (h[0] > 3){ gh.gain.setValueAtTime(h[1], t); gh.gain.exponentialRampToValueAtTime(.0001, t + .5); }
+      o.connect(gh); gh.connect(g); o.start(t); o.stop(t + 2.5);
+    });
+  }
+  function baix(t, m, v){
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = 'triangle'; o.frequency.value = hz(m);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .03);
+    g.gain.exponentialRampToValueAtTime(.0001, t + SPB * 2.6);
+    o.connect(g); g.connect(dry); g.connect(wet); o.start(t); o.stop(t + SPB * 2.7);
+  }
+  function reverb(){
+    var len = ctx.sampleRate * 3, buf = ctx.createBuffer(2, len, ctx.sampleRate);
+    for (var c = 0; c < 2; c++){
+      var d = buf.getChannelData(c);
+      for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+    }
+    var cv = ctx.createConvolver(); cv.buffer = buf; return cv;
+  }
+
+  var idx = 0, inici = 0;
+  function programa(){
+    var fins = ctx.currentTime + .5;
+    while (inici + EV[idx].b * SPB < fins){
+      var e = EV[idx], t = inici + e.b * SPB;
+      if (e.baix) baix(t, e.m, e.v); else caixa(t, e.m, e.v);
+      if (++idx === EV.length){ idx = 0; inici += LOOP * SPB; }
+    }
+  }
+
+  function engega(){
+    if (!ctx){
+      var AC_ = window.AudioContext || window.webkitAudioContext;
+      if (!AC_) return;
+      ctx = new AC_();
+      master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+      dry = ctx.createGain(); dry.gain.value = .8; dry.connect(master);
+      var rv = reverb(); wet = ctx.createGain(); wet.gain.value = .45; wet.connect(rv); rv.connect(master);
+      inici = ctx.currentTime + .15; idx = 0;
+    }
+    ctx.resume();
+    if (ctx.currentTime > inici + LOOP * SPB){ inici = ctx.currentTime + .15; idx = 0; }
+    master.gain.cancelScheduledValues(ctx.currentTime);
+    master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
+    master.gain.linearRampToValueAtTime(VOL, ctx.currentTime + 3);
+    if (!timer) timer = setInterval(programa, 120);
+    programa();
+    sona = true; boto.classList.add('sona'); boto.setAttribute('aria-label','Atura la música');
+  }
+  function atura(){
+    sona = false; boto.classList.remove('sona'); boto.setAttribute('aria-label','Activa la música');
+    if (!ctx) return;
+    master.gain.cancelScheduledValues(ctx.currentTime);
+    master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
+    master.gain.linearRampToValueAtTime(0, ctx.currentTime + .6);
+    clearInterval(timer); timer = null;
+    setTimeout(function(){ if (!sona) ctx.suspend(); }, 700);
+  }
+
+  var tocat = false;
+  function primerToc(e){
+    if (tocat || boto.contains(e.target)) return;
+    tocat = true;
+    if (pref()) engega();
+  }
+  ['pointerdown','touchend','keydown'].forEach(function(ev){ document.addEventListener(ev, primerToc, true); });
+  boto.addEventListener('click', function(){
+    tocat = true;
+    if (sona){ atura(); desa(false); } else { engega(); desa(true); }
+  });
+  document.addEventListener('visibilitychange', function(){
+    if (!ctx || !sona) return;
+    if (document.hidden){ clearInterval(timer); timer = null; ctx.suspend(); }
+    else { engega(); }
+  });
+})();
 </script>
 </body>
 </html>
