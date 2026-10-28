@@ -614,7 +614,7 @@ document.getElementById('form').addEventListener('submit', function(e){
 // comença al primer toc o clic, amb fos d'entrada, i el botó l'apaga.
 (function(){
   var boto = document.getElementById('musica'), ctx = null, master, dry, wet, timer = null, sona = false;
-  var VOL = 0.2, BPM = 84, SPB = 60 / BPM;
+  var VOL = 0.55, BPM = 84, SPB = 60 / BPM;
   function pref(){ try { return localStorage.getItem('nadal_musica') !== 'off'; } catch(e){ return true; } }
   function desa(v){ try { localStorage.setItem('nadal_musica', v ? 'on' : 'off'); } catch(e){} }
 
@@ -691,15 +691,20 @@ document.getElementById('form').addEventListener('submit', function(e){
       var rv = reverb(); wet = ctx.createGain(); wet.gain.value = .45; wet.connect(rv); rv.connect(master);
       inici = ctx.currentTime + .15; idx = 0;
     }
-    ctx.resume();
-    if (ctx.currentTime > inici + LOOP * SPB){ inici = ctx.currentTime + .15; idx = 0; }
-    master.gain.cancelScheduledValues(ctx.currentTime);
-    master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-    master.gain.linearRampToValueAtTime(VOL, ctx.currentTime + 3);
-    if (!timer) timer = setInterval(programa, 120);
-    programa();
-    sona = true; boto.classList.add('sona'); boto.setAttribute('aria-label','Atura la música');
+    sona = true;
+    var p = ctx.resume();
+    (p && p.then ? p : Promise.resolve()).then(function(){
+      if (!sona || ctx.state !== 'running') return;
+      if (ctx.currentTime > inici + LOOP * SPB || ctx.currentTime > inici + EV[idx].b * SPB){ inici = ctx.currentTime + .15; idx = 0; }
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
+      master.gain.linearRampToValueAtTime(VOL, ctx.currentTime + 3);
+      if (!timer) timer = setInterval(programa, 120);
+      programa();
+      boto.classList.add('sona'); boto.setAttribute('aria-label','Atura la música');
+    }).catch(function(){});
   }
+  function actiu(){ return sona && ctx && ctx.state === 'running'; }
   function atura(){
     sona = false; boto.classList.remove('sona'); boto.setAttribute('aria-label','Activa la música');
     if (!ctx) return;
@@ -710,16 +715,16 @@ document.getElementById('form').addEventListener('submit', function(e){
     setTimeout(function(){ if (!sona) ctx.suspend(); }, 700);
   }
 
-  var tocat = false;
+  // Es torna a provar a cada toc fins que el navegador deixa sonar
+  var EVS = ['pointerdown','pointerup','touchend','click','keydown'];
   function primerToc(e){
-    if (tocat || boto.contains(e.target)) return;
-    tocat = true;
+    if (boto.contains(e.target)) return;
+    if (ctx && ctx.state === 'running'){ EVS.forEach(function(ev){ document.removeEventListener(ev, primerToc, true); }); return; }
     if (pref()) engega();
   }
-  ['pointerdown','touchend','keydown'].forEach(function(ev){ document.addEventListener(ev, primerToc, true); });
+  EVS.forEach(function(ev){ document.addEventListener(ev, primerToc, true); });
   boto.addEventListener('click', function(){
-    tocat = true;
-    if (sona){ atura(); desa(false); } else { engega(); desa(true); }
+    if (actiu()){ atura(); desa(false); } else { engega(); desa(true); }
   });
   document.addEventListener('visibilitychange', function(){
     if (!ctx || !sona) return;
