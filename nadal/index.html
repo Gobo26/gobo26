@@ -168,6 +168,29 @@ summary::after{content:"+";position:absolute;right:6px;top:10px;font-family:var(
 details[open] summary::after{transform:rotate(45deg)}
 details p{margin:0 0 18px;color:var(--tinta2)}
 
+/* Altres espectacles */
+.altres-sec{background:var(--paper2)}
+.altres{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:40px}
+.esp{position:relative;border-radius:22px;padding:34px 30px 30px;color:#f4ebe2;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 44px rgba(40,20,10,.22);transition:transform .25s}
+.esp:hover{transform:translateY(-4px)}
+.esp .ic{font-size:2.6rem;line-height:1;margin-bottom:16px}
+.esp .marca{position:absolute;right:-20px;bottom:-40px;font-size:11rem;opacity:.07;line-height:1;pointer-events:none}
+.esp .estat{position:absolute;top:22px;right:22px;font-family:var(--maq);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:4px 10px;opacity:.85}
+.esp h3{font-family:var(--serif);font-weight:800;font-size:1.9rem;line-height:1.05;margin:0 0 6px}
+.esp .gen{font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75;margin:0 0 16px}
+.esp p{margin:0 0 20px;font-size:.98rem;line-height:1.6;opacity:.92}
+.esp .xips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px}
+.esp .xips span{font-size:.8rem;border-radius:999px;padding:5px 12px;background:rgba(255,255,255,.1)}
+.esp .btn{margin-top:auto;align-self:flex-start;padding:13px 22px;font-size:.95rem}
+.taverna{background:radial-gradient(ellipse at 50% -10%,#3a2620 0%,#171110 70%)}
+.taverna h3,.taverna .ic{color:#f2c98a}
+.taverna .btn{background:#e0a458;color:#2b1a0c}
+.taverna .btn:hover{background:#f2c98a}
+.celler{background:radial-gradient(ellipse at 30% -10%,#6b2a3a 0%,#2a0f17 75%)}
+.celler h3{color:#f3d9a8}
+.celler .btn{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.4)}
+.celler .btn:hover{box-shadow:inset 0 0 0 2px #fff}
+
 /* Contacte */
 .contacte{background:radial-gradient(ellipse at 20% 0%,#1d4a3c 0%,var(--nit) 60%);color:#fff;overflow:hidden}
 .contacte .etiqueta{color:var(--or2)}
@@ -194,8 +217,8 @@ footer p{margin:6px 0}
 /* Caganer amagat */
 .caganer{position:absolute;width:30px;height:38px;cursor:pointer;z-index:4;opacity:.92;transition:transform .2s;background:none;border:0;padding:0}
 .caganer:hover{transform:scale(1.25) rotate(-6deg)}
-.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,140%);background:var(--tinta);color:#fff;padding:14px 20px;border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.35);font-size:.95rem;max-width:min(440px,calc(100vw - 32px));z-index:50;transition:transform .45s cubic-bezier(.2,1.4,.4,1)}
-.toast.vist{transform:translate(-50%,0)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,calc(100% + 40px));background:var(--tinta);color:#fff;padding:14px 20px;border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.35);font-size:.95rem;max-width:min(440px,calc(100vw - 32px));z-index:50;visibility:hidden;transition:transform .45s cubic-bezier(.2,1.4,.4,1),visibility 0s .45s}
+.toast.vist{transform:translate(-50%,0);visibility:visible;transition:transform .45s cubic-bezier(.2,1.4,.4,1)}
 .toast b{color:var(--or2)}
 
 /* Botó de música */
@@ -457,6 +480,38 @@ footer p{margin:6px 0}
       <details><summary>És un espectacle religiós?</summary><p>No. Els textos i les lletres de les nadales expliquen el Nadal tal com es viu a casa nostra: el naixement de Betlem, que n'és l'origen, i les tradicions populars que hi han crescut al voltant, com el pessebre, el tió o la taula. Ho fan des de la cultura i amb humor, no des de la fe, i sense ofendre ningú. Hi cap tothom, cregui o no.</p></details>
       <details><summary>Funciona amb criatures?</summary><p>Sí. Les criatures s'ho passen d'allò més bé amb els exercicis de grup i amb el caganer. Els adults, amb tot el que hi ha entre línies.</p></details>
       <details><summary>Quines dates hi ha disponibles?</summary><p>Fem funcions des de finals de novembre fins a Reis. Les dates de desembre són les primeres que s'omplen: com més aviat ens escriviu, millor.</p></details>    </div>
+  </div>
+</section>
+
+<!-- ============ ALTRES ESPECTACLES ============ -->
+<section class="sec altres-sec" id="altres">
+  <div class="wrap">
+    <div class="revela">
+      <p class="etiqueta">Duo Suay</p>
+      <h2>Voleu veure altres espectacles <em>del Duo Suay?</em></h2>
+      <p class="lead">La Rosa i l'Eli porten a escena altres històries, sempre amb dues veus i cançons fetes a mida.</p>
+    </div>
+    <div class="altres">
+      <article class="esp taverna revela">
+        <div class="marca" aria-hidden="true">⚓</div>
+        <div class="ic" aria-hidden="true">⚓</div>
+        <h3>La Taverna de la Lola</h3>
+        <p class="gen">Concert · Havaneres, boleros, valsets i rumbes</p>
+        <p>Una taverna marinera on la música, la paraula i la memòria es donen la mà a partir de les històries de la gent del mar. Un espectacle càlid i de petit format, amb les harmonies de dues veus femenines i moltes cançons pròpies, escrites expressament per a l'espectacle.</p>
+        <div class="xips"><span>60 minuts</span><span>Dues veus</span><span>Cançons pròpies</span></div>
+        <a class="btn" href="https://gobo26.github.io/taverna-lola/" target="_blank" rel="noopener">Escolteu-ne les cançons ♪</a>
+      </article>
+      <article class="esp celler revela">
+        <div class="marca" aria-hidden="true">🍇</div>
+        <span class="estat">Nou</span>
+        <div class="ic" aria-hidden="true">🍷</div>
+        <h3>Celler de vida</h3>
+        <p class="gen">Teatre musical · Una vida entre vinyes</p>
+        <p>S'ha acabat la verema i, com cada any, el poble és convidat al celler del mas. Aquest any, però, la mestressa ja no hi és, i la seva filla i la seva nora llegeixen el discurs que ella va deixar escrit sense canviar-ne ni una coma… fins a l'últim apartat.</p>
+        <div class="xips"><span>30 minuts</span><span>Per a cellers i teatres</span><span>Amb brindis final</span></div>
+        <a class="btn" href="#contacte">Demaneu-nos informació</a>
+      </article>
+    </div>
   </div>
 </section>
 
