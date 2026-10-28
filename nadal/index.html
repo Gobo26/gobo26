@@ -38,6 +38,7 @@ a{color:inherit}
 #neu{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:90px;background:var(--paper);clip-path:ellipse(75% 100% at 50% 100%);z-index:1}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding-top:90px;padding-bottom:140px;position:relative;z-index:2}
+.logo-duo{display:block;width:min(230px,58vw);height:auto;margin:0 0 18px -6px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.35))}
 .segell-top{display:inline-flex;align-items:center;gap:10px;font-family:var(--maq);font-size:.82rem;letter-spacing:.08em;color:var(--or2);border:1px dashed rgba(243,213,140,.5);border-radius:999px;padding:6px 14px;margin-bottom:22px}
 .hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(2.8rem,7vw,5.6rem);line-height:.95;margin:0 0 18px;letter-spacing:-.02em}
 .hero h1 .claud{display:block;font-weight:400;font-style:italic;color:var(--or2);font-size:.55em;letter-spacing:0;margin-top:10px}
@@ -273,7 +274,8 @@ footer p{margin:6px 0}
 
   <div class="wrap hero-grid">
     <div>
-      <div class="segell-top">✦ Duo Suay presenta · Temporada de Nadal</div>
+      <img class="logo-duo" src="duo-suay.png" width="640" height="330" alt="Duo Suay">
+      <div class="segell-top">✦ presenta · Temporada de Nadal</div>
       <h1>El Nadal<span class="claud">[manual d'ús]</span></h1>
       <p class="sub">Dues <strong>inspectores de tradicions</strong> imparteixen el curs oficial per entendre, per fi, com funciona el Nadal. Amb rigor científic, solemnitat absoluta… i <strong>tota la sala cantant nadales</strong>.</p>
       <div class="botons">
@@ -508,7 +510,7 @@ footer p{margin:6px 0}
         <h3>Celler de vida</h3>
         <p class="gen">Teatre musical · Una vida entre vinyes</p>
         <p>S'ha acabat la verema i, com cada any, el poble és convidat al celler del mas. Aquest any, però, la mestressa ja no hi és, i la seva filla i la seva nora llegeixen el discurs que ella va deixar escrit sense canviar-ne ni una coma… fins a l'últim apartat.</p>
-        <div class="xips"><span>30 minuts</span><span>Per a cellers i teatres</span><span>Amb brindis final</span></div>
+        <div class="xips"><span>30 minuts</span><span>Per a cellers i teatres</span><span>Dues veus</span></div>
         <a class="btn" href="#contacte">Demaneu-nos informació</a>
       </article>
     </div>
