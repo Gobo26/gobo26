@@ -25,6 +25,7 @@ body{
   overflow-x:hidden;
 }
 body.locked{overflow:hidden}
+.nw{display:inline-block;white-space:nowrap}
 .script{font-family:'Great Vibes',cursive;font-weight:400}
 
 /* ---------- Pantalla d'entrada (la tapa) ---------- */
@@ -140,7 +141,7 @@ footer .script{font-size:30px;color:var(--burn);display:block}
 
 <div id="tapa" role="button" tabindex="0" aria-label="Obre la capsa">
   <div class="arbre" aria-hidden="true"></div>
-  <div class="noms">Joan Miquel &amp; María Piedad</div>
+  <div class="noms"><span class="nw">Joan Miquel</span> <span class="nw">&amp; María Piedad</span></div>
   <div class="toca">Toca per obrir</div>
 </div>
 
@@ -212,7 +213,7 @@ footer .script{font-size:30px;color:var(--burn);display:block}
 
 <footer>
   <span class="script">Amb tot l'afecte,</span>
-  <span class="script" style="font-size:34px">Rosa Sanahuja i Joan Martínez</span>
+  <span class="script" style="font-size:34px"><span class="nw">Rosa Sanahuja</span> <span class="nw">i Joan Martínez</span></span>
   La Selva del Camp, 28 de novembre de 2026
 </footer>
 
