@@ -34,6 +34,12 @@ h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.15;let
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:62px}
 .marca{font-weight:700;font-size:.95rem;text-decoration:none;line-height:1.2}
 .marca small{display:block;font-weight:500;color:var(--gris);font-size:.75rem}
+.marca small b{color:var(--terra-fosc);font-weight:700}
+.tramit{background:var(--terra);color:#fff}
+.tramit .wrap{display:flex;align-items:center;justify-content:center;gap:12px;padding-top:18px;padding-bottom:18px;text-align:center;font-weight:700;font-size:1.05rem;line-height:1.4}
+.tramit svg{width:24px;height:24px;flex:none}
+.tramit-fitxa{background:#f6e6dd;border-left:4px solid var(--terra);border-radius:10px;padding:12px 14px;margin:0 0 16px;font-weight:700;font-size:.95rem;color:var(--terra-fosc)}
+.contacte .tramit-gran{margin-top:20px;background:rgba(255,255,255,.08);border-left:4px solid #e9b79f;border-radius:12px;padding:16px 18px;font-weight:700;font-size:1.08rem;opacity:1}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:13px 22px;font-weight:600;font-size:.98rem;text-decoration:none;border:0;cursor:pointer;transition:transform .15s,background .15s}
 .btn:hover{transform:translateY(-1px)}
 .btn-terra{background:var(--terra);color:#fff}
@@ -194,7 +200,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 
 <header class="top">
   <div class="wrap">
-    <a class="marca" href="#inici">Pis a Tarragona · Nou Eixample Nord<small>En venda per Finques Tarragona · Ref. 2744</small></a>
+    <a class="marca" href="#inici">Pis a Tarragona · Nou Eixample Nord<small><b>Venda i tràmits: Finques Tarragona (Jordi Monlleó)</b> · Ref. 2744</small></a>
     <a class="btn btn-terra" href="tel:+34977252052"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>977 252 052</a>
   </div>
 </header>
@@ -214,6 +220,10 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
     </div>
   </div>
 </section>
+
+<div class="tramit" role="note">
+  <div class="wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg><span>Tot el tràmit de compravenda es fa a través de Finques Tarragona (Jordi Monlleó).</span></div>
+</div>
 
 <div class="xifres">
   <ul class="wrap">
@@ -379,9 +389,11 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
     <div class="reveal">
       <span class="eyebrow">Visites i informació</span>
       <h2>Veniu a veure'l. Us hi veureu.</h2>
-      <p>La venda la porta Finques Tarragona. Truqueu-los, escriviu-los o passeu per l'oficina de la Rambla Nova: us ensenyaran el pis quan us vagi bé.</p>
+      <p>Truqueu-los, escriviu-los o passeu per l'oficina de la Rambla Nova: us ensenyaran el pis quan us vagi bé.</p>
+      <p class="tramit-gran">Tot el tràmit de compravenda —visites, informació, ofertes, reserva i signatura— es fa exclusivament a través de Finques Tarragona (Jordi Monlleó).</p>
     </div>
     <div class="fitxa reveal">
+      <p class="tramit-fitxa">Tot el tràmit de compravenda es fa a través de Finques Tarragona (Jordi Monlleó).</p>
       <h3>Finques Tarragona</h3>
       <div class="ref">Referència del pis: <b>2744</b></div>
       <a class="btn btn-terra" href="tel:+34977252052">Trucar al 977 252 052</a>
