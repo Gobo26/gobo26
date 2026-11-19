@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pis de 4 habitacions amb pàrquing · Tarragona · Finques Tarragona</title>
+<meta name="description" content="Pis reformat de 4 habitacions, 2 banys i plaça d'aparcament inclosa al Nou Eixample Nord de Tarragona. 83 m², 1a planta exterior amb ascensor. 225.000 €. Informació i visites: Finques Tarragona, 977 252 052.">
+<meta property="og:title" content="Pis de 4 habitacions amb pàrquing a Tarragona · 225.000 €">
+<meta property="og:description" content="83 m², 2 banys, reformat, 1a planta exterior amb ascensor i plaça d'aparcament inclosa. Visites amb Finques Tarragona.">
+<meta property="og:image" content="https://gobo26.github.io/gobo26/pis-tarragona/img/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#4f5d47">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crema:#f7f2ea; --paper:#fffdf9; --tinta:#2b2a26; --gris:#6b675e;
+  --salvia:#4f5d47; --salvia-cl:#dfe5d6; --terra:#b8613f; --terra-fosc:#9a4d30;
+  --roure:#c9a27a; --linia:#e6ddcf;
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--crema);color:var(--tinta);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.15;letter-spacing:-.01em}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+.eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--terra)}
+
+/* barra superior */
+.top{position:sticky;top:0;z-index:30;background:rgba(247,242,234,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--linia)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:62px}
+.marca{font-weight:700;font-size:.95rem;text-decoration:none;line-height:1.2}
+.marca small{display:block;font-weight:500;color:var(--gris);font-size:.75rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:13px 22px;font-weight:600;font-size:.98rem;text-decoration:none;border:0;cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-terra{background:var(--terra);color:#fff}
+.btn-terra:hover{background:var(--terra-fosc)}
+.btn-blanc{background:#fff;color:var(--tinta);border:1px solid var(--linia)}
+.btn-salvia{background:var(--salvia);color:#fff}
+.top .btn{padding:9px 16px;font-size:.9rem}
+svg.i{width:18px;height:18px;flex:none}
+
+/* portada */
+.hero{position:relative;min-height:min(88vh,760px);display:flex;align-items:flex-end;color:#fff;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 30%,rgba(25,22,18,.78) 100%)}
+.hero .wrap{position:relative;z-index:2;padding-top:120px;padding-bottom:48px;width:100%}
+.hero .eyebrow{color:#f3d9c9}
+.hero h1{font-size:clamp(2.1rem,5.4vw,3.9rem);max-width:15ch;margin:10px 0 14px}
+.hero p.sub{font-size:1.12rem;max-width:44ch;opacity:.95}
+.preu{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px;margin:22px 0 26px}
+.preu b{font-family:Fraunces,serif;font-size:2.4rem;font-weight:700}
+.preu s{opacity:.7}
+.preu .baixa{background:var(--salvia-cl);color:var(--salvia);font-weight:700;font-size:.85rem;padding:4px 10px;border-radius:999px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px}
+.segell{position:absolute;right:16px;top:78px;z-index:2;font-size:.72rem;background:rgba(0,0,0,.45);padding:5px 10px;border-radius:999px}
+
+/* xifres */
+.xifres{background:var(--paper);border-bottom:1px solid var(--linia)}
+.xifres ul{list-style:none;display:grid;grid-template-columns:repeat(6,1fr)}
+.xifres li{padding:22px 10px;text-align:center;border-right:1px solid var(--linia)}
+.xifres li:last-child{border-right:0}
+.xifres b{display:block;font-family:Fraunces,serif;font-size:1.65rem;font-weight:600;color:var(--salvia)}
+.xifres span{font-size:.85rem;color:var(--gris)}
+
+section{padding:84px 0}
+.titol{max-width:640px;margin-bottom:38px}
+.titol h2{font-size:clamp(1.8rem,3.6vw,2.6rem);margin:8px 0 12px}
+.titol p{color:var(--gris)}
+
+/* imagina-t'hi */
+.galeria{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+.galeria figure{position:relative;border-radius:var(--r);overflow:hidden;background:#ddd;cursor:zoom-in}
+.galeria figure img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.galeria figure:hover img{transform:scale(1.03)}
+.galeria .gran{grid-row:span 2}
+.galeria figcaption{position:absolute;left:12px;bottom:12px;background:rgba(255,253,249,.94);padding:6px 12px;border-radius:999px;font-size:.85rem;font-weight:600}
+.galeria .petites{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.avis{margin-top:16px;font-size:.85rem;color:var(--gris);display:flex;gap:8px;align-items:flex-start}
+
+/* abans/ara */
+.compara{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.slider{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;user-select:none;touch-action:pan-y;background:#ccc}
+.slider img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slider .dalt{clip-path:inset(0 0 0 50%)}
+.slider .barra{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;transform:translateX(-50%);pointer-events:none}
+.slider .barra::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:#fff;color:var(--tinta);display:grid;place-items:center;font-size:1.2rem;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.slider .et{position:absolute;top:12px;font-size:.78rem;font-weight:600;background:rgba(0,0,0,.55);color:#fff;padding:4px 10px;border-radius:999px}
+.slider .et.e{left:12px}.slider .et.d{right:12px}
+.slider input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.tabs button{font:inherit;font-size:.88rem;font-weight:600;padding:8px 14px;border-radius:999px;border:1px solid var(--linia);background:#fff;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--salvia);color:#fff;border-color:var(--salvia)}
+
+/* punts forts */
+.punts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.punt{background:var(--paper);border:1px solid var(--linia);border-radius:var(--r);padding:26px}
+.punt .ico{width:44px;height:44px;border-radius:12px;background:var(--salvia-cl);color:var(--salvia);display:grid;place-items:center;margin-bottom:14px}
+.punt h3{font-size:1.2rem;margin-bottom:6px}
+.punt p{color:var(--gris);font-size:.95rem}
+
+/* fotos reals */
+.reals{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.reals figure{border-radius:12px;overflow:hidden;aspect-ratio:4/3;cursor:zoom-in;position:relative;background:#ddd}
+.reals img{width:100%;height:100%;object-fit:cover}
+.reals figcaption{position:absolute;left:8px;bottom:8px;font-size:.75rem;background:rgba(255,253,249,.92);padding:3px 9px;border-radius:999px;font-weight:600}
+.video{margin-top:28px;border-radius:var(--r);overflow:hidden;background:#000}
+.video video{width:100%;display:block;aspect-ratio:16/9}
+
+/* plànol */
+.planol{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
+.planol figure{background:#fff;border-radius:var(--r);padding:14px;border:1px solid var(--linia);cursor:zoom-in}
+.distrib{list-style:none}
+.distrib li{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px dashed var(--linia)}
+.distrib li span:last-child{color:var(--gris);text-align:right}
+
+/* quota */
+.quota{background:var(--salvia);color:#fff;border-radius:28px;padding:44px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.quota h2{font-size:clamp(1.7rem,3.2vw,2.4rem);margin:8px 0 12px}
+.quota .eyebrow{color:#e9c9b6}
+.quota p{opacity:.9}
+.calc{background:rgba(255,255,255,.1);border-radius:20px;padding:24px}
+.calc label{display:block;font-size:.88rem;margin:14px 0 6px;display:flex;justify-content:space-between}
+.calc label:first-child{margin-top:0}
+.calc input[type=range]{width:100%;accent-color:var(--roure)}
+.calc .res{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.25)}
+.calc .res b{font-family:Fraunces,serif;font-size:2.4rem;display:block;line-height:1.1}
+.calc small{opacity:.75;font-size:.78rem;display:block;margin-top:8px}
+
+/* preguntes */
+.faq details{background:var(--paper);border:1px solid var(--linia);border-radius:14px;margin-bottom:10px}
+.faq summary{padding:18px 22px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:1.4rem;line-height:1;color:var(--terra)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding:0 22px 18px;color:var(--gris)}
+
+/* contacte */
+.contacte{background:var(--tinta);color:#fff}
+.contacte .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:44px;align-items:start}
+.contacte h2{font-size:clamp(1.9rem,3.8vw,2.8rem);margin:8px 0 14px}
+.contacte .eyebrow{color:#e9b79f}
+.contacte p{opacity:.85}
+.fitxa{background:#fff;color:var(--tinta);border-radius:22px;padding:28px}
+.fitxa h3{font-size:1.35rem;margin-bottom:4px}
+.fitxa .ref{color:var(--gris);font-size:.88rem;margin-bottom:18px}
+.fitxa .btn{width:100%;margin-bottom:10px}
+.fitxa dl{margin-top:14px;font-size:.92rem}
+.fitxa dt{font-weight:600;margin-top:10px}
+.fitxa dd{color:var(--gris)}
+footer{background:#1f1e1b;color:#a8a296;font-size:.8rem;padding:26px 0 90px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+
+/* barra fixa mòbil */
+.mobil{display:none;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,253,249,.97);border-top:1px solid var(--linia);gap:8px}
+.mobil .btn{flex:1;padding:12px 10px;font-size:.92rem}
+
+/* visor */
+.visor{position:fixed;inset:0;z-index:60;background:rgba(15,14,12,.94);display:none;align-items:center;justify-content:center;padding:20px}
+.visor.obert{display:flex}
+.visor img{max-height:86vh;max-width:100%;border-radius:10px}
+.visor .tanca{position:absolute;top:14px;right:16px;background:#fff;border:0;width:42px;height:42px;border-radius:50%;font-size:1.4rem;cursor:pointer}
+.visor p{position:absolute;bottom:18px;left:0;right:0;text-align:center;color:#ddd;font-size:.9rem}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+.reveal.vist{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+@media (max-width:900px){
+  .xifres ul{grid-template-columns:repeat(3,1fr)}
+  .xifres li:nth-child(3){border-right:0}
+  .xifres li:nth-child(-n+3){border-bottom:1px solid var(--linia)}
+  .galeria,.compara,.planol,.quota,.contacte .grid{grid-template-columns:1fr}
+  .galeria .gran{grid-row:auto;aspect-ratio:4/3}
+  .punts{grid-template-columns:1fr 1fr}
+  .reals{grid-template-columns:repeat(2,1fr)}
+  .quota{padding:30px 22px}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  section{padding:60px 0}
+  .punts{grid-template-columns:1fr}
+  .galeria .petites{grid-template-columns:1fr}
+  .top .btn{display:none}
+  .mobil{display:flex}
+  .hero .ctas .btn{flex:1}
+  .preu b{font-size:2rem}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="marca" href="#inici">Pis a Tarragona · Nou Eixample Nord<small>En venda per Finques Tarragona · Ref. 2744</small></a>
+    <a class="btn btn-terra" href="tel:+34977252052"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>977 252 052</a>
+  </div>
+</header>
+
+<main id="inici">
+<section class="hero" style="padding:0">
+  <img src="img/sim-menjador.jpg" alt="Menjador del pis amb decoració virtual: sofà, catifa i finestral" fetchpriority="high">
+  <span class="segell">Simulació de decoració virtual</span>
+  <div class="wrap">
+    <span class="eyebrow">En venda · Tarragona</span>
+    <h1>Quatre habitacions, llum i pàrquing a dos passos del centre</h1>
+    <p class="sub">Un pis reformat, a punt per entrar a viure-hi, al Nou Eixample Nord. Només cal posar-hi els mobles… i la vostra vida.</p>
+    <div class="preu"><b>225.000 €</b><s>245.000 €</s><span class="baixa">Ha baixat 20.000 €</span></div>
+    <div class="ctas">
+      <a class="btn btn-terra" href="#contacte">Demaneu una visita</a>
+      <a class="btn btn-blanc" href="#imagina">Veure el pis</a>
+    </div>
+  </div>
+</section>
+
+<div class="xifres">
+  <ul class="wrap">
+    <li><b>83 m²</b><span>construïts · 79,8 útils</span></li>
+    <li><b>4</b><span>habitacions</span></li>
+    <li><b>2</b><span>banys</span></li>
+    <li><b>1a</b><span>planta exterior</span></li>
+    <li><b>Sí</b><span>ascensor</span></li>
+    <li><b>Inclòs</b><span>plaça de pàrquing</span></li>
+  </ul>
+</div>
+
+<section id="imagina">
+  <div class="wrap">
+    <div class="titol reveal">
+      <span class="eyebrow">Imagineu-vos-hi</span>
+      <h2>Així podria ser casa vostra</h2>
+      <p>Hem moblat virtualment el pis a partir de les fotos reals perquè us costi menys imaginar-hi la vida de cada dia. Les parets, el terra, les finestres, la cuina i el bany són els que hi ha.</p>
+    </div>
+    <div class="galeria reveal">
+      <figure class="gran" data-gran="img/sim-menjador.jpg"><img src="img/sim-menjador.jpg" alt="Menjador amb decoració virtual" loading="lazy"><figcaption>Menjador · estar</figcaption></figure>
+      <figure data-gran="img/sim-cuina.jpg"><img src="img/sim-cuina.jpg" alt="Cuina equipada amb sortida a la galeria, amb decoració virtual" loading="lazy"><figcaption>Cuina amb galeria</figcaption></figure>
+      <div class="petites">
+        <figure data-gran="img/sim-dormitori.jpg"><img src="img/sim-dormitori.jpg" alt="Dormitori principal amb decoració virtual" loading="lazy"><figcaption>Dormitori</figcaption></figure>
+        <figure data-gran="img/sim-bany.jpg"><img src="img/sim-bany.jpg" alt="Bany amb dutxa amb decoració virtual" loading="lazy"><figcaption>Bany complet</figcaption></figure>
+      </div>
+    </div>
+    <p class="avis">ⓘ Imatges amb decoració virtual: els mobles i complements són simulats; l'habitatge s'entrega buit.</p>
+  </div>
+</section>
+
+<section style="background:var(--paper);border-top:1px solid var(--linia);border-bottom:1px solid var(--linia)">
+  <div class="wrap compara">
+    <div class="reveal">
+      <span class="eyebrow">Abans i després</span>
+      <h2 style="font-size:clamp(1.8rem,3.6vw,2.6rem);margin:8px 0 12px">Arrossegueu i compareu</h2>
+      <p style="color:var(--gris)">A l'esquerra, la foto real de l'estança buida. A la dreta, la mateixa estança amb mobles. Tot el que no és moble ja hi és.</p>
+      <div class="tabs" role="group" aria-label="Triar estança">
+        <button aria-pressed="true" data-a="img/real-menjador.jpg" data-b="img/sim-menjador.jpg">Menjador</button>
+        <button aria-pressed="false" data-a="img/real-dormitori.jpg" data-b="img/sim-dormitori.jpg">Dormitori</button>
+        <button aria-pressed="false" data-a="img/real-cuina2.jpg" data-b="img/sim-cuina.jpg">Cuina</button>
+      </div>
+    </div>
+    <div class="slider reveal" id="slider">
+      <img class="sota" src="img/real-menjador.jpg" alt="Foto real de l'estança buida">
+      <img class="dalt" src="img/sim-menjador.jpg" alt="La mateixa estança amb decoració virtual">
+      <span class="et e">Real</span><span class="et d">Simulació</span>
+      <div class="barra"></div>
+      <input type="range" min="0" max="100" value="50" aria-label="Moure la comparació">
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="titol reveal">
+      <span class="eyebrow">Per què aquest pis</span>
+      <h2>Tot fet, res per fer</h2>
+      <p>Entreu-hi amb les maletes. La feina grossa —la del pis i la de l'edifici— ja està feta.</p>
+    </div>
+    <div class="punts">
+      <div class="punt reveal"><div class="ico"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5V21H3z"/><path d="M9 21v-6h6v6"/></svg></div><h3>Reformat a fons</h3><p>Cuina nova amb vitroceràmica, forn i taulell de granit; dos banys nous i terra de gres a tot el pis.</p></div>
+      <div class="punt reveal"><div class="ico"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l2-5h10l2 5"/><circle cx="7.5" cy="19" r="1.5"/><circle cx="16.5" cy="19" r="1.5"/></svg></div><h3>Pàrquing inclòs</h3><p>Plaça d'aparcament per a cotxe petit inclosa al preu. A Tarragona, un tresor.</p></div>
+      <div class="punt reveal"><div class="ico"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16"/><path d="M9 8h6M9 12h6M9 16h6"/></svg></div><h3>Edifici al dia</h3><p>Façanes rehabilitades amb certificat final d'obra de l'arquitecte (2016): totes les deficiències de la inspecció tècnica, resoltes.</p></div>
+      <div class="punt reveal"><div class="ico"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></div><h3>Exterior i lluminós</h3><p>Primera planta exterior amb ascensor. Finestres àmplies a totes les habitacions i galeria a la cuina.</p></div>
+      <div class="punt reveal"><div class="ico"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2.5 1-4.5 4-4.5s2 .5 2 .5"/></svg></div><h3>Espai per a una família</h3><p>Quatre habitacions: dues d'entre 8 i 12 m² i dues més petites, perfectes per a fills, despatx o convidats. Bany complet i un segon lavabo.</p></div>
+      <div class="punt reveal"><div class="ico"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div><h3>Papers en regla</h3><p>Cèdula d'habitabilitat vigent fins al 2041, certificat energètic del 2026 i nota simple recent. Sense sorpreses.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="titol reveal">
+      <span class="eyebrow">Fotos reals</span>
+      <h2>Tal com és, sense filtres</h2>
+      <p>Les fotos de l'habitatge buit, just acabada la reforma, i un recorregut en vídeo per totes les estances.</p>
+    </div>
+    <div class="reals reveal">
+      <figure data-gran="img/real-menjador.jpg"><img src="img/real-menjador.jpg" alt="Menjador buit" loading="lazy"><figcaption>Menjador</figcaption></figure>
+      <figure data-gran="img/real-cuina.jpg"><img src="img/real-cuina.jpg" alt="Cuina" loading="lazy"><figcaption>Cuina</figcaption></figure>
+      <figure data-gran="img/real-rebedor.jpg"><img src="img/real-rebedor.jpg" alt="Rebedor" loading="lazy"><figcaption>Rebedor</figcaption></figure>
+      <figure data-gran="img/real-passadis.jpg"><img src="img/real-passadis.jpg" alt="Passadís" loading="lazy"><figcaption>Passadís</figcaption></figure>
+      <figure data-gran="img/real-habitacio.jpg"><img src="img/real-habitacio.jpg" alt="Habitació" loading="lazy"><figcaption>Habitació</figcaption></figure>
+      <figure data-gran="img/real-lavabo.jpg"><img src="img/real-lavabo.jpg" alt="Segon lavabo" loading="lazy"><figcaption>Segon lavabo</figcaption></figure>
+      <figure data-gran="img/real-galeria.jpg"><img src="img/real-galeria.jpg" alt="Galeria i safareig" loading="lazy"><figcaption>Galeria</figcaption></figure>
+      <figure data-gran="img/real-parking.jpg"><img src="img/real-parking.jpg" alt="Plaça d'aparcament" loading="lazy"><figcaption>Plaça de pàrquing</figcaption></figure>
+    </div>
+    <div class="video reveal">
+      <video controls preload="none" playsinline poster="img/video-poster.jpg">
+        <source src="visita.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--paper);border-top:1px solid var(--linia);border-bottom:1px solid var(--linia)">
+  <div class="wrap planol">
+    <figure class="reveal" data-gran="img/planol.jpg"><img src="img/planol.jpg" alt="Plànol de distribució del pis" loading="lazy"></figure>
+    <div class="reveal">
+      <span class="eyebrow">Distribució</span>
+      <h2 style="font-size:clamp(1.8rem,3.6vw,2.6rem);margin:8px 0 18px">Ben repartit, sense metres perduts</h2>
+      <ul class="distrib">
+        <li><span>Menjador · estar</span><span>exterior, amb finestral</span></li>
+        <li><span>Cuina office</span><span>amb galeria i safareig</span></li>
+        <li><span>Dormitori principal</span><span>3,40 × 2,65 m</span></li>
+        <li><span>Segona habitació</span><span>entre 8 i 12 m²</span></li>
+        <li><span>Dues habitacions més</span><span>entre 5 i 8 m²</span></li>
+        <li><span>Bany complet</span><span>amb dutxa</span></li>
+        <li><span>Segon lavabo</span><span>amb rentamans</span></li>
+        <li><span>Rebedor i passadís</span><span>distribuïdor central</span></li>
+      </ul>
+      <p style="font-size:.82rem;color:var(--gris);margin-top:14px">Plànol orientatiu amb mobles d'exemple. Superfícies: 83,86 m² segons registre; 79,8 m² útils segons cèdula.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="quota reveal">
+      <div>
+        <span class="eyebrow">Fem números</span>
+        <h2>Potser pagareu menys que un lloguer</h2>
+        <p>Moveu els controls per fer-vos una idea de la quota mensual d'una hipoteca. És només una estimació orientativa: a Finques Tarragona us poden orientar sobre finançament i despeses de compra.</p>
+      </div>
+      <div class="calc">
+        <label for="entrada"><span>Estalvis que hi poseu</span><b id="vEntrada"></b></label>
+        <input type="range" id="entrada" min="10" max="50" step="5" value="20">
+        <label for="anys"><span>Anys d'hipoteca</span><b id="vAnys"></b></label>
+        <input type="range" id="anys" min="10" max="35" step="1" value="30">
+        <label for="tipus"><span>Interès anual</span><b id="vTipus"></b></label>
+        <input type="range" id="tipus" min="1.5" max="5" step="0.1" value="2.8">
+        <div class="res">
+          <span>Quota aproximada</span>
+          <b id="quota">—</b>
+          <small id="detall"></small>
+          <small>Sobre el preu de 225.000 €. No inclou impostos ni despeses de compra.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap" style="max-width:820px">
+    <div class="titol reveal">
+      <span class="eyebrow">Preguntes freqüents</span>
+      <h2>El que tothom pregunta</h2>
+    </div>
+    <div class="faq reveal">
+      <details><summary>On és exactament?</summary><p>Al carrer dels Castellers de Tarragona, al barri del Nou Eixample Nord, en un complex residencial a tocar de l'Avinguda Catalunya i a pocs minuts del centre.</p></details>
+      <details><summary>La plaça d'aparcament entra al preu?</summary><p>Sí. Hi ha inclosa una plaça d'aparcament per a cotxe petit. Finques Tarragona us en concretarà les mides i l'accés.</p></details>
+      <details><summary>És un pis de protecció oficial? Què vol dir per a mi?</summary><p>Sí, l'edifici es va qualificar com a habitatge de protecció oficial el 1977. A la pràctica: el preu és lliure, no cal cap autorització per vendre'l i només s'ha de visar el contracte. L'única condició és que sigui el vostre habitatge habitual i que no tingueu un altre habitatge protegit en propietat. Segons l'Agència de l'Habitatge de Catalunya, aquest règim té una durada de 50 anys des de la qualificació (maig del 1977). Finques Tarragona us ho explicarà amb detall.</p></details>
+      <details><summary>Cal fer-hi obres?</summary><p>No. El pis es va reformar a fons i les façanes de l'edifici es van rehabilitar el 2016. El podeu decorar al vostre gust des del primer dia.</p></details>
+      <details><summary>I l'eficiència energètica?</summary><p>Disposa de certificat energètic vigent (fet el 2026). L'aigua calenta és amb termo elèctric. El certificat inclou recomanacions de millora per si la voleu millorar més endavant; l'agència us en pot ensenyar el document complet.</p></details>
+      <details><summary>Com puc visitar-lo?</summary><p>Truqueu a Finques Tarragona al 977 252 052 o escriviu-los a informa@finquestarragona.com indicant la referència 2744. Us ensenyaran el pis i us resoldran qualsevol dubte.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="contacte" id="contacte">
+  <div class="wrap grid">
+    <div class="reveal">
+      <span class="eyebrow">Visites i informació</span>
+      <h2>Veniu a veure'l. Us hi veureu.</h2>
+      <p>La venda la porta Finques Tarragona. Truqueu-los, escriviu-los o passeu per l'oficina de la Rambla Nova: us ensenyaran el pis quan us vagi bé.</p>
+    </div>
+    <div class="fitxa reveal">
+      <h3>Finques Tarragona</h3>
+      <div class="ref">Referència del pis: <b>2744</b></div>
+      <a class="btn btn-terra" href="tel:+34977252052">Trucar al 977 252 052</a>
+      <a class="btn btn-salvia" href="mailto:informa@finquestarragona.com?subject=Visita%20pis%20ref.%202744%20(Castellers%20de%20Tarragona)&body=Hola%2C%20m'interessa%20el%20pis%20de%204%20habitacions%20del%20carrer%20dels%20Castellers%20de%20Tarragona%20(ref.%202744)%20i%20m'agradaria%20visitar-lo.%0A%0ANom%3A%0ATel%C3%A8fon%3A%0A">Enviar un correu</a>
+      <a class="btn btn-blanc" href="https://www.finquestarragona.com/property/pis-de-4-habitacions-a-castellers-de-tarragona/" target="_blank" rel="noopener">Fitxa al web de l'agència ↗</a>
+      <dl>
+        <dt>Oficina</dt><dd>Rambla Nova, 18, baixos · 43004 Tarragona</dd>
+        <dt>Horari</dt><dd>De dilluns a divendres, de 9 a 14 h i de 16 a 19 h</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Informació orientativa, sense valor contractual. Les imatges amb decoració virtual són simulacions.</span>
+    <span>Comercialització: Finques Tarragona · AICAT nº 4746</span>
+  </div>
+</footer>
+
+<div class="mobil">
+  <a class="btn btn-terra" href="tel:+34977252052">Trucar</a>
+  <a class="btn btn-salvia" href="#contacte">Demanar visita</a>
+</div>
+
+<div class="visor" id="visor" role="dialog" aria-modal="true" aria-label="Imatge ampliada">
+  <button class="tanca" aria-label="Tancar">×</button>
+  <img alt="">
+  <p></p>
+</div>
+
+<script>
+// Visor d'imatges
+var visor=document.getElementById('visor'), vImg=visor.querySelector('img'), vTxt=visor.querySelector('p');
+document.querySelectorAll('[data-gran]').forEach(function(f){
+  f.addEventListener('click',function(){
+    vImg.src=f.dataset.gran;
+    var c=f.querySelector('figcaption'), sim=f.dataset.gran.indexOf('sim-')>-1;
+    vTxt.textContent=(c?c.textContent:'')+(sim?' · Simulació de decoració virtual':'');
+    visor.classList.add('obert');
+  });
+});
+function tanca(){visor.classList.remove('obert');}
+visor.addEventListener('click',function(e){if(e.target!==vImg)tanca();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')tanca();});
+
+// Comparador abans/després
+var sl=document.getElementById('slider'), dalt=sl.querySelector('.dalt'), sota=sl.querySelector('.sota'), barra=sl.querySelector('.barra'), rang=sl.querySelector('input');
+function posa(v){dalt.style.clipPath='inset(0 0 0 '+v+'%)';barra.style.left=v+'%';}
+rang.addEventListener('input',function(){posa(rang.value);});
+document.querySelectorAll('.tabs button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.tabs button').forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true');
+    sota.src=b.dataset.a; dalt.src=b.dataset.b; rang.value=50; posa(50);
+  });
+});
+
+// Calculadora de quota
+var PREU=225000;
+function euros(n){return Math.round(n).toLocaleString('ca-ES')+' €';}
+function calc(){
+  var e=+document.getElementById('entrada').value, a=+document.getElementById('anys').value, t=+document.getElementById('tipus').value;
+  document.getElementById('vEntrada').textContent=e+'% · '+euros(PREU*e/100);
+  document.getElementById('vAnys').textContent=a+' anys';
+  document.getElementById('vTipus').textContent=t.toFixed(1).replace('.',',')+' %';
+  var P=PREU*(1-e/100), i=t/100/12, n=a*12, q=P*i/(1-Math.pow(1+i,-n));
+  document.getElementById('quota').textContent=euros(q)+' /mes';
+  document.getElementById('detall').textContent='Import finançat: '+euros(P);
+}
+['entrada','anys','tipus'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);});
+calc();
+
+// Aparició suau
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vist');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+}else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('vist');});}
+</script>
+</body>
+</html>
