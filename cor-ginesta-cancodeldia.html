@@ -112,5 +112,6 @@ document.getElementById('reset').addEventListener('click',()=>{search.value='';l
 grid.addEventListener('click',event=>{const button=event.target.closest('.story-toggle');if(!button)return;const id=Number(button.dataset.id);expanded.has(id)?expanded.delete(id):expanded.add(id);render();document.querySelector(`[data-id="${id}"]`)?.focus()});
 render();
 </script>
+<script data-goatcounter="https://gobo26.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
