@@ -54,6 +54,9 @@ h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.15;let
 .preu{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px;margin:22px 0 26px}
 .preu b{font-family:Fraunces,serif;font-size:2.4rem;font-weight:700}
 .preu span{font-size:.95rem;opacity:.9}
+.inclou{display:inline-flex;align-items:center;gap:12px;background:var(--sorra);color:#2b2216;border-radius:16px;padding:12px 18px 12px 14px;font-weight:700;font-size:1.05rem;line-height:1.3;margin:-8px 0 26px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.inclou svg{width:30px;height:30px;flex:none}
+.inclou small{display:block;font-weight:500;font-size:.88rem;opacity:.85}
 .hero .ctas{display:flex;flex-wrap:wrap;gap:12px}
 
 /* franja destacats */
@@ -190,6 +193,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
   .quota{padding:30px 22px}
 }
 @media (max-width:600px){
+  .inclou{font-size:.98rem}
   body{font-size:16px}
   .wrap{padding:0 16px}
   section{padding:60px 0}
@@ -219,7 +223,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
     <span class="eyebrow">En venda · Salou</span>
     <h1>Quatre habitacions i una gran terrassa, a 5 minuts de la platja</h1>
     <p class="sub">En una zona residencial i tranquil·la, a cinc minuts caminant de la platja. Pis ampli i lluminós, orientat a sud-oest, amb vistes al jardí, a la piscina i al parc. Cuina nova, bany de la suite reformat, pàrquing i traster inclosos.</p>
-    <div class="preu"><b>430.000 €</b><span>Pàrquing i traster inclosos</span></div>
+    <div class="preu"><b>430.000 €</b></div>
+    <div class="inclou"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l2-5h10l2 5"/><circle cx="7.5" cy="19" r="1.5"/><circle cx="16.5" cy="19" r="1.5"/></svg><span>El preu inclou plaça d'aparcament i traster<small>Tots dos al mateix edifici</small></span></div>
     <div class="ctas">
       <a class="btn btn-terra" href="#contacte">Demanar una visita</a>
       <a class="btn btn-blanc" href="#fotos">Veure el pis</a>
