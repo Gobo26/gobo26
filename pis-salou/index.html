@@ -94,6 +94,12 @@ section{padding:84px 0}
 .terrassa .fotos{display:grid;gap:14px}
 .terrassa .fotos figure{border-radius:var(--r);overflow:hidden;cursor:zoom-in;background:#ddd}
 .terrassa .fotos img{width:100%;aspect-ratio:16/8;object-fit:cover}
+.terrassa .fotos figure{position:relative}
+.terrassa .fotos .pisc img{aspect-ratio:4/3}
+.terrassa .fotos .dues{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.terrassa .fotos .dues img{aspect-ratio:4/3}
+.terrassa .fotos figcaption{position:absolute;left:12px;bottom:12px;background:rgba(255,253,249,.94);padding:6px 12px;border-radius:999px;font-size:.85rem;font-weight:600}
+.reals figure.doble{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
 .llista{list-style:none;margin-top:18px}
 .llista li{padding:10px 0 10px 30px;border-bottom:1px dashed var(--linia);position:relative}
 .llista li::before{content:"";position:absolute;left:4px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--sorra)}
@@ -286,8 +292,11 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
       </ul>
     </div>
     <div class="fotos reveal">
+      <figure class="pisc" data-gran="img/piscina.jpg"><img src="img/piscina.jpg" alt="Piscina i jardí del recinte vistos des de la terrassa" loading="lazy"><figcaption>La piscina, des de la terrassa</figcaption></figure>
+      <div class="dues">
       <figure data-gran="img/terrassa-2.jpg"><img src="img/terrassa-2.jpg" alt="Terrassa amb vistes al jardí i a la piscina" loading="lazy"></figure>
       <figure data-gran="img/terrassa-1.jpg"><img src="img/terrassa-1.jpg" alt="Terrassa amb butaques i vistes als arbres" loading="lazy"></figure>
+      </div>
     </div>
   </div>
 </section>
@@ -346,6 +355,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
       <p>Toqueu qualsevol foto per veure-la gran i passar a la següent.</p>
     </div>
     <div class="reals reveal">
+      <figure class="doble" data-gran="img/piscina.jpg"><img src="img/piscina.jpg" alt="Piscina i jardí del recinte" loading="lazy"><figcaption>Piscina i jardí</figcaption></figure>
       <figure data-gran="img/salo.jpg"><img src="img/salo.jpg" alt="Saló" loading="lazy"><figcaption>Saló</figcaption></figure>
       <figure data-gran="img/menjador.jpg"><img src="img/menjador.jpg" alt="Menjador" loading="lazy"><figcaption>Menjador</figcaption></figure>
       <figure data-gran="img/cuina.jpg"><img src="img/cuina.jpg" alt="Cuina" loading="lazy"><figcaption>Cuina</figcaption></figure>
